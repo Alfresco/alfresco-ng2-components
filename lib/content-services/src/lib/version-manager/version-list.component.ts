@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ConfirmDialogComponent, IconModule } from '@alfresco/adf-core';
+import { ConfirmDialogComponent, ConfirmDialogComponentProps, IconModule } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ContentApi, ContentPagingQuery, LazyApi, Node, NodeEntry, NodesApi, VersionEntry, VersionsApi } from '@alfresco/js-api';
@@ -180,7 +180,7 @@ export class VersionListComponent implements OnChanges, OnInit {
         }
     }
 
-    deleteVersion(versionId: string, menuTrigger?: MatMenuTrigger) {
+    deleteVersion(versionId: string, menuTrigger?: MatMenuTrigger): void {
         if (this.canUpdate()) {
             if (menuTrigger?.menuOpen) {
                 menuTrigger.menuClosed
@@ -192,7 +192,7 @@ export class VersionListComponent implements OnChanges, OnInit {
         }
     }
 
-    onVersionDeleted(node: any) {
+    onVersionDeleted(node: Node): void {
         this.loadVersionHistory();
         this.deleted.emit(node);
     }
@@ -215,8 +215,8 @@ export class VersionListComponent implements OnChanges, OnInit {
         }
     }
 
-    private openDeleteConfirmationDialog(versionId: string) {
-        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    private openDeleteConfirmationDialog(versionId: string): void {
+        const dialogRef = this.dialog.open<ConfirmDialogComponent, ConfirmDialogComponentProps, boolean>(ConfirmDialogComponent, {
             data: {
                 title: 'ADF_VERSION_LIST.CONFIRM_DELETE.TITLE',
                 message: 'ADF_VERSION_LIST.CONFIRM_DELETE.MESSAGE',
