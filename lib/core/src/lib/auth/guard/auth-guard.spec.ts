@@ -32,8 +32,7 @@ const buildToken = (payload: object): string => `header.${btoa(JSON.stringify(pa
 
 const tokenFor = (preferredUsername: string): string => buildToken({ preferred_username: preferredUsername });
 
-/** An access token the identity provider issued without a `preferred_username` claim - the AAE-55444 case. */
-const tokenWithoutUsername = buildToken({ sub: 'b9b4e2f0', aud: 'alfresco' });
+const tokenWithoutUsername = buildToken({ sub: 'user-12345', aud: 'test' });
 
 describe('AuthGuard cross-tab storage handling', () => {
     let authGuardService: jasmine.SpyObj<AuthGuardService>;
