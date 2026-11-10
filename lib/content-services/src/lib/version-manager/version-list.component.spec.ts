@@ -18,16 +18,16 @@
 import { formatDate } from '@angular/common';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { VersionListComponent, VersionListDataSource } from './version-list.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { of, Subject } from 'rxjs';
+import { of } from 'rxjs';
 import { Node, NodeEntry, VersionEntry, Version, UserInfo } from '@alfresco/js-api';
 import { ContentVersionService } from './content-version.service';
 import { take } from 'rxjs/operators';
 import { CdkFixedSizeVirtualScroll } from '@angular/cdk/scrolling';
 import { ConfirmDialogComponent, NoopAuthModule, UnitTestingUtils } from '@alfresco/adf-core';
 import { provideApiTesting } from '../testing/providers';
-import { DebugElement } from '@angular/core';
+import { DebugElement, EventEmitter } from '@angular/core';
 
 describe('VersionListComponent', () => {
     let component: VersionListComponent;
@@ -63,6 +63,9 @@ describe('VersionListComponent', () => {
         })
     ];
 
+    const mockConfirmDialogRef = (result: boolean): MatDialogRef<ConfirmDialogComponent, boolean> =>
+        jasmine.createSpyObj<MatDialogRef<ConfirmDialogComponent, boolean>>('MatDialogRef', { afterClosed: of(result) });
+
     afterEach(() => {
         fixture.destroy();
         TestBed.resetTestingModule();
@@ -91,9 +94,7 @@ describe('VersionListComponent', () => {
     it('should raise confirmation dialog on delete', () => {
         fixture.detectChanges();
 
-        spyOn(dialog, 'open').and.returnValue({
-            afterClosed: () => of(false)
-        } as any);
+        spyOn(dialog, 'open').and.returnValue(mockConfirmDialogRef(false));
 
         component.deleteVersion('1');
 
@@ -101,9 +102,7 @@ describe('VersionListComponent', () => {
     });
 
     it('should delete the version if user confirms', async () => {
-        spyOn(dialog, 'open').and.returnValue({
-            afterClosed: () => of(true)
-        } as any);
+        spyOn(dialog, 'open').and.returnValue(mockConfirmDialogRef(true));
         spyOn(component.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve());
 
         fixture.detectChanges();
@@ -114,9 +113,7 @@ describe('VersionListComponent', () => {
     });
 
     it('should not delete version if user rejects', () => {
-        spyOn(dialog, 'open').and.returnValue({
-            afterClosed: () => of(false)
-        } as any);
+        spyOn(dialog, 'open').and.returnValue(mockConfirmDialogRef(false));
 
         spyOn(component.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve());
         fixture.detectChanges();
@@ -127,26 +124,22 @@ describe('VersionListComponent', () => {
     });
 
     it('should open the delete confirmation dialog only after the version actions menu is closed', () => {
-        spyOn(dialog, 'open').and.returnValue({
-            afterClosed: () => of(false)
-        } as any);
-        const menuClosed = new Subject<void>();
-        const menuTrigger = { menuOpen: true, menuClosed } as unknown as MatMenuTrigger;
+        spyOn(dialog, 'open').and.returnValue(mockConfirmDialogRef(false));
+        const menuClosed = new EventEmitter<void>();
+        const menuTrigger = jasmine.createSpyObj<MatMenuTrigger>('MatMenuTrigger', [], { menuOpen: true, menuClosed });
 
         fixture.detectChanges();
         component.deleteVersion(versionId, menuTrigger);
 
         expect(dialog.open).not.toHaveBeenCalled();
 
-        menuClosed.next();
+        menuClosed.emit();
 
         expect(dialog.open).toHaveBeenCalled();
     });
 
     it('should restore focus when the delete confirmation dialog is closed', () => {
-        spyOn(dialog, 'open').and.returnValue({
-            afterClosed: () => of(false)
-        } as any);
+        spyOn(dialog, 'open').and.returnValue(mockConfirmDialogRef(false));
 
         fixture.detectChanges();
         component.deleteVersion(versionId);
@@ -161,7 +154,7 @@ describe('VersionListComponent', () => {
             done();
         });
         fixture.detectChanges();
-        component.onVersionDeleted({});
+        component.onVersionDeleted(component.node);
     });
 
     describe('Version history fetching', () => {
@@ -375,7 +368,7 @@ describe('VersionListComponent', () => {
                 fixture.whenStable().then(() => {
                     getActionMenuButton('1.1').click();
 
-                    const deleteButton: any = document.querySelector('[id="adf-version-list-action-delete-1.1"]');
+                    const deleteButton = document.querySelector<HTMLButtonElement>('[id="adf-version-list-action-delete-1.1"]');
 
                     expect(deleteButton.disabled).toBe(true);
                     done();
@@ -407,7 +400,7 @@ describe('VersionListComponent', () => {
                 fixture.whenStable().then(() => {
                     getActionMenuButton('1.1').click();
 
-                    const deleteButton: any = document.querySelector('[id="adf-version-list-action-delete-1.1"]');
+                    const deleteButton = document.querySelector<HTMLButtonElement>('[id="adf-version-list-action-delete-1.1"]');
 
                     expect(deleteButton.disabled).toBe(false);
                     done();
@@ -448,7 +441,7 @@ describe('VersionListComponent', () => {
                 let focusedElementOnDialogOpen: Element;
                 spyOn(dialog, 'open').and.callFake(() => {
                     focusedElementOnDialogOpen = document.activeElement;
-                    return { afterClosed: () => of(false) } as any;
+                    return mockConfirmDialogRef(false);
                 });
                 fixture.detectChanges();
                 await fixture.whenStable();
