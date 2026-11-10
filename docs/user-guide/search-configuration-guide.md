@@ -102,8 +102,8 @@ In the three steps you can specify the search configuration. i.e
 You may find it useful to check out the following resources for background information
 before customizing the search UI:
 
--   [Search API](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.3/Alfresco-Content-Services/Develop/REST-API-Guide/Searching-for-Content)
--   [Alfresco Full Text Search Reference](https://support.hyland.com/r/Alfresco/Alfresco-Search-Services/2.0/Alfresco-Search-Services/Using/Full-text-search-reference)
+-   [Search API](https://docs.hyland.com/r/Alfresco/Alfresco-Content-Services/23.3/Alfresco-Content-Services/Develop/REST-API-Guide/Searching-for-Content)
+-   [Alfresco Full Text Search Reference](https://docs.hyland.com/r/Alfresco/Alfresco-Search-Services/2.0/Alfresco-Search-Services/Using/Full-text-search-reference)
 -   [ACS API Explorer](https://api-explorer.alfresco.com/api-explorer/#!/search/search)
 
 ### Configuration
@@ -277,7 +277,7 @@ When a user types free text into a search input, the [Search Query Builder Servi
     set), and a `*` wildcard is appended to each term when wildcards are enabled. Words that are
     exactly `AND` or `OR` are preserved as logical operators.
 -   **formula** - the user input is passed through verbatim as an
-    [AFTS](https://docs.alfresco.com/content-services/latest/develop/search-api/) expression. Use
+    [AFTS](https://docs.hyland.com/r/Alfresco/Alfresco-Search-Services/2.0/Alfresco-Search-Services/Using/Full-text-search-reference) expression. Use
     this mode when the caller already builds valid query syntax.
 
 The `app:fields` entry lists the fields used to expand a `regular` user query:

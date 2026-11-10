@@ -174,7 +174,7 @@ The builder supports two search modes, selected through the `searchMode` propert
     field query. The query is split into terms, each term is matched against the fields listed in
     the `app:fields` search configuration entry (falling back to `cm:name`), and a `*` wildcard is
     appended when wildcards are enabled. Bare `AND`/`OR` words are preserved as operators.
--   **formula** - the text in `userQuery` is used verbatim as an [AFTS](https://docs.alfresco.com/content-services/latest/develop/search-api/) expression, allowing callers that already build their own query syntax to bypass parsing.
+-   **formula** - the text in `userQuery` is used verbatim as an [AFTS](https://docs.hyland.com/r/Alfresco/Alfresco-Search-Services/2.0/Alfresco-Search-Services/Using/Full-text-search-reference) expression, allowing callers that already build their own query syntax to bypass parsing.
 
 > **Note:** From ADF 3.0.0, the query contains the `"facetFormat": "V2"` parameter so that all the responses have the same structure whether they come from search queries containing facetFields, facetQueries, grouped facetQueries or facetIntervals.
 
