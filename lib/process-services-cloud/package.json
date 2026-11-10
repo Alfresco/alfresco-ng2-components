@@ -1,6 +1,6 @@
 {
   "name": "@alfresco/adf-process-services-cloud",
-  "description": "Alfresco ADF process services cloud (maintenance mode: critical bug fixes and security patches only, no new features)",
+  "description": "Alfresco ADF process services cloud (maintenance mode: critical bug fixes only, no new features)",
   "version": "9.1.0",
   "author": "Hyland Software, Inc. and its affiliates",
   "repository": {

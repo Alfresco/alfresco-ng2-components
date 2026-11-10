@@ -1,3 +1,5 @@
+> **Note:** `lib/process-services-cloud` is in maintenance mode. Only critical bug fixes are accepted for it; new features will not be merged.
+
 **Please check if the PR fulfills these requirements**
 
 > - [ ] The commit message follows our [guidelines](https://github.com/Alfresco/alfresco-ng2-components/wiki/Commit-format)
