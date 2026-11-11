@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Alfresco front-channel logout static page</title>
+</head>
+<body>
+    <script>
+        // OpenID Connect Front-Channel Logout 1.0.
+        // The identity provider loads this page in a hidden iframe when a session ends, passing the
+        // issuer (iss) and the session id (sid). The page removes the OAuth items of every application
+        // on this origin whose stored id_token belongs to that session. It never redirects and never
+        // calls the network. Open tabs are notified through the browser "storage" event.
+        (function () {
+            var ID_TOKEN_KEY = 'id_token';
+            var AUTH_STORAGE_ITEMS = [
+                'access_token',
+                'access_token_stored_at',
+                'expires_at',
+                'granted_scopes',
+                'id_token',
+                'id_token_claims_obj',
+                'id_token_expires_at',
+                'id_token_stored_at',
+                'nonce',
+                'PKCE_verifier',
+                'refresh_token',
+                'session_state'
+            ];
+
+            function withoutTrailingSlash(value) {
+                return value.charAt(value.length - 1) === '/' ? value.slice(0, -1) : value;
+            }
+
+            function decodeClaims(token) {
+                try {
+                    var payload = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+                    var json = decodeURIComponent(
+                        atob(payload)
+                            .split('')
+                            .map(function (char) {
+                                return '%' + ('00' + char.charCodeAt(0).toString(16)).slice(-2);
+                            })
+                            .join('')
+                    );
+                    return JSON.parse(json);
+                } catch (error) {
+                    return null;
+                }
+            }
+
+            try {
+                var params = new URLSearchParams(window.location.search);
+                var iss = params.get('iss');
+                var sid = params.get('sid');
+
+                if (!iss || !sid) {
+                    return;
+                }
+
+                var storage = window.localStorage;
+                var prefixes = [];
+
+                for (var index = 0; index < storage.length; index++) {
+                    var key = storage.key(index);
+                    var isIdTokenKey = key === ID_TOKEN_KEY || (key && key.slice(-(ID_TOKEN_KEY.length + 1)) === '_' + ID_TOKEN_KEY);
+
+                    if (!isIdTokenKey) {
+                        continue;
+                    }
+
+                    var claims = decodeClaims(storage.getItem(key) || '');
+
+                    if (claims && claims.sid === sid && typeof claims.iss === 'string' && withoutTrailingSlash(claims.iss) === withoutTrailingSlash(iss)) {
+                        prefixes.push(key.slice(0, key.length - ID_TOKEN_KEY.length));
+                    }
+                }
+
+                prefixes.forEach(function (prefix) {
+                    AUTH_STORAGE_ITEMS.forEach(function (item) {
+                        storage.removeItem(prefix + item);
+                    });
+                });
+            } catch (error) {
+                // storage not available: nothing to clean up
+            }
+        })();
+    </script>
+</body>
+</html>

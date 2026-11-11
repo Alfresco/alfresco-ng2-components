@@ -40,6 +40,7 @@
         "main": "lib/core/test.ts",
         "tsConfig": "lib/core/tsconfig.spec.json",
         "karmaConfig": "lib/core/karma.conf.js",
+        "assets": [{ "glob": "frontchannel-logout.html", "input": "lib/core/src/lib/assets", "output": "/assets" }],
         "watch": false,
         "sourceMap": true,
         "codeCoverage": true,
