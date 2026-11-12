@@ -80,21 +80,15 @@
 
                 <div matListItemMeta class="adf-compact-breadcrumb-menu-list-item-meta">
                     @if (nodeWithState.current) {
-                        <mat-icon class="adf-compact-breadcrumb-menu-list-item-meta-icon">
-                            location_on
-                        </mat-icon>
+                        <mat-icon class="adf-compact-breadcrumb-menu-list-item-meta-icon" adf-icon="location_on" />
                         {{ 'BREADCRUMB.COMPACT_MENU.CURRENT_LEVEL_ICON_LABEL' | translate }}
                     } @else {
                         @if (dragDropStateService.dragging()) {
                             @if (nodeWithState.libraryContainer) {
-                                <mat-icon class="adf-compact-breadcrumb-menu-list-item-meta-icon">
-                                    do_not_disturb
-                                </mat-icon>
+                                <mat-icon class="adf-compact-breadcrumb-menu-list-item-meta-icon" adf-icon="do_not_disturb" />
                                 {{ 'BREADCRUMB.COMPACT_MENU.LIBRARY_CONTAINER_LEVEL_ICON_LABEL' | translate }}
                             } @else if (hoveredItem()?.node.id === nodeWithState.node.id) {
-                                <mat-icon class="adf-compact-breadcrumb-menu-list-item-meta-icon">
-                                    check_circle
-                                </mat-icon>
+                                <mat-icon class="adf-compact-breadcrumb-menu-list-item-meta-icon" adf-icon="check_circle" />
                                 {{ 'BREADCRUMB.COMPACT_MENU.DROP_HINT' | translate }}
                             }
                         }
@@ -104,7 +98,7 @@
         }
     </mat-nav-list>
     <p class="adf-compact-breadcrumb-menu-description adf-compact-breadcrumb-menu-footer">
-        <mat-icon class="adf-compact-breadcrumb-menu-description-back-icon">shortcut</mat-icon>
+        <mat-icon class="adf-compact-breadcrumb-menu-description-back-icon" adf-icon="shortcut" />
         {{
             (dragDropStateService.dragging() ? 'BREADCRUMB.COMPACT_MENU.PRESS_ESC_TO_CLOSE_HINT_WHEN_DRAGGING'
                 : 'BREADCRUMB.COMPACT_MENU.PRESS_ESC_TO_CLOSE_HINT_WHEN_NO_DRAGGING') | translate

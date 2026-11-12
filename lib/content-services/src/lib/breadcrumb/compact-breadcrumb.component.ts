@@ -36,7 +36,7 @@ import {
 import { PathElement } from '@alfresco/js-api';
 import { MatButton } from '@angular/material/button';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { DataRow, DragDropStateService } from '@alfresco/adf-core';
+import { DataRow, DragDropStateService, IconModule } from '@alfresco/adf-core';
 import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { MatListItem, MatListItemIcon, MatListItemLine, MatListItemMeta, MatListItemTitle, MatNavList } from '@angular/material/list';
 import { NgOptimizedImage } from '@angular/common';
@@ -65,6 +65,7 @@ interface PathElementWithState {
         CdkDropListGroup,
         CdkDrag,
         CdkTrapFocus,
+        IconModule,
         MatIcon,
         MatNavList,
         MatListItem,
