@@ -531,11 +531,11 @@ describe('CompactBreadcrumbComponent', () => {
 
                     const itemMetas = getItemMetas();
                     expect(itemMetas[0].nativeElement.textContent.trim()).toBe(
-                        'do_not_disturb  BREADCRUMB.COMPACT_MENU.LIBRARY_CONTAINER_LEVEL_ICON_LABEL'
+                        'do_not_disturb BREADCRUMB.COMPACT_MENU.LIBRARY_CONTAINER_LEVEL_ICON_LABEL'
                     );
-                    expect(itemMetas[1].nativeElement.textContent.trim()).toBe('check_circle  BREADCRUMB.COMPACT_MENU.DROP_HINT');
+                    expect(itemMetas[1].nativeElement.textContent.trim()).toBe('check_circle BREADCRUMB.COMPACT_MENU.DROP_HINT');
                     expect(itemMetas[2].nativeElement.textContent.trim()).toBe('');
-                    expect(itemMetas[3].nativeElement.textContent.trim()).toBe('location_on  BREADCRUMB.COMPACT_MENU.CURRENT_LEVEL_ICON_LABEL');
+                    expect(itemMetas[3].nativeElement.textContent.trim()).toBe('location_on BREADCRUMB.COMPACT_MENU.CURRENT_LEVEL_ICON_LABEL');
                 });
 
                 it('should have not rendered icon for hovered item if DragDropStateService dragging is false even if there is hovered item', async () => {
