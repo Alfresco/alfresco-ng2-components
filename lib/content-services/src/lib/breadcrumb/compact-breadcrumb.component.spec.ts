@@ -596,28 +596,31 @@ describe('CompactBreadcrumbComponent', () => {
             expect(triggerElement.focus).not.toHaveBeenCalled();
         });
 
-        it('should call stopPropagation on event if ESC was hit and dragging is false on DragDropStateService', () => {
+        it('should call stopPropagation on event if ESC was hit, dragging is false on DragDropStateService and menu is open', () => {
             dragDropStateService.dragging.set(false);
             spyOn(escEvent, 'stopPropagation');
+            triggerElement.click();
 
             document.dispatchEvent(escEvent);
             expect(escEvent.stopPropagation).toHaveBeenCalled();
         });
 
-        it('should not call stopPropagation on event if ESC was hit and dragging is true on DragDropStateService', () => {
+        it('should not call stopPropagation on event if ESC was hit, dragging is true on DragDropStateService and menu is open', () => {
             dragDropStateService.dragging.set(true);
             spyOn(escEvent, 'stopPropagation');
+            triggerElement.click();
 
             document.dispatchEvent(escEvent);
             expect(escEvent.stopPropagation).not.toHaveBeenCalled();
         });
 
-        it('should not call stopPropagation on event if other than ESC key was hit and dragging is false on DragDropStateService', () => {
+        it('should not call stopPropagation on event if other than ESC key was hit and dragging is false on DragDropStateService and menu is open', () => {
             dragDropStateService.dragging.set(false);
             const enterEvent = new KeyboardEvent('keydown', {
                 key: 'Enter'
             });
             spyOn(enterEvent, 'stopPropagation');
+            triggerElement.click();
 
             document.dispatchEvent(enterEvent);
             expect(enterEvent.stopPropagation).not.toHaveBeenCalled();

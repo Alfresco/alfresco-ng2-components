@@ -355,7 +355,9 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     private async setupNode() {
         try {
             const [nodeEntry, adminUser] = await Promise.all([
-                this.nodesApi.getNode(this.nodeId, { include: ['allowableOperations', 'path'] }),
+                this.nodesApi.getNode(this.nodeId, {
+                    include: this.showBreadcrumbs ? ['allowableOperations', 'path'] : ['allowableOperations']
+                }),
                 this.showBreadcrumbs ? firstValueFrom(this.adminUser$.pipe(catchError(() => of(false)))) : Promise.resolve(false)
             ]);
             this.nodeEntry = nodeEntry;
