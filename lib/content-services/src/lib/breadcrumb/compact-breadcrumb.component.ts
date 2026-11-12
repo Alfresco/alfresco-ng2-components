@@ -36,7 +36,7 @@ import {
 import { PathElement } from '@alfresco/js-api';
 import { MatButton } from '@angular/material/button';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { DataRow, DragDropStateService } from '@alfresco/adf-core';
+import { DataRow, DragDropStateService, IconModule } from '@alfresco/adf-core';
 import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { MatListItem, MatListItemIcon, MatListItemLine, MatListItemMeta, MatListItemTitle, MatNavList } from '@angular/material/list';
 import { NgOptimizedImage } from '@angular/common';
@@ -56,7 +56,7 @@ interface PathElementWithState {
     templateUrl: './compact-breadcrumb.component.html',
     styleUrls: ['./compact-breadcrumb.component.scss'],
     host: {
-        '(document:keydown.escape)': 'closeMenu(true)'
+        '(document:keydown.escape)': 'closeMenu($event)'
     },
     imports: [
         MatButton,
@@ -65,6 +65,7 @@ interface PathElementWithState {
         CdkDropListGroup,
         CdkDrag,
         CdkTrapFocus,
+        IconModule,
         MatIcon,
         MatNavList,
         MatListItem,
@@ -86,26 +87,11 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     private readonly translateService = inject(TranslateService);
 
     /** The nodes to display in the breadcrumb. */
-    readonly nodes = input.required<PathElementWithState[], PathElement[]>({
-        transform: (nodes) => {
-            let indexOffset = 0;
-            return nodes.map((node, index) => {
-                const current = index === nodes.length - 1;
-                const libraryContainer = nodes[index + 1]?.nodeType === 'st:site';
-                if (libraryContainer) {
-                    indexOffset = 1;
-                }
-                return {
-                    node,
-                    current,
-                    libraryContainer,
-                    description: this.getLevelDescription(nodes, index, current, libraryContainer, indexOffset)
-                };
-            });
-        }
-    });
+    readonly nodes = input.required<PathElement[]>();
     /** If true, the breadcrumb menu will be displayed in full width. */
     readonly fullWidth = input(false);
+    /** If true, the current location will be disabled in the breadcrumb. */
+    readonly disableCurrentLocation = input(true);
 
     /** Emitted when dragged item is dropped onto the breadcrumb. Emits drag and drop event. */
     readonly dropped = output<CdkDragDrop<PathElement, PathElement, DataRow>>();
@@ -121,7 +107,23 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
 
     protected readonly menuOpen = signal(false);
     protected readonly hoveredItem = signal<PathElementWithState>(undefined);
-    protected readonly parentsCounter = computed(() => this.nodes().filter((node) => !node.current && !node.libraryContainer).length);
+    protected readonly nodesWithState = computed<PathElementWithState[]>(() => {
+        let indexOffset = 0;
+        return this.nodes().map((node, index) => {
+            const current = index === this.nodes().length - 1 && this.disableCurrentLocation();
+            const libraryContainer = this.nodes()[index + 1]?.nodeType === 'st:site';
+            if (libraryContainer) {
+                indexOffset = 1;
+            }
+            return {
+                node,
+                current,
+                libraryContainer,
+                description: this.getLevelDescription(this.nodes(), index, current, libraryContainer, indexOffset)
+            };
+        });
+    });
+    protected readonly parentsCounter = computed(() => this.nodesWithState().length - 2);
     protected readonly suppressHoverOpen = signal(false);
 
     private removeOutsideClickListener: () => void;
@@ -179,7 +181,7 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     }
 
     onDrop(event: CdkDragDrop<PathElement, PathElement, DataRow>): void {
-        if (this.isRouteEnabled(this.hoveredItem()) && event.isPointerOverContainer) {
+        if (this.isRouteEnabled(this.hoveredItem(), true) && event.isPointerOverContainer) {
             this.dropped.emit(event);
         }
     }
@@ -233,13 +235,16 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
         }
     }
 
-    isRouteEnabled(route: PathElementWithState): boolean {
-        return route && !route.current && !route.libraryContainer;
+    isRouteEnabled(route: PathElementWithState, dropped = false): boolean {
+        return route && !route.current && (!route.libraryContainer || (route.libraryContainer && !this.dragDropStateService.dragging() && !dropped));
     }
 
-    closeMenu(usedEsc = false): void {
-        if (this.menuOpen() && usedEsc) {
+    closeMenu(event?: Event): void {
+        if (event && this.menuOpen()) {
             this.menuTrigger().nativeElement.focus();
+            if (!this.dragDropStateService.dragging()) {
+                event.stopPropagation();
+            }
         }
         this.menuOpen.set(false);
         this.removeOutsideClickListener?.();
@@ -284,8 +289,17 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
                 this.closeMenu();
             }
         };
+        const handleEscape = (event: KeyboardEvent): void => {
+            if (event.key === 'Escape' && this.menuOpen()) {
+                this.closeMenu(event);
+            }
+        };
         document.addEventListener('click', handleOutsideClick, true);
-        this.removeOutsideClickListener = () => document.removeEventListener('click', handleOutsideClick, true);
+        document.addEventListener('keydown', handleEscape, true);
+        this.removeOutsideClickListener = () => {
+            document.removeEventListener('click', handleOutsideClick, true);
+            document.removeEventListener('keydown', handleEscape, true);
+        };
     }
 
     private updateMenuPosition(): void {

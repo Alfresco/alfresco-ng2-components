@@ -90,21 +90,25 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     @ViewChild('dropdown')
     dropdown: MatSelect;
 
-    /** Maximum number of nodes to display before wrapping them with a dropdown element.  */
+    /** Maximum number of nodes to display before wrapping them with a dropdown element. */
     @Input()
     maxItems: number;
 
-    /** Number of table rows that are currently selected.  */
+    /** Number of table rows that are currently selected. */
     @Input()
     selectedRowItemsCount = 0;
 
-    /** If true, the breadcrumb will be displayed in compact mode.  */
+    /** If true, the breadcrumb will be displayed in compact mode. */
     @Input()
     compactMode = false;
 
     /** Selector for connected drop list which allows to switch to that list when pressing Shift + ArrowRight. */
     @Input()
     connectedDropListSelector = '';
+
+    /** If true, the current location will be hidden from the breadcrumb. */
+    @Input()
+    hideCurrentLocation = false;
 
     previousNodes: PathElement[];
     lastNodes: PathElement[];
@@ -179,6 +183,9 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
             this.lastNodes = this.route;
             this.previousNodes = null;
         }
+        if (this.hideCurrentLocation) {
+            this.lastNodes.pop();
+        }
     }
 
     open(): void {
@@ -232,7 +239,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     }
 
     isBreadcrumbItemAnchor(index: number): boolean {
-        return !this.readOnly && index !== this.lastNodes.length - 1 && !this.isCompactBreadcrumbItem(index);
+        return !this.readOnly && (index !== this.lastNodes.length - 1 || this.hideCurrentLocation) && !this.isCompactBreadcrumbItem(index);
     }
 
     isCompactBreadcrumbItem(index: number): boolean {

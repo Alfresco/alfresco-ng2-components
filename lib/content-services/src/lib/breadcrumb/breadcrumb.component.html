@@ -75,7 +75,8 @@
                                     [nodes]="lastNodes"
                                     (dropped)="dropped.emit($event)"
                                     (navigate)="onRouteClick($event)"
-                                    [fullWidth]="hostElement?.clientWidth < 362" />
+                                    [fullWidth]="hostElement?.clientWidth < 362"
+                                    [disableCurrentLocation]="!hideCurrentLocation" />
                             } @else {
                                 <h1 class="adf-breadcrumb-item-current" aria-current="location">
                                     {{ (selectedRowItemsCount < 1 ? item.name ?? '' : 'BREADCRUMB.HEADER.SELECTED') | translate: { count: selectedRowItemsCount } }}

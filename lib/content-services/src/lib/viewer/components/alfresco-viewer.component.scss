@@ -1,0 +1,19 @@
+adf-alfresco-viewer {
+    .adf-viewer-toolbar-breadcrumb {
+        .adf-compact-breadcrumb-trigger {
+            font-size: 14px;
+        }
+
+        .adf-breadcrumb-item-chevron {
+            font-size: 20px;
+            margin-left: 0;
+            margin-top: 6px;
+        }
+    }
+}
+
+dialog {
+    &.adf-compact-breadcrumb-menu {
+        margin-top: 14px;
+    }
+}

@@ -20,7 +20,7 @@ import { SpyLocation } from '@angular/common/testing';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
-import { ContentInfo, Node, NodeEntry, VersionEntry } from '@alfresco/js-api';
+import { ContentInfo, Node, NodeEntry, NodesApi, PathElement, VersionEntry } from '@alfresco/js-api';
 import {
     CloseButtonPosition,
     EventMock,
@@ -39,7 +39,8 @@ import {
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
 import { FileModel } from '../../common/models/file.model';
-import { throwError } from 'rxjs';
+import { defer, of, throwError } from 'rxjs';
+import { PeopleContentService } from '../../common/services/people-content.service';
 import { Component, SimpleChange, SimpleChanges } from '@angular/core';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { By } from '@angular/platform-browser';
@@ -51,6 +52,7 @@ import { RenditionService } from '../../common/services/rendition.service';
 import { NodeActionsService } from '../../document-list/services/node-actions.service';
 import { provideApiTesting } from '../../testing/providers';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
+import { BreadcrumbComponent } from '../../breadcrumb';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -180,8 +182,10 @@ describe('AlfrescoViewerComponent', () => {
     let viewUtilService: ViewUtilService;
     let nodeActionsService: NodeActionsService;
     let testingUtils: UnitTestingUtils;
+    let adminUser: boolean;
 
     beforeEach(() => {
+        adminUser = false;
         TestBed.configureTestingModule({
             imports: [NoopAuthModule, MatIconTestingModule, NoopTranslateModule, MatDialogModule, AlfrescoViewerComponent],
             providers: [
@@ -194,6 +198,7 @@ describe('AlfrescoViewerComponent', () => {
                     }
                 },
                 { provide: Location, useClass: SpyLocation },
+                { provide: PeopleContentService, useValue: { getCurrentPerson: () => defer(() => of({ capabilities: { isAdmin: adminUser } })) } },
                 MatDialog
             ]
         });
@@ -1221,6 +1226,217 @@ describe('AlfrescoViewerComponent', () => {
             expect(viewer.blobFile).toBe(mockBlob);
             expect(viewer.urlFile).toBeFalsy();
             expect(viewer.fileName).toBe('test.pdf');
+        });
+    });
+
+    describe('Breadcrumbs', () => {
+        let getNodeSpy: jasmine.Spy<NodesApi['getNode']>;
+        let nodeEntryPromise: Promise<NodeEntry>;
+        let simpleChanges: SimpleChanges;
+        let node: Node;
+
+        const getBreadcrumbComponent = (): BreadcrumbComponent => testingUtils.getByDirective(BreadcrumbComponent)?.componentInstance;
+
+        beforeEach(() => {
+            getNodeSpy = spyOn(component.nodesApi, 'getNode');
+            node = new Node({
+                id: 'node-id',
+                name: 'file.pdf',
+                content: new ContentInfo()
+            });
+            nodeEntryPromise = Promise.resolve(
+                new NodeEntry({
+                    entry: node
+                })
+            );
+            simpleChanges = getSimpleChanges('node-id');
+        });
+
+        it('should be rendered if showBreadcrumbs is true and nodeEntry is loaded', async () => {
+            getNodeSpy.and.returnValue(nodeEntryPromise);
+            component.showBreadcrumbs = true;
+            component.nodeId = 'node-id';
+            component.ngOnChanges(simpleChanges);
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(getBreadcrumbComponent()).not.toBeUndefined();
+        });
+
+        it('should not be rendered if showBreadcrumbs is true and nodeEntry is not loaded', async () => {
+            component.showBreadcrumbs = true;
+            component.nodeId = 'node-id';
+            component.ngOnChanges(simpleChanges);
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(getBreadcrumbComponent()).toBeUndefined();
+        });
+
+        it('should not be rendered if showBreadcrumbs is false and nodeEntry is loaded', async () => {
+            getNodeSpy.and.returnValue(nodeEntryPromise);
+            component.showBreadcrumbs = false;
+            component.nodeId = 'node-id';
+            component.ngOnChanges(simpleChanges);
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(getBreadcrumbComponent()).toBeUndefined();
+        });
+
+        it('should have assigned compactMode to true', async () => {
+            getNodeSpy.and.returnValue(nodeEntryPromise);
+            component.showBreadcrumbs = true;
+            component.nodeId = 'node-id';
+            component.ngOnChanges(simpleChanges);
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(getBreadcrumbComponent().compactMode).toBeTrue();
+        });
+
+        it('should have assigned hideCurrentLocation to true', async () => {
+            getNodeSpy.and.returnValue(nodeEntryPromise);
+            component.showBreadcrumbs = true;
+            component.nodeId = 'node-id';
+            component.ngOnChanges(simpleChanges);
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(getBreadcrumbComponent().hideCurrentLocation).toBeTrue();
+        });
+
+        it('should have assigned undefined to root by default', async () => {
+            getNodeSpy.and.returnValue(nodeEntryPromise);
+            component.showBreadcrumbs = true;
+            component.nodeId = 'node-id';
+            component.ngOnChanges(simpleChanges);
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(getBreadcrumbComponent().root).toBeUndefined();
+        });
+
+        it('should have assigned breadcrumbsRoot to root', async () => {
+            getNodeSpy.and.returnValue(nodeEntryPromise);
+            component.showBreadcrumbs = true;
+            component.nodeId = 'node-id';
+            component.breadcrumbsRoot = 'Personal Files';
+            component.ngOnChanges(simpleChanges);
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(getBreadcrumbComponent().root).toBe('Personal Files');
+        });
+
+        it('should emit breadcrumbNavigate if navigate event was triggered', async () => {
+            getNodeSpy.and.returnValue(nodeEntryPromise);
+            component.showBreadcrumbs = true;
+            component.nodeId = 'node-id';
+            const pathElement: PathElement = {
+                id: 'company-home',
+                name: 'Company Home',
+                nodeType: 'cm:folder'
+            };
+            component.ngOnChanges(simpleChanges);
+            spyOn(component.breadcrumbNavigate, 'emit');
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+            getBreadcrumbComponent().navigate.emit(pathElement);
+            expect(component.breadcrumbNavigate.emit).toHaveBeenCalledWith(pathElement);
+        });
+
+        it('should have assigned loaded node entry to folderNode', async () => {
+            getNodeSpy.and.returnValue(nodeEntryPromise);
+            component.showBreadcrumbs = true;
+            component.nodeId = 'node-id';
+            component.breadcrumbsRoot = 'Personal Files';
+            component.ngOnChanges(simpleChanges);
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(getBreadcrumbComponent().folderNode).toEqual(node);
+        });
+
+        describe('node path', () => {
+            let companyHome: PathElement;
+            let userHomes: PathElement;
+            let userFolder: PathElement;
+            let sites: PathElement;
+            let site: PathElement;
+            let documentLibrary: PathElement;
+            let subFolder: PathElement;
+
+            const loadNodeWithPath = async (elements: PathElement[], admin = false): Promise<PathElement[]> => {
+                adminUser = admin;
+                getNodeSpy.and.resolveTo(new NodeEntry({ entry: new Node({ ...node, path: { elements: [...elements] } }) }));
+                component.showBreadcrumbs = true;
+                component.nodeId = 'node-id';
+                component.ngOnChanges(simpleChanges);
+
+                await fixture.whenStable();
+                fixture.detectChanges();
+                return getBreadcrumbComponent().folderNode.path.elements;
+            };
+
+            beforeEach(() => {
+                companyHome = {
+                    id: 'company-home',
+                    name: 'Company Home',
+                    nodeType: 'cm:folder'
+                };
+                userHomes = {
+                    id: 'user-homes',
+                    name: 'User Homes',
+                    nodeType: 'cm:folder'
+                };
+                userFolder = {
+                    id: 'user-folder',
+                    name: 'user',
+                    nodeType: 'cm:folder'
+                };
+                sites = {
+                    id: 'sites',
+                    name: 'Sites',
+                    nodeType: 'st:sites'
+                };
+                site = {
+                    id: 'site',
+                    name: 'my-site',
+                    nodeType: 'st:site'
+                };
+                documentLibrary = {
+                    id: 'document-library',
+                    name: 'documentLibrary',
+                    nodeType: 'cm:folder'
+                };
+                subFolder = {
+                    id: 'sub-folder',
+                    name: 'sub folder',
+                    nodeType: 'cm:folder'
+                };
+            });
+
+            it('should remove root and User Homes elements from path for non-admin user', async () => {
+                expect(await loadNodeWithPath([companyHome, userHomes, userFolder, subFolder])).toEqual([userFolder, subFolder]);
+            });
+
+            it('should keep whole path inside User Homes for admin user', async () => {
+                expect(await loadNodeWithPath([companyHome, userHomes, userFolder], true)).toEqual([companyHome, userHomes, userFolder]);
+            });
+
+            it('should remove sites and documentLibrary elements from path inside a site', async () => {
+                expect(await loadNodeWithPath([companyHome, sites, site, documentLibrary, subFolder])).toEqual([companyHome, site, subFolder]);
+            });
+
+            it('should keep path unchanged if it is neither inside User Homes nor sites', async () => {
+                expect(await loadNodeWithPath([companyHome, subFolder, userFolder])).toEqual([companyHome, subFolder, userFolder]);
+            });
+
+            it('should keep path unchanged if it has only one element', async () => {
+                expect(await loadNodeWithPath([companyHome])).toEqual([companyHome]);
+            });
         });
     });
 });

@@ -393,6 +393,11 @@ describe('Breadcrumb', () => {
         const getBreadcrumbContainerPathCompactModeElement = (): DebugElement =>
             unitTestingUtils.getByCSS('.adf-breadcrumb-container-path-compact-mode');
 
+        const getCurrentElementForItem = (itemElement: DebugElement): DebugElement => itemElement.query(By.css(breadcrumbItemCurrent));
+
+        const getAnchorTextForItem = (itemElement: DebugElement): string =>
+            itemElement.query(By.css(breadcrumbItemAnchorSelector))?.nativeElement.textContent.trim();
+
         beforeEach(() => {
             folderNode = {
                 id: 'folder2',
@@ -413,6 +418,10 @@ describe('Breadcrumb', () => {
                         {
                             id: 'folder1',
                             name: 'folder 1'
+                        },
+                        {
+                            id: 'folder1a',
+                            name: 'folder 1a'
                         }
                     ]
                 }
@@ -425,12 +434,27 @@ describe('Breadcrumb', () => {
             fixture.detectChanges();
         });
 
-        it('should display correct paths and compact breadcrumb in compact mode', () => {
+        it('should display correct paths and compact breadcrumb in compact mode with hideCurrentLocation set to false (default)', () => {
             const items = getBreadcrumbItems();
             expect(items.length).toBe(3);
-            expect(items[0].query(By.css(breadcrumbItemAnchorSelector)).nativeElement.textContent.trim()).toBe('root');
+            expect(getAnchorTextForItem(items[0])).toBe('root');
             expect(items[1].query(By.directive(CompactBreadcrumbComponent))).not.toBeNull();
-            expect(items[2].query(By.css(breadcrumbItemCurrent)).nativeElement.textContent.trim()).toBe('folder 2');
+            const lastItem = items[2];
+            expect(getCurrentElementForItem(lastItem).nativeElement.textContent.trim()).toBe('folder 2');
+            expect(getAnchorTextForItem(lastItem)).toBeUndefined();
+        });
+
+        it('should display correct paths and compact breadcrumb in compact mode with hideCurrentLocation set to true', () => {
+            component.hideCurrentLocation = true;
+            fixture.detectChanges();
+
+            const items = getBreadcrumbItems();
+            expect(items.length).toBe(3);
+            expect(getAnchorTextForItem(items[0])).toBe('root');
+            expect(items[1].query(By.directive(CompactBreadcrumbComponent))).not.toBeNull();
+            const lastItem = items[2];
+            expect(getAnchorTextForItem(lastItem)).toBe('folder 2');
+            expect(getCurrentElementForItem(lastItem)).toBeNull();
         });
 
         it('should display element with adf-breadcrumb-container-path-compact-mode class in compact mode', () => {
@@ -451,36 +475,22 @@ describe('Breadcrumb', () => {
                 compactBreadcrumbComponent = unitTestingUtils.getByDirective(CompactBreadcrumbComponent).componentInstance;
             });
 
-            it('should have assigned correct nodes', () => {
+            it('should have assigned nodes including current node if hideCurrentLocation is false (default)', () => {
                 expect(compactBreadcrumbComponent.nodes()).toEqual([
-                    {
-                        node: folderNode.path.elements[0],
-                        current: false,
-                        libraryContainer: false,
-                        description: 'BREADCRUMB.COMPACT_MENU.FIRST_LEVEL'
-                    },
-                    {
-                        node: folderNode.path.elements[1],
-                        current: false,
-                        libraryContainer: false,
-                        description: 'BREADCRUMB.COMPACT_MENU.NOT_FIRST_LEVEL'
-                    },
-                    {
-                        node: folderNode.path.elements[2],
-                        current: false,
-                        libraryContainer: false,
-                        description: 'BREADCRUMB.COMPACT_MENU.NOT_FIRST_LEVEL'
-                    },
-                    {
-                        node: jasmine.objectContaining({
-                            id: folderNode.id,
-                            name: folderNode.name
-                        }),
-                        current: true,
-                        libraryContainer: false,
-                        description: 'BREADCRUMB.COMPACT_MENU.CURRENT_LEVEL'
-                    }
+                    ...folderNode.path.elements,
+                    jasmine.objectContaining({
+                        id: folderNode.id,
+                        name: folderNode.name
+                    })
                 ]);
+            });
+
+            it('should have assigned nodes excluding current node if hideCurrentLocation is true', () => {
+                component.hideCurrentLocation = true;
+                documentListComponent.$folderNode.next(folderNode);
+
+                fixture.detectChanges();
+                expect(compactBreadcrumbComponent.nodes()).toEqual(folderNode.path.elements);
             });
 
             it('should emit dropped event on breadcrumbs when dropped event is emitted', () => {
@@ -513,6 +523,20 @@ describe('Breadcrumb', () => {
 
                 fixture.detectChanges();
                 expect(compactBreadcrumbComponent.fullWidth()).toBeFalse();
+            });
+
+            it('should have assigned disableCurrentLocation to true if hideCurrentLocation is false', () => {
+                component.hideCurrentLocation = false;
+
+                fixture.detectChanges();
+                expect(compactBreadcrumbComponent.disableCurrentLocation()).toBeTrue();
+            });
+
+            it('should have assigned disableCurrentLocation to false if hideCurrentLocation is true', () => {
+                component.hideCurrentLocation = true;
+
+                fixture.detectChanges();
+                expect(compactBreadcrumbComponent.disableCurrentLocation()).toBeFalse();
             });
         });
 

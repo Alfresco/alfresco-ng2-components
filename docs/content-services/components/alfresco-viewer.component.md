@@ -72,7 +72,7 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 ### Properties
 
 | Name                 | Type                  | Default value | Description                                                                                                                 |
-|----------------------|-----------------------|---------------|-----------------------------------------------------------------------------------------------------------------------------|
+|----------------------------|---------------------------|--------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | allowDownload        | `boolean`             | true          | Toggles downloading.                                                                                                        |
 | allowFullScreen      | `boolean`             | true          | Toggles the 'Full Screen' feature.                                                                                          |
 | allowGoBack          | `boolean`             | true          | Allows `back` navigation.                                                                                                   |
@@ -95,15 +95,18 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | sidebarLeftTemplate  | `TemplateRef<unknown>`    | null          | The template for the left sidebar. The template context contains the loaded node data.                                      |
 | sidebarRightTemplate | `TemplateRef<unknown>`    | null          | The template for the right sidebar. The template context contains the loaded node data.                                     |
 | versionId            | `string`              | null          | Version Id of the file to load.                                                                                             |
+| showBreadcrumbs            | `boolean`              | false          | If true breadcrumbs will be displayed in the viewer.                                                                                             |
+| breadcrumbsRoot            | `string`              | undefined          | Name of the root element of the breadcrumb. You can use this property to rename "Company Home" to "Personal Files" for example. You can use an i18n resource key for the property value.                                                                                             |
 
 ### Events
 
 | Name              | Type                                        | Description                                                 |
-|-------------------|---------------------------------------------|-------------------------------------------------------------|
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
 | invalidSharedLink | `EventEmitter<any>`                         | Emitted when the shared link used is not valid.             |
 | navigateBefore    | `EventEmitter<KeyboardEvent \| MouseEvent>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
 | navigateNext      | `EventEmitter<KeyboardEvent \| MouseEvent>` | Emitted when user clicks 'Navigate Next' (">") button.      |
 | showViewerChange  | `EventEmitter<boolean>`                     | Emitted when the viewer close                               |
+| breadcrumbNavigate  | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PathElement`](../../../lib/js-api/src/api/content-rest-api/docs/PathElement.md)`>`                     | Emitted when the user clicks on a breadcrumb                               |
 
 ## Keyboard shortcuts
 
