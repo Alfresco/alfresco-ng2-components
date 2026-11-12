@@ -316,7 +316,7 @@ describe('CompactBreadcrumbComponent', () => {
                     dragDropStateService.dragging.set(false);
                     fixture.componentRef.setInput('disableCurrentLocation', false);
 
-                    expect(listItems.every(async (item) => !(await item.isDisabled()))).toBeTrue();
+                    expect((await Promise.all(listItems.map((item) => item.isDisabled()))).every((disabled) => !disabled)).toBeTrue();
                 });
 
                 it('should not have adf-compact-breadcrumb-menu-list-item-disabled class if node is not site container, is not last, dragging is set to true on DragDropStateService and disableCurrentLocation is true', async () => {
@@ -614,14 +614,13 @@ describe('CompactBreadcrumbComponent', () => {
 
         it('should not call stopPropagation on event if other than ESC key was hit and dragging is false on DragDropStateService', () => {
             dragDropStateService.dragging.set(false);
-            spyOn(escEvent, 'stopPropagation');
+            const enterEvent = new KeyboardEvent('keydown', {
+                key: 'Enter'
+            });
+            spyOn(enterEvent, 'stopPropagation');
 
-            document.dispatchEvent(
-                new KeyboardEvent('keydown', {
-                    key: 'Enter'
-                })
-            );
-            expect(escEvent.stopPropagation).not.toHaveBeenCalled();
+            document.dispatchEvent(enterEvent);
+            expect(enterEvent.stopPropagation).not.toHaveBeenCalled();
         });
     });
 });

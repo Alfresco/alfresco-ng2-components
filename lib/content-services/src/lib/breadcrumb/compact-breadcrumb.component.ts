@@ -239,10 +239,8 @@ export class CompactBreadcrumbComponent implements OnInit, AfterViewInit {
     }
 
     closeMenu(event?: Event): void {
-        if (event) {
-            if (this.menuOpen()) {
-                this.menuTrigger().nativeElement.focus();
-            }
+        if (event && this.menuOpen()) {
+            this.menuTrigger().nativeElement.focus();
             if (!this.dragDropStateService.dragging()) {
                 event.stopPropagation();
             }

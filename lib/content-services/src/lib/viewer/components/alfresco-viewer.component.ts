@@ -60,8 +60,8 @@ import {
 } from '@alfresco/js-api';
 import { RenditionService } from '../../common/services/rendition.service';
 import { MatDialog } from '@angular/material/dialog';
-import { firstValueFrom } from 'rxjs';
-import { filter, map, shareReplay } from 'rxjs/operators';
+import { firstValueFrom, of } from 'rxjs';
+import { catchError, filter, map, shareReplay } from 'rxjs/operators';
 import { ContentService } from '../../common/services/content.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
@@ -287,7 +287,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
     private readonly adminUser$ = this.peopleContentService.getCurrentPerson().pipe(
-        map((user) => user.capabilities.isAdmin),
+        map((user) => user.capabilities?.isAdmin ?? false),
         shareReplay(1)
     );
 
@@ -356,7 +356,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
         try {
             const [nodeEntry, adminUser] = await Promise.all([
                 this.nodesApi.getNode(this.nodeId, { include: ['allowableOperations', 'path'] }),
-                firstValueFrom(this.adminUser$)
+                this.showBreadcrumbs ? firstValueFrom(this.adminUser$.pipe(catchError(() => of(false)))) : Promise.resolve(false)
             ]);
             this.nodeEntry = nodeEntry;
             this.prepareNodePath(this.nodeEntry.entry, adminUser);
