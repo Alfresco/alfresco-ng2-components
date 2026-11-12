@@ -60,7 +60,7 @@ import {
 } from '@alfresco/js-api';
 import { RenditionService } from '../../common/services/rendition.service';
 import { MatDialog } from '@angular/material/dialog';
-import { firstValueFrom, of } from 'rxjs';
+import { firstValueFrom, Observable, of } from 'rxjs';
 import { catchError, filter, map, shareReplay } from 'rxjs/operators';
 import { ContentService } from '../../common/services/content.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
@@ -254,6 +254,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     @Output()
     breadcrumbNavigate = new EventEmitter<PathElement>();
 
+    private adminUser$?: Observable<boolean>;
     private cacheBusterNumber: number;
 
     versionEntry: VersionEntry;
@@ -286,10 +287,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     declare readonly contentApi: ContentApi;
 
     private readonly destroyRef = inject(DestroyRef);
-    private readonly adminUser$ = this.peopleContentService.getCurrentPerson().pipe(
-        map((user) => user.capabilities?.isAdmin ?? false),
-        shareReplay(1)
-    );
 
     constructor() {
         const renditionService = this.renditionService;
@@ -358,7 +355,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
                 this.nodesApi.getNode(this.nodeId, {
                     include: this.showBreadcrumbs ? ['allowableOperations', 'path'] : ['allowableOperations']
                 }),
-                this.showBreadcrumbs ? firstValueFrom(this.adminUser$.pipe(catchError(() => of(false)))) : Promise.resolve(false)
+                this.showBreadcrumbs ? firstValueFrom(this.getAdminUser$().pipe(catchError(() => of(false)))) : Promise.resolve(false)
             ]);
             this.nodeEntry = nodeEntry;
             this.prepareNodePath(this.nodeEntry.entry, adminUser);
@@ -372,6 +369,14 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
         } catch {
             this.urlFileContent = 'invalid-node';
         }
+    }
+
+    private getAdminUser$(): Observable<boolean> {
+        this.adminUser$ ??= this.peopleContentService.getCurrentPerson().pipe(
+            map((user) => user.capabilities?.isAdmin ?? false),
+            shareReplay(1)
+        );
+        return this.adminUser$;
     }
 
     private prepareNodePath(node: Node, adminUser = false) {
