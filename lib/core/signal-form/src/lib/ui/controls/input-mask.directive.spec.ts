@@ -63,6 +63,45 @@ describe('SignalInputMaskDirective', () => {
         expect(host.seen()).toBe('12,34%');
     });
 
+    const editAt = (input: HTMLInputElement, text: string, caret: number) => {
+        input.value = text;
+        input.setSelectionRange(caret, caret);
+        input.dispatchEvent(new Event('input'));
+    };
+
+    it('should keep the caret next to the same digits when the text is edited in the middle', () => {
+        const { input } = render();
+        input.focus();
+
+        editAt(input, '(123) 4956-7890', 8);
+
+        expect(input.value).toBe('(123) 495-6789');
+        expect(input.selectionStart).toBe(8);
+    });
+
+    it('should keep the caret before the same digits for a reversed mask', () => {
+        const { fixture, host, input } = render();
+        host.mask.set('#.##0,00%');
+        host.reversed.set(true);
+        fixture.detectChanges();
+        input.focus();
+
+        editAt(input, '1.234,5%', 6);
+
+        expect(input.value).toBe('123,45%');
+        expect(input.selectionStart).toBe(5);
+    });
+
+    it('should not move the caret of an input without focus', () => {
+        const { input } = render();
+        const moveCaret = spyOn(input, 'setSelectionRange').and.callThrough();
+
+        typeInto(input, '1234');
+
+        expect(input.value).toBe('(123) 4');
+        expect(moveCaret).not.toHaveBeenCalled();
+    });
+
     it('should leave the text as typed without a mask', () => {
         const { fixture, host, input } = render();
         host.mask.set(null);

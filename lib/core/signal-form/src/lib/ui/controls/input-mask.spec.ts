@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { applyInputMask } from './input-mask';
+import { applyInputMask, maskedCaretPosition } from './input-mask';
 
 describe('applyInputMask', () => {
     it('should drop the characters the mask rejects', () => {
@@ -56,5 +56,36 @@ describe('applyInputMask', () => {
     it('should add a trailing literal once the text fills the mask', () => {
         expect(applyInputMask('55', '000-')).toBe('55');
         expect(applyInputMask('555', '000-')).toBe('555-');
+    });
+});
+
+describe('maskedCaretPosition', () => {
+    const phone = '(000) 000-0000';
+    const amount = '#.##0,00%';
+
+    it('should keep the caret after the same characters when a digit is typed in the middle', () => {
+        expect(maskedCaretPosition('(123) 4956-7890', 8, phone)).toBe(8);
+    });
+
+    it('should keep the caret where it was when the mask rejects the typed character', () => {
+        expect(maskedCaretPosition('(123) 4x56-7890', 8, phone)).toBe(7);
+    });
+
+    it('should keep the caret after the same characters when one is deleted in the middle', () => {
+        expect(maskedCaretPosition('(12) 456-7890', 3, phone)).toBe(3);
+    });
+
+    it('should move the caret past the literals the mask adds before the typed character', () => {
+        expect(maskedCaretPosition('(1234) 456-7890', 5, phone)).toBe(7);
+    });
+
+    it('should put the caret at the end of the masked text when it was at the end', () => {
+        expect(maskedCaretPosition('(123) 456-78901', 15, phone)).toBe(14);
+        expect(maskedCaretPosition('1234', 4, amount, true)).toBe(6);
+    });
+
+    it('should keep the caret before the same characters for a reversed mask', () => {
+        expect(maskedCaretPosition('1.234,5%', 6, amount, true)).toBe(5);
+        expect(maskedCaretPosition('1.2345,67%', 6, amount, true)).toBe(6);
     });
 });
