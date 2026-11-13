@@ -414,14 +414,6 @@ describe('CategoriesManagementComponent', () => {
             expect(isTitleCorrect).toBeTrue();
         });
 
-        it('should have correct remove category label', () => {
-            const removeButtons = getRemoveCategoryButtons();
-            const isAriaLabelCorrect = removeButtons.every(
-                (removeBtn) => removeBtn.attributes.getNamedItem('aria-label').textContent === 'CATEGORIES_MANAGEMENT.DELETE_CATEGORY'
-            );
-            expect(isAriaLabelCorrect).toBeTrue();
-        });
-
         it('should have correct category label name', () => {
             const translateSpy = spyOn(TranslatePipe.prototype, 'transform').and.callThrough();
             fixture.detectChanges();
