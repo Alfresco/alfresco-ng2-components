@@ -24,12 +24,12 @@ export class SignalInputMaskDirective {
     readonly reversed = input(false, { alias: 'adf-signal-input-mask-reversed', transform: booleanAttribute });
 
     private readonly element: HTMLInputElement = inject(ElementRef).nativeElement;
+    private readonly renderer = inject(Renderer2);
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor() {
-        const renderer = inject(Renderer2);
-        const destroyRef = inject(DestroyRef);
-        const stopMasking = renderer.listen(this.element, 'input', () => this.maskTypedText(), { capture: true });
-        destroyRef.onDestroy(stopMasking);
+        const stopMasking = this.renderer.listen(this.element, 'input', () => this.maskTypedText(), { capture: true });
+        this.destroyRef.onDestroy(stopMasking);
     }
 
     private maskTypedText(): void {
