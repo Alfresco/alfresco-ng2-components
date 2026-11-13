@@ -106,6 +106,19 @@ jobs:
           registry-url: 'https://${{ vars.NPM_REGISTRY_ADDRESS }}'
           scope: '@alfresco'
       - run: pnpm run publish --tag ${{ steps.setup.outputs.npm-tag }} ${{ steps.set-dryrun.outputs.dryrun }}
+      - name: Authenticate with Cloudsmith
+        uses: Alfresco/alfresco-build-tools/.github/actions/cloudsmith-auth@b4b2716a50beebc3b17a38294242761251afacf9 # v19.1.1
+        with:
+          oidc-namespace: ${{ vars.CLOUDSMITH_NAMESPACE }}
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        name: release libraries Cloudsmith registry
+        with:
+          node-version-file: '.nvmrc'
+          registry-url: 'https://${{ vars.CLOUDSMITH_REGISTRY_ADDRESS }}/alfresco-community-releases/'
+          scope: '@alfresco'
+      - run: pnpm run publish --tag ${{ steps.setup.outputs.npm-tag }} ${{ steps.set-dryrun.outputs.dryrun }}
+        env:
+          NODE_AUTH_TOKEN: ${{ env.CLOUDSMITH_API_KEY }}
 
   create-git-tag:
     runs-on: ubuntu-latest
