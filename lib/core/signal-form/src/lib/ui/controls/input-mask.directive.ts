@@ -16,7 +16,7 @@
  */
 
 import { booleanAttribute, DestroyRef, Directive, ElementRef, inject, input, Renderer2 } from '@angular/core';
-import { applyInputMask } from './input-mask';
+import { applyInputMask, maskedCaretPosition } from './input-mask';
 
 @Directive({ selector: 'input[adf-signal-input-mask]' })
 export class SignalInputMaskDirective {
@@ -26,14 +26,31 @@ export class SignalInputMaskDirective {
     private readonly element: HTMLInputElement = inject(ElementRef).nativeElement;
 
     constructor() {
-        const stopMasking = inject(Renderer2).listen(this.element, 'input', () => this.maskTypedText(), { capture: true });
-        inject(DestroyRef).onDestroy(stopMasking);
+        const renderer = inject(Renderer2);
+        const destroyRef = inject(DestroyRef);
+        const stopMasking = renderer.listen(this.element, 'input', () => this.maskTypedText(), { capture: true });
+        destroyRef.onDestroy(stopMasking);
     }
 
     private maskTypedText(): void {
         const mask = this.mask();
-        if (mask) {
-            this.element.value = applyInputMask(this.element.value, mask, this.reversed());
+        if (!mask) {
+            return;
         }
+        const text = this.element.value;
+        const masked = applyInputMask(text, mask, this.reversed());
+        if (masked === text) {
+            return;
+        }
+        const caret = this.element.selectionStart;
+        this.element.value = masked;
+        if (this.isFocused() && caret !== null) {
+            const position = maskedCaretPosition(text, caret, mask, this.reversed());
+            this.element.setSelectionRange(position, position);
+        }
+    }
+
+    private isFocused(): boolean {
+        return this.element.ownerDocument.activeElement === this.element;
     }
 }

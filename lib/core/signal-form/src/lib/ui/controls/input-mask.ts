@@ -92,3 +92,20 @@ export const applyInputMask = (text: string, mask: string, reversed = false): st
     }
     return masked.join('');
 };
+
+/**
+ * Returns where the caret belongs in the masked text, so it stays next to the same typed characters: after the same
+ * characters before it, or, for a reversed mask, before the same characters after it.
+ *
+ * @param text the typed text
+ * @param caret the caret position in the typed text
+ * @param mask the mask
+ * @param reversed whether the mask is filled from the right
+ * @returns the caret position in the masked text
+ */
+export const maskedCaretPosition = (text: string, caret: number, mask: string, reversed = false): number => {
+    if (reversed) {
+        return applyInputMask(text, mask, true).length - applyInputMask(text.slice(caret), mask, true).length;
+    }
+    return applyInputMask(text.slice(0, caret), mask).length;
+};
