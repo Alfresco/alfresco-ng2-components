@@ -28,7 +28,6 @@
                 mat-icon-button
                 (click)="removeCategory(category)"
                 [attr.title]="removeCategoryTitle | translate : { removeCategoryName : category.name }"
-                [attr.aria-label]="removeCategoryTitle | translate : { removeCategoryName : category.name }"
                 [disabled]="disableRemoval">
                 <mat-icon adf-icon="remove" />
             </button>
