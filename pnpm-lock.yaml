@@ -85,8 +85,8 @@ importers:
         specifier: 19.0.0
         version: 19.0.0(@angular/common@21.2.25(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.2)(zone.js@0.16.3))(rxjs@7.8.2))(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.2)(zone.js@0.16.3))
       apollo-angular:
-        specifier: 13.0.0
-        version: 13.0.0(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.2)(zone.js@0.16.3))(@apollo/client@4.3.7(graphql-ws@6.4.1(graphql@16.14.2)(ws@8.22.0))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2))(graphql@16.14.2)(rxjs@7.8.2)
+        specifier: 14.2.0
+        version: 14.2.0(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.2)(zone.js@0.16.3))(@apollo/client@4.3.7(graphql-ws@6.4.1(graphql@16.14.2)(ws@8.22.0))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2))(graphql@16.14.2)(rxjs@7.8.2)
       chart.js:
         specifier: 4.5.1
         version: 4.5.1
@@ -4117,13 +4117,13 @@ packages:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
 
-  apollo-angular@13.0.0:
-    resolution: {integrity: sha512-ATWoL68J8ZeW4Xn4ZQZnFDF0D+FBF4XloiFAjdqQtSknxZm8mMwCZUvtZy+HQZM05PhOd4qtChpL6wjQnHZv6g==}
+  apollo-angular@14.2.0:
+    resolution: {integrity: sha512-Ln8Qc2BTmVzVHljQqneSGOHXLjin0gz0j5HMAIUAE4kndr5QAqyZD7ui5uATNJ4JPlNqV9zGb0KBS5I5u/MGOw==}
     engines: {node: '>=16'}
     peerDependencies:
-      '@angular/core': ^19.0.0 || ^20.0.0 || ^21.0.0
-      '@apollo/client': ^4.0.1
-      graphql: ^16.0.0
+      '@angular/core': ^20.0.0 || ^21.0.0 || ^22.0.0
+      '@apollo/client': ^4.2.3
+      graphql: ^16.0.0 || ^17.0.0
       rxjs: ^7.8.0
 
   are-docs-informative@0.1.1:
@@ -12218,7 +12218,7 @@ snapshots:
       normalize-path: 3.0.0
       picomatch: 4.0.7
 
-  apollo-angular@13.0.0(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.2)(zone.js@0.16.3))(@apollo/client@4.3.7(graphql-ws@6.4.1(graphql@16.14.2)(ws@8.22.0))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2))(graphql@16.14.2)(rxjs@7.8.2):
+  apollo-angular@14.2.0(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.2)(zone.js@0.16.3))(@apollo/client@4.3.7(graphql-ws@6.4.1(graphql@16.14.2)(ws@8.22.0))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2))(graphql@16.14.2)(rxjs@7.8.2):
     dependencies:
       '@angular/core': 21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.2)(zone.js@0.16.3)
       '@apollo/client': 4.3.7(graphql-ws@6.4.1(graphql@16.14.2)(ws@8.22.0))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2)
