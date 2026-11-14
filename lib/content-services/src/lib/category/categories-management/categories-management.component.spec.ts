@@ -29,6 +29,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { UnitTestingUtils } from '@alfresco/adf-core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 describe('CategoriesManagementComponent', () => {
     let loader: HarnessLoader;
@@ -411,6 +412,13 @@ describe('CategoriesManagementComponent', () => {
                 (removeBtn) => removeBtn.attributes.getNamedItem('title').textContent === 'CATEGORIES_MANAGEMENT.DELETE_CATEGORY'
             );
             expect(isTitleCorrect).toBeTrue();
+        });
+
+        it('should have correct category label name', () => {
+            const translateSpy = spyOn(TranslatePipe.prototype, 'transform').and.callThrough();
+            fixture.detectChanges();
+
+            expect(translateSpy).toHaveBeenCalledWith('CATEGORIES_MANAGEMENT.DELETE_CATEGORY', { removeCategoryName: category3.name });
         });
 
         it('should display create category label', fakeAsync(() => {

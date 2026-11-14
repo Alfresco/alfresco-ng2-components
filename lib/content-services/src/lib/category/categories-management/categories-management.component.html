@@ -27,7 +27,7 @@
                 data-automation-id="categories-remove-category-button"
                 mat-icon-button
                 (click)="removeCategory(category)"
-                [attr.title]="removeCategoryTitle | translate"
+                [attr.title]="removeCategoryTitle | translate : { removeCategoryName : category.name }"
                 [disabled]="disableRemoval">
                 <mat-icon adf-icon="remove" />
             </button>
