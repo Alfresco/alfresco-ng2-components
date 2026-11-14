@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ConfirmDialogComponent, IconModule } from '@alfresco/adf-core';
+import { ConfirmDialogComponent, ConfirmDialogComponentProps, IconModule } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ContentApi, ContentPagingQuery, LazyApi, Node, NodeEntry, NodesApi, VersionEntry, VersionsApi } from '@alfresco/js-api';
@@ -29,7 +29,7 @@ import { CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport } 
 import { CommonModule } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { VersionCompatibilityDirective } from '../version-compatibility';
@@ -180,30 +180,19 @@ export class VersionListComponent implements OnChanges, OnInit {
         }
     }
 
-    deleteVersion(versionId: string) {
+    deleteVersion(versionId: string, menuTrigger?: MatMenuTrigger): void {
         if (this.canUpdate()) {
-            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-                data: {
-                    title: 'ADF_VERSION_LIST.CONFIRM_DELETE.TITLE',
-                    message: 'ADF_VERSION_LIST.CONFIRM_DELETE.MESSAGE',
-                    yesLabel: 'ADF_VERSION_LIST.CONFIRM_DELETE.YES_LABEL',
-                    noLabel: 'ADF_VERSION_LIST.CONFIRM_DELETE.NO_LABEL'
-                },
-                minWidth: '250px'
-            });
-
-            dialogRef
-                .afterClosed()
-                .pipe(takeUntilDestroyed(this.destroyRef))
-                .subscribe((result) => {
-                    if (result) {
-                        this.versionsApi.deleteVersion(this.node.id, versionId).then(() => this.onVersionDeleted(this.node));
-                    }
-                });
+            if (menuTrigger?.menuOpen) {
+                menuTrigger.menuClosed
+                    .pipe(take(1), takeUntilDestroyed(this.destroyRef))
+                    .subscribe(() => this.openDeleteConfirmationDialog(versionId));
+            } else {
+                this.openDeleteConfirmationDialog(versionId);
+            }
         }
     }
 
-    onVersionDeleted(node: any) {
+    onVersionDeleted(node: Node): void {
         this.loadVersionHistory();
         this.deleted.emit(node);
     }
@@ -224,5 +213,27 @@ export class VersionListComponent implements OnChanges, OnInit {
             link.click();
             document.body.removeChild(link);
         }
+    }
+
+    private openDeleteConfirmationDialog(versionId: string): void {
+        const dialogRef = this.dialog.open<ConfirmDialogComponent, ConfirmDialogComponentProps, boolean>(ConfirmDialogComponent, {
+            data: {
+                title: 'ADF_VERSION_LIST.CONFIRM_DELETE.TITLE',
+                message: 'ADF_VERSION_LIST.CONFIRM_DELETE.MESSAGE',
+                yesLabel: 'ADF_VERSION_LIST.CONFIRM_DELETE.YES_LABEL',
+                noLabel: 'ADF_VERSION_LIST.CONFIRM_DELETE.NO_LABEL'
+            },
+            minWidth: '250px',
+            restoreFocus: true
+        });
+
+        dialogRef
+            .afterClosed()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((result) => {
+                if (result) {
+                    this.versionsApi.deleteVersion(this.node.id, versionId).then(() => this.onVersionDeleted(this.node));
+                }
+            });
     }
 }
