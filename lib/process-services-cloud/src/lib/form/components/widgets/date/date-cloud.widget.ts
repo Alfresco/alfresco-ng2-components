@@ -35,7 +35,7 @@ import {
 } from '@alfresco/adf-core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -47,7 +47,7 @@ export const getDateCloudWidgetRange = (field: FormFieldModel, today: Date): { m
 
 @Component({
     selector: 'date-widget',
-    imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, MatDatepickerModule, ReactiveFormsModule, MatIconModule],
+    imports: [TranslatePipe, MatFormFieldModule, MatInputModule, MatDatepickerModule, ReactiveFormsModule, MatIconModule],
     providers: [
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
         { provide: DateAdapter, useClass: AdfDateFnsAdapter }

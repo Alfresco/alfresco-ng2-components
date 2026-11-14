@@ -199,12 +199,13 @@ The Process Instance List also supports pagination:
     [appName]="'myApp'"
     #processList>
 </adf-cloud-process-list>
-<adf-pagination
-    *ngIf="processList"
-    [target]="processList"
-    [supportedPageSizes]="supportedPages"
-    #processListPagination>
-</adf-pagination>
+@if (processList) {
+    <adf-pagination
+        [target]="processList"
+        [supportedPageSizes]="supportedPages"
+        #processListPagination>
+    </adf-pagination>
+}
 ```
 
 The configuration related to the pagination can be changed from the `app.config.json`, as described in the example below:

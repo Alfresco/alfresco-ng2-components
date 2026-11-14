@@ -24,7 +24,7 @@ import { IdentityUserModel } from '../../../../people/models/identity-user.model
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReactivePreselectionService } from '../reactive-preselection.service';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { PeopleCloudComponent } from '../../../../people/components/people-cloud.component';
 
@@ -32,7 +32,7 @@ import { PeopleCloudComponent } from '../../../../people/components/people-cloud
 
 @Component({
     selector: 'people-cloud-widget',
-    imports: [CommonModule, TranslatePipe, PeopleCloudComponent],
+    imports: [TranslatePipe, PeopleCloudComponent],
     templateUrl: './people-cloud.widget.html',
     host: {
         '(click)': 'event($event)',

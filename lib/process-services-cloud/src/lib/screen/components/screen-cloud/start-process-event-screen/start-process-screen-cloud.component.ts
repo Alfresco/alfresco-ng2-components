@@ -18,13 +18,13 @@
 import { ChangeDetectionStrategy, Component, ComponentRef, effect, input, output, signal } from '@angular/core';
 import { BaseScreenCloudComponent } from '../base-screen/base-screen-cloud.component';
 import { MatCardModule } from '@angular/material/card';
-import { CommonModule } from '@angular/common';
+
 import { StartProcessScreenCloud } from './start-process-screen.model';
 import { TaskVariableCloud } from '../../../../form/models/task-variable-cloud.model';
 
 @Component({
     selector: 'adf-cloud-start-process-screen-cloud',
-    imports: [CommonModule, MatCardModule],
+    imports: [MatCardModule],
     templateUrl: './start-process-screen-cloud.component.html',
     host: { class: 'adf-cloud-start-process-screen-cloud' },
     styleUrls: ['./start-process-screen-cloud.component.scss'],
