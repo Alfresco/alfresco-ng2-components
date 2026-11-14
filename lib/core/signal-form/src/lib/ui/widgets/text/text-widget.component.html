@@ -1,0 +1,35 @@
+<div
+    class="adf-textfield {{ widgetClass }}"
+    [class.adf-invalid]="showError()"
+    [class.adf-readonly]="readOnly()"
+    [class.adf-signal-form-left-label-field]="leftLabel()"
+>
+    @if (leftLabel()) {
+        <adf-signal-left-label [target]="inputId()" [text]="definition().name ?? '' | translate" [required]="fieldRequired()" />
+    }
+    <mat-form-field class="adf-form-field-input" subscriptSizing="dynamic" [floatLabel]="placeholder() ? 'always' : 'auto'">
+        @if (showsFloatingLabel()) {
+            <mat-label class="adf-label" [attr.data-automation-id]="labelAutomationId">{{ definition().name | translate }}</mat-label>
+        }
+        <input
+            matInput
+            class="adf-input"
+            type="text"
+            [id]="inputId()"
+            #textInput
+            [formField]="field()"
+            [adf-signal-input-mask]="inputMask()?.mask ?? null"
+            [adf-signal-input-mask-reversed]="!!inputMask()?.reversed"
+            [placeholder]="placeholder()"
+            [title]="definition().tooltip ?? ''"
+            [errorStateMatcher]="errorStateMatcher"
+            (paste)="guardPaste($event, textInput)"
+            (input)="edited($event)"
+        />
+        @if (shownError(); as message) {
+            <mat-error class="adf-form-field-status-slot">
+                <adf-signal-field-error [message]="message" />
+            </mat-error>
+        }
+    </mat-form-field>
+</div>
