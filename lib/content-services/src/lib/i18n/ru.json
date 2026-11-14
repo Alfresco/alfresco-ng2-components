@@ -710,7 +710,7 @@
       "NOT_FIRST_LEVEL": "Уровень {{ level }} • В {{ ancestorName }}",
       "CURRENT_LEVEL": "Уже в этой папке",
       "CURRENT_LEVEL_ICON_LABEL": "Текущее",
-      "LIBRARY_CONTAINER_LEVEL": "Только навигация по библиотеке",
+      "LIBRARY_CONTAINER_LEVEL": "Файл/папку нельзя переместить в список библиотек.",
       "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Недоступно",
       "DROP_HINT": "Переместить сюда"
     }

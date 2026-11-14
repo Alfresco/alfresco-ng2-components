@@ -710,7 +710,7 @@
       "NOT_FIRST_LEVEL": "Nível {{ level }} • Em {{ ancestorName }}",
       "CURRENT_LEVEL": "Já está nesta pasta",
       "CURRENT_LEVEL_ICON_LABEL": "Atual",
-      "LIBRARY_CONTAINER_LEVEL": "Somente navegação na biblioteca",
+      "LIBRARY_CONTAINER_LEVEL": "O arquivo/pasta não pode ser movido para a lista de bibliotecas.",
       "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Indisponível",
       "DROP_HINT": "Mover para aqui"
     }

@@ -710,7 +710,7 @@
       "NOT_FIRST_LEVEL": "Nivå {{ level }} • I {{ ancestorName }}",
       "CURRENT_LEVEL": "Redan i denna mapp",
       "CURRENT_LEVEL_ICON_LABEL": "Aktuell",
-      "LIBRARY_CONTAINER_LEVEL": "Endast biblioteksnavigering",
+      "LIBRARY_CONTAINER_LEVEL": "Fil/mapp kan inte flyttas till bibliotekslistan.",
       "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Otillgänglig",
       "DROP_HINT": "Flytta hit"
     }

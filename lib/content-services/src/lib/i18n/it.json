@@ -710,7 +710,7 @@
       "NOT_FIRST_LEVEL": "Livello {{ level }} • In {{ ancestorName }}",
       "CURRENT_LEVEL": "Già in questa cartella",
       "CURRENT_LEVEL_ICON_LABEL": "Corrente",
-      "LIBRARY_CONTAINER_LEVEL": "Solo navigazione della libreria",
+      "LIBRARY_CONTAINER_LEVEL": "Il file/la cartella non può essere spostato nell'elenco delle librerie.",
       "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Non disponibile",
       "DROP_HINT": "Sposta qui"
     }

@@ -710,7 +710,7 @@
       "NOT_FIRST_LEVEL": "Level {{ level }} • In {{ ancestorName }}",
       "CURRENT_LEVEL": "Already in this folder",
       "CURRENT_LEVEL_ICON_LABEL": "Current",
-      "LIBRARY_CONTAINER_LEVEL": "Library navigation only",
+      "LIBRARY_CONTAINER_LEVEL": "File/folder cannot be moved to libraries list.",
       "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Unavailable",
       "DROP_HINT": "Move here"
     }

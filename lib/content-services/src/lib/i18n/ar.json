@@ -710,7 +710,7 @@
       "NOT_FIRST_LEVEL": "المستوى {{ level }} • في {{ ancestorName }}",
       "CURRENT_LEVEL": "أنت موجود بالفعل في هذا المجلد",
       "CURRENT_LEVEL_ICON_LABEL": "الحالي",
-      "LIBRARY_CONTAINER_LEVEL": "التنقل داخل المكتبة فقط",
+      "LIBRARY_CONTAINER_LEVEL": "لا يمكن نقل الملف/المجلد إلى قائمة المكتبات.",
       "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "غير متاح",
       "DROP_HINT": "النقل هنا"
     }

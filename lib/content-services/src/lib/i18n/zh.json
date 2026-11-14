@@ -710,7 +710,7 @@
       "NOT_FIRST_LEVEL": "第 {{ level }} 级 • 在 {{ ancestorName }} 内",
       "CURRENT_LEVEL": "已在此文件夹中",
       "CURRENT_LEVEL_ICON_LABEL": "当前",
-      "LIBRARY_CONTAINER_LEVEL": "仅限库导航",
+      "LIBRARY_CONTAINER_LEVEL": "文件/文件夹不能移动到库列表。",
       "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "不可用",
       "DROP_HINT": "移动到此处"
     }

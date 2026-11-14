@@ -710,7 +710,7 @@
       "NOT_FIRST_LEVEL": "Nivel {{ level }} • En {{ ancestorName }}",
       "CURRENT_LEVEL": "Ya está en esta carpeta",
       "CURRENT_LEVEL_ICON_LABEL": "Actual",
-      "LIBRARY_CONTAINER_LEVEL": "Solo navegación de bibliotecas",
+      "LIBRARY_CONTAINER_LEVEL": "El fichero/carpeta no se puede mover a la lista de bibliotecas.",
       "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "No disponible",
       "DROP_HINT": "Mover aquí"
     }
