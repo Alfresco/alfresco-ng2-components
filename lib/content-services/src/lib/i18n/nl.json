@@ -710,7 +710,7 @@
       "NOT_FIRST_LEVEL": "Niveau {{ level }} • In {{ ancestorName }}",
       "CURRENT_LEVEL": "Al in deze map",
       "CURRENT_LEVEL_ICON_LABEL": "Huidige",
-      "LIBRARY_CONTAINER_LEVEL": "Alleen bibliotheeknavigatie",
+      "LIBRARY_CONTAINER_LEVEL": "Bestand/map kan niet worden verplaatst naar de bibliothekenlijst.",
       "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Niet beschikbaar",
       "DROP_HINT": "Hier verplaatsen"
     }

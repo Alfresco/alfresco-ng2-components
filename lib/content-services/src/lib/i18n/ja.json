@@ -710,7 +710,7 @@
       "NOT_FIRST_LEVEL": "レベル {{ level }} • {{ ancestorName }} 内",
       "CURRENT_LEVEL": "すでにこのフォルダ内にあります",
       "CURRENT_LEVEL_ICON_LABEL": "現在",
-      "LIBRARY_CONTAINER_LEVEL": "ライブラリナビゲーションのみ",
+      "LIBRARY_CONTAINER_LEVEL": "ファイル/フォルダはライブラリ一覧に移動できません。",
       "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "利用不可",
       "DROP_HINT": "ここに移動"
     }

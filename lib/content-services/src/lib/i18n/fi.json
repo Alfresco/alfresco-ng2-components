@@ -710,7 +710,7 @@
       "NOT_FIRST_LEVEL": "Taso {{ level }} • Kohteessa {{ ancestorName }}",
       "CURRENT_LEVEL": "Olet jo tässä kansiossa",
       "CURRENT_LEVEL_ICON_LABEL": "Nykyinen",
-      "LIBRARY_CONTAINER_LEVEL": "Vain kirjastonavigointi",
+      "LIBRARY_CONTAINER_LEVEL": "Tiedostoa/kansiota ei voi siirtää kirjastoluetteloon.",
       "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Ei käytettävissä",
       "DROP_HINT": "Siirrä tähän"
     }

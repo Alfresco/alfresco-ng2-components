@@ -710,7 +710,7 @@
       "NOT_FIRST_LEVEL": "Poziom {{ level }} • W {{ ancestorName }}",
       "CURRENT_LEVEL": "Już w tym folderze",
       "CURRENT_LEVEL_ICON_LABEL": "Bieżący",
-      "LIBRARY_CONTAINER_LEVEL": "Tylko nawigacja w bibliotece",
+      "LIBRARY_CONTAINER_LEVEL": "Pliku/folderu nie można przenieść do listy bibliotek.",
       "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Niedostępne",
       "DROP_HINT": "Przenieś tutaj"
     }
