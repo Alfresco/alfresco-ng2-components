@@ -22,7 +22,7 @@ import { FormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@
 import { ParameterValueModel } from '../../../../diagram/models/report/parameter-value.model';
 import { ReportParameterDetailsModel } from '../../../../diagram/models/report/report-parameter-details.model';
 import { NumberWidgetAnalyticsComponent } from '../number/number.widget';
-import { CommonModule } from '@angular/common';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DropdownWidgetAnalyticsComponent } from '../dropdown/dropdown.widget';
@@ -30,7 +30,7 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'duration-widget',
-    imports: [CommonModule, MatFormFieldModule, TranslatePipe, FormsModule, DropdownWidgetAnalyticsComponent, MatInputModule],
+    imports: [MatFormFieldModule, TranslatePipe, FormsModule, DropdownWidgetAnalyticsComponent, MatInputModule],
     templateUrl: './duration.widget.html',
     styleUrls: ['./duration.widget.scss'],
     encapsulation: ViewEncapsulation.None
