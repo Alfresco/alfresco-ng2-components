@@ -113,7 +113,7 @@
     "eslint-plugin-prettier": "5.5.6",
     "eslint-plugin-rxjs": "5.0.3",
     "eslint-plugin-storybook": "10.6.5",
-    "eslint-plugin-unicorn": "61.0.2",
+    "eslint-plugin-unicorn": "79.0.0",
     "graphql": "16.14.2",
     "husky": "9.1.7",
     "jasmine-core": "6.3.0",
