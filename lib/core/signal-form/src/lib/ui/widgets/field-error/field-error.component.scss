@@ -1,4 +1,4 @@
-@use '../../../../../../src/lib/styles/mixins';
+@use 'styles/mixins' as mixins;
 
 .adf-error-icon {
     @include mixins.adf-error-icon;
