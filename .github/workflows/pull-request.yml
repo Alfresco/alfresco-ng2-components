@@ -47,7 +47,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Label PR from branch name
-        uses: Alfresco/alfresco-build-tools/.github/actions/github-pr-label-from-branch@2cebc8f19812b2653361d82e86b25f29cfa4a144 # v19.12.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/github-pr-label-from-branch@74d5f71b8cac71b5c056c8e53d51ba660b0f59fd # v19.14.1
         with:
           mapping: |
             feat/: enhancement
@@ -74,7 +74,7 @@ jobs:
         uses: hyland/github-actions-ensure-sha-pinned-actions@9f71a10c9852b115cfcb146ec2d8d09e2b89593f # v2.1.1
 
       - name: Run pre-commit
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@2cebc8f19812b2653361d82e86b25f29cfa4a144 # v19.12.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@74d5f71b8cac71b5c056c8e53d51ba660b0f59fd # v19.14.1
         with:
           skip_checkout: true
 
