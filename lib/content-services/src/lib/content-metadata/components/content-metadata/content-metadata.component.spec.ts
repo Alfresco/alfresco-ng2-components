@@ -1939,9 +1939,9 @@ describe('ContentMetadataComponent', () => {
 
             expect(nodesApiService.getNode).toHaveBeenCalledWith('-root-', templatesRelativePath);
             expect(openDialogSpy).toHaveBeenCalledWith('templates-folder-id', jasmine.any(String), jasmine.any(Function));
-            expect(target.value).toBe('workspace://SpacesStore/template-id');
+            expect(target.value).toBe('Nworkspace://SpacesStore/template-id');
             expect(target.displayName).toBe('My Template');
-            expect(updateSpy).toHaveBeenCalledWith(target, 'workspace://SpacesStore/template-id');
+            expect(updateSpy).toHaveBeenCalledWith(target, 'Nworkspace://SpacesStore/template-id');
         });
 
         it('should only allow files to be selected in the templates dialog', () => {
