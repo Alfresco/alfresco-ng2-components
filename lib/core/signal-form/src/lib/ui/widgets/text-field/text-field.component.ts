@@ -16,11 +16,11 @@
  */
 
 import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
+import { InputMaskDirective } from '@alfresco/adf-core';
 import { FormField } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
-import { SignalInputMaskDirective } from '../../controls/input-mask.directive';
 import { SignalPasteLimitDirective } from '../../controls/paste-limit.directive';
 import { maxLengthMessage } from '../field-error-message';
 import { SignalFieldErrorComponent } from '../field-error/field-error.component';
@@ -36,7 +36,7 @@ import { SignalFormWidget } from '../signal-form-widget';
         MatFormFieldModule,
         MatInputModule,
         TranslatePipe,
-        SignalInputMaskDirective,
+        InputMaskDirective,
         SignalPasteLimitDirective,
         SignalFieldErrorComponent,
         SignalLeftLabelComponent
@@ -48,6 +48,7 @@ export class SignalTextFieldComponent extends SignalFormWidget<string> {
 
     protected readonly labelAutomationId = computed(() => `${this.widgetClass()}-label`);
     protected readonly inputMask = computed(() => this.definition().inputMask ?? null);
+    protected readonly maskSettings = computed(() => ({ mask: this.inputMask()?.mask ?? '', isReversed: !!this.inputMask()?.reversed }));
     protected readonly placeholder = computed(() => this.inputMask()?.placeholder || (this.definition().placeholder ?? ''));
 
     private readonly pasteRefused = signal(false);

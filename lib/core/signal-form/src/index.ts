@@ -29,5 +29,4 @@ export * from './lib/state/signal-form';
 export * from './lib/state/field-metadata';
 export * from './lib/state/signal-form-event';
 export * from './lib/ui/widgets/signal-form-widget';
-export * from './lib/ui/controls/input-mask.directive';
 export * from './lib/ui/widgets/field-error-message';
