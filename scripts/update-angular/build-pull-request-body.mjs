@@ -203,7 +203,7 @@ function buildPullRequestBody(bodyFile, validationDir, reportDir, version, runUr
         `### Steps\n\n${resultsTable(steps)}`,
         nextSteps(steps)
     ];
-    const runLink = `[Workflow run](${runUrl})`;
+    const runLink = `[Workflow run](${runUrl}) · Comment \`/update-angular help\` on this pull request to see what the workflow can do for you.`;
     const available = MAX_BODY_CHARS - join([...head, runLink]).length - SEPARATORS_ROOM_CHARS;
 
     const reports = shareBudget(
