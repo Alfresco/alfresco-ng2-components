@@ -3,11 +3,13 @@
         <span aria-hidden="true" class="adf-pagination__range">
             {{ itemRangeText }}
         </span>
-        <span aria-live="polite" class="adf-sr-only">
-            @if (pagination.totalItems === 1) {
-                {{ 'CORE.PAGINATION.ONE_ITEM_FOUND' | translate }}
-            } @else {
-                {{ 'CORE.PAGINATION.TOTAL_ITEMS_FOUND' | translate: { total: pagination.totalItems } }}
+        <span aria-live="polite" class="cdk-visually-hidden">
+            @if (pagination.totalItems > 0) {
+                @if (pagination.totalItems === 1) {
+                    {{ 'CORE.PAGINATION.ONE_ITEM_FOUND' | translate }}
+                } @else {
+                    {{ 'CORE.PAGINATION.TOTAL_ITEMS_FOUND' | translate: { total: pagination.totalItems } }}
+                }
             }
         </span>
     </div>
