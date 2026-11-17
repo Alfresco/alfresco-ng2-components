@@ -355,4 +355,27 @@ describe('AuthenticationService', () => {
             expect(onTokenReceivedSpy).toHaveBeenCalled();
         });
     });
+
+    describe('getValidToken', () => {
+        it('should get the valid access token from the redirect auth service when using OAuth', async () => {
+            spyOn(authService, 'isOauth').and.returnValue(true);
+            const getValidAccessTokenSpy = spyOn(TestBed.inject(RedirectAuthService), 'getValidAccessToken').and.resolveTo('renewed-token');
+
+            const token = await authService.getValidToken();
+
+            expect(token).toBe('renewed-token');
+            expect(getValidAccessTokenSpy).toHaveBeenCalledTimes(1);
+        });
+
+        it('should get the current token without waiting when not using OAuth', async () => {
+            spyOn(authService, 'isOauth').and.returnValue(false);
+            spyOn(basicAlfrescoAuthService, 'getToken').and.returnValue('basic-ticket');
+            const getValidAccessTokenSpy = spyOn(TestBed.inject(RedirectAuthService), 'getValidAccessToken');
+
+            const token = await authService.getValidToken();
+
+            expect(token).toBe('basic-ticket');
+            expect(getValidAccessTokenSpy).not.toHaveBeenCalled();
+        });
+    });
 });

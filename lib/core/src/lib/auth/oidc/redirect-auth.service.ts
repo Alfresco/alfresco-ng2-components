@@ -29,8 +29,8 @@ import {
     OAuthLogger
 } from 'angular-oauth2-oidc';
 import { WebCryptoJwksValidationHandler } from './web-crypto-jwks-validation-handler';
-import { defer, EMPTY, from, fromEvent, Observable, race, ReplaySubject, timer } from 'rxjs';
-import { catchError, distinctUntilChanged, filter, map, scan, shareReplay, switchMap, take, takeUntil } from 'rxjs/operators';
+import { defer, EMPTY, firstValueFrom, from, fromEvent, interval, merge, Observable, of, race, ReplaySubject, timer } from 'rxjs';
+import { catchError, distinctUntilChanged, filter, map, scan, shareReplay, switchMap, take, takeUntil, timeout } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { AUTH_MODULE_CONFIG, AuthModuleConfig } from './auth-config';
 import { RetryLoginService } from './retry-login.service';
@@ -39,6 +39,8 @@ import { TimeSyncService } from '../services/time-sync.service';
 const isPromise = <T>(value: T | Promise<T>): value is Promise<T> => value && typeof (value as Promise<T>).then === 'function';
 
 const TOKEN_REFRESH_RETRY_DELAY_MS = 5000;
+const VALID_ACCESS_TOKEN_WAIT_TIMEOUT_MS = 10000;
+const VALID_ACCESS_TOKEN_POLL_INTERVAL_MS = 1000;
 
 interface ConsecutiveTokenRefreshErrors {
     count: number;
@@ -175,10 +177,11 @@ export class RedirectAuthService extends AuthService {
 
         this.firstOauthErrorEventExcludingTokenRefreshError$ = this.oauthErrorEvent$.pipe(
             filter(
-                (event) => event.type !== 'token_refresh_error' &&
-                event.type !== 'token_error' &&
-                event.type !== 'silent_refresh_error' &&
-                event.type !== 'silent_refresh_timeout'
+                (event) =>
+                    event.type !== 'token_refresh_error' &&
+                    event.type !== 'token_error' &&
+                    event.type !== 'silent_refresh_error' &&
+                    event.type !== 'silent_refresh_timeout'
             ),
             take(1)
         );
@@ -414,6 +417,36 @@ export class RedirectAuthService extends AuthService {
                     return originalSilentRefresh(params, noPrompt);
                 }
             });
+    }
+
+    /**
+     * Gets an access token that has not expired yet.
+     *
+     * Backends reject a token as soon as it expires, so the expiration is checked strictly,
+     * without the clock skew tolerated by `authenticated`. When the token is expired, this waits
+     * for the ongoing renewal (the automatic refresh or the retry after a failed one, in this tab
+     * or another one) instead of starting a new refresh, which could count as a second consecutive
+     * failure and log the user out. Use it before sending the token once for a long-lived
+     * connection, such as a WebSocket handshake.
+     *
+     * @returns the unexpired access token, or the current one if no renewal happened in time
+     */
+    async getValidAccessToken(): Promise<string> {
+        if (!this.hasUnexpiredAccessToken()) {
+            await firstValueFrom(
+                merge(this.onTokenReceived, interval(VALID_ACCESS_TOKEN_POLL_INTERVAL_MS)).pipe(
+                    filter(() => this.hasUnexpiredAccessToken()),
+                    take(1),
+                    timeout({ first: VALID_ACCESS_TOKEN_WAIT_TIMEOUT_MS, with: () => of(undefined) })
+                ),
+                { defaultValue: undefined }
+            );
+        }
+        return this.oauthService.getAccessToken();
+    }
+
+    private hasUnexpiredAccessToken(): boolean {
+        return !!this.oauthService.getAccessToken() && this.oauthService.getAccessTokenExpiration() > Date.now();
     }
 
     updateIDPConfiguration(config: AuthConfig) {

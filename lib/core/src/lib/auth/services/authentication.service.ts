@@ -103,6 +103,17 @@ export class AuthenticationService implements AuthenticationServiceInterface {
         }
     }
 
+    /**
+     * Gets an auth token that has not expired yet, waiting for an ongoing token renewal if needed.
+     * Use it instead of `getToken` before sending the token once for a long-lived connection,
+     * such as a WebSocket handshake, so an expired token is not sent while it is being renewed.
+     *
+     * @returns the unexpired auth token, or the current one if no renewal happened in time
+     */
+    getValidToken(): Promise<string> {
+        return this.isOauth() ? this.redirectAuthService.getValidAccessToken() : Promise.resolve(this.getToken());
+    }
+
     isLoggedIn(): boolean {
         if (this.isOauth()) {
             return this.oidcAuthenticationService.isLoggedIn();

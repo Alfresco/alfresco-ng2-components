@@ -21,6 +21,9 @@ Provides authentication to ACS and APS.
 -   **getToken**(): `string`<br/>
     Gets the auth token.
     -   **Returns** `string` - Auth token string
+-   **getValidToken**(): `Promise<string>`<br/>
+    Gets an auth token that has not expired yet, waiting (up to 10 seconds) for an ongoing token renewal if needed. Use it instead of `getToken` before sending the token once for a long-lived connection, such as a WebSocket handshake, so an expired token is not sent while it is being renewed.
+    -   **Returns** `Promise<string>` - The unexpired auth token, or the current one if no renewal happened in time
 -   **getUsername**(): `string`<br/>
     Gets the username of the authenticated user.
     -   **Returns** `string` - Username of the authenticated user

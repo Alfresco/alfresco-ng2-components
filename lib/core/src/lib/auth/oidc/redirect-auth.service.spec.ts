@@ -66,7 +66,8 @@ describe('RedirectAuthService', () => {
                 'silentRefresh',
                 'refreshToken',
                 'getIdentityClaims',
-                'getAccessToken'
+                'getAccessToken',
+                'getAccessTokenExpiration'
             ],
             { clockSkewInSec: 120, events: oauthEvents$, tokenValidationHandler: {} }
         );
@@ -649,5 +650,78 @@ describe('RedirectAuthService', () => {
         oauthEvents$.next(new OAuthInfoEvent('logout'));
 
         expect(expectedLogoutIsEmitted).toBeTrue();
+    });
+
+    describe('getValidAccessToken', () => {
+        const VALID_ACCESS_TOKEN_WAIT_TIMEOUT_MS = 10000;
+        const VALID_ACCESS_TOKEN_POLL_INTERVAL_MS = 1000;
+        const TOKEN_LIFETIME_MS = 300000;
+        const EXPIRED_SINCE_MS = 15000;
+        let resolvedToken: string | undefined;
+
+        const storeToken = (token: string, expiresAt: number) => {
+            oauthServiceSpy.getAccessToken.and.returnValue(token);
+            oauthServiceSpy.getAccessTokenExpiration.and.returnValue(expiresAt);
+        };
+
+        const requestValidAccessToken = () => {
+            resolvedToken = undefined;
+            service.getValidAccessToken().then((token) => (resolvedToken = token));
+        };
+
+        it('should return the access token right away when it has not expired', fakeAsync(() => {
+            storeToken('current-token', Date.now() + TOKEN_LIFETIME_MS);
+
+            requestValidAccessToken();
+            flushMicrotasks();
+
+            expect(resolvedToken).toBe('current-token');
+        }));
+
+        it('should wait for the token renewal when the access token expired, even within the allowed clock skew', fakeAsync(() => {
+            oauthServiceSpy.hasValidAccessToken.and.returnValue(true);
+            storeToken('expired-token', Date.now() - EXPIRED_SINCE_MS);
+
+            requestValidAccessToken();
+            tick(VALID_ACCESS_TOKEN_POLL_INTERVAL_MS / 2);
+            expect(resolvedToken).toBeUndefined();
+
+            storeToken('renewed-token', Date.now() + TOKEN_LIFETIME_MS);
+            oauthEvents$.next(new OAuthSuccessEvent('token_received'));
+            flushMicrotasks();
+
+            expect(resolvedToken).toBe('renewed-token');
+        }));
+
+        it('should return the token renewed by another tab without a token_received event', fakeAsync(() => {
+            storeToken('expired-token', Date.now() - EXPIRED_SINCE_MS);
+
+            requestValidAccessToken();
+            storeToken('token-renewed-by-another-tab', Date.now() + TOKEN_LIFETIME_MS);
+            tick(VALID_ACCESS_TOKEN_POLL_INTERVAL_MS);
+
+            expect(resolvedToken).toBe('token-renewed-by-another-tab');
+        }));
+
+        it('should return the current token when no renewal happens in time', fakeAsync(() => {
+            storeToken('expired-token', Date.now() - EXPIRED_SINCE_MS);
+
+            requestValidAccessToken();
+            tick(VALID_ACCESS_TOKEN_WAIT_TIMEOUT_MS - 1);
+            expect(resolvedToken).toBeUndefined();
+
+            tick(1);
+            expect(resolvedToken).toBe('expired-token');
+        }));
+
+        it('should not start a token refresh itself', fakeAsync(() => {
+            storeToken('expired-token', Date.now() - EXPIRED_SINCE_MS);
+
+            requestValidAccessToken();
+            tick(VALID_ACCESS_TOKEN_WAIT_TIMEOUT_MS);
+
+            expect(oauthServiceSpy.refreshToken).not.toHaveBeenCalled();
+            expect(oauthServiceSpy.silentRefresh).not.toHaveBeenCalled();
+        }));
     });
 });
