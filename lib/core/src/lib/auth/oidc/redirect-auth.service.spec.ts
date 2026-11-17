@@ -440,6 +440,7 @@ describe('RedirectAuthService', () => {
 
         it('should logout and stop retrying when the retried refresh fails too', fakeAsync(() => {
             const retryError = refreshError('refresh token expired');
+            oauthServiceSpy.logOut.and.callFake(() => oauthEvents$.next(new OAuthSuccessEvent('logout')));
             oauthServiceSpy.refreshToken.and.callFake(() => {
                 oauthEvents$.next(retryError);
                 return Promise.reject(new Error('refresh token expired'));

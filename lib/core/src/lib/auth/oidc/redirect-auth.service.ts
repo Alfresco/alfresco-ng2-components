@@ -30,7 +30,7 @@ import {
 } from 'angular-oauth2-oidc';
 import { WebCryptoJwksValidationHandler } from './web-crypto-jwks-validation-handler';
 import { defer, EMPTY, from, fromEvent, Observable, race, ReplaySubject, timer } from 'rxjs';
-import { catchError, distinctUntilChanged, filter, map, scan, shareReplay, switchMap, take } from 'rxjs/operators';
+import { catchError, distinctUntilChanged, filter, map, scan, shareReplay, switchMap, take, takeUntil } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { AUTH_MODULE_CONFIG, AuthModuleConfig } from './auth-config';
 import { RetryLoginService } from './retry-login.service';
@@ -435,6 +435,7 @@ export class RedirectAuthService extends AuthService {
     private retryTokenRefreshAfterFirstFailure(): void {
         this.consecutiveTokenRefreshErrors$()
             .pipe(
+                takeUntil(this.onLogout$),
                 switchMap(({ count }) => (count === 1 ? this.waitBeforeTokenRefreshRetry() : EMPTY)),
                 switchMap(() => defer(() => this.refreshTokens()).pipe(catchError(() => EMPTY)))
             )
