@@ -20,6 +20,7 @@ import { PaginationComponent } from './pagination.component';
 import { PaginatedComponent } from './paginated-component.interface';
 import { BehaviorSubject } from 'rxjs';
 import { PaginationModel } from '../models/pagination.model';
+import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 class FakePaginationInput implements PaginationModel {
     count = 25;
@@ -37,6 +38,7 @@ class FakePaginationInput implements PaginationModel {
 describe('PaginationComponent', () => {
     let fixture: ComponentFixture<PaginationComponent>;
     let component: PaginationComponent;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -45,6 +47,7 @@ describe('PaginationComponent', () => {
         fixture = TestBed.createComponent(PaginationComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     afterEach(() => {
@@ -56,6 +59,14 @@ describe('PaginationComponent', () => {
         await fixture.whenStable();
 
         expect(fixture.nativeElement.classList.contains('adf-pagination__empty')).toBeTruthy();
+    });
+
+    it('should announce number of items found if there are items present', () => {
+        component.pagination = new FakePaginationInput(1, 1, 10);
+        fixture.detectChanges();
+
+        const screenReaderElement = testingUtils.getByCSS('.adf-sr-only').nativeElement.textContent.trim();
+        expect(screenReaderElement).toBe('CORE.PAGINATION.TOTAL_ITEMS_FOUND');
     });
 
     describe('Single page', () => {
