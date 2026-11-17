@@ -506,6 +506,28 @@ describe('RedirectAuthService', () => {
             expect(oauthServiceSpy.silentRefresh).toHaveBeenCalledTimes(1);
             expect(oauthServiceSpy.refreshToken).not.toHaveBeenCalled();
         }));
+
+        it('should retry silent refresh after a silent refresh error', fakeAsync(() => {
+            Object.assign(oauthServiceSpy, { responseType: 'code', useSilentRefresh: true });
+            oauthServiceSpy.silentRefresh.and.resolveTo(new OAuthSuccessEvent('silently_refreshed'));
+
+            oauthEvents$.next(new OAuthErrorEvent('silent_refresh_error', { reason: 'network error' }, {}));
+            expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+            tick(TOKEN_REFRESH_RETRY_DELAY_MS);
+            expect(oauthServiceSpy.silentRefresh).toHaveBeenCalledTimes(1);
+            expect(oauthServiceSpy.refreshToken).not.toHaveBeenCalled();
+        }));
+
+        it('should retry silent refresh after a silent refresh timeout', fakeAsync(() => {
+            Object.assign(oauthServiceSpy, { responseType: 'code', useSilentRefresh: true });
+            oauthServiceSpy.silentRefresh.and.resolveTo(new OAuthSuccessEvent('silently_refreshed'));
+
+            oauthEvents$.next(new OAuthErrorEvent('silent_refresh_timeout', { reason: 'timeout' }, {}));
+            expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+            tick(TOKEN_REFRESH_RETRY_DELAY_MS);
+            expect(oauthServiceSpy.silentRefresh).toHaveBeenCalledTimes(1);
+            expect(oauthServiceSpy.refreshToken).not.toHaveBeenCalled();
+        }));
     });
 
     it('should logout user if token_refresh_error is emitted because of clock out of sync', () => {

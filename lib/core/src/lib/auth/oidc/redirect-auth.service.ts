@@ -174,7 +174,9 @@ export class RedirectAuthService extends AuthService {
         this.firstOauthErrorEventOccur$ = this.oauthErrorEvent$.pipe(take(1));
 
         this.firstOauthErrorEventExcludingTokenRefreshError$ = this.oauthErrorEvent$.pipe(
-            filter((event) => event instanceof OAuthErrorEvent && event.type !== 'token_refresh_error'),
+            filter(
+                (event) => event.type !== 'token_refresh_error' && event.type !== 'silent_refresh_error' && event.type !== 'silent_refresh_timeout'
+            ),
             take(1)
         );
 
@@ -417,10 +419,19 @@ export class RedirectAuthService extends AuthService {
 
     private consecutiveTokenRefreshErrors$(): Observable<ConsecutiveTokenRefreshErrors> {
         return this.oauthService.events.pipe(
-            filter((event) => event.type === 'token_refresh_error' || event.type === 'token_received' || event.type === 'logout'),
+            filter(
+                (event) =>
+                    event.type === 'token_refresh_error' ||
+                    event.type === 'silent_refresh_error' ||
+                    event.type === 'silent_refresh_timeout' ||
+                    event.type === 'token_received' ||
+                    event.type === 'logout'
+            ),
             scan(
                 (errors: ConsecutiveTokenRefreshErrors, event): ConsecutiveTokenRefreshErrors =>
-                    event.type === 'token_refresh_error' ? { count: errors.count + 1, lastError: event as OAuthErrorEvent } : { count: 0 },
+                    event.type === 'token_refresh_error' || event.type === 'silent_refresh_error' || event.type === 'silent_refresh_timeout'
+                        ? { count: errors.count + 1, lastError: event as OAuthErrorEvent }
+                        : { count: 0 },
                 { count: 0 }
             )
         );
