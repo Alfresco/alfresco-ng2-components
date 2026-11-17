@@ -48,9 +48,10 @@ describe('RedirectAuthService', () => {
         removeItem: jasmine.createSpy('removeItem'),
         setItem: jasmine.createSpy('setItem')
     };
-    const oauthEvents$ = new Subject<OAuthEvent>();
+    let oauthEvents$: Subject<OAuthEvent>;
 
     beforeEach(() => {
+        oauthEvents$ = new Subject<OAuthEvent>();
         retryLoginServiceSpy = jasmine.createSpyObj('RetryLoginService', ['tryToLoginTimes']);
         timeSyncServiceSpy = jasmine.createSpyObj('TimeSyncService', ['checkTimeSync']);
         oauthLoggerSpy = jasmine.createSpyObj('OAuthLogger', ['error', 'info', 'warn']);
@@ -428,7 +429,7 @@ describe('RedirectAuthService', () => {
         });
 
         it('should retry the token refresh once when the first refresh fails', fakeAsync(() => {
-            oauthEvents$.next(refreshError('network error'));
+            oauthEvents$.next(new OAuthErrorEvent('token_error', { reason: 'network error' }, {}));
 
             tick(TOKEN_REFRESH_RETRY_DELAY_MS - 1);
             expect(oauthServiceSpy.refreshToken).not.toHaveBeenCalled();

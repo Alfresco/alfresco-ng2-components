@@ -175,7 +175,10 @@ export class RedirectAuthService extends AuthService {
 
         this.firstOauthErrorEventExcludingTokenRefreshError$ = this.oauthErrorEvent$.pipe(
             filter(
-                (event) => event.type !== 'token_refresh_error' && event.type !== 'silent_refresh_error' && event.type !== 'silent_refresh_timeout'
+                (event) =>                 event.type !== 'token_refresh_error' &&
+                event.type !== 'token_error' &&
+                event.type !== 'silent_refresh_error' &&
+                event.type !== 'silent_refresh_timeout'
             ),
             take(1)
         );
@@ -422,6 +425,7 @@ export class RedirectAuthService extends AuthService {
             filter(
                 (event) =>
                     event.type === 'token_refresh_error' ||
+                    event.type === 'token_error' ||
                     event.type === 'silent_refresh_error' ||
                     event.type === 'silent_refresh_timeout' ||
                     event.type === 'token_received' ||
@@ -429,7 +433,10 @@ export class RedirectAuthService extends AuthService {
             ),
             scan(
                 (errors: ConsecutiveTokenRefreshErrors, event): ConsecutiveTokenRefreshErrors =>
-                    event.type === 'token_refresh_error' || event.type === 'silent_refresh_error' || event.type === 'silent_refresh_timeout'
+                    event.type === 'token_refresh_error' ||
+                    event.type === 'token_error' ||
+                    event.type === 'silent_refresh_error' ||
+                    event.type === 'silent_refresh_timeout'
                         ? { count: errors.count + 1, lastError: event as OAuthErrorEvent }
                         : { count: 0 },
                 { count: 0 }

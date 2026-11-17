@@ -55,7 +55,7 @@
     "@cspell/eslint-plugin": "10.0.1",
     "@mat-datetimepicker/core": "17.1.0",
     "@ngx-translate/core": "17.0.0",
-    "angular-oauth2-oidc": "19.0.0",
+    "angular-oauth2-oidc": "21.0.3",
     "apollo-angular": "13.0.0",
     "chart.js": "4.5.1",
     "cropperjs": "1.6.2",
