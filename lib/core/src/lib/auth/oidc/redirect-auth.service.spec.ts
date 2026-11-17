@@ -48,10 +48,9 @@ describe('RedirectAuthService', () => {
         removeItem: jasmine.createSpy('removeItem'),
         setItem: jasmine.createSpy('setItem')
     };
-    let oauthEvents$: Subject<OAuthEvent>;
+    const oauthEvents$ = new Subject<OAuthEvent>();
 
     beforeEach(() => {
-        oauthEvents$ = new Subject<OAuthEvent>();
         retryLoginServiceSpy = jasmine.createSpyObj('RetryLoginService', ['tryToLoginTimes']);
         timeSyncServiceSpy = jasmine.createSpyObj('TimeSyncService', ['checkTimeSync']);
         oauthLoggerSpy = jasmine.createSpyObj('OAuthLogger', ['error', 'info', 'warn']);

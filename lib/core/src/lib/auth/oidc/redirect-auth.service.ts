@@ -453,9 +453,9 @@ export class RedirectAuthService extends AuthService {
     private retryTokenRefreshAfterFirstFailure(): void {
         this.consecutiveTokenRefreshErrors$()
             .pipe(
-                takeUntil(this.onLogout$),
                 switchMap(({ count }) => (count === 1 ? this.waitBeforeTokenRefreshRetry() : EMPTY)),
-                switchMap(() => defer(() => this.refreshTokens()).pipe(catchError(() => EMPTY)))
+                switchMap(() => defer(() => this.refreshTokens()).pipe(catchError(() => EMPTY))),
+                takeUntil(this.onLogout$)
             )
             .subscribe();
     }
