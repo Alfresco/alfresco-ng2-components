@@ -7,9 +7,6 @@ on:
         description: "Target Angular major version (must be the next major, e.g. 22)"
         required: true
         type: string
-  push:
-    branches:
-      - improvement/AAE-52273-automate-angular-migration
 
 concurrency:
   group: ${{ github.workflow }}
@@ -45,7 +42,7 @@ jobs:
         id: prepare
         uses: ./.github/actions/update-angular/prepare-branch
         with:
-          angular-major: ${{ inputs.angular-major || '22' }}
+          angular-major: ${{ inputs.angular-major }}
       - name: Save peer dependency baseline
         run: node scripts/update-angular/save-peer-baseline.mjs "$RUNNER_TEMP/peers-baseline.json"
       - name: Configure git identity
@@ -56,11 +53,11 @@ jobs:
       - name: Update Nx
         uses: ./.github/actions/update-angular/update-nx
         with:
-          angular-major: ${{ inputs.angular-major || '22' }}
+          angular-major: ${{ inputs.angular-major }}
       - name: Update Angular packages
         uses: ./.github/actions/update-angular/update-angular-packages
         with:
-          angular-major: ${{ inputs.angular-major || '22' }}
+          angular-major: ${{ inputs.angular-major }}
           version: ${{ steps.prepare.outputs.version }}
       - name: Align peer dependencies
         uses: ./.github/actions/update-angular/align-peers
