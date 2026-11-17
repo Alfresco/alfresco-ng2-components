@@ -15,59 +15,27 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { textMaxLength } from '../../../validation/field-validators';
-import { maxLengthMessage } from '../field-error-message';
 import { SignalFormWidget } from '../signal-form-widget';
-import { TEXT_WIDGET_IMPORTS } from './text-widget-imports';
-
-const PASTE_INPUT_TYPE = 'insertFromPaste';
+import { SignalTextFieldComponent } from '../text-field/text-field.component';
 
 @Component({
     selector: 'adf-signal-text-widget',
-    templateUrl: './text-widget.component.html',
+    template: `
+        <adf-signal-text-field
+            [form]="form()"
+            [field]="field()"
+            [definition]="definition()"
+            [elementId]="elementId()"
+            [row]="row()"
+            widgetClass="adf-text-widget"
+            [pasteLimit]="pasteLimit()"
+        />
+    `,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: TEXT_WIDGET_IMPORTS
+    imports: [SignalTextFieldComponent]
 })
 export class SignalTextWidgetComponent extends SignalFormWidget<string> {
-    protected readonly widgetClass: string = 'adf-text-widget';
-    protected readonly labelAutomationId: string = 'adf-text-widget-label';
-
-    protected readonly inputMask = computed(() => this.definition().inputMask ?? null);
-    protected readonly placeholder = computed(() => this.inputMask()?.placeholder || (this.definition().placeholder ?? ''));
-
     protected readonly pasteLimit = computed(() => textMaxLength(this.definition()));
-
-    private readonly pasteRejected = signal(false);
-
-    protected override readonly shownError = computed(() => {
-        if (this.pasteRejected()) {
-            return maxLengthMessage(this.pasteLimit());
-        }
-        return this.showError() ? this.error() : null;
-    });
-
-    protected guardPaste(event: ClipboardEvent, textInput: HTMLInputElement): void {
-        const limit = this.pasteLimit();
-        if (!limit) {
-            return;
-        }
-        const text = textInput.value;
-        const replaced = (textInput.selectionEnd ?? text.length) - (textInput.selectionStart ?? text.length);
-        const pasted = event.clipboardData?.getData('text') ?? '';
-        const tooLong = text.length - replaced + pasted.length > limit;
-        if (tooLong) {
-            event.preventDefault();
-            this.field()().markAsTouched();
-        }
-        this.pasteRejected.set(tooLong);
-    }
-
-    protected edited(event: Event): void {
-        if (!isPasteInput(event)) {
-            this.pasteRejected.set(false);
-        }
-    }
 }
-
-const isPasteInput = (event: Event): boolean => event instanceof InputEvent && event.inputType === PASTE_INPUT_TYPE;

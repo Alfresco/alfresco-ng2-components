@@ -17,17 +17,25 @@
 
 import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { maxLengthOf } from '../../../validation/field-validators';
-import { SignalTextWidgetComponent } from '../text/text-widget.component';
-import { TEXT_WIDGET_IMPORTS } from '../text/text-widget-imports';
+import { SignalFormWidget } from '../signal-form-widget';
+import { SignalTextFieldComponent } from '../text-field/text-field.component';
 
 @Component({
     selector: 'adf-signal-integer-widget',
-    templateUrl: '../text/text-widget.component.html',
+    template: `
+        <adf-signal-text-field
+            [form]="form()"
+            [field]="field()"
+            [definition]="definition()"
+            [elementId]="elementId()"
+            [row]="row()"
+            widgetClass="adf-number-widget"
+            [pasteLimit]="pasteLimit()"
+        />
+    `,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: TEXT_WIDGET_IMPORTS
+    imports: [SignalTextFieldComponent]
 })
-export class SignalIntegerWidgetComponent extends SignalTextWidgetComponent {
-    protected override readonly widgetClass: string = 'adf-number-widget';
-    protected override readonly labelAutomationId: string = 'adf-number-widget-label';
-    protected override readonly pasteLimit = computed(() => maxLengthOf(this.definition()));
+export class SignalIntegerWidgetComponent extends SignalFormWidget<string> {
+    protected readonly pasteLimit = computed(() => maxLengthOf(this.definition()));
 }

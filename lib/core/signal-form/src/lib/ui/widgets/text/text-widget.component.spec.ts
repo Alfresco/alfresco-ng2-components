@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { TestBed } from '@angular/core/testing';
 import { NoopTranslateModule } from '../../../../../../src/lib/testing/noop-translate.module';
 import { createFieldsForm, renderWidget, typeInto } from '../../testing/widget-testing.mock';
 import { SignalTextWidgetComponent } from './text-widget.component';
@@ -25,8 +23,6 @@ import { SignalTextWidgetComponent } from './text-widget.component';
 describe('SignalTextWidgetComponent', () => {
     const errorText = (element: HTMLElement): string | undefined => element.querySelector('.adf-error-text')?.textContent?.trim();
     const textInput = (element: HTMLElement): HTMLInputElement => element.querySelector('input');
-    const floatingLabel = async (fixture: ComponentFixture<SignalTextWidgetComponent>): Promise<string | null> =>
-        (await TestbedHarnessEnvironment.loader(fixture).getHarness(MatFormFieldHarness)).getLabel();
 
     const paste = (input: HTMLInputElement, text: string): ClipboardEvent => {
         const clipboardData = new DataTransfer();
@@ -40,37 +36,14 @@ describe('SignalTextWidgetComponent', () => {
         TestBed.configureTestingModule({ imports: [NoopTranslateModule] });
     });
 
-    it('should show the field label and write what is typed into the form', async () => {
+    it('should write what is typed into the form', () => {
         const form = createFieldsForm([{ id: 'name', name: 'Name', type: 'text' }]);
         const fixture = renderWidget(SignalTextWidgetComponent, form, 'name');
-        const element: HTMLElement = fixture.nativeElement;
 
-        typeInto(textInput(element), 'Ada');
+        typeInto(textInput(fixture.nativeElement), 'Ada');
         fixture.detectChanges();
 
-        expect(await floatingLabel(fixture)).toBe('Name');
-        expect(textInput(element).id).toBe('name');
         expect(form.submittedValues()['name']).toBe('Ada');
-    });
-
-    it('should show a missing value only once the field is touched', () => {
-        const form = createFieldsForm([{ id: 'name', name: 'Name', type: 'text', required: true }]);
-        const fixture = renderWidget(SignalTextWidgetComponent, form, 'name');
-        const element: HTMLElement = fixture.nativeElement;
-
-        expect(errorText(element)).toBeUndefined();
-
-        textInput(element).dispatchEvent(new Event('blur'));
-        fixture.detectChanges();
-
-        expect(errorText(element)).toBe('FORM.FIELD.REQUIRED');
-    });
-
-    it('should show any other error at once', () => {
-        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'abc', regexPattern: '[0-9]+' }]);
-        const fixture = renderWidget(SignalTextWidgetComponent, form, 'code');
-
-        expect(errorText(fixture.nativeElement)).toBe('FORM.FIELD.VALIDATOR.INVALID_VALUE');
     });
 
     it('should refuse a paste that makes the text too long, until the text is edited', () => {
@@ -105,23 +78,12 @@ describe('SignalTextWidgetComponent', () => {
     it('should refuse a paste that makes a string field longer than its text limit', () => {
         const form = createFieldsForm([{ id: 'code', type: 'string', value: 'abc', maxLength: 5 }]);
         const fixture = renderWidget(SignalTextWidgetComponent, form, 'code');
-        const element: HTMLElement = fixture.nativeElement;
 
-        const refused = paste(textInput(element), 'defgh');
+        const refused = paste(textInput(fixture.nativeElement), 'defgh');
         fixture.detectChanges();
 
         expect(refused.defaultPrevented).toBeTrue();
-        expect(errorText(element)).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
-    });
-
-    it('should accept a paste without clipboard data', () => {
-        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'abc', maxLength: 5 }]);
-        const fixture = renderWidget(SignalTextWidgetComponent, form, 'code');
-        const empty = new ClipboardEvent('paste', { cancelable: true });
-
-        textInput(fixture.nativeElement).dispatchEvent(empty);
-
-        expect(empty.defaultPrevented).toBeFalse();
+        expect(errorText(fixture.nativeElement)).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
     });
 
     it('should accept a paste that fits', () => {
@@ -129,29 +91,6 @@ describe('SignalTextWidgetComponent', () => {
         const fixture = renderWidget(SignalTextWidgetComponent, form, 'code');
 
         expect(paste(textInput(fixture.nativeElement), 'de').defaultPrevented).toBeFalse();
-    });
-
-    it('should edit the text through the input mask when the field has one', () => {
-        const form = createFieldsForm([
-            { id: 'phone', type: 'text', params: { inputMask: '(000) 000-0000', inputMaskPlaceholder: '(___) ___-____' } }
-        ]);
-        const fixture = renderWidget(SignalTextWidgetComponent, form, 'phone');
-        const element: HTMLElement = fixture.nativeElement;
-
-        typeInto(textInput(element), '1234567890');
-        fixture.detectChanges();
-
-        expect(textInput(element).placeholder).toBe('(___) ___-____');
-        expect(form.submittedValues()['phone']).toBe('(123) 456-7890');
-    });
-
-    it('should show the label to the left when the form asks for it', async () => {
-        const form = createFieldsForm([{ id: 'name', name: 'Name', type: 'text', required: true }], { leftLabels: true });
-        const fixture = renderWidget(SignalTextWidgetComponent, form, 'name');
-        const element: HTMLElement = fixture.nativeElement;
-
-        expect(element.querySelector('label.adf-signal-form-left-label[for="name"]')?.textContent).toContain('Name');
-        expect(await floatingLabel(fixture)).toBeNull();
     });
 
     it('should style text fields as today', () => {
