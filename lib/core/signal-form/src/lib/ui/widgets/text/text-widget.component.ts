@@ -16,26 +16,10 @@
  */
 
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
-import { FormField } from '@angular/forms/signals';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { TranslatePipe } from '@ngx-translate/core';
-import { maxLengthOf, textMaxLength } from '../../../validation/field-validators';
-import { SignalInputMaskDirective } from '../../controls/input-mask.directive';
-import { SignalFieldErrorComponent } from '../field-error/field-error.component';
+import { textMaxLength } from '../../../validation/field-validators';
 import { maxLengthMessage } from '../field-error-message';
-import { SignalLeftLabelComponent } from '../left-label/left-label.component';
 import { SignalFormWidget } from '../signal-form-widget';
-
-const TEXT_WIDGET_IMPORTS = [
-    FormField,
-    MatFormFieldModule,
-    MatInputModule,
-    TranslatePipe,
-    SignalInputMaskDirective,
-    SignalLeftLabelComponent,
-    SignalFieldErrorComponent
-];
+import { TEXT_WIDGET_IMPORTS } from './text-widget-imports';
 
 const PASTE_INPUT_TYPE = 'insertFromPaste';
 
@@ -84,30 +68,6 @@ export class SignalTextWidgetComponent extends SignalFormWidget<string> {
             this.pasteRejected.set(false);
         }
     }
-}
-
-@Component({
-    selector: 'adf-signal-integer-widget',
-    templateUrl: './text-widget.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: TEXT_WIDGET_IMPORTS
-})
-export class SignalIntegerWidgetComponent extends SignalTextWidgetComponent {
-    protected override readonly widgetClass: string = 'adf-number-widget';
-    protected override readonly labelAutomationId: string = 'adf-number-widget-label';
-    protected override readonly pasteLimit = computed(() => maxLengthOf(this.definition()));
-}
-
-@Component({
-    selector: 'adf-signal-decimal-widget',
-    templateUrl: './text-widget.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: TEXT_WIDGET_IMPORTS
-})
-export class SignalDecimalWidgetComponent extends SignalTextWidgetComponent {
-    protected override readonly widgetClass: string = 'adf-decimal-widget';
-    protected override readonly labelAutomationId: string = 'adf-decimal-widget-label';
-    protected override readonly pasteLimit = computed(() => maxLengthOf(this.definition()));
 }
 
 const isPasteInput = (event: Event): boolean => event instanceof InputEvent && event.inputType === PASTE_INPUT_TYPE;

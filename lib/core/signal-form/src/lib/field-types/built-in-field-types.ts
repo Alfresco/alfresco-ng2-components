@@ -57,8 +57,8 @@ import type { FieldTypeDefinition, FieldTypeResolver } from './field-type-defini
 const TEXT_VALIDATORS = [requiredValidator, minLengthValidator, maxLengthValidator, patternValidator];
 
 const textWidget = () => import('../ui/widgets/text/text-widget.component').then((widgets) => widgets.SignalTextWidgetComponent);
-const integerWidget = () => import('../ui/widgets/text/text-widget.component').then((widgets) => widgets.SignalIntegerWidgetComponent);
-const decimalWidget = () => import('../ui/widgets/text/text-widget.component').then((widgets) => widgets.SignalDecimalWidgetComponent);
+const integerWidget = () => import('../ui/widgets/integer/integer-widget.component').then((widgets) => widgets.SignalIntegerWidgetComponent);
+const decimalWidget = () => import('../ui/widgets/decimal/decimal-widget.component').then((widgets) => widgets.SignalDecimalWidgetComponent);
 
 const TEXT_FIELD_TYPE: FieldTypeDefinition = { type: FormFieldType.Text, component: textWidget, validators: TEXT_VALIDATORS };
 

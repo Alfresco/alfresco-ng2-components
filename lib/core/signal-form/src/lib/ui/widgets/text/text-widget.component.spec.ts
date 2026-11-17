@@ -20,7 +20,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { NoopTranslateModule } from '../../../../../../src/lib/testing/noop-translate.module';
 import { createFieldsForm, renderWidget, typeInto } from '../../testing/widget-testing.mock';
-import { SignalDecimalWidgetComponent, SignalIntegerWidgetComponent, SignalTextWidgetComponent } from './text-widget.component';
+import { SignalTextWidgetComponent } from './text-widget.component';
 
 describe('SignalTextWidgetComponent', () => {
     const errorText = (element: HTMLElement): string | undefined => element.querySelector('.adf-error-text')?.textContent?.trim();
@@ -114,20 +114,6 @@ describe('SignalTextWidgetComponent', () => {
         expect(errorText(element)).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
     });
 
-    it('should refuse a paste into an integer field longer than its default limit', () => {
-        const form = createFieldsForm([{ id: 'count', type: 'integer' }]);
-        const fixture = renderWidget(SignalIntegerWidgetComponent, form, 'count');
-
-        expect(paste(textInput(fixture.nativeElement), '1'.repeat(11)).defaultPrevented).toBeTrue();
-    });
-
-    it('should not limit a paste into a field without a maximum length', () => {
-        const form = createFieldsForm([{ id: 'ratio', type: 'bigdecimal' }]);
-        const fixture = renderWidget(SignalDecimalWidgetComponent, form, 'ratio');
-
-        expect(paste(textInput(fixture.nativeElement), '1'.repeat(2000)).defaultPrevented).toBeFalse();
-    });
-
     it('should accept a paste without clipboard data', () => {
         const form = createFieldsForm([{ id: 'code', type: 'text', value: 'abc', maxLength: 5 }]);
         const fixture = renderWidget(SignalTextWidgetComponent, form, 'code');
@@ -168,13 +154,9 @@ describe('SignalTextWidgetComponent', () => {
         expect(await floatingLabel(fixture)).toBeNull();
     });
 
-    it('should style integer and decimal fields as today', () => {
-        const form = createFieldsForm([
-            { id: 'count', type: 'integer' },
-            { id: 'ratio', type: 'bigdecimal' }
-        ]);
+    it('should style text fields as today', () => {
+        const form = createFieldsForm([{ id: 'name', type: 'text' }]);
 
-        expect(renderWidget(SignalIntegerWidgetComponent, form, 'count').nativeElement.querySelector('.adf-number-widget')).not.toBeNull();
-        expect(renderWidget(SignalDecimalWidgetComponent, form, 'ratio').nativeElement.querySelector('.adf-decimal-widget')).not.toBeNull();
+        expect(renderWidget(SignalTextWidgetComponent, form, 'name').nativeElement.querySelector('.adf-text-widget')).not.toBeNull();
     });
 });
