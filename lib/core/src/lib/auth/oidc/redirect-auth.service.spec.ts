@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { fakeAsync, flush, flushMicrotasks, TestBed, tick } from '@angular/core/testing';
 import {
     OAuthService,
     OAuthEvent,
@@ -405,6 +405,7 @@ describe('RedirectAuthService', () => {
         } catch (error) {
             expect(error).toEqual(jasmine.any(Error));
         }
+        flush();
     }));
 
     it('should logout user if the second time the refresh token failed', fakeAsync(async () => {
@@ -416,6 +417,118 @@ describe('RedirectAuthService', () => {
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorCausedBySecondTokenRefreshError);
     }));
+
+    describe('token refresh failure recovery', () => {
+        const TOKEN_REFRESH_RETRY_DELAY_MS = 5000;
+        const refreshError = (reason: string) => new OAuthErrorEvent('token_refresh_error', { reason }, {});
+
+        beforeEach(() => {
+            Object.assign(oauthServiceSpy, { responseType: 'code', useSilentRefresh: false });
+            oauthServiceSpy.refreshToken.and.resolveTo({} as TokenResponse);
+        });
+
+        it('should retry the token refresh once when the first refresh fails', fakeAsync(() => {
+            oauthEvents$.next(new OAuthErrorEvent('token_error', { reason: 'network error' }, {}));
+
+            tick(TOKEN_REFRESH_RETRY_DELAY_MS - 1);
+            expect(oauthServiceSpy.refreshToken).not.toHaveBeenCalled();
+
+            tick(1);
+            expect(oauthServiceSpy.refreshToken).toHaveBeenCalledTimes(1);
+            expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+        }));
+
+        it('should logout and stop retrying when the retried refresh fails too', fakeAsync(() => {
+            const retryError = refreshError('refresh token expired');
+            oauthServiceSpy.logOut.and.callFake(() => oauthEvents$.next(new OAuthSuccessEvent('logout')));
+            oauthServiceSpy.refreshToken.and.callFake(() => {
+                oauthEvents$.next(retryError);
+                return Promise.reject(new Error('refresh token expired'));
+            });
+
+            oauthEvents$.next(refreshError('network error'));
+            tick(TOKEN_REFRESH_RETRY_DELAY_MS);
+            flushMicrotasks();
+            tick(TOKEN_REFRESH_RETRY_DELAY_MS);
+
+            expect(oauthServiceSpy.refreshToken).toHaveBeenCalledTimes(1);
+            expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
+            expect(oauthLoggerSpy.error).toHaveBeenCalledWith(retryError);
+        }));
+
+        it('should not retry when a new token is received before the retry', fakeAsync(() => {
+            oauthEvents$.next(refreshError('network error'));
+            oauthEvents$.next(new OAuthSuccessEvent('token_received'));
+
+            tick(TOKEN_REFRESH_RETRY_DELAY_MS);
+
+            expect(oauthServiceSpy.refreshToken).not.toHaveBeenCalled();
+        }));
+
+        it('should not retry when the user logs out before the retry', fakeAsync(() => {
+            oauthEvents$.next(refreshError('network error'));
+            oauthEvents$.next(new OAuthSuccessEvent('logout'));
+
+            tick(TOKEN_REFRESH_RETRY_DELAY_MS);
+
+            expect(oauthServiceSpy.refreshToken).not.toHaveBeenCalled();
+        }));
+
+        it('should not logout when a refresh fails again after a token was received in between', fakeAsync(() => {
+            oauthEvents$.next(refreshError('network error'));
+            oauthEvents$.next(new OAuthSuccessEvent('token_received'));
+            oauthEvents$.next(refreshError('another network error'));
+
+            expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+            flush();
+        }));
+
+        it('should wait until the browser is back online before retrying', fakeAsync(() => {
+            const onLineSpy = spyOnProperty(navigator, 'onLine').and.returnValue(false);
+
+            oauthEvents$.next(refreshError('network error'));
+            tick(TOKEN_REFRESH_RETRY_DELAY_MS * 2);
+            expect(oauthServiceSpy.refreshToken).not.toHaveBeenCalled();
+
+            onLineSpy.and.returnValue(true);
+            window.dispatchEvent(new Event('online'));
+
+            expect(oauthServiceSpy.refreshToken).toHaveBeenCalledTimes(1);
+        }));
+
+        it('should retry with the silent refresh when the refresh token flow is not used', fakeAsync(() => {
+            Object.assign(oauthServiceSpy, { responseType: 'code', useSilentRefresh: true });
+            oauthServiceSpy.silentRefresh.and.resolveTo(new OAuthSuccessEvent('silently_refreshed'));
+
+            oauthEvents$.next(refreshError('network error'));
+            tick(TOKEN_REFRESH_RETRY_DELAY_MS);
+
+            expect(oauthServiceSpy.silentRefresh).toHaveBeenCalledTimes(1);
+            expect(oauthServiceSpy.refreshToken).not.toHaveBeenCalled();
+        }));
+
+        it('should retry silent refresh after a silent refresh error', fakeAsync(() => {
+            Object.assign(oauthServiceSpy, { responseType: 'code', useSilentRefresh: true });
+            oauthServiceSpy.silentRefresh.and.resolveTo(new OAuthSuccessEvent('silently_refreshed'));
+
+            oauthEvents$.next(new OAuthErrorEvent('silent_refresh_error', { reason: 'network error' }, {}));
+            expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+            tick(TOKEN_REFRESH_RETRY_DELAY_MS);
+            expect(oauthServiceSpy.silentRefresh).toHaveBeenCalledTimes(1);
+            expect(oauthServiceSpy.refreshToken).not.toHaveBeenCalled();
+        }));
+
+        it('should retry silent refresh after a silent refresh timeout', fakeAsync(() => {
+            Object.assign(oauthServiceSpy, { responseType: 'code', useSilentRefresh: true });
+            oauthServiceSpy.silentRefresh.and.resolveTo(new OAuthSuccessEvent('silently_refreshed'));
+
+            oauthEvents$.next(new OAuthErrorEvent('silent_refresh_timeout', { reason: 'timeout' }, {}));
+            expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+            tick(TOKEN_REFRESH_RETRY_DELAY_MS);
+            expect(oauthServiceSpy.silentRefresh).toHaveBeenCalledTimes(1);
+            expect(oauthServiceSpy.refreshToken).not.toHaveBeenCalled();
+        }));
+    });
 
     it('should logout user if token_refresh_error is emitted because of clock out of sync', () => {
         const expectedErrorMessage = new Error(
