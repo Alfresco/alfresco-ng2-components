@@ -175,7 +175,7 @@ export class RedirectAuthService extends AuthService {
 
         this.firstOauthErrorEventExcludingTokenRefreshError$ = this.oauthErrorEvent$.pipe(
             filter(
-                (event) =>                 event.type !== 'token_refresh_error' &&
+                (event) => event.type !== 'token_refresh_error' &&
                 event.type !== 'token_error' &&
                 event.type !== 'silent_refresh_error' &&
                 event.type !== 'silent_refresh_timeout'
