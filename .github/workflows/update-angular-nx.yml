@@ -177,7 +177,7 @@ jobs:
 
   unit-tests:
     name: "🎯 Test ${{ matrix.project }}"
-    needs: [migrate, test-matrix]
+    needs: [migrate, clean-overrides, test-matrix]
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
