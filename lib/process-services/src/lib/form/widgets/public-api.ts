@@ -20,6 +20,7 @@ import { DocumentWidgetComponent } from './document/document.widget';
 import { ContentWidgetComponent } from './document/content.widget';
 import { PeopleWidgetComponent } from './people/people.widget';
 import { FunctionalGroupWidgetComponent } from './functional-group/functional-group.widget';
+import { CheckboxGroupWidgetComponent } from './checkbox-group/checkbox-group.widget';
 import { RadioButtonsWidgetComponent } from './radio-buttons/radio-buttons.widget';
 import { DropdownWidgetComponent } from './dropdown/dropdown.widget';
 import { TypeaheadWidgetComponent } from './typeahead/typeahead.widget';
@@ -31,6 +32,7 @@ export * from './content-widget/public-api';
 export * from './document/content.widget';
 export * from './document/document.widget';
 export * from './people/people.widget';
+export * from './checkbox-group/checkbox-group.widget';
 export * from './radio-buttons/radio-buttons.widget';
 export * from './functional-group/functional-group.widget';
 export * from './typeahead/typeahead.widget';
@@ -51,6 +53,7 @@ export const WIDGET_DIRECTIVES = [
     FileViewerWidgetComponent,
     FunctionalGroupWidgetComponent,
     PeopleWidgetComponent,
+    CheckboxGroupWidgetComponent,
     RadioButtonsWidgetComponent,
     TypeaheadWidgetComponent,
     UploadWidgetComponent

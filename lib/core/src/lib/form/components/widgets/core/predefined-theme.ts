@@ -87,6 +87,32 @@ export const predefinedTheme: PredefinedThemeModel = {
                 }
             }
         },
+        'checkbox-group': {
+            normal: {
+                name: 'FORM.FIELD_STYLE.PREDEFINED.CHECKBOX_GROUP.NORMAL',
+                styles: {
+                    '--adf-checkbox-group-font-size': '16px',
+                    '--adf-checkbox-group-font-weight': 'normal',
+                    '--adf-checkbox-group-color': 'inherit'
+                }
+            },
+            strong: {
+                name: 'FORM.FIELD_STYLE.PREDEFINED.CHECKBOX_GROUP.STRONG',
+                styles: {
+                    '--adf-checkbox-group-font-size': '16px',
+                    '--adf-checkbox-group-font-weight': 'bold',
+                    '--adf-checkbox-group-color': 'inherit'
+                }
+            },
+            heading: {
+                name: 'FORM.FIELD_STYLE.PREDEFINED.CHECKBOX_GROUP.HEADING',
+                styles: {
+                    '--adf-checkbox-group-font-size': '20px',
+                    '--adf-checkbox-group-font-weight': 'normal',
+                    '--adf-checkbox-group-color': 'inherit'
+                }
+            }
+        },
         'radio-buttons': {
             normal: {
                 name: 'FORM.FIELD_STYLE.PREDEFINED.RADIO_BUTTONS.NORMAL',

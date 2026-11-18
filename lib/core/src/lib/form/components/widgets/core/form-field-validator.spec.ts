@@ -112,6 +112,74 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBe(true);
         });
 
+        it('should validate multiple uploads before serializing their values', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                params: { multiple: true },
+                value: [{ id: 'file1' }],
+                required: true
+            });
+
+            expect(validator.validate(field)).toBeTrue();
+            field.value = [];
+            expect(validator.validate(field)).toBeFalse();
+        });
+
+        for (const type of [FormFieldTypes.CHECKBOX_GROUP, FormFieldTypes.DYNAMIC_TABLE]) {
+            it(`should require a non-empty collection for ${type}`, () => {
+                const field = new FormFieldModel(new FormModel(), { type, required: true });
+
+                for (const value of [null, [], 'invalid']) {
+                    field.value = value;
+                    expect(validator.validate(field)).toBeFalse();
+                    expect(field.validationSummary.message).toBe('');
+                }
+
+                field.value = [{ id: 'one', name: 'One' }];
+                expect(validator.validate(field)).toBeTrue();
+                field.required = false;
+                field.value = [];
+                expect(validator.validate(field)).toBeTrue();
+            });
+        }
+
+        for (const type of [FormFieldTypes.PEOPLE, FormFieldTypes.FUNCTIONAL_GROUP, FormFieldTypes.TYPEAHEAD]) {
+            describe(`${type} with multiple selection (unchanged behavior)`, () => {
+                let field: FormFieldModel;
+
+                beforeEach(() => {
+                    field = new FormFieldModel(new FormModel(), { type, selectionType: 'multiple', required: true });
+                });
+
+                it('should fail for an empty value', () => {
+                    for (const value of [null, undefined, '']) {
+                        field.value = value;
+                        expect(validator.validate(field)).toBeFalse();
+                    }
+                });
+
+                it('should accept any non-empty value, including a single non-array value', () => {
+                    for (const value of [{ id: 1, name: 'One' }, 'one', [{ id: 1, name: 'One' }]]) {
+                        field.value = value;
+                        expect(validator.validate(field)).toBeTrue();
+                    }
+                });
+
+                it('should not apply the checkbox group array rules', () => {
+                    field.value = [];
+                    expect(validator.validate(field)).toBeTrue();
+                });
+            });
+        }
+
+        it('should reject malformed multiple selections after normalization', () => {
+            const field = new FormFieldModel(new FormModel(), { type: FormFieldTypes.CHECKBOX_GROUP, required: true });
+            field.value = [{}];
+
+            expect(validator.validate(field)).toBeFalse();
+            expect(field.validationSummary.message).toBe('');
+        });
+
         it('should fail (display error) for text', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,

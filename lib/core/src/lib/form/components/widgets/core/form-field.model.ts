@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { getCheckboxGroupValue } from './checkbox-group-value';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { ContainerColumnModel } from './container-column.model';
 import { ErrorMessageModel } from './error-message.model';
@@ -260,7 +261,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     get hasMultipleValues() {
-        return this.selectionType === 'multiple' || this.params.multiple;
+        return this.type === FormFieldTypes.CHECKBOX_GROUP || this.selectionType === 'multiple' || this.params.multiple;
     }
 
     // a date, datetime or dropdown widget that set its own validation summary owns the result until it clears it
@@ -702,6 +703,12 @@ export class FormFieldModel extends FormWidgetModel {
     parseValue(json: any, initialValue?: any): any {
         const value = initialValue ?? (Object.prototype.hasOwnProperty.call(json, 'value') && json.value !== undefined ? json.value : null);
 
+        if (json.type === FormFieldTypes.CHECKBOX_GROUP) {
+            const selection = getCheckboxGroupValue(value, this.options);
+            this.addOptions(selection);
+            return selection;
+        }
+
         /*
          This is needed due to Activiti issue related to reading dropdown values as value string
          but saving back as object: { id: <id>, name: <name> }
@@ -877,6 +884,8 @@ export class FormFieldModel extends FormWidgetModel {
 
     getFormValue(repeatableDefinition?: Record<string, unknown>) {
         switch (this.type) {
+            case FormFieldTypes.CHECKBOX_GROUP:
+                return getCheckboxGroupValue(this.value, this.options);
             case FormFieldTypes.DROPDOWN: {
                 if (!this.value) {
                     return null;
