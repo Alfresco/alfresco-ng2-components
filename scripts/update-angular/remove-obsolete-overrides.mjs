@@ -17,6 +17,7 @@
 
 import fs from 'node:fs';
 import { main } from './lib/cli.mjs';
+import { escapeTableCell } from './lib/markdown.mjs';
 import { removeOverrides } from './lib/overrides.mjs';
 
 /**
@@ -28,7 +29,9 @@ function decisionsTable(decisions) {
     return [
         '| Override | Target | Reason |',
         '| --- | --- | --- |',
-        ...decisions.map((decision) => `| \`${decision.key}\` | \`${decision.target}\` | ${decision.reason} |`)
+        ...decisions.map(
+            (decision) => `| \`${escapeTableCell(decision.key)}\` | \`${escapeTableCell(decision.target)}\` | ${escapeTableCell(decision.reason)} |`
+        )
     ];
 }
 

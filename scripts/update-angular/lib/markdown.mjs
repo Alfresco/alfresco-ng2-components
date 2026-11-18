@@ -31,6 +31,15 @@ export function fenced(text) {
 }
 
 /**
+ * Escapes the pipes of a text so that it stays in one cell of a markdown table, such as a range with `||`.
+ * @param text cell value
+ * @returns escaped text
+ */
+export function escapeTableCell(text) {
+    return String(text).replaceAll('|', '\\|');
+}
+
+/**
  * Shortens markdown to a number of characters, cutting at a line break and closing the collapsible blocks left open.
  * @param text markdown to shorten
  * @param limit maximum number of characters of the result

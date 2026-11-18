@@ -19,6 +19,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import { main } from './lib/cli.mjs';
+import { escapeTableCell } from './lib/markdown.mjs';
 import { findPeerIssues, issueKey, readBaselineKeys } from './lib/peers.mjs';
 import { majorVersion } from './lib/versions.mjs';
 
@@ -31,7 +32,10 @@ function issuesTable(issues) {
     return [
         '| Peer | Installed | Wanted | Required by |',
         '| --- | --- | --- | --- |',
-        ...issues.map((issue) => `| \`${issue.peer}\` | ${issue.installed} | \`${issue.wanted}\` | \`${issue.requiredBy}\` |`)
+        ...issues.map(
+            (issue) =>
+                `| \`${issue.peer}\` | ${escapeTableCell(issue.installed)} | \`${escapeTableCell(issue.wanted)}\` | \`${escapeTableCell(issue.requiredBy)}\` |`
+        )
     ];
 }
 
@@ -68,7 +72,7 @@ function upgradesSection(aligned) {
               '',
               '| Package | Range |',
               '| --- | --- |',
-              ...aligned.skipped.map((dependency) => `| \`${dependency.name}\` | \`${dependency.range}\` |`)
+              ...aligned.skipped.map((dependency) => `| \`${dependency.name}\` | \`${escapeTableCell(dependency.range)}\` |`)
           ].join('\n')
         : '';
     const manual = aligned.manual.length
