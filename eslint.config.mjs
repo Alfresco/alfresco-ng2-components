@@ -275,7 +275,12 @@ export default [
             'rxjs/no-subject-unsubscribe': 'error',
             'rxjs/no-subject-value': 'error',
             'rxjs/no-unsafe-takeuntil': 'error',
-            'unicorn/filename-case': 'error',
+            'unicorn/filename-case': [
+                'error',
+                {
+                    ignore: ['^\\d+_\\d+_\\d+$']
+                }
+            ],
             'unicorn/prefer-optional-catch-binding': 'error',
             '@typescript-eslint/no-unused-expressions': [
                 'error',
