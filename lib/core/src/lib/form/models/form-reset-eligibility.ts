@@ -31,6 +31,7 @@ const RESETTABLE_TYPES = [
     FormFieldTypes.BOOLEAN,
     FormFieldTypes.DATE,
     FormFieldTypes.DATETIME,
+    FormFieldTypes.CHECKBOX_GROUP,
     FormFieldTypes.DROPDOWN,
     FormFieldTypes.RADIO_BUTTONS,
     FormFieldTypes.PEOPLE,
