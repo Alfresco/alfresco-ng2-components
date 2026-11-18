@@ -28,6 +28,11 @@ const UPDATE_STAGES = [
     { name: 'update-angular-packages', todo: 'Bump the Angular packages with `pnpm nx migrate <package>@<version>`, then run `pnpm install`.' },
     { name: 'align-peers', todo: 'Run `pnpm peers check`, upgrade the packages with unmet peers, then run `pnpm install`.' },
     { name: 'run-migrations', todo: 'Run `pnpm nx migrate --run-migrations --create-commits`, delete `migrations.json`, then run `pnpm install`.' },
+    {
+        name: 'format-and-lint-fix',
+        todo: 'Run `pnpm nx format:write` and `pnpm nx run-many -t lint --fix`, then fix by hand what they report.',
+        continuesOnFailure: true
+    },
     { name: 'lockfile', todo: 'Run `pnpm install` and commit `pnpm-lock.yaml`.' },
     {
         name: 'peers',
@@ -175,7 +180,9 @@ function nextSteps(steps) {
  * @returns markdown, empty when the update completed
  */
 function stoppedWarning(steps) {
-    const stopped = steps.find((step) => UPDATE_STAGES.some((stage) => stage.name === step.name) && step.outcome !== 'success');
+    const stopped = steps.find(
+        (step) => UPDATE_STAGES.some((stage) => stage.name === step.name) && !step.continuesOnFailure && step.outcome !== 'success'
+    );
 
     return stopped
         ? `> ⚠️ **The automated update did not complete.** It stopped at \`${stopped.name}\`. This branch holds the work done up to that point, and the steps after it were not run.`

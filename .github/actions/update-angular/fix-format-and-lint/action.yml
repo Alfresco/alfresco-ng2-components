@@ -4,13 +4,24 @@ runs:
   using: "composite"
   steps:
     - name: Format and fix lint
+      id: stage
       shell: bash
       continue-on-error: true
       run: |
-        pnpm nx format:write
-        pnpm nx run-many -t lint --fix --skip-nx-cache
+        {
+          STATUS=0
+          pnpm nx format:write || STATUS=1
+          pnpm nx run-many -t lint --fix --skip-nx-cache || STATUS=1
+          exit $STATUS
+        } 2>&1 | tee "$RUNNER_TEMP/validation.log"
     - name: Commit fixes
       shell: bash
       run: |
         git add -A
         git diff --cached --quiet || git commit -m "chore: apply format and lint fixes"
+    - name: Record result
+      if: ${{ always() }}
+      uses: ./.github/actions/update-angular/record-validation-result
+      with:
+        name: format-and-lint-fix
+        outcome: ${{ steps.stage.outcome }}
