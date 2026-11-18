@@ -17,7 +17,7 @@
 
 import fs from 'node:fs';
 import { main } from './lib/cli.mjs';
-import { readResolvedVersions } from './lib/lockfile.mjs';
+import { readDependencyEdges, readResolvedVersions } from './lib/lockfile.mjs';
 import { parseSelector, readOverrides } from './lib/overrides.mjs';
 import { compareVersions, satisfiesRange } from './lib/versions.mjs';
 
@@ -32,13 +32,37 @@ function meetsTarget(version, target) {
 }
 
 /**
+ * Lists the versions of a package that the override would apply to, without any override.
+ * For a parent selector, only the versions used directly by the matching versions of the parent count.
+ * @param selector parsed override key
+ * @param resolved versions resolved without overrides, by package name
+ * @param edges direct dependencies of every resolved package, or undefined when the lockfile has none
+ * @returns the versions, or a reason when they cannot be told
+ */
+function versionsInScope(selector, resolved, edges) {
+    const { name, range, parent, parentRange } = selector;
+    if (parent && !edges) {
+        return { unknown: `the dependencies of ${parent} cannot be read from the lockfile` };
+    }
+    const versions = parent
+        ? edges
+              .filter((edge) => edge.parent === parent && edge.name === name && (!parentRange || satisfiesRange(edge.parentVersion, parentRange)))
+              .map((edge) => edge.version)
+        : (resolved.get(name) ?? []);
+
+    return { versions: versions.filter((version) => !range || satisfiesRange(version, range)) };
+}
+
+/**
  * Decides whether an override is still needed, based on what the dependencies resolve to without any override.
  * @param override override with its key and target
  * @param resolved versions resolved without overrides, by package name
+ * @param edges direct dependencies of every resolved package, or undefined when the lockfile has none
  * @returns the override with `obsolete` and the reason of the decision
  */
-function judgeOverride(override, resolved) {
-    const { name, range, parent } = parseSelector(override.key);
+function judgeOverride(override, resolved, edges) {
+    const selector = parseSelector(override.key);
+    const { name, range, parent } = selector;
     const decision = (obsolete, reason) => ({ ...override, obsolete, reason });
 
     if (!/^[<>=~^\d]/.test(override.target)) {
@@ -51,9 +75,13 @@ function judgeOverride(override, resolved) {
         return decision(true, `${name} is no longer in the dependency tree`);
     }
 
-    const inScope = resolved.get(name).filter((version) => !range || satisfiesRange(version, range));
+    const { versions: inScope, unknown } = versionsInScope(selector, resolved, edges);
+    if (unknown) {
+        return decision(false, unknown);
+    }
     if (!inScope.length) {
-        return decision(true, `no version of ${name} matching ${range} is resolved anymore`);
+        const wanted = `${name}${range ? `@${range}` : ''}`;
+        return decision(true, parent ? `${override.key.split('>').at(-2)} no longer depends on ${wanted}` : `no ${wanted} is resolved anymore`);
     }
 
     const tooLow = inScope.filter((version) => !meetsTarget(version, override.target));
@@ -70,7 +98,8 @@ function judgeOverride(override, resolved) {
  */
 function findObsoleteOverrides(workspaceFile, freshLockfile, decisionsFile) {
     const resolved = readResolvedVersions(freshLockfile);
-    const decisions = readOverrides(workspaceFile).map((override) => judgeOverride(override, resolved));
+    const edges = readDependencyEdges(freshLockfile);
+    const decisions = readOverrides(workspaceFile).map((override) => judgeOverride(override, resolved, edges));
 
     fs.writeFileSync(decisionsFile, `${JSON.stringify(decisions, null, 2)}\n`);
 }

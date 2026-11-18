@@ -91,12 +91,12 @@ export function removeOverrides(file, keys) {
 /**
  * Splits an override key such as "parent@1>name@2" into the overridden package, its version range and its parent.
  * @param key override key
- * @returns name, range and parent name
+ * @returns name, range, parent name and parent range
  */
 export function parseSelector(key) {
     const parts = key.split('>');
     const [, name, range] = parts.at(-1).match(/^(@?[^@]+)(?:@(.+))?$/);
-    const parent = parts.length > 1 ? parts.at(-2).match(/^(@?[^@]+)/)[1] : undefined;
+    const [, parent, parentRange] = parts.length > 1 ? parts.at(-2).match(/^(@?[^@]+)(?:@(.+))?$/) : [];
 
-    return { name, range, parent };
+    return { name, range, parent, parentRange };
 }

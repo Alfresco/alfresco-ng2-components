@@ -18,6 +18,10 @@
 import fs from 'node:fs';
 
 const PACKAGE_KEY = /^ {2}'?(@?[^@'\s]+)@([^':\s]+)'?:$/;
+const SNAPSHOT_KEY = /^ {2}'?(@?[^@'\s]+)@([^'(:\s]+)\S*:$/;
+const SNAPSHOT_SECTION = /^ {4}(\w+):$/;
+const SNAPSHOT_DEPENDENCY = /^ {6}'?(@?[^':\s]+)'?: '?([^'(\s]+)/;
+const DEPENDENCY_SECTIONS = ['dependencies', 'optionalDependencies'];
 
 /**
  * Reads the versions the lockfile resolved for every package.
@@ -38,4 +42,43 @@ export function readResolvedVersions(file) {
     }
 
     return resolved;
+}
+
+/**
+ * Reads which version of every direct dependency each resolved package uses.
+ * @param file path of pnpm-lock.yaml
+ * @returns edges with the parent name and version and the dependency name and version, or undefined when the lockfile has no snapshots
+ */
+export function readDependencyEdges(file) {
+    const lines = fs.readFileSync(file, 'utf8').split('\n');
+    const start = lines.indexOf('snapshots:');
+    if (start === -1) {
+        return undefined;
+    }
+
+    const edges = [];
+    let parent;
+    let section;
+    for (const line of lines.slice(start + 1)) {
+        if (/^\S/.test(line)) {
+            break;
+        }
+        const key = line.match(SNAPSHOT_KEY);
+        if (key) {
+            parent = { name: key[1], version: key[2] };
+            section = undefined;
+            continue;
+        }
+        const header = line.match(SNAPSHOT_SECTION);
+        if (header) {
+            section = header[1];
+            continue;
+        }
+        const dependency = line.match(SNAPSHOT_DEPENDENCY);
+        if (dependency && parent && DEPENDENCY_SECTIONS.includes(section)) {
+            edges.push({ parent: parent.name, parentVersion: parent.version, name: dependency[1], version: dependency[2] });
+        }
+    }
+
+    return edges;
 }
