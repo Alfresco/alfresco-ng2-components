@@ -7,16 +7,12 @@ inputs:
   command:
     description: "Shell command that runs the check"
     required: true
-  cache-suffix:
-    description: "Suffix of the Nx cache key"
-    required: true
 runs:
   using: "composite"
   steps:
     - name: Setup environment
       uses: ./.github/actions/setup
       with:
-        cache-suffix: ${{ inputs.cache-suffix }}
         full-setup: 'false'
     - name: Run check
       id: check

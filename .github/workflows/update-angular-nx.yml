@@ -36,7 +36,6 @@ jobs:
       - name: Setup environment
         uses: ./.github/actions/setup
         with:
-          cache-suffix: update-angular
           full-setup: 'false'
       - name: Prepare branch
         id: prepare
@@ -104,7 +103,6 @@ jobs:
       - name: Setup environment
         uses: ./.github/actions/setup
         with:
-          cache-suffix: update-angular-overrides
           full-setup: 'false'
       - name: Configure git identity
         uses: ./.github/actions/update-angular/configure-git-identity
@@ -143,7 +141,6 @@ jobs:
         with:
           name: build
           command: pnpm nx run-many -t build --configuration=production --exclude=stories --skip-nx-cache
-          cache-suffix: update-angular-build
 
   lint:
     name: "🔍 Lint"
@@ -161,7 +158,6 @@ jobs:
         with:
           name: lint
           command: pnpm nx run-many -t lint --skip-nx-cache
-          cache-suffix: update-angular-lint
 
   test-matrix:
     name: "🧪 Test matrix"
@@ -199,7 +195,6 @@ jobs:
         with:
           name: test-${{ matrix.project }}
           command: xvfb-run --auto-servernum pnpm nx run ${{ matrix.project }}:test --skip-nx-cache
-          cache-suffix: update-angular-test-${{ matrix.project }}
 
   pull-request:
     name: "🔀 Open pull request"

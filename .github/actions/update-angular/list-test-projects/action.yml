@@ -10,7 +10,6 @@ runs:
     - name: Setup environment
       uses: ./.github/actions/setup
       with:
-        cache-suffix: update-angular-test-matrix
         full-setup: 'false'
     - name: List projects
       id: matrix
