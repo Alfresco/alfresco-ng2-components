@@ -19,10 +19,12 @@ import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
-import { FormFieldModel, FormFieldTypes, FormModel, FormService } from '@alfresco/adf-core';
+import { FormFieldEvent, FormFieldModel, FormFieldTypes, FormModel, FormRenderingService, FormService } from '@alfresco/adf-core';
 import { of, Subject, throwError } from 'rxjs';
 import { CheckboxGroupWidgetComponent } from './checkbox-group.widget';
 import { TaskFormService } from '../../services/task-form.service';
+import { FormComponent } from '../../form.component';
+import { ProcessFormRenderingService } from '../../process-form-rendering.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 
 const options = [
@@ -170,13 +172,13 @@ describe('CheckboxGroupWidgetComponent', () => {
         });
     }
 
-    it('should show required validation after interaction and on submission', async () => {
+    it('should show required validation after interaction', async () => {
         widget.field = createField({ required: true, tooltip: 'Choose some', alignmentType: 'horizontal', className: 'custom' });
         fixture.detectChanges();
         expect(widget.field.isValid).toBeFalse();
         expect(widget.field.validationSummary.isActive()).toBeFalse();
         expect(fixture.nativeElement.querySelector('error-widget')).toBeNull();
-        widget.field.form.showAllValidationErrors = true;
+        widget.markAsTouched();
         fixture.detectChanges();
         expect(fixture.nativeElement.querySelector('error-widget')).not.toBeNull();
         expect(fixture.nativeElement.querySelectorAll('.adf-error-text').length).toBe(1);
@@ -396,5 +398,85 @@ describe('CheckboxGroupWidgetComponent without zone.js', () => {
 
         expect(group.getAttribute('aria-busy')).toBe('false');
         expect((await loader.getAllHarnesses(MatCheckboxHarness)).length).toBe(2);
+    });
+});
+
+describe('CheckboxGroupWidgetComponent with OnPush change detection', () => {
+    let fixture: ComponentFixture<CheckboxGroupWidgetComponent>;
+    let formService: FormService;
+    let field: FormFieldModel;
+
+    beforeEach(async () => {
+        TestBed.configureTestingModule({
+            imports: [CheckboxGroupWidgetComponent],
+            providers: [
+                provideZonelessChangeDetection(),
+                { provide: TaskFormService, useValue: {} },
+                { provide: ProcessDefinitionService, useValue: {} }
+            ]
+        });
+        formService = TestBed.inject(FormService);
+        field = new FormFieldModel(new FormModel(), { id: 'choices', name: 'Choices', type: FormFieldTypes.CHECKBOX_GROUP, options });
+        fixture = TestBed.createComponent(CheckboxGroupWidgetComponent);
+        fixture.componentRef.setInput('field', field);
+        await fixture.whenStable();
+    });
+
+    it('should re-render when the field value is changed from outside the widget', async () => {
+        field.value = [options[0]];
+        formService.formFieldValueChanged.next(new FormFieldEvent(field.form, field));
+        await fixture.whenStable();
+
+        const boxes = await TestbedHarnessEnvironment.loader(fixture).getAllHarnesses(MatCheckboxHarness);
+        expect(await boxes[0].isChecked()).toBeTrue();
+        expect(await boxes[1].isChecked()).toBeFalse();
+    });
+
+    it('should re-render when the validation summary changes', async () => {
+        fixture.componentInstance.markAsTouched();
+        await fixture.whenStable();
+        expect(fixture.nativeElement.querySelector('[role="group"]').getAttribute('aria-invalid')).not.toBe('true');
+
+        field.required = true;
+        field.validate();
+        await fixture.whenStable();
+
+        expect(fixture.nativeElement.querySelector('[role="group"]').getAttribute('aria-invalid')).toBe('true');
+    });
+});
+
+describe('CheckboxGroupWidgetComponent submission inside a real form without zone.js', () => {
+    it('should show the required error when the form is submitted without forcing change detection', async () => {
+        TestBed.configureTestingModule({
+            imports: [FormComponent],
+            providers: [
+                provideZonelessChangeDetection(),
+                { provide: FormRenderingService, useClass: ProcessFormRenderingService },
+                { provide: TaskFormService, useValue: {} },
+                { provide: ProcessDefinitionService, useValue: {} }
+            ]
+        });
+        const form = new FormModel({
+            id: 'form',
+            fields: [
+                {
+                    id: 'section',
+                    type: 'container',
+                    numberOfColumns: 1,
+                    fields: { 1: [{ id: 'choices', name: 'Choices', type: FormFieldTypes.CHECKBOX_GROUP, required: true, options }] }
+                }
+            ],
+            outcomes: [{ id: 'complete', name: 'Complete' }]
+        });
+        const fixture = TestBed.createComponent(FormComponent);
+        fixture.componentRef.setInput('form', form);
+        await fixture.whenStable();
+        expect(fixture.nativeElement.querySelector('checkbox-group-widget')).withContext('widget rendered').not.toBeNull();
+        expect(fixture.nativeElement.querySelector('.adf-error-text')).toBeNull();
+
+        fixture.componentInstance.onOutcomeRequested('complete');
+        await fixture.whenStable();
+
+        expect(fixture.nativeElement.querySelector('.adf-error-text')).withContext('error shown').not.toBeNull();
     });
 });
