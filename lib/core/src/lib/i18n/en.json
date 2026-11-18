@@ -171,7 +171,7 @@
       "CURRENT_PAGE": "Page {{ number }}",
       "TOTAL_PAGES": "of {{ total }}",
       "ONE_ITEM_FOUND": "1 result found",
-      "TOTAL_ITEMS_FOUND": "{{ total }} results found"
+      "TOTAL_ITEMS_FOUND": "{{ totalItems }} results found"
     },
     "DIALOG": {
       "DOWNLOAD_ZIP": {

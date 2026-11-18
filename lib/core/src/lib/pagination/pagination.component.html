@@ -4,12 +4,10 @@
             {{ itemRangeText }}
         </span>
         <span aria-live="polite" class="cdk-visually-hidden">
-            @if (pagination.totalItems > 0) {
-                @if (pagination.totalItems === 1) {
-                    {{ 'CORE.PAGINATION.ONE_ITEM_FOUND' | translate }}
-                } @else {
-                    {{ 'CORE.PAGINATION.TOTAL_ITEMS_FOUND' | translate: { total: pagination.totalItems } }}
-                }
+            @if (pagination.totalItems === 1) {
+                {{ 'CORE.PAGINATION.ONE_ITEM_FOUND' | translate }}
+            } @else {
+                {{ 'CORE.PAGINATION.TOTAL_ITEMS_FOUND' | translate: { totalItems: pagination.totalItems } }}
             }
         </span>
     </div>

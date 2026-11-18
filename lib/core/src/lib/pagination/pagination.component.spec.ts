@@ -85,7 +85,7 @@ describe('PaginationComponent', () => {
         component.pagination = new FakePaginationInput(1, 1, 10);
         fixture.detectChanges();
 
-        expect(translateSpy).toHaveBeenCalledWith('CORE.PAGINATION.TOTAL_ITEMS_FOUND', { total: 10 });
+        expect(translateSpy).toHaveBeenCalledWith('CORE.PAGINATION.TOTAL_ITEMS_FOUND', { totalItems: 10 });
     });
 
     describe('Single page', () => {
