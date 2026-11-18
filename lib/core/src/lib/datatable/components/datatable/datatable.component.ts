@@ -18,6 +18,8 @@
 import {
     AfterContentInit,
     AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     ContentChild,
     DestroyRef,
@@ -137,6 +139,7 @@ export type ShowHeaderMode = (typeof ShowHeaderMode)[keyof typeof ShowHeaderMode
     ],
     templateUrl: './datatable.component.html',
     styleUrls: ['./datatable.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
         class: 'adf-datatable',
@@ -155,6 +158,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     private readonly sanitizer = inject(DomSanitizer);
     private readonly translateService = inject(TranslateService);
     private readonly focusTrapFactory = inject(ConfigurableFocusTrapFactory);
+    private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
     private static readonly MINIMUM_COLUMN_SIZE = 100;
 
@@ -170,9 +174,24 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
 
-    /** Data source for the table */
+    /**
+     * Data source for the table.
+     *
+     * @returns Current data source.
+     */
     @Input()
-    data: DataTableAdapter;
+    get data(): DataTableAdapter {
+        return this.dataAdapter;
+    }
+
+    set data(data: DataTableAdapter) {
+        this.rowsChangedSubscription?.unsubscribe();
+        this.dataAdapter = data;
+        this.rowsChangedSubscription = data?.rowsChanged
+            ?.pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => this.changeDetectorRef.markForCheck());
+        this.changeDetectorRef.markForCheck();
+    }
 
     /** The rows that the datatable will show. */
     @Input()
@@ -386,6 +405,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     private readonly differ: any;
     private rowMenuCache: any = {};
+    private dataAdapter: DataTableAdapter;
+    private rowsChangedSubscription: Subscription;
 
     private singleClickStreamSub: Subscription;
     private multiClickStreamSub: Subscription;
@@ -434,6 +455,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         if (this.columnList) {
             this.columnList.columns.changes.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
                 this.setTableSchema();
+                this.changeDetectorRef.markForCheck();
             });
         }
         this.setTableSchema();
@@ -582,6 +604,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
                     })
                 );
             }
+            this.changeDetectorRef.markForCheck();
         });
 
         const multiClickStream = this.click$.pipe(
@@ -736,6 +759,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         this.isSelectAllChecked = false;
         this.isSelectAllIndeterminate = false;
         this.selectedItemsCountChanged.emit(0);
+        this.changeDetectorRef.markForCheck();
     }
 
     onRowDblClick(row: DataRow, event?: Event) {
@@ -866,6 +890,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
                 this.isSelectAllIndeterminate = false;
             }
         }
+        this.changeDetectorRef.markForCheck();
     }
 
     onImageLoadingError(event: Event, row: DataRow) {
@@ -984,6 +1009,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         this.selectedRowId = selectedRow.id ? selectedRow.id : '';
         this.data.getRows().forEach((row) => (row.isContextMenuSource = false));
         selectedRow.isContextMenuSource = true;
+        this.changeDetectorRef.markForCheck();
     }
 
     private setRowAsContextSource(): void {
@@ -1008,6 +1034,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
             }
 
             this.selectedItemsCountChanged.emit(this.selection.length);
+            this.changeDetectorRef.markForCheck();
         }
     }
 
@@ -1114,6 +1141,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
             const allColumns = this.getVisibleColumns();
             allColumns[colIndex].width = width;
             this.data.setColumns(allColumns);
+            this.changeDetectorRef.markForCheck();
 
             if (!this.isResizing) {
                 clearTimeout(timeoutId);
@@ -1203,6 +1231,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         this.draggedRowIndex = null;
         this.dragDropStateService.keyboardDraggingData.set(null);
         this.dragDropStateService.dragging.set(false);
+        this.changeDetectorRef.markForCheck();
     }
 
     private handleKeyDownForDragAndDropWithDisabledSorting(event: KeyboardEvent): void {
@@ -1252,6 +1281,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
                     });
                     setTimeout(() => {
                         this.keyManager.setActiveItem(this.keyManager.activeItemIndex - 1);
+                        this.changeDetectorRef.markForCheck();
                     });
                 }
                 break;
@@ -1264,6 +1294,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
                     });
                     setTimeout(() => {
                         this.keyManager.setActiveItem(this.keyManager.activeItemIndex + 1);
+                        this.changeDetectorRef.markForCheck();
                     });
                 }
                 break;

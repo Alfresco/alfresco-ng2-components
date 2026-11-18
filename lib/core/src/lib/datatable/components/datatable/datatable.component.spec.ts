@@ -15,13 +15,24 @@
  * limitations under the License.
  */
 
-import { Component, DebugElement, QueryList, SimpleChange, TemplateRef, ViewChild } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    DebugElement,
+    provideZonelessChangeDetection,
+    QueryList,
+    signal,
+    SimpleChange,
+    TemplateRef,
+    ViewChild
+} from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';
 import { ObjectDataColumn } from '../../data/object-datacolumn.model';
+import { ObjectDataRow } from '../../data/object-datarow.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataTableComponent, ShowHeaderMode } from './datatable.component';
 import { DataColumnListComponent } from '../../data-column/data-column-list.component';
@@ -55,6 +66,26 @@ class CustomColumnTemplateComponent {
 })
 class CustomColumnHeaderComponent {
     @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;
+}
+
+@Component({
+    selector: 'adf-datatable-projected-columns',
+    imports: [DataTableComponent, DataColumnListComponent, DataColumnComponent],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
+        <adf-datatable [rows]="rows">
+            <data-columns>
+                <data-column key="name" title="Name" />
+                @if (showStatus()) {
+                    <data-column key="status" title="Status" />
+                }
+            </data-columns>
+        </adf-datatable>
+    `
+})
+class DatatableProjectedColumnsComponent {
+    readonly rows = [{ name: 'First', status: 'Ready' }];
+    readonly showStatus = signal(false);
 }
 
 class FakeDataRow implements DataRow {
@@ -1616,7 +1647,7 @@ describe('DataTable', () => {
         });
 
         it('should have assigned correct cdkDropListConnectedTo', () => {
-            dataTable.dropListConnectedTo = ['list1', 'list2'];
+            fixture.componentRef.setInput('dropListConnectedTo', ['list1', 'list2']);
             fixture.detectChanges();
 
             expect(getDropList().connectedTo).toEqual(['list1', 'list2']);
@@ -1627,7 +1658,7 @@ describe('DataTable', () => {
         });
 
         it('should have assigned true to cdkDropListSortingDisabled if rowDropSortingDisabled is true', () => {
-            dataTable.rowDropSortingDisabled = true;
+            fixture.componentRef.setInput('rowDropSortingDisabled', true);
             fixture.detectChanges();
 
             expect(getDropList().sortingDisabled).toBeTrue();
@@ -1730,7 +1761,7 @@ describe('DataTable', () => {
             });
 
             it('should have assigned cdkDragBoundary equal to datatable dragBoundary', () => {
-                dataTable.dragBoundary = '.custom-boundary';
+                fixture.componentRef.setInput('dragBoundary', '.custom-boundary');
                 fixture.detectChanges();
 
                 for (let i = 0; i < rows.length; i++) {
@@ -1746,6 +1777,116 @@ describe('DataTable', () => {
                 }
             });
         });
+    });
+});
+
+describe('DataTable with zoneless change detection', () => {
+    let fixture: ComponentFixture<DataTableComponent>;
+    let dataTable: DataTableComponent;
+
+    const getRow = (index: number): HTMLElement => fixture.nativeElement.querySelector(`[data-automation-id="datatable-row-${index}"]`);
+
+    beforeEach(async () => {
+        TestBed.configureTestingModule({
+            providers: [provideZonelessChangeDetection(), provideRouter([])]
+        });
+        fixture = TestBed.createComponent(DataTableComponent);
+        dataTable = fixture.componentInstance;
+        fixture.componentRef.setInput('rows', [{ name: 'First' }, { name: 'Second' }]);
+        fixture.componentRef.setInput('columns', [
+            { key: 'name', title: 'Name', width: 100 },
+            { key: 'status', title: 'Status' }
+        ]);
+        fixture.componentRef.setInput('multiselect', true);
+        fixture.componentRef.setInput('selectionMode', 'multiple');
+        await fixture.whenStable();
+    });
+
+    it('should render selection and the indeterminate header after a debounced row click', async () => {
+        const rowClicked = firstValueFrom(dataTable.rowClick);
+        getRow(0).querySelector<HTMLElement>('[role="gridcell"][data-automation-id]').click();
+
+        await rowClicked;
+        await fixture.whenStable();
+
+        expect(getRow(0).getAttribute('aria-selected')).toBe('true');
+        expect(getRow(0).querySelector<HTMLInputElement>('input[type="checkbox"]').checked).toBeTrue();
+        const headerCheckbox = fixture.nativeElement.querySelector(
+            '[data-automation-id="datatable-row-header"] input[type="checkbox"]'
+        ) as HTMLInputElement;
+        expect(headerCheckbox.indeterminate).toBeTrue();
+    });
+
+    it('should render programmatic selection and reset without an input change', async () => {
+        dataTable.selectRow(dataTable.data.getRows()[0], true);
+        await fixture.whenStable();
+        expect(getRow(0).getAttribute('aria-selected')).toBe('true');
+
+        dataTable.resetSelection();
+        await fixture.whenStable();
+        expect(getRow(0).getAttribute('aria-selected')).toBe('false');
+        expect(getRow(0).querySelector<HTMLInputElement>('input[type="checkbox"]').checked).toBeFalse();
+    });
+
+    it('should render rows emitted by the current adapter after replacing the adapter', async () => {
+        const previousAdapter = dataTable.data;
+        const adapter = new ObjectDataTableAdapter([{ name: 'Replacement' }], [new ObjectDataColumn({ key: 'name', title: 'Name' })]);
+        fixture.componentRef.setInput('data', adapter);
+        await fixture.whenStable();
+
+        expect(previousAdapter.rowsChanged.observed).toBeFalse();
+        previousAdapter.setRows([new ObjectDataRow({ name: 'Stale' })]);
+        adapter.setRows([new ObjectDataRow({ name: 'Updated' }), new ObjectDataRow({ name: 'Added' })]);
+        await fixture.whenStable();
+
+        expect(getRow(0).textContent).toContain('Updated');
+        expect(getRow(1).textContent).toContain('Added');
+        expect(fixture.nativeElement.textContent).not.toContain('Stale');
+    });
+
+    it('should stop observing adapter updates when destroyed', () => {
+        const adapter = dataTable.data;
+
+        fixture.destroy();
+
+        expect(adapter.rowsChanged.observed).toBeFalse();
+    });
+
+    it('should render column widths after the resize timer completes', async () => {
+        dataTable.onResizing({ rectangle: { top: 0, bottom: 10, left: 0, right: 150, width: 150 } }, 0);
+        await new Promise<void>((resolve) => setTimeout(resolve));
+        await fixture.whenStable();
+
+        const header = fixture.nativeElement.querySelector('[data-automation-id="auto_id_name"]') as HTMLElement;
+        const cell = getRow(0).querySelector<HTMLElement>('[role="gridcell"][data-automation-id]');
+        expect(header.style.flex).toBe('0 1 150px');
+        expect(cell.style.flex).toBe('0 1 150px');
+    });
+
+    it('should update row tab stops after deferred keyboard drag navigation', async () => {
+        fixture.componentRef.setInput('enableDragRows', true);
+        await fixture.whenStable();
+        getRow(0).focus();
+        await fixture.whenStable();
+
+        getRow(0).dispatchEvent(new KeyboardEvent('keyup', { key: 'ArrowDown', shiftKey: true, bubbles: true }));
+        await new Promise<void>((resolve) => setTimeout(resolve));
+        await fixture.whenStable();
+
+        expect(getRow(0).getAttribute('tabindex')).toBe('-1');
+        expect(getRow(1).getAttribute('tabindex')).toBe('0');
+    });
+
+    it('should render projected columns when their query changes', async () => {
+        const host = TestBed.createComponent(DatatableProjectedColumnsComponent);
+        await host.whenStable();
+        expect(host.nativeElement.querySelector('[data-automation-id="auto_id_status"]')).toBeNull();
+
+        host.componentInstance.showStatus.set(true);
+        await host.whenStable();
+
+        expect(host.nativeElement.querySelector('[data-automation-id="auto_id_status"]').textContent).toContain('Status');
+        expect(host.nativeElement.textContent).toContain('Ready');
     });
 });
 
@@ -1989,7 +2130,7 @@ describe('Accessibility', () => {
 
             expect(liveRegion.textContent.trim()).toBe('');
 
-            dataTable.data.getRows()[0].isSelected = true;
+            dataTable.selectRow(dataTable.data.getRows()[0], true);
             fixture.detectChanges();
             tick();
 
@@ -2612,7 +2753,7 @@ describe('Column Resizing', () => {
     };
 
     const testClassesAfterResizing = (headerColumnsSelector = '.adf-datatable-cell-header', excludedClass = 'adf-datatable__cursor--pointer') => {
-        dataTable.isResizingEnabled = true;
+        fixture.componentRef.setInput('isResizingEnabled', true);
         fixture.detectChanges();
 
         const resizeHandle = getResizeHandler();
@@ -2661,14 +2802,14 @@ describe('Column Resizing', () => {
     });
 
     it('should display resize handle for each column, but not for the last one, by default', () => {
-        dataTable.isResizingEnabled = true;
+        fixture.componentRef.setInput('isResizingEnabled', true);
         fixture.detectChanges();
 
         expect(getResizeHandlersCount()).toBe(1);
     });
 
     it('should NOT display resize handle for the column when the column has resizable param set to false and column is not the last one', () => {
-        dataTable.isResizingEnabled = true;
+        fixture.componentRef.setInput('isResizingEnabled', true);
         dataTableSchema[0].resizable = false;
         dataTable.data = new ObjectDataTableAdapter([...data], [...dataTableSchema]);
         fixture.detectChanges();
@@ -2677,7 +2818,7 @@ describe('Column Resizing', () => {
     });
 
     it('should display resize handle when the feature is Enabled [isResizingEnabled=true]', () => {
-        dataTable.isResizingEnabled = true;
+        fixture.componentRef.setInput('isResizingEnabled', true);
 
         fixture.detectChanges();
         const resizeHandle = getResizeHandler();
@@ -2699,7 +2840,7 @@ describe('Column Resizing', () => {
     });
 
     it('should NOT display drag icon upon resizing starts', () => {
-        dataTable.isResizingEnabled = true;
+        fixture.componentRef.setInput('isResizingEnabled', true);
         fixture.detectChanges();
 
         testingUtils.hoverOverByDataAutomationId('auto_id_id');
@@ -2720,7 +2861,7 @@ describe('Column Resizing', () => {
 
     describe('Datatable blur', () => {
         beforeEach(() => {
-            dataTable.isResizingEnabled = true;
+            fixture.componentRef.setInput('isResizingEnabled', true);
             fixture.detectChanges();
 
             const resizeHandle = getResizeHandler();
@@ -2735,7 +2876,7 @@ describe('Column Resizing', () => {
         });
 
         it('should not blur the table body upon resizing starts when blurOnResize is false', () => {
-            dataTable.blurOnResize = false;
+            fixture.componentRef.setInput('blurOnResize', false);
             fixture.detectChanges();
             const tableBody = getTableBody();
             expect(dataTable.isResizing).toBeTrue();
@@ -2756,7 +2897,7 @@ describe('Column Resizing', () => {
     }));
 
     it('should stop propagation on resize handler click event', () => {
-        dataTable.isResizingEnabled = true;
+        fixture.componentRef.setInput('isResizingEnabled', true);
         fixture.detectChanges();
 
         const resizeHandle = getResizeHandler();
@@ -2845,7 +2986,7 @@ describe('Column Resizing', () => {
     }));
 
     it('should unblur the body and set the resizing to false upon resizing ends', () => {
-        dataTable.isResizingEnabled = true;
+        fixture.componentRef.setInput('isResizingEnabled', true);
         fixture.detectChanges();
 
         const resizeHandle: HTMLElement = getResizeHandler();
@@ -2870,7 +3011,7 @@ describe('Column Resizing', () => {
     it('should emit on columns width change when resizing ends', () => {
         spyOn(dataTable.columnsWidthChanged, 'emit');
 
-        dataTable.isResizingEnabled = true;
+        fixture.componentRef.setInput('isResizingEnabled', true);
         fixture.detectChanges();
 
         const resizeHandle: HTMLElement = getResizeHandler();
@@ -2891,8 +3032,8 @@ describe('Column Resizing', () => {
 
     it('should not have drag and drop directive enabled and not emit event when drag rows is disabled', () => {
         spyOn(dataTable.dragDropped, 'emit');
-        dataTable.enableDragRows = false;
-        dataTable.showHeader = ShowHeaderMode.Never;
+        fixture.componentRef.setInput('enableDragRows', false);
+        fixture.componentRef.setInput('showHeader', ShowHeaderMode.Never);
         fixture.detectChanges();
         const dragAndDrop = testingUtils.getByDirective(CdkDropList).injector.get(CdkDropList);
         dataTable.onDragDrop({} as CdkDragDrop<any>);
@@ -2902,7 +3043,7 @@ describe('Column Resizing', () => {
 
     it('should emit event when drag rows is enabled', () => {
         spyOn(dataTable.dragDropped, 'emit');
-        dataTable.enableDragRows = true;
+        fixture.componentRef.setInput('enableDragRows', true);
         fixture.detectChanges();
         const data = { previousIndex: 1, currentIndex: 0 };
         dataTable.onDragDrop(data as CdkDragDrop<any>);
