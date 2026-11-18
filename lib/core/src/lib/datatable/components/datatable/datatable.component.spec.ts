@@ -17,8 +17,10 @@
 
 import {
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     DebugElement,
+    inject,
     provideZonelessChangeDetection,
     QueryList,
     signal,
@@ -86,6 +88,17 @@ class CustomColumnHeaderComponent {
 class DatatableProjectedColumnsComponent {
     readonly rows = [{ name: 'First', status: 'Ready' }];
     readonly showStatus = signal(false);
+}
+
+@Component({
+    selector: 'adf-datatable-mutable-rows',
+    imports: [DataTableComponent],
+    template: `<adf-datatable [rows]="rows" [columns]="columns" />`
+})
+class DatatableMutableRowsComponent {
+    readonly rows = [{ name: 'First' }];
+    readonly columns = [{ key: 'name', type: 'text', title: 'Name' }];
+    readonly changeDetectorRef = inject(ChangeDetectorRef);
 }
 
 class FakeDataRow implements DataRow {
@@ -1875,6 +1888,17 @@ describe('DataTable with zoneless change detection', () => {
 
         expect(getRow(0).getAttribute('tabindex')).toBe('-1');
         expect(getRow(1).getAttribute('tabindex')).toBe('0');
+    });
+
+    it('should render rows pushed into the bound rows array when the parent is checked', async () => {
+        const host = TestBed.createComponent(DatatableMutableRowsComponent);
+        await host.whenStable();
+
+        host.componentInstance.rows.push({ name: 'Second' });
+        host.componentInstance.changeDetectorRef.markForCheck();
+        await host.whenStable();
+
+        expect(host.nativeElement.querySelector('[data-automation-id="datatable-row-1"]').textContent).toContain('Second');
     });
 
     it('should render projected columns when their query changes', async () => {
