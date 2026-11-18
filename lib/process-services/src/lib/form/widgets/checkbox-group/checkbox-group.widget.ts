@@ -17,12 +17,12 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, DestroyRef, inject, OnInit, signal, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, inject, OnInit, signal, ViewEncapsulation } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TranslatePipe } from '@ngx-translate/core';
-import { ErrorWidgetComponent, FormFieldOption, WidgetComponent } from '@alfresco/adf-core';
-import { finalize } from 'rxjs/operators';
+import { ErrorWidgetComponent, FormFieldEvent, FormFieldOption, WidgetComponent } from '@alfresco/adf-core';
+import { filter, finalize } from 'rxjs/operators';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 
@@ -32,12 +32,14 @@ import { ProcessDefinitionService } from '../../services/process-definition.serv
     templateUrl: './checkbox-group.widget.html',
     styleUrls: ['./checkbox-group.widget.scss'],
     host: { '(click)': 'event($event)' },
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CheckboxGroupWidgetComponent extends WidgetComponent implements OnInit {
     private readonly taskFormService = inject(TaskFormService);
     private readonly processDefinitionService = inject(ProcessDefinitionService);
     private readonly destroyRef = inject(DestroyRef);
+    private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
     readonly loading = signal(false);
 
@@ -51,6 +53,7 @@ export class CheckboxGroupWidgetComponent extends WidgetComponent implements OnI
     }
 
     ngOnInit(): void {
+        this.listenForExternalChanges();
         if (!this.field || this.field.optionType !== 'rest' || !this.field.restUrl || this.field.form?.readOnly) {
             return;
         }
@@ -73,6 +76,7 @@ export class CheckboxGroupWidgetComponent extends WidgetComponent implements OnI
                     this.field.value = this.field
                         .getFormValue()
                         .filter((selected: FormFieldOption) => this.field.options.some((option) => option.id === selected.id));
+                    this.changeDetectorRef.markForCheck();
                 },
                 error: (error) => this.widgetError.emit(error)
             });
@@ -86,6 +90,11 @@ export class CheckboxGroupWidgetComponent extends WidgetComponent implements OnI
         return this.isRequired() && !this.field.isValid && this.field.getFormValue().length === 0 && !this.field.validationSummary?.isActive();
     }
 
+    override markAsTouched(): void {
+        super.markAsTouched();
+        this.changeDetectorRef.markForCheck();
+    }
+
     onSelectionChange(option: FormFieldOption, checked: boolean): void {
         if (this.disabled) {
             return;
@@ -95,6 +104,27 @@ export class CheckboxGroupWidgetComponent extends WidgetComponent implements OnI
         this.field.value = checked ? this.sortByOptionOrder([...remaining, option]) : remaining;
         this.markAsTouched();
         this.onFieldChanged(this.field);
+    }
+
+    // the field model is mutated outside the template (rules, form reset, validation), so OnPush needs an explicit notification
+    private listenForExternalChanges(): void {
+        if (!this.field) {
+            return;
+        }
+        const refresh = () => this.changeDetectorRef.markForCheck();
+        this.formService.formFieldValueChanged
+            .pipe(
+                filter((event: FormFieldEvent) => event.field === this.field),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe(refresh);
+        this.formService.formState.commits
+            .pipe(
+                filter(({ field }) => field === this.field),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe(refresh);
+        this.field.validationSummaryChanges$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(refresh);
     }
 
     private getSelectedIds(): Set<string> {
