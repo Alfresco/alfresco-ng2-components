@@ -22,14 +22,16 @@ runs:
           echo "$PLAN"
           mkdir -p "$RUNNER_TEMP/migrations" "$RUNNER_TEMP/reported"
           COUNT=0
+          MIGRATION_FILES=()
           while read -r spec; do
             ./node_modules/.bin/nx migrate "$spec"
             if [ -f migrations.json ]; then
               mv migrations.json "$RUNNER_TEMP/migrations/$COUNT.json"
+              MIGRATION_FILES+=("$RUNNER_TEMP/migrations/$COUNT.json")
             fi
             COUNT=$((COUNT+1))
           done <<< "$PLAN"
-          node scripts/update-angular/merge-migrations.mjs migrations.json "$RUNNER_TEMP"/migrations/*.json
+          node scripts/update-angular/merge-migrations.mjs migrations.json "${MIGRATION_FILES[@]}"
           pnpm install --no-frozen-lockfile
           node scripts/update-angular/verify-versions.mjs "$TARGET_MAJOR"
           cp migrations.json "$RUNNER_TEMP/reported/angular.json"
