@@ -1,0 +1,77 @@
+name: "💬 Update Angular and Nx: feedback"
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions: {}
+
+jobs:
+  feedback:
+    name: "💬 Handle comment"
+    if: >-
+      ${{
+        github.event.issue.pull_request != null
+        && github.event.comment.user.type != 'Bot'
+        && startsWith(github.event.comment.body, '/update-angular')
+        && contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
+      }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    concurrency:
+      group: update-angular-feedback-${{ github.event.issue.number }}
+      cancel-in-progress: false
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPOSITORY: ${{ github.repository }}
+      PR_NUMBER: ${{ github.event.issue.number }}
+      COMMENT_ID: ${{ github.event.comment.id }}
+      COMMENTER: ${{ github.event.comment.user.login }}
+    steps:
+      - name: Checkout the scripts of the default branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout: scripts/update-angular
+          persist-credentials: false
+      - name: Acknowledge the comment
+        run: gh api -X POST "repos/$REPOSITORY/issues/comments/$COMMENT_ID/reactions" -f content=eyes > /dev/null
+      - name: Load the pull request and the role of the commenter
+        id: load
+        run: |
+          PR=$(gh api "repos/$REPOSITORY/pulls/$PR_NUMBER")
+          {
+            echo "state=$(jq -r '.state' <<< "$PR")"
+            echo "head-ref=$(jq -r '.head.ref' <<< "$PR")"
+            echo "head-sha=$(jq -r '.head.sha' <<< "$PR")"
+            echo "head-repository=$(jq -r '.head.repo.full_name // ""' <<< "$PR")"
+            echo "role=$(gh api "repos/$REPOSITORY/collaborators/$COMMENTER/permission" --jq '.role_name' 2>/dev/null || echo none)"
+          } >> "$GITHUB_OUTPUT"
+      - name: Handle the command
+        id: handle
+        env:
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          COMMENTER_ROLE: ${{ steps.load.outputs.role }}
+          PR_STATE: ${{ steps.load.outputs.state }}
+          PR_HEAD_REF: ${{ steps.load.outputs.head-ref }}
+          PR_HEAD_SHA: ${{ steps.load.outputs.head-sha }}
+          PR_HEAD_REPOSITORY: ${{ steps.load.outputs.head-repository }}
+        run: |
+          VERDICT=$(node scripts/update-angular/handle-feedback-comment.mjs "$RUNNER_TEMP/feedback-reply.md")
+          echo "verdict=$VERDICT" >> "$GITHUB_OUTPUT"
+      - name: Post the reply
+        if: ${{ steps.handle.outputs.verdict != 'ignored' }}
+        run: gh api -X POST "repos/$REPOSITORY/issues/$PR_NUMBER/comments" -F body=@"$RUNNER_TEMP/feedback-reply.md" > /dev/null
+      - name: React to the comment with the verdict
+        if: ${{ steps.handle.outputs.verdict != 'ignored' }}
+        env:
+          VERDICT: ${{ steps.handle.outputs.verdict }}
+        run: |
+          REACTION=confused
+          if [ "$VERDICT" = "accepted" ]; then
+            REACTION='+1'
+          fi
+          gh api -X POST "repos/$REPOSITORY/issues/comments/$COMMENT_ID/reactions" -f content="$REACTION" > /dev/null

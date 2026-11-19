@@ -1,0 +1,22 @@
+name: "Run migrations"
+description: "Run the collected Nx migrations, one commit each, then remove the migrations file"
+runs:
+  using: "composite"
+  steps:
+    - name: Run migrations
+      id: stage
+      shell: bash
+      run: |
+        {
+          pnpm nx migrate --run-migrations --create-commits
+          git rm -f --ignore-unmatch migrations.json
+          pnpm install --no-frozen-lockfile
+          git add -A
+          git diff --cached --quiet || git commit -m "chore: remove migrations file and refresh lockfile"
+        } 2>&1 | tee "$RUNNER_TEMP/validation.log"
+    - name: Record result
+      if: ${{ always() }}
+      uses: ./.github/actions/update-angular/record-validation-result
+      with:
+        name: run-migrations
+        outcome: ${{ steps.stage.outcome }}
