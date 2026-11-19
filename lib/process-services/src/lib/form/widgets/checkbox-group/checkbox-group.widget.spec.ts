@@ -334,6 +334,17 @@ describe('CheckboxGroupWidgetComponent', () => {
         }
     }
 
+    it('should emit a field change only when REST options drop saved selections', () => {
+        widget.field = createField({ optionType: 'rest', restUrl: '/options', value: options }, new FormModel({ taskId: 'task' }));
+        const changed = spyOn(widget, 'onFieldChanged');
+        taskService.getRestFieldValues.and.returnValue(of(options));
+        widget.ngOnInit();
+        expect(changed).not.toHaveBeenCalled();
+        taskService.getRestFieldValues.and.returnValue(of([options[1]]));
+        widget.ngOnInit();
+        expect(changed).toHaveBeenCalledOnceWith(widget.field);
+    });
+
     it('should handle an empty REST response', () => {
         taskService.getRestFieldValues.and.returnValue(of(null));
         widget.field = createField({ optionType: 'rest', restUrl: '/options' }, new FormModel({ taskId: 'task' }));

@@ -54,7 +54,7 @@ export class CheckboxGroupWidgetComponent extends WidgetComponent implements OnI
 
     ngOnInit(): void {
         this.listenForExternalChanges();
-        if (!this.field || this.field.optionType !== 'rest' || !this.field.restUrl || this.field.form?.readOnly) {
+        if (this.field?.optionType !== 'rest' || !this.field.restUrl || this.field.form?.readOnly) {
             return;
         }
         const form = this.field.form;
@@ -73,9 +73,13 @@ export class CheckboxGroupWidgetComponent extends WidgetComponent implements OnI
             .subscribe({
                 next: (options) => {
                     this.field.options = options || [];
-                    this.field.value = this.field
-                        .getFormValue()
-                        .filter((selected: FormFieldOption) => this.field.options.some((option) => option.id === selected.id));
+                    const saved: FormFieldOption[] = this.field.getFormValue();
+                    const available = saved.filter((selected) => this.field.options.some((option) => option.id === selected.id));
+                    if (available.length !== saved.length) {
+                        // the server is authoritative for REST options, so selections it no longer offers are dropped and rules/dirty-state are notified
+                        this.field.value = available;
+                        this.onFieldChanged(this.field);
+                    }
                     this.changeDetectorRef.markForCheck();
                 },
                 error: (error) => this.widgetError.emit(error)
@@ -137,7 +141,7 @@ export class CheckboxGroupWidgetComponent extends WidgetComponent implements OnI
         return this.selectedIds;
     }
 
-    // keeps the value stable regardless of click order; selections that are no longer available stay last
+    // keeps the value stable regardless of click order; selections missing from the options stay last
     private sortByOptionOrder(selection: FormFieldOption[]): FormFieldOption[] {
         const position = (entry: FormFieldOption): number => {
             const index = this.field.options.findIndex((candidate) => candidate.id === entry.id);
