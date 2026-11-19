@@ -20,6 +20,8 @@ import { PaginationComponent } from './pagination.component';
 import { PaginatedComponent } from './paginated-component.interface';
 import { BehaviorSubject } from 'rxjs';
 import { PaginationModel } from '../models/pagination.model';
+import { UnitTestingUtils } from '../testing/unit-testing-utils';
+import { TranslatePipe } from '@ngx-translate/core';
 
 class FakePaginationInput implements PaginationModel {
     count = 25;
@@ -37,6 +39,7 @@ class FakePaginationInput implements PaginationModel {
 describe('PaginationComponent', () => {
     let fixture: ComponentFixture<PaginationComponent>;
     let component: PaginationComponent;
+    let testingUtils: UnitTestingUtils;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -45,6 +48,7 @@ describe('PaginationComponent', () => {
         fixture = TestBed.createComponent(PaginationComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
     });
 
     afterEach(() => {
@@ -56,6 +60,32 @@ describe('PaginationComponent', () => {
         await fixture.whenStable();
 
         expect(fixture.nativeElement.classList.contains('adf-pagination__empty')).toBeTruthy();
+    });
+
+    it('should announce number of items found if there are items present', () => {
+        component.pagination = new FakePaginationInput(1, 1, 10);
+        fixture.detectChanges();
+
+        const srAnnouncementText = testingUtils.getByCSS('.cdk-visually-hidden').nativeElement.textContent.trim();
+        expect(srAnnouncementText).toBe('CORE.PAGINATION.TOTAL_ITEMS_FOUND');
+    });
+
+    it('should announce number of items found even if there is one item', () => {
+        component.pagination = new FakePaginationInput(1, 1, 1);
+        fixture.detectChanges();
+
+        const srAnnouncementText = testingUtils.getByCSS('.cdk-visually-hidden').nativeElement.textContent.trim();
+        expect(srAnnouncementText).toBe('CORE.PAGINATION.ONE_ITEM_FOUND');
+    });
+
+    it('should announce correct number of items', () => {
+        const translateSpy = spyOn(TranslatePipe.prototype, 'transform').and.callThrough();
+        fixture.detectChanges();
+
+        component.pagination = new FakePaginationInput(1, 1, 10);
+        fixture.detectChanges();
+
+        expect(translateSpy).toHaveBeenCalledWith('CORE.PAGINATION.TOTAL_ITEMS_FOUND', { totalItems: 10 });
     });
 
     describe('Single page', () => {
