@@ -49,4 +49,3 @@ export * from './theme.model';
 export * from './predefined-theme';
 export * from './displayable-cm-properties.model';
 export * from './repeatable-section.model';
-export * from './checkbox-group-value';
