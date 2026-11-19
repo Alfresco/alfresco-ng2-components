@@ -1,91 +1,106 @@
 <div class="adf-file-properties-table-container">
-    <table mat-table [dataSource]="uploadedFiles" class="adf-properties-table adf-file-properties-table mat-elevation-z0" *ngIf="hasFile">
-        <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td class="adf-file-properties-table-cell" mat-cell *matCellDef="let element">
-                <mat-icon matListItemLine class="adf-datatable-selected" *ngIf="selectedNode && element.id === selectedNode.id" (click)="onRowClicked(element)" adf-icon="check_circle" />
-                <img matListItemLine class="adf-attach-widget__icon"
-                    *ngIf="!selectedNode || element.id !== selectedNode.id" [id]="'file-'+element?.id+'-icon'"
-                    (click)="onRowClicked(element)"
-                    (keyup.enter)="onRowClicked(element)"
-                    [src]="element.content ? getIcon(element.content.mimeType) : getIcon(element['mimeType'])"
-                    [alt]="mimeTypeIcon" role="button" tabindex="0" />
-            </td>
+  @if (hasFile) {
+    <table mat-table [dataSource]="uploadedFiles" class="adf-properties-table adf-file-properties-table mat-elevation-z0">
+      <ng-container matColumnDef="icon">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td class="adf-file-properties-table-cell" mat-cell *matCellDef="let element">
+          @if (selectedNode && element.id === selectedNode.id) {
+            <mat-icon matListItemLine class="adf-datatable-selected" (click)="onRowClicked(element)" adf-icon="check_circle" />
+          }
+          @if (!selectedNode || element.id !== selectedNode.id) {
+            <img matListItemLine class="adf-attach-widget__icon"
+              [id]="'file-'+element?.id+'-icon'"
+              (click)="onRowClicked(element)"
+              (keyup.enter)="onRowClicked(element)"
+              [src]="element.content ? getIcon(element.content.mimeType) : getIcon(element['mimeType'])"
+              [alt]="mimeTypeIcon" role="button" tabindex="0" />
+          }
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="fileName">
+        <th mat-header-cell *matHeaderCellDef>{{ 'FORM.FIELD.FILE_NAME' | translate }}</th>
+        <td mat-cell class="adf-file-properties-table-cell" *matCellDef="let element">
+          <span matLine id="{{'file-'+element?.id}}"
+            role="button"
+            tabindex="0"
+            class="adf-file"
+            (keyup.enter)="onAttachFileClicked(element)"
+            (click)="onAttachFileClicked(element)"
+          >{{ element.name }}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>{{ 'FORM.FIELD.TITLE' | translate }}</th>
+        <td mat-cell class="adf-file-properties-table-cell" *matCellDef="let element">{{ element.title }}</td>
+      </ng-container>
+      @for (prop of field?.params?.displayableCMProperties; track prop) {
+        <ng-container [matColumnDef]="prop.name">
+          <th mat-header-cell *matHeaderCellDef>{{prop.title ? prop.title : prop.name | titlecase }}</th>
+          <td mat-cell class="adf-file-properties-table-cell" *matCellDef="let row">
+            <span matLine id="{{'fileProperty-'+row?.id+'-'+prop?.name}}" role="button" tabindex="0"
+              (keyup.enter)="onRowClicked(row)"
+            (click)="onRowClicked(row)">{{ getColumnValue(row, prop) }}</span>
+          </td>
         </ng-container>
-
-        <ng-container matColumnDef="fileName">
-            <th mat-header-cell *matHeaderCellDef>{{ 'FORM.FIELD.FILE_NAME' | translate }}</th>
-            <td mat-cell class="adf-file-properties-table-cell" *matCellDef="let element">
-                <span matLine id="{{'file-'+element?.id}}"
-                      role="button"
-                      tabindex="0"
-                      class="adf-file"
-                      (keyup.enter)="onAttachFileClicked(element)"
-                      (click)="onAttachFileClicked(element)"
-                >{{ element.name }}</span>
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef>{{ 'FORM.FIELD.TITLE' | translate }}</th>
-            <td mat-cell class="adf-file-properties-table-cell" *matCellDef="let element">{{ element.title }}</td>
-        </ng-container>
-
-        <ng-container *ngFor="let prop of field?.params?.displayableCMProperties" [matColumnDef]="prop.name">
-            <th mat-header-cell *matHeaderCellDef>{{prop.title ? prop.title : prop.name | titlecase }}</th>
-            <td mat-cell class="adf-file-properties-table-cell" *matCellDef="let row">
-                <span matLine id="{{'fileProperty-'+row?.id+'-'+prop?.name}}" role="button" tabindex="0"
-                      (keyup.enter)="onRowClicked(row)"
-                      (click)="onRowClicked(row)">{{ getColumnValue(row, prop) }}</span>
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell class="adf-file-properties-table-cell" *matCellDef="let element">
-                <button id="{{'file-'+element?.id+'-option-menu'}}" mat-icon-button [matMenuTriggerFor]="fileActionMenu"
-                        *ngIf="!!element.content?.mimeType"
-                        [attr.aria-label]="'ADF_PROCESS_LIST.DETAILS.BUTTON.FILE_OPTION_MENU' | translate">
-                    <mat-icon adf-icon="more_vert" />
+      }
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell class="adf-file-properties-table-cell" *matCellDef="let element">
+          @if (!!element.content?.mimeType) {
+            <button id="{{'file-'+element?.id+'-option-menu'}}" mat-icon-button [matMenuTriggerFor]="fileActionMenu"
+              [attr.aria-label]="'ADF_PROCESS_LIST.DETAILS.BUTTON.FILE_OPTION_MENU' | translate">
+              <mat-icon adf-icon="more_vert" />
+            </button>
+          }
+          <mat-menu #fileActionMenu="matMenu" xPosition="before">
+            @if (displayMenuOption('show') && !!element.content?.mimeType) {
+              <button
+                id="{{'file-'+element?.id+'-show-file'}}" mat-menu-item
+                (click)="onAttachFileClicked(element)">
+                <mat-icon adf-icon="visibility" />
+                <span>{{ 'FORM.FIELD.VIEW_FILE' | translate }}</span>
+              </button>
+            }
+            @if (displayMenuOption('download') && !!element.content?.mimeType) {
+              <button
+                id="{{'file-'+element?.id+'-download-file'}}" mat-menu-item
+                (click)="downloadContent(element)">
+                <mat-icon adf-icon="file_download" />
+                <span>{{ 'FORM.FIELD.DOWNLOAD_FILE' | translate }}</span>
+              </button>
+            }
+            @if (displayMenuOption('retrieveMetadata') && !!element.content?.mimeType) {
+              <button
+                id="{{'file-'+element?.id+'-retrieve-file-metadata'}}" mat-menu-item
+                (click)="contentModelFormFileHandler(element)">
+                <mat-icon class="mat-24" adf-icon="low_priority" />
+                <span>{{ 'ADF_CLOUD_FORM_COMPONENT.RETRIEVE_METADATA' | translate }}</span>
+              </button>
+            }
+            @if (!field.readOnly && displayMenuOption('remove')) {
+              <button
+                mat-menu-item
+                [id]="'file-'+element?.id+'-remove'"
+                (click)="onRemoveAttachFile(element);" (keyup.enter)="onRemoveAttachFile(element);">
+                <mat-icon class="mat-24" adf-icon="highlight_off" />
+                <span>{{ 'FORM.FIELD.REMOVE_FILE' | translate }}</span>
+              </button>
+            }
+            @if (displayMenuOption('newVersion')) {
+              <div>
+                <button [adf-upload]="true" [mode]="['click']"
+                  (upload-files)="onUploadNewFileVersion($event, element);"
+                  id="{{'file-'+ element?.id +'-upload-new-version'}}" mat-menu-item>
+                  <mat-icon class="mat-24" adf-icon="file_upload" />
+                  <span>{{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.TITLE' | translate }}</span>
                 </button>
-                <mat-menu #fileActionMenu="matMenu" xPosition="before">
-                    <button *ngIf="displayMenuOption('show') && !!element.content?.mimeType"
-                            id="{{'file-'+element?.id+'-show-file'}}" mat-menu-item
-                            (click)="onAttachFileClicked(element)">
-                        <mat-icon adf-icon="visibility" />
-                        <span>{{ 'FORM.FIELD.VIEW_FILE' | translate }}</span>
-                    </button>
-                    <button *ngIf="displayMenuOption('download') && !!element.content?.mimeType"
-                            id="{{'file-'+element?.id+'-download-file'}}" mat-menu-item
-                            (click)="downloadContent(element)">
-                        <mat-icon adf-icon="file_download" />
-                        <span>{{ 'FORM.FIELD.DOWNLOAD_FILE' | translate }}</span>
-                    </button>
-                    <button *ngIf="displayMenuOption('retrieveMetadata') && !!element.content?.mimeType"
-                            id="{{'file-'+element?.id+'-retrieve-file-metadata'}}" mat-menu-item
-                            (click)="contentModelFormFileHandler(element)">
-                        <mat-icon class="mat-24" adf-icon="low_priority" />
-                        <span>{{ 'ADF_CLOUD_FORM_COMPONENT.RETRIEVE_METADATA' | translate }}</span>
-                    </button>
-                    <button *ngIf="!field.readOnly && displayMenuOption('remove')"
-                            mat-menu-item
-                            [id]="'file-'+element?.id+'-remove'"
-                            (click)="onRemoveAttachFile(element);" (keyup.enter)="onRemoveAttachFile(element);">
-                        <mat-icon class="mat-24" adf-icon="highlight_off" />
-                        <span>{{ 'FORM.FIELD.REMOVE_FILE' | translate }}</span>
-                    </button>
-                    <div *ngIf="displayMenuOption('newVersion')">
-                        <button [adf-upload]="true" [mode]="['click']"
-                                (upload-files)="onUploadNewFileVersion($event, element);"
-                                id="{{'file-'+ element?.id +'-upload-new-version'}}" mat-menu-item>
-                            <mat-icon class="mat-24" adf-icon="file_upload" />
-                            <span>{{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.TITLE' | translate }}</span>
-                        </button>
-                    </div>
-                </mat-menu>
-            </td>
-        </ng-container>
-        <tr mat-header-row class="adf-file-properties-table-header-row" *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+              </div>
+            }
+          </mat-menu>
+        </td>
+      </ng-container>
+      <tr mat-header-row class="adf-file-properties-table-header-row" *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+  }
 </div>

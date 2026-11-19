@@ -17,7 +17,7 @@
 
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { WidgetComponent, FormBaseModule, FormFieldValueFormatterService, ADF_TYPED_VALUE_FORMATTING_ENABLED } from '@alfresco/adf-core';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -30,7 +30,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     standalone: true,
-    imports: [CommonModule, TranslatePipe, ReactiveFormsModule, MatFormFieldModule, MatInputModule, FormBaseModule, MatIconModule],
+    imports: [TranslatePipe, ReactiveFormsModule, MatFormFieldModule, MatInputModule, FormBaseModule, MatIconModule],
     selector: 'adf-cloud-display-external-property',
     templateUrl: './display-external-property.widget.html',
     styleUrls: ['./display-external-property.widget.scss'],
