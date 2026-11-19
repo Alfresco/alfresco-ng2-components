@@ -18,4 +18,12 @@ adf-search-filter-tabbed {
             display: block !important;
         }
     }
+
+    div[role='tab'] {
+        &:focus-visible {
+            outline: 2px solid var(--mat-sys-primary);
+            border-radius: 4px;
+            outline-offset: -2px;
+        }
+    }
 }
