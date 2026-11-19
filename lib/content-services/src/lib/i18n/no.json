@@ -710,7 +710,7 @@
       "NOT_FIRST_LEVEL": "Nivå {{ level }} • I {{ ancestorName }}",
       "CURRENT_LEVEL": "Allerede i denne mappen",
       "CURRENT_LEVEL_ICON_LABEL": "Gjeldende",
-      "LIBRARY_CONTAINER_LEVEL": "Kun biblioteknavigasjon",
+      "LIBRARY_CONTAINER_LEVEL": "Fil/mappe kan ikke flyttes til biblioteklisten.",
       "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Ikke tilgjengelig",
       "DROP_HINT": "Flytt hit"
     }
