@@ -1198,7 +1198,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     protected stopNodeDragging(stopByClick = false): void {
         document.dispatchEvent(new MouseEvent('mouseup'));
         if (stopByClick && this.dragDropStateService.keyboardDraggingData()) {
-            this.keyManager.setActiveItem(this.draggedRowIndex + 1);
+            this.keyManager.setActiveItem(this.draggedRowIndex + this.rowsOffset);
         }
         this.draggedRowIndex = null;
         this.dragDropStateService.keyboardDraggingData.set(null);
