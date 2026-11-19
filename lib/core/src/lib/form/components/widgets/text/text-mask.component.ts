@@ -50,7 +50,6 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
     };
 
     private readonly byPassKeys = [9, 16, 17, 18, 36, 37, 38, 39, 40, 91];
-    private value;
     private readonly invalidCharacters = [];
 
     _onChange = (_: any) => {};
@@ -99,35 +98,26 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
     private maskValue(actualValue: string, startCaret: number, maskToApply: string, isMaskReversed: boolean, keyCode: number) {
         if (this.byPassKeys.indexOf(keyCode) === -1) {
             const value = this.getMasked(false, actualValue, maskToApply, isMaskReversed);
-            const calculatedCaret = this.calculateCaretPosition(startCaret, actualValue, keyCode);
+            const caretPosition = this.maskedCaretPosition(actualValue, startCaret, maskToApply, isMaskReversed);
             this.render.setAttribute(this.el.nativeElement, 'value', value);
             this.el.nativeElement.value = value;
-            this.setValue(value);
             this._onChange(value);
-            this.setCaretPosition(calculatedCaret);
+            this.restoreCaretPosition(caretPosition);
         }
     }
 
-    private setCaretPosition(caretPosition: number) {
-        this.el.nativeElement.moveStart = caretPosition;
-        this.el.nativeElement.moveEnd = caretPosition;
+    private restoreCaretPosition(caretPosition: number) {
+        const input: HTMLInputElement = this.el.nativeElement;
+        if (input.ownerDocument.activeElement === input) {
+            input.setSelectionRange(caretPosition, caretPosition);
+        }
     }
 
-    calculateCaretPosition(caretPosition: number, newValue: string, keyCode: number): number {
-        const newValueLength = newValue.length;
-        const oldValue = this.getValue() || '';
-        const oldValueLength = oldValue.length;
-
-        if (keyCode === 8 && oldValue !== newValue) {
-            caretPosition = caretPosition - (newValue.slice(0, caretPosition).length - oldValue.slice(0, caretPosition).length);
-        } else if (oldValue !== newValue) {
-            if (caretPosition >= oldValueLength) {
-                caretPosition = newValueLength;
-            } else {
-                caretPosition = caretPosition + (newValue.slice(0, caretPosition).length - oldValue.slice(0, caretPosition).length);
-            }
+    private maskedCaretPosition(typedValue: string, caretPosition: number, mask: string, isReversed: boolean): number {
+        if (isReversed) {
+            return this.getMasked(false, typedValue, mask, true).length - this.getMasked(false, typedValue.slice(caretPosition), mask, true).length;
         }
-        return caretPosition;
+        return this.getMasked(false, typedValue.slice(0, caretPosition), mask).length;
     }
 
     getMasked(skipMaskChars: boolean, val: string, mask: string, isReversed = false) {
@@ -216,13 +206,5 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
             check = maskIndex < maskLen && valueIndex < valueLength;
         }
         return check;
-    }
-
-    private setValue(value) {
-        this.value = value;
-    }
-
-    private getValue() {
-        return this.value;
     }
 }

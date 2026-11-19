@@ -28,3 +28,5 @@ export * from './lib/outcomes/outcome-rules';
 export * from './lib/state/signal-form';
 export * from './lib/state/field-metadata';
 export * from './lib/state/signal-form-event';
+export * from './lib/ui/widgets/signal-form-widget';
+export * from './lib/ui/widgets/field-error-message';
