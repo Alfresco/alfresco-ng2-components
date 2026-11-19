@@ -1830,6 +1830,18 @@ describe('DataTable with zoneless change detection', () => {
         expect(headerCheckbox.indeterminate).toBeTrue();
     });
 
+    it('should render the select all state when there are no selectable rows', async () => {
+        dataTable.data.getRows().forEach((row) => (row.isSelectable = false));
+
+        dataTable.onSelectAllClick({ checked: true } as MatCheckboxChange);
+        await fixture.whenStable();
+
+        const headerCheckbox = fixture.nativeElement.querySelector(
+            '[data-automation-id="datatable-row-header"] input[type="checkbox"]'
+        ) as HTMLInputElement;
+        expect(headerCheckbox.checked).toBeTrue();
+    });
+
     it('should render programmatic selection and reset without an input change', async () => {
         dataTable.selectRow(dataTable.data.getRows()[0], true);
         await fixture.whenStable();

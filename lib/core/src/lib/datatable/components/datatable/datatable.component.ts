@@ -851,6 +851,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
             this.emitRowSelectionEvent(domEventName, row);
         }
+        this.changeDetectorRef.markForCheck();
     }
 
     onCheckboxLabelClick(row: DataRow, event: MouseEvent) {
