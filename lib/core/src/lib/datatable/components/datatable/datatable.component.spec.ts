@@ -1598,6 +1598,13 @@ describe('DataTable', () => {
         expect(testingUtils.getInnerTextByDataAutomationId('text_Row 21')).toContain('Row 21');
     });
 
+    it('should not call setActiveItem on FocusKeyManager if document was clicked without keyboard drag and drop', () => {
+        spyOn(FocusKeyManager.prototype, 'setActiveItem');
+
+        document.dispatchEvent(new MouseEvent('click'));
+        expect(FocusKeyManager.prototype.setActiveItem).not.toHaveBeenCalled();
+    });
+
     describe('Body', () => {
         let liveAnnouncer: LiveAnnouncer;
 
@@ -2361,8 +2368,23 @@ describe('Accessibility', () => {
     });
 
     describe('Drag and drop', () => {
-        it('should emit dragDropped event when arrow down is pressed', () => {
-            const dataRows = [{ name: 'test1' }, { name: 'test2' }, { name: 'test3' }, { name: 'test4' }];
+        const draggedRowIndex = 1;
+
+        beforeEach(() => {
+            const dataRows = [
+                {
+                    id: 'id 1'
+                },
+                {
+                    id: 'id 2'
+                },
+                {
+                    id: 'id 3'
+                },
+                {
+                    id: 'id 4'
+                }
+            ] as DataRow[];
             dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
             dataTable.ngOnChanges({
                 rows: new SimpleChange(null, dataRows, false)
@@ -2370,13 +2392,17 @@ describe('Accessibility', () => {
             fixture.detectChanges();
             dataTable.rowDropSortingDisabled = true;
             dataTable.enableDragRows = true;
-            spyOnProperty(FocusKeyManager.prototype, 'activeItemIndex').and.returnValues(1, 2);
+            spyOnProperty(FocusKeyManager.prototype, 'activeItemIndex').and.returnValues(draggedRowIndex, 2);
+            spyOn(dataTable.data, 'getRows').and.returnValue(dataRows);
             fixture.nativeElement.dispatchEvent(
                 new KeyboardEvent('keyup', {
                     key: 'ArrowUp',
                     shiftKey: true
                 })
             );
+        });
+
+        it('should emit dragDropped event when arrow down is pressed', () => {
             spyOn(dataTable.dragDropped, 'emit');
 
             fixture.nativeElement.dispatchEvent(
@@ -2389,6 +2415,13 @@ describe('Accessibility', () => {
                 previousIndex: 0,
                 currentIndex: 1
             });
+        });
+
+        it('should call setActiveItem on FocusKeyManager if document was clicked during drag and drop by keyboard', () => {
+            spyOn(FocusKeyManager.prototype, 'setActiveItem');
+
+            document.dispatchEvent(new MouseEvent('click'));
+            expect(FocusKeyManager.prototype.setActiveItem).toHaveBeenCalledWith(draggedRowIndex);
         });
     });
 
