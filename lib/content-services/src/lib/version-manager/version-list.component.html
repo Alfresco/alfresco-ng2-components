@@ -59,12 +59,13 @@
                         *ngIf="allowVersionDelete"
                         [disabled]="!canDelete()"
                         [id]="'adf-version-list-action-delete-' + version.entry.id"
-                        (click)="deleteVersion(version.entry.id)"
+                        (click)="deleteVersion(version.entry.id, versionMenuTrigger)"
                         mat-menu-item>
                         {{ 'ADF_VERSION_LIST.ACTIONS.DELETE' | translate }}
                     </button>
                 </mat-menu>
                 <button mat-icon-button
+                            #versionMenuTrigger="matMenuTrigger"
                             [matMenuTriggerFor]="versionMenu"
                             [id]="'adf-version-list-action-menu-button-' + version.entry.id"
                             title="{{ 'ADF_VERSION_LIST.MANAGE_VERSION_OPTIONS' | translate }}">
