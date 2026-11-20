@@ -46,6 +46,10 @@ describe('CheckboxGroupWidgetComponent', () => {
             ...config
         });
     const checkboxes = () => TestbedHarnessEnvironment.loader(fixture).getAllHarnesses(MatCheckboxHarness);
+    const option = (id: string) =>
+        TestbedHarnessEnvironment.loader(fixture).getHarness(
+            MatCheckboxHarness.with({ selector: `[data-automation-id="adf-checkbox-group-option-choices-${id}"]` })
+        );
 
     beforeEach(() => {
         taskService = jasmine.createSpyObj('TaskFormService', ['getRestFieldValues']);
@@ -64,12 +68,16 @@ describe('CheckboxGroupWidgetComponent', () => {
 
     it('should render all options unchecked with an accessible group label', async () => {
         fixture.detectChanges();
-        const boxes = await checkboxes();
-        expect(boxes.length).toBe(2);
-        expect(await boxes[0].getLabelText()).toBe('Alpha');
-        expect(await boxes[0].isChecked()).toBeFalse();
-        expect(await boxes[1].isChecked()).toBeFalse();
-        expect(fixture.nativeElement.querySelector('[role="group"]').getAttribute('aria-labelledby')).toBe('choices-label');
+        expect((await checkboxes()).length).toBe(2);
+        const [alpha, beta] = [await option('a'), await option('b')];
+        expect(await alpha.getLabelText()).toBe('Alpha');
+        expect(await alpha.isChecked()).toBeFalse();
+        expect(await beta.isChecked()).toBeFalse();
+        expect(
+            fixture.nativeElement
+                .querySelector('[data-automation-id="adf-checkbox-group-widget-group"][role="group"]')
+                .getAttribute('aria-labelledby')
+        ).toBe('choices-label');
     });
 
     for (const readOnly of [false, true]) {
@@ -77,7 +85,7 @@ describe('CheckboxGroupWidgetComponent', () => {
             widget.field = createField({ readOnly });
             fixture.detectChanges();
             const host: HTMLElement = fixture.nativeElement;
-            const title = host.querySelector<HTMLElement>('.adf-checkbox-group-widget > .adf-label');
+            const title = host.querySelector<HTMLElement>('[data-automation-id="adf-checkbox-group-widget-label"]');
             const items = Array.from(host.querySelectorAll<HTMLElement>('.adf-checkbox-group-option-label'));
             const typography = (element: HTMLElement) => {
                 const style = getComputedStyle(element);
@@ -104,34 +112,35 @@ describe('CheckboxGroupWidgetComponent', () => {
 
     it('should select several options, avoid duplicates and deselect one', async () => {
         fixture.detectChanges();
-        const boxes = await checkboxes();
-        await boxes[0].check();
-        await boxes[1].check();
+        const [alpha, beta] = [await option('a'), await option('b')];
+        await alpha.check();
+        await beta.check();
         expect(widget.field.form.values.choices).toEqual(options);
         widget.onSelectionChange(options[1], true);
         expect(widget.field.form.values.choices).toEqual(options);
-        await boxes[0].uncheck();
+        await alpha.uncheck();
         expect(widget.field.form.values.choices).toEqual([options[1]]);
-        await boxes[1].uncheck();
+        await beta.uncheck();
         expect(widget.field.form.values.choices).toEqual([]);
     });
 
-    it('should keep the selection in option order regardless of click order', () => {
+    it('should keep the selection in option order regardless of click order', async () => {
         fixture.detectChanges();
-        widget.onSelectionChange(options[1], true);
-        widget.onSelectionChange(options[0], true);
+        const [alpha, beta] = [await option('a'), await option('b')];
+        await beta.check();
+        await alpha.check();
         expect(widget.field.form.values.choices).toEqual(options);
 
-        widget.onSelectionChange(options[0], false);
-        widget.onSelectionChange(options[0], true);
+        await alpha.uncheck();
+        await alpha.check();
         expect(widget.field.form.values.choices).toEqual(options);
     });
 
-    it('should keep saved selections that are no longer available after the current options', () => {
+    it('should keep saved selections that are no longer available after the current options', async () => {
         const stale = { id: 'old', name: 'Old' };
         widget.field = createField({ value: [stale, options[1]] });
         fixture.detectChanges();
-        widget.onSelectionChange(options[0], true);
+        await (await option('a')).check();
         expect(widget.field.form.values.choices).toEqual([options[0], options[1], stale]);
     });
 
@@ -182,22 +191,24 @@ describe('CheckboxGroupWidgetComponent', () => {
         fixture.detectChanges();
         expect(fixture.nativeElement.querySelector('error-widget')).not.toBeNull();
         expect(fixture.nativeElement.querySelectorAll('.adf-error-text').length).toBe(1);
-        expect(fixture.nativeElement.querySelector('.adf-checkbox-group-horizontal')).not.toBeNull();
-        expect(fixture.nativeElement.querySelector('.custom')).not.toBeNull();
-        const [checkbox] = await checkboxes();
-        expect(await (await checkbox.host()).getAttribute('title')).toBe('Choose some');
-        widget.onSelectionChange(options[0], true);
+        expect(
+            fixture.nativeElement.querySelector('[data-automation-id="adf-checkbox-group-widget-group"].adf-checkbox-group-horizontal')
+        ).not.toBeNull();
+        expect(fixture.nativeElement.querySelector('[data-automation-id="adf-checkbox-group-widget"].custom')).not.toBeNull();
+        const alpha = await option('a');
+        expect(await (await alpha.host()).getAttribute('title')).toBe('Choose some');
+        await alpha.check();
         expect(widget.field.isValid).toBeTrue();
         fixture.detectChanges();
         expect(fixture.nativeElement.querySelector('.adf-error-text')).toBeNull();
-        widget.onSelectionChange(options[0], false);
+        await alpha.uncheck();
         expect(widget.field.isValid).toBeFalse();
         fixture.detectChanges();
         expect(fixture.nativeElement.querySelectorAll('.adf-error-text').length).toBe(1);
     });
 
     describe('accessibility state', () => {
-        const group = () => fixture.nativeElement.querySelector('[role="group"]');
+        const group = () => fixture.nativeElement.querySelector('[data-automation-id="adf-checkbox-group-widget-group"][role="group"]');
 
         it('should not announce an untouched required group as invalid or described by an empty error', () => {
             widget.field = createField({ required: true });
@@ -276,7 +287,8 @@ describe('CheckboxGroupWidgetComponent', () => {
         widget.field.validationSummary.message = 'Custom error';
         fixture.detectChanges();
 
-        const errors = fixture.nativeElement.querySelectorAll('.adf-error-text');
+        const errorContainer = fixture.nativeElement.querySelector('[data-automation-id="adf-checkbox-group-widget-error"]');
+        const errors = errorContainer.querySelectorAll('.adf-error-text');
         expect(errors.length).toBe(1);
         expect(errors[0].textContent).toContain('Custom error');
     });
@@ -398,7 +410,7 @@ describe('CheckboxGroupWidgetComponent without zone.js', () => {
             restUrl: '/options'
         });
         await fixture.whenStable();
-        const group: HTMLElement = fixture.nativeElement.querySelector('[role="group"]');
+        const group: HTMLElement = fixture.nativeElement.querySelector('[data-automation-id="adf-checkbox-group-widget-group"][role="group"]');
         const loader = TestbedHarnessEnvironment.loader(fixture);
         expect(group.getAttribute('aria-busy')).toBe('true');
         expect((await loader.getAllHarnesses(MatCheckboxHarness)).length).toBe(0);
@@ -446,13 +458,17 @@ describe('CheckboxGroupWidgetComponent with OnPush change detection', () => {
     it('should re-render when the validation summary changes', async () => {
         fixture.componentInstance.markAsTouched();
         await fixture.whenStable();
-        expect(fixture.nativeElement.querySelector('[role="group"]').getAttribute('aria-invalid')).not.toBe('true');
+        expect(
+            fixture.nativeElement.querySelector('[data-automation-id="adf-checkbox-group-widget-group"][role="group"]').getAttribute('aria-invalid')
+        ).not.toBe('true');
 
         field.required = true;
         field.validate();
         await fixture.whenStable();
 
-        expect(fixture.nativeElement.querySelector('[role="group"]').getAttribute('aria-invalid')).toBe('true');
+        expect(
+            fixture.nativeElement.querySelector('[data-automation-id="adf-checkbox-group-widget-group"][role="group"]').getAttribute('aria-invalid')
+        ).toBe('true');
     });
 });
 
