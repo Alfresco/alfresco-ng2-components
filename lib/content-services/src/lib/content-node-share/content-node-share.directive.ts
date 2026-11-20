@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { afterNextRender, ChangeDetectorRef, Directive, HostListener, inject, Injector, Input, OnChanges } from '@angular/core';
+import { afterNextRender, ChangeDetectorRef, DestroyRef, Directive, HostListener, inject, Injector, Input, OnChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LazyApi, NodeEntry, NodesApi } from '@alfresco/js-api';
 
 import { ShareDialogComponent } from './content-node-share.dialog';
 import { from, Observable } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 @Directive({
@@ -31,6 +32,7 @@ export class NodeSharedDirective implements OnChanges {
     private readonly dialog = inject(MatDialog);
     private readonly injector = inject(Injector);
     private readonly changeDetectorRef = inject(ChangeDetectorRef);
+    private readonly destroyRef = inject(DestroyRef);
     private readonly alfrescoApiService = inject(AlfrescoApiService);
 
     isFile: boolean = false;
@@ -72,33 +74,36 @@ export class NodeSharedDirective implements OnChanges {
     }
 
     private openShareLinkDialog(node: NodeEntry) {
-        this.dialog.open(ShareDialogComponent, {
-            width: '600px',
-            panelClass: 'adf-share-link-dialog',
-            data: {
-                node,
-                baseShareUrl: this.baseShareUrl
-            }
-        });
+        this.dialog
+            .open(ShareDialogComponent, {
+                width: '600px',
+                panelClass: 'adf-share-link-dialog',
+                data: {
+                    node,
+                    baseShareUrl: this.baseShareUrl
+                }
+            })
+            .afterClosed()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => this.refreshShareState());
     }
 
     ngOnChanges() {
-        afterNextRender(
-            () => {
-                if (this.node?.entry) {
-                    this.isFile = this.node.entry.isFile;
-                    this.isShared = this.node.entry.properties ? this.node.entry.properties['qshare:sharedId'] : false;
-                    this.changeDetectorRef.markForCheck();
-                }
-            },
-            { injector: this.injector }
-        );
+        afterNextRender(() => this.refreshShareState(), { injector: this.injector });
     }
 
     @HostListener('click')
     onClick() {
         if (this.node) {
             this.shareNode(this.node);
+        }
+    }
+
+    private refreshShareState() {
+        if (this.node?.entry) {
+            this.isFile = this.node.entry.isFile;
+            this.isShared = this.node.entry.properties ? this.node.entry.properties['qshare:sharedId'] : false;
+            this.changeDetectorRef.markForCheck();
         }
     }
 }
