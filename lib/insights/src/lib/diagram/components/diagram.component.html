@@ -1,67 +1,115 @@
-<div *ngIf="diagram" class="diagram">
-    <div *ngFor="let element of diagram.elements">
-        <div [ngSwitch]="element.type">
-            <div *ngSwitchCase="'StartEvent'">
+@if (diagram) {
+  <div class="diagram">
+    @for (element of diagram.elements; track element) {
+      <div>
+        <div>
+          @switch (element.type) {
+            @case ('StartEvent') {
+              <div>
                 <diagram-start-event [data]="element" />
-            </div>
-            <div *ngSwitchCase="'ExclusiveGateway'">
+              </div>
+            }
+            @case ('ExclusiveGateway') {
+              <div>
                 <diagram-exclusive-gateway [data]="element" />
-            </div>
-            <div *ngSwitchCase="'InclusiveGateway'">
+              </div>
+            }
+            @case ('InclusiveGateway') {
+              <div>
                 <diagram-inclusive-gateway [data]="element" />
-            </div>
-            <div *ngSwitchCase="'EventGateway'">
+              </div>
+            }
+            @case ('EventGateway') {
+              <div>
                 <diagram-event-gateway [data]="element" />
-            </div>
-            <div *ngSwitchCase="'ParallelGateway'">
+              </div>
+            }
+            @case ('ParallelGateway') {
+              <div>
                 <diagram-parallel-gateway [data]="element" />
-            </div>
-            <div *ngSwitchCase="'EndEvent'">
+              </div>
+            }
+            @case ('EndEvent') {
+              <div>
                 <diagram-end-event [data]="element" />
-            </div>
-            <div *ngSwitchCase="'UserTask'">
+              </div>
+            }
+            @case ('UserTask') {
+              <div>
                 <diagram-user-task [data]="element" />
-            </div>
-            <div *ngSwitchCase="'ManualTask'">
+              </div>
+            }
+            @case ('ManualTask') {
+              <div>
                 <diagram-manual-task [data]="element" />
-            </div>
-            <div *ngSwitchCase="'ServiceTask'">
+              </div>
+            }
+            @case ('ServiceTask') {
+              <div>
                 <diagram-container-service-task [data]="element" />
-            </div>
-            <div *ngSwitchCase="'ReceiveTask'">
+              </div>
+            }
+            @case ('ReceiveTask') {
+              <div>
                 <diagram-receive-task [data]="element" />
-            </div>
-            <div *ngSwitchCase="'ScriptTask'">
+              </div>
+            }
+            @case ('ScriptTask') {
+              <div>
                 <diagram-script-task [data]="element" />
-            </div>
-            <div *ngSwitchCase="'BusinessRuleTask'">
+              </div>
+            }
+            @case ('BusinessRuleTask') {
+              <div>
                 <diagram-business-rule-task [data]="element" />
-            </div>
-            <div *ngSwitchCase="'BoundaryEvent'">
+              </div>
+            }
+            @case ('BoundaryEvent') {
+              <div>
                 <diagram-boundary-event [data]="element" />
-            </div>
-            <div *ngSwitchCase="'ThrowEvent'">
+              </div>
+            }
+            @case ('ThrowEvent') {
+              <div>
                 <diagram-throw-event [data]="element" />
-            </div>
-            <div *ngSwitchCase="'IntermediateCatchEvent'">
+              </div>
+            }
+            @case ('IntermediateCatchEvent') {
+              <div>
                 <diagram-intermediate-catching-event [data]="element" />
-            </div>
-            <div *ngSwitchCase="'SubProcess'">
+              </div>
+            }
+            @case ('SubProcess') {
+              <div>
                 <diagram-subprocess [data]="element" />
-            </div>
-            <div *ngSwitchCase="'EventSubProcess'">
+              </div>
+            }
+            @case ('EventSubProcess') {
+              <div>
                 <diagram-event-subprocess [data]="element" />
-            </div>
+              </div>
+            }
+          }
         </div>
-    </div>
-    <div *ngFor="let flow of diagram.flows">
-        <div [ngSwitch]="flow.type">
-            <div *ngSwitchCase="'sequenceFlow'">
+      </div>
+    }
+    @for (flow of diagram.flows; track flow) {
+      <div>
+        <div>
+          @switch (flow.type) {
+            @case ('sequenceFlow') {
+              <div>
                 <adf-diagram-sequence-flow [flow]="flow" />
-            </div>
+              </div>
+            }
+          }
         </div>
-    </div>
-    <div *ngIf="diagram.pools">
+      </div>
+    }
+    @if (diagram.pools) {
+      <div>
         <diagram-pools [pools]="diagram.pools" />
-    </div>
-</div>
+      </div>
+    }
+  </div>
+}
