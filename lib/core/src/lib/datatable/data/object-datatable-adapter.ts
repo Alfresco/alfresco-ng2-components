@@ -33,7 +33,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     private _sortingMode: SortingMode;
 
     selectedRow: DataRow;
-    rowsChanged: Subject<Array<DataRow>>;
+    readonly rowsChanged = new Subject<Array<DataRow>>();
 
     static generateSchema(data: any[]) {
         const schema = [];
@@ -86,8 +86,6 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
                 this.sort(sortable[0].key, 'asc');
             }
         }
-
-        this.rowsChanged = new Subject<Array<DataRow>>();
     }
 
     getColumnType(_row: DataRow, col: DataColumn): string {
@@ -134,11 +132,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     setSorting(sorting: DataSorting): void {
         this._sorting = sorting;
 
-        if (this._sortingMode === 'server') {
-            return;
-        }
-
-        if (sorting?.key) {
+        if (this._sortingMode !== 'server' && sorting?.key) {
             this._rows.sort((a: DataRow, b: DataRow) => {
                 let left = a.getValue(sorting.key) ?? '';
                 let right = b.getValue(sorting.key) ?? '';
@@ -156,6 +150,8 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
                     : right.localeCompare(left, undefined, sorting.options);
             });
         }
+
+        this.rowsChanged.next(this._rows);
     }
 
     sort(key?: string, direction?: string, options?: Intl.CollatorOptions): void {
