@@ -21,6 +21,7 @@ import { DataSorting } from './data-sorting.model';
 import { ObjectDataTableAdapter } from './object-datatable-adapter';
 import { ObjectDataRow } from './object-datarow.model';
 import { ObjectDataColumn } from './object-datacolumn.model';
+import { firstValueFrom } from 'rxjs';
 
 describe('ObjectDataTableAdapter', () => {
     it('should init with empty row collection', () => {
@@ -157,6 +158,16 @@ describe('ObjectDataTableAdapter', () => {
 
         adapter.setSorting(null);
         expect(adapter.getSorting()).toBe(null);
+    });
+
+    it('should notify rowsChanged when sorting is set', async () => {
+        const adapter = new ObjectDataTableAdapter([{ id: 2 }, { id: 1 }], []);
+        const rowsChangedPromise = firstValueFrom(adapter.rowsChanged);
+
+        adapter.setSorting(new DataSorting('id', 'asc', { numeric: true }));
+
+        expect(await rowsChangedPromise).toBe(adapter.getRows());
+        expect(adapter.getRows()[0].getValue('id')).toBe(1);
     });
 
     it('should sort rows with new sorting value', () => {
