@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, DestroyRef, Directive, ElementRef, forwardRef, inject, Input, NgZone, OnDestroy } from '@angular/core';
+import { afterNextRender, ChangeDetectorRef, DestroyRef, Directive, ElementRef, forwardRef, inject, Injector, Input, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 import { fromEvent, merge, Observable, of, Subject, Subscription } from 'rxjs';
@@ -48,7 +48,7 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
 })
 export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
     private readonly element = inject(ElementRef);
-    private readonly ngZone = inject(NgZone);
+    private readonly injector = inject(Injector);
     private readonly changeDetectorRef = inject(ChangeDetectorRef);
     private readonly document = inject(DOCUMENT, { optional: true });
 
@@ -168,7 +168,16 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
     }
 
     private subscribeToClosingActions(): Subscription {
-        const firstStable = this.ngZone.onStable.asObservable();
+        const firstStable = new Observable<void>((subscriber) => {
+            const ref = afterNextRender(
+                () => {
+                    subscriber.next();
+                    subscriber.complete();
+                },
+                { injector: this.injector }
+            );
+            return () => ref.destroy();
+        });
         const optionChanges = this.searchPanel.keyPressedStream.asObservable();
 
         return merge(firstStable, optionChanges)

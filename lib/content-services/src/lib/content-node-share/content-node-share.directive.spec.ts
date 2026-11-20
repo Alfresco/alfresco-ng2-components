@@ -17,7 +17,7 @@
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Component } from '@angular/core';
+import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { NodeSharedDirective } from './content-node-share.directive';
 import { NoopAuthModule } from '@alfresco/adf-core';
@@ -133,5 +133,21 @@ describe('NodeSharedDirective', () => {
         fixture.detectChanges();
 
         expect(document.querySelector('.adf-share-link-dialog')).not.toBe(null);
+    });
+});
+
+describe('NodeSharedDirective without zone.js', () => {
+    it('should set isFile and isShared after the next render', async () => {
+        TestBed.configureTestingModule({
+            imports: [NoopAuthModule, NodeShareTestComponent, MatNativeDatetimeModule],
+            providers: [provideZonelessChangeDetection()]
+        });
+        const fixture = TestBed.createComponent(NodeShareTestComponent);
+        fixture.componentInstance.documentList.selection = [{ entry: { isFile: true, properties: { 'qshare:sharedId': 'someId' } } }] as any;
+        await fixture.whenStable();
+
+        const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
+        expect(button.disabled).toBe(false);
+        expect(button.title).toBe('Shared');
     });
 });
