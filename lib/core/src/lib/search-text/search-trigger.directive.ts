@@ -184,6 +184,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
             .pipe(
                 switchMap(() => {
                     this.searchPanel.setVisibility();
+                    this.changeDetectorRef.markForCheck();
                     return this.panelClosingActions;
                 }),
                 takeUntilDestroyed(this.destroyRef)

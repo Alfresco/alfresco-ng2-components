@@ -33,13 +33,13 @@ class SearchTriggerTestComponent {
 
 describe('SearchTriggerDirective without zone.js', () => {
     it('should set panel visibility after the next render when panel is opened', async () => {
-        const setVisibility = jasmine.createSpy('setVisibility');
+        const setVisibility = jasmine.createSpy('setVisibility').and.callFake(() => (panel.showPanel = true));
         const panel = {
             keyPressedStream: new Subject<string>(),
             setVisibility,
             resetResults: () => {},
             hidePanel: () => {},
-            showPanel: true,
+            showPanel: false,
             isOpen: false
         };
 
@@ -48,12 +48,13 @@ describe('SearchTriggerDirective without zone.js', () => {
         fixture.componentInstance.panel.set(panel);
         await fixture.whenStable();
 
+        const inputElement: HTMLInputElement = fixture.nativeElement.querySelector('input');
         fixture.componentInstance.input().openPanel();
         expect(setVisibility).not.toHaveBeenCalled();
 
-        fixture.componentRef.changeDetectorRef.markForCheck();
         await fixture.whenStable();
 
         expect(setVisibility).toHaveBeenCalledTimes(1);
+        expect(inputElement.getAttribute('aria-expanded')).toBe('true');
     });
 });
