@@ -16,15 +16,13 @@
  */
 
 import { Injectable } from '@angular/core';
-import {
-    FormFieldTypes,
-    FormRenderingService
-} from '@alfresco/adf-core';
+import { FormFieldTypes, FormRenderingService } from '@alfresco/adf-core';
 import { AttachFileWidgetComponent } from './widgets/content-widget/attach-file-widget.component';
 import { AttachFolderWidgetComponent } from './widgets/content-widget/attach-folder-widget.component';
 import { DocumentWidgetComponent } from './widgets/document/document.widget';
 import { PeopleWidgetComponent } from './widgets/people/people.widget';
 import { FunctionalGroupWidgetComponent } from './widgets/functional-group/functional-group.widget';
+import { CheckboxGroupWidgetComponent } from './widgets/checkbox-group/checkbox-group.widget';
 import { RadioButtonsWidgetComponent } from './widgets/radio-buttons/radio-buttons.widget';
 import { TypeaheadWidgetComponent } from './widgets/typeahead/typeahead.widget';
 import { DynamicTableWidgetComponent } from './widgets/dynamic-table/dynamic-table.widget';
@@ -38,17 +36,21 @@ export class ProcessFormRenderingService extends FormRenderingService {
     constructor() {
         super();
 
-        this.register({
-            [FormFieldTypes.DROPDOWN]: () => DropdownWidgetComponent,
-            [FormFieldTypes.TYPEAHEAD]: () =>  TypeaheadWidgetComponent,
-            [FormFieldTypes.RADIO_BUTTONS]: () =>  RadioButtonsWidgetComponent,
-            [FormFieldTypes.UPLOAD]: () => AttachFileWidgetComponent,
-            [FormFieldTypes.ATTACH_FOLDER]: () => AttachFolderWidgetComponent,
-            [FormFieldTypes.DOCUMENT]: () => DocumentWidgetComponent,
-            [FormFieldTypes.PEOPLE]: () =>  PeopleWidgetComponent,
-            [FormFieldTypes.FUNCTIONAL_GROUP]:  () => FunctionalGroupWidgetComponent,
-            [FormFieldTypes.DYNAMIC_TABLE]:  () => DynamicTableWidgetComponent,
-            [FormFieldTypes.ALFRESCO_FILE_VIEWER]:  () => FileViewerWidgetComponent
-        }, true);
+        this.register(
+            {
+                [FormFieldTypes.DROPDOWN]: () => DropdownWidgetComponent,
+                [FormFieldTypes.TYPEAHEAD]: () => TypeaheadWidgetComponent,
+                [FormFieldTypes.CHECKBOX_GROUP]: () => CheckboxGroupWidgetComponent,
+                [FormFieldTypes.RADIO_BUTTONS]: () => RadioButtonsWidgetComponent,
+                [FormFieldTypes.UPLOAD]: () => AttachFileWidgetComponent,
+                [FormFieldTypes.ATTACH_FOLDER]: () => AttachFolderWidgetComponent,
+                [FormFieldTypes.DOCUMENT]: () => DocumentWidgetComponent,
+                [FormFieldTypes.PEOPLE]: () => PeopleWidgetComponent,
+                [FormFieldTypes.FUNCTIONAL_GROUP]: () => FunctionalGroupWidgetComponent,
+                [FormFieldTypes.DYNAMIC_TABLE]: () => DynamicTableWidgetComponent,
+                [FormFieldTypes.ALFRESCO_FILE_VIEWER]: () => FileViewerWidgetComponent
+            },
+            true
+        );
     }
 }

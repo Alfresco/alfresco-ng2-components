@@ -28,6 +28,7 @@ export class FormFieldTypes {
     static INTEGER: string = 'integer';
     static DECIMAL: string = 'bigdecimal';
     static MULTILINE_TEXT: string = 'multi-line-text';
+    static CHECKBOX_GROUP: string = 'checkbox-group';
     static DROPDOWN: string = 'dropdown';
     static HYPERLINK: string = 'hyperlink';
     static RADIO_BUTTONS: string = 'radio-buttons';

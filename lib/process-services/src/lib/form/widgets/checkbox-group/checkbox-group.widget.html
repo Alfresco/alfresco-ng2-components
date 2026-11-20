@@ -1,0 +1,38 @@
+@if (field) {
+<div class="adf-checkbox-group-widget {{field.className}}" [class.adf-readonly]="disabled" [id]="field.id" data-automation-id="adf-checkbox-group-widget">
+    <div [id]="field.id + '-label'" class="adf-label" data-automation-id="adf-checkbox-group-widget-label">
+        {{ field.name | translate }} @if (isRequired()) {
+        <span class="adf-asterisk" aria-hidden="true">*</span>
+        }
+    </div>
+    <div
+        class="adf-checkbox-group"
+        role="group"
+        data-automation-id="adf-checkbox-group-widget-group"
+        [class.adf-checkbox-group-horizontal]="field.alignmentType === 'horizontal'"
+        [attr.aria-labelledby]="field.id + '-label'"
+        [attr.aria-required]="isRequired()"
+        [attr.aria-invalid]="isTouched() && !field.isValid"
+        [attr.aria-describedby]="isTouched() ? field.id + '-error' : null"
+        [attr.aria-busy]="loading()"
+    >
+        @for (option of field.options; track option.id) {
+        <mat-checkbox
+            [id]="field.id + '-' + option.id"
+            [attr.data-automation-id]="'adf-checkbox-group-option-' + field.id + '-' + option.id"
+            [title]="field.tooltip"
+            [checked]="isSelected(option)"
+            [disabled]="disabled"
+            (change)="onSelectionChange(option, $event.checked)"
+        >
+            <span class="adf-checkbox-group-option-label">{{ option.name }}</span>
+        </mat-checkbox>
+        }
+    </div>
+    <div [id]="field.id + '-error'" aria-live="polite" data-automation-id="adf-checkbox-group-widget-error">
+        @if (isTouched()) {
+        <error-widget [error]="field.validationSummary" [required]="isInvalidFieldRequired() ? ('FORM.FIELD.REQUIRED' | translate) : ''" />
+        }
+    </div>
+</div>
+}

@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { CheckboxGroupWidgetComponent } from './widgets/checkbox-group/checkbox-group.widget';
 import { ProcessFormRenderingService } from './process-form-rendering.service';
 import { FormFieldModel, FormFieldTypes, FormService } from '@alfresco/adf-core';
 import { AttachFolderWidgetComponent } from './widgets/content-widget/attach-folder-widget.component';
@@ -37,6 +38,11 @@ describe('ProcessFormRenderingService', () => {
             providers: [ProcessFormRenderingService, FormService]
         });
         service = TestBed.inject(ProcessFormRenderingService);
+    });
+
+    it('should resolve checkbox groups', () => {
+        const field = new FormFieldModel(null, { type: FormFieldTypes.CHECKBOX_GROUP });
+        expect(service.resolveComponentType(field)).toBe(CheckboxGroupWidgetComponent);
     });
 
     it('should resolve Upload field as Upload widget', () => {
