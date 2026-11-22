@@ -71,7 +71,7 @@ importers:
         version: 21.2.25(@angular/common@21.2.25(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.2)(zone.js@0.16.3))(rxjs@7.8.2))(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.2)(zone.js@0.16.3))(@angular/platform-browser@21.2.25(@angular/animations@21.2.25(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.2)(zone.js@0.16.3)))(@angular/common@21.2.25(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.2)(zone.js@0.16.3))(rxjs@7.8.2))(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.2)(zone.js@0.16.3)))(rxjs@7.8.2)
       '@apollo/client':
         specifier: 4.3.7
-        version: 4.3.7(graphql-ws@6.4.1(graphql@16.14.2)(ws@8.22.0))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2)
+        version: 4.3.7(graphql-ws@6.4.1(graphql@16.15.0)(ws@8.22.0))(graphql@16.15.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2)
       '@cspell/eslint-plugin':
         specifier: 10.0.1
         version: 10.0.1(eslint@10.11.0(jiti@2.7.0)(supports-color@7.2.0))
@@ -86,7 +86,7 @@ importers:
         version: 21.0.3(@angular/common@21.2.25(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.2)(zone.js@0.16.3))(rxjs@7.8.2))(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.2)(zone.js@0.16.3))
       apollo-angular:
         specifier: 13.0.0
-        version: 13.0.0(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.2)(zone.js@0.16.3))(@apollo/client@4.3.7(graphql-ws@6.4.1(graphql@16.14.2)(ws@8.22.0))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2))(graphql@16.14.2)(rxjs@7.8.2)
+        version: 13.0.0(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.2)(zone.js@0.16.3))(@apollo/client@4.3.7(graphql-ws@6.4.1(graphql@16.15.0)(ws@8.22.0))(graphql@16.15.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2))(graphql@16.15.0)(rxjs@7.8.2)
       chart.js:
         specifier: 4.5.1
         version: 4.5.1
@@ -107,7 +107,7 @@ importers:
         version: 5.0.4
       graphql-ws:
         specifier: 6.4.1
-        version: 6.4.1(graphql@16.14.2)(ws@8.22.0)
+        version: 6.4.1(graphql@16.15.0)(ws@8.22.0)
       material-icons:
         specifier: 1.13.14
         version: 1.13.14
@@ -254,8 +254,8 @@ importers:
         specifier: 79.0.0
         version: 79.0.0(eslint@10.11.0(jiti@2.7.0)(supports-color@7.2.0))(supports-color@10.2.2)(typescript@5.9.3)
       graphql:
-        specifier: 16.14.2
-        version: 16.14.2
+        specifier: 16.15.0
+        version: 16.15.0
       husky:
         specifier: 9.1.7
         version: 9.1.7
@@ -5541,8 +5541,8 @@ packages:
       ws:
         optional: true
 
-  graphql@16.14.2:
-    resolution: {integrity: sha512-Chq1s4CY7jmh8gO2qvLIJyfCDIN+EHLFW/9iShnp1z8FjBQMoodWP1kDC36VAMXXIvAjj4ARa7ntfAV2BrjsbA==}
+  graphql@16.15.0:
+    resolution: {integrity: sha512-32kz9FecohDiC/tgcViwnRXM7HFBVTPiW7pHO+DikKOI5KjhU/jNULOReXsrFqt2WAYbE9xFXsTffJw6iTO8qw==}
     engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
 
   has-flag@4.0.0:
@@ -8806,19 +8806,19 @@ snapshots:
       rxjs: 7.8.2
       tslib: 2.8.1
 
-  '@apollo/client@4.3.7(graphql-ws@6.4.1(graphql@16.14.2)(ws@8.22.0))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2)':
+  '@apollo/client@4.3.7(graphql-ws@6.4.1(graphql@16.15.0)(ws@8.22.0))(graphql@16.15.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2)':
     dependencies:
-      '@graphql-typed-document-node/core': 3.2.0(graphql@16.14.2)
+      '@graphql-typed-document-node/core': 3.2.0(graphql@16.15.0)
       '@wry/caches': 1.0.1
       '@wry/equality': 0.5.7
       '@wry/trie': 0.5.0
-      graphql: 16.14.2
-      graphql-tag: 2.12.7(graphql@16.14.2)
+      graphql: 16.15.0
+      graphql-tag: 2.12.7(graphql@16.15.0)
       optimism: 0.18.1
       rxjs: 7.8.2
       tslib: 2.8.1
     optionalDependencies:
-      graphql-ws: 6.4.1(graphql@16.14.2)(ws@8.22.0)
+      graphql-ws: 6.4.1(graphql@16.15.0)(ws@8.22.0)
       react: 19.2.6
       react-dom: 19.2.6(react@19.2.6)
 
@@ -10334,9 +10334,9 @@ snapshots:
       '@eslint/core': 1.2.1
       levn: 0.4.1
 
-  '@graphql-typed-document-node/core@3.2.0(graphql@16.14.2)':
+  '@graphql-typed-document-node/core@3.2.0(graphql@16.15.0)':
     dependencies:
-      graphql: 16.14.2
+      graphql: 16.15.0
 
   '@harperfast/extended-iterable@1.0.3':
     optional: true
@@ -12335,11 +12335,11 @@ snapshots:
       normalize-path: 3.0.0
       picomatch: 4.0.7
 
-  apollo-angular@13.0.0(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.2)(zone.js@0.16.3))(@apollo/client@4.3.7(graphql-ws@6.4.1(graphql@16.14.2)(ws@8.22.0))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2))(graphql@16.14.2)(rxjs@7.8.2):
+  apollo-angular@13.0.0(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.2)(zone.js@0.16.3))(@apollo/client@4.3.7(graphql-ws@6.4.1(graphql@16.15.0)(ws@8.22.0))(graphql@16.15.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2))(graphql@16.15.0)(rxjs@7.8.2):
     dependencies:
       '@angular/core': 21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.2)(zone.js@0.16.3)
-      '@apollo/client': 4.3.7(graphql-ws@6.4.1(graphql@16.14.2)(ws@8.22.0))(graphql@16.14.2)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2)
-      graphql: 16.14.2
+      '@apollo/client': 4.3.7(graphql-ws@6.4.1(graphql@16.15.0)(ws@8.22.0))(graphql@16.15.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rxjs@7.8.2)
+      graphql: 16.15.0
       rxjs: 7.8.2
       tslib: 2.8.1
 
@@ -13946,18 +13946,18 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  graphql-tag@2.12.7(graphql@16.14.2):
+  graphql-tag@2.12.7(graphql@16.15.0):
     dependencies:
-      graphql: 16.14.2
+      graphql: 16.15.0
       tslib: 2.8.1
 
-  graphql-ws@6.4.1(graphql@16.14.2)(ws@8.22.0):
+  graphql-ws@6.4.1(graphql@16.15.0)(ws@8.22.0):
     dependencies:
-      graphql: 16.14.2
+      graphql: 16.15.0
     optionalDependencies:
       ws: 8.22.0
 
-  graphql@16.14.2: {}
+  graphql@16.15.0: {}
 
   has-flag@4.0.0: {}
 
