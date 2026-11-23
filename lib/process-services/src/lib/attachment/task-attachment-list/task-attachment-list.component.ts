@@ -127,13 +127,16 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
 
     add(content: any): void {
         this.ngZone.run(() => {
-            this.attachments.push({
-                id: content.id,
-                name: content.name,
-                created: content.created,
-                createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
-                icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
-            });
+            this.attachments = [
+                ...this.attachments,
+                {
+                    id: content.id,
+                    name: content.name,
+                    created: content.created,
+                    createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
+                    icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
+                }
+            ];
         });
     }
 

@@ -17,6 +17,7 @@
 
 import { DataColumn, DataRow, DataSorting, DataTableAdapter, ThumbnailService } from '@alfresco/adf-core';
 import { NodePaging, NodeEntry } from '@alfresco/js-api';
+import { Subject } from 'rxjs';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { ShareDataRow } from './share-data-row.model';
 import { RowFilter } from './row-filter.model';
@@ -38,6 +39,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     permissionsStyle: PermissionStyleModel[];
     selectedRow: DataRow;
     allowDropFiles: boolean;
+    rowsChanged = new Subject<Array<DataRow>>();
 
     set sortingMode(value: string) {
         let newValue = (value || 'client').toLowerCase();
@@ -78,6 +80,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     setRows(rows: Array<DataRow>) {
         this.rows = rows || [];
         this.sort();
+        this.rowsChanged.next(this.rows);
     }
 
     getColumns(): Array<DataColumn> {
@@ -181,6 +184,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         this.sorting = sorting;
 
         this.sortRows(this.rows, this.sorting);
+        this.rowsChanged.next(this.rows);
     }
 
     sort(key?: string, direction?: string): void {
@@ -313,6 +317,8 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         } else {
             this.rows = shareDataRows;
         }
+
+        this.rowsChanged.next(this.rows);
     }
 
     getSelectedRows(): DataRow[] {

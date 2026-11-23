@@ -112,8 +112,7 @@ export class AddPermissionDialogComponent {
     }
 
     onMemberDelete({ id }: MemberModel) {
-        const index = this.selectedMembers.findIndex((member) => member.id === id);
-        this.selectedMembers.splice(index, 1);
+        this.selectedMembers = this.selectedMembers.filter((member) => member.id !== id);
         if (this.selectedMembers.length === 0) {
             this.enableSearch();
             this.currentSelection = [];
