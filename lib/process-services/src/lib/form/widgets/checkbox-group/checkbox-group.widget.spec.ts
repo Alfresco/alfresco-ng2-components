@@ -74,9 +74,7 @@ describe('CheckboxGroupWidgetComponent', () => {
         expect(await alpha.isChecked()).toBeFalse();
         expect(await beta.isChecked()).toBeFalse();
         expect(
-            fixture.nativeElement
-                .querySelector('[data-automation-id="adf-checkbox-group-widget-group"][role="group"]')
-                .getAttribute('aria-labelledby')
+            fixture.nativeElement.querySelector('fieldset[data-automation-id="adf-checkbox-group-widget-group"]').getAttribute('aria-labelledby')
         ).toBe('choices-label');
     });
 
@@ -208,7 +206,7 @@ describe('CheckboxGroupWidgetComponent', () => {
     });
 
     describe('accessibility state', () => {
-        const group = () => fixture.nativeElement.querySelector('[data-automation-id="adf-checkbox-group-widget-group"][role="group"]');
+        const group = () => fixture.nativeElement.querySelector('fieldset[data-automation-id="adf-checkbox-group-widget-group"]');
 
         it('should not announce an untouched required group as invalid or described by an empty error', () => {
             widget.field = createField({ required: true });
@@ -410,7 +408,7 @@ describe('CheckboxGroupWidgetComponent without zone.js', () => {
             restUrl: '/options'
         });
         await fixture.whenStable();
-        const group: HTMLElement = fixture.nativeElement.querySelector('[data-automation-id="adf-checkbox-group-widget-group"][role="group"]');
+        const group: HTMLElement = fixture.nativeElement.querySelector('fieldset[data-automation-id="adf-checkbox-group-widget-group"]');
         const loader = TestbedHarnessEnvironment.loader(fixture);
         expect(group.getAttribute('aria-busy')).toBe('true');
         expect((await loader.getAllHarnesses(MatCheckboxHarness)).length).toBe(0);
@@ -459,7 +457,7 @@ describe('CheckboxGroupWidgetComponent with OnPush change detection', () => {
         fixture.componentInstance.markAsTouched();
         await fixture.whenStable();
         expect(
-            fixture.nativeElement.querySelector('[data-automation-id="adf-checkbox-group-widget-group"][role="group"]').getAttribute('aria-invalid')
+            fixture.nativeElement.querySelector('fieldset[data-automation-id="adf-checkbox-group-widget-group"]').getAttribute('aria-invalid')
         ).not.toBe('true');
 
         field.required = true;
@@ -467,7 +465,7 @@ describe('CheckboxGroupWidgetComponent with OnPush change detection', () => {
         await fixture.whenStable();
 
         expect(
-            fixture.nativeElement.querySelector('[data-automation-id="adf-checkbox-group-widget-group"][role="group"]').getAttribute('aria-invalid')
+            fixture.nativeElement.querySelector('fieldset[data-automation-id="adf-checkbox-group-widget-group"]').getAttribute('aria-invalid')
         ).toBe('true');
     });
 });

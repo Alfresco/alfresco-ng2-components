@@ -5,9 +5,8 @@
         <span class="adf-asterisk" aria-hidden="true">*</span>
         }
     </div>
-    <div
+    <fieldset
         class="adf-checkbox-group"
-        role="group"
         data-automation-id="adf-checkbox-group-widget-group"
         [class.adf-checkbox-group-horizontal]="field.alignmentType === 'horizontal'"
         [attr.aria-labelledby]="field.id + '-label'"
@@ -28,7 +27,7 @@
             <span class="adf-checkbox-group-option-label">{{ option.name }}</span>
         </mat-checkbox>
         }
-    </div>
+    </fieldset>
     <div [id]="field.id + '-error'" aria-live="polite" data-automation-id="adf-checkbox-group-widget-error">
         @if (isTouched()) {
         <error-widget [error]="field.validationSummary" [required]="isInvalidFieldRequired() ? ('FORM.FIELD.REQUIRED' | translate) : ''" />
