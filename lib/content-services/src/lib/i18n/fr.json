@@ -710,7 +710,7 @@
       "NOT_FIRST_LEVEL": "Niveau {{ level }} • Dans {{ ancestorName }}",
       "CURRENT_LEVEL": "Déjà dans ce dossier",
       "CURRENT_LEVEL_ICON_LABEL": "Actuel",
-      "LIBRARY_CONTAINER_LEVEL": "Navigation dans la bibliothèque uniquement",
+      "LIBRARY_CONTAINER_LEVEL": "Le fichier/dossier ne peut pas être déplacé vers la liste des bibliothèques.",
       "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Indisponible",
       "DROP_HINT": "Déplacer ici"
     }

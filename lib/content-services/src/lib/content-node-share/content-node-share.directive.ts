@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { DestroyRef, Directive, HostListener, inject, Input, NgZone, OnChanges } from '@angular/core';
+import { afterNextRender, ChangeDetectorRef, DestroyRef, Directive, HostListener, inject, Injector, Input, OnChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LazyApi, NodeEntry, NodesApi } from '@alfresco/js-api';
 
 import { ShareDialogComponent } from './content-node-share.dialog';
 import { from, Observable } from 'rxjs';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 @Directive({
     selector: '[adf-share]',
@@ -30,7 +30,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class NodeSharedDirective implements OnChanges {
     private readonly dialog = inject(MatDialog);
-    private readonly zone = inject(NgZone);
+    private readonly injector = inject(Injector);
+    private readonly changeDetectorRef = inject(ChangeDetectorRef);
+    private readonly destroyRef = inject(DestroyRef);
     private readonly alfrescoApiService = inject(AlfrescoApiService);
 
     isFile: boolean = false;
@@ -48,7 +50,6 @@ export class NodeSharedDirective implements OnChanges {
     @LazyApi((self: NodeSharedDirective) => new NodesApi(self.alfrescoApiService.getInstance()))
     declare readonly nodesApi: NodesApi;
 
-    private readonly destroyRef = inject(DestroyRef);
     shareNode(nodeEntry: NodeEntry) {
         if (nodeEntry?.entry?.isFile) {
             // shared and favorite
@@ -73,29 +74,36 @@ export class NodeSharedDirective implements OnChanges {
     }
 
     private openShareLinkDialog(node: NodeEntry) {
-        this.dialog.open(ShareDialogComponent, {
-            width: '600px',
-            panelClass: 'adf-share-link-dialog',
-            data: {
-                node,
-                baseShareUrl: this.baseShareUrl
-            }
-        });
+        this.dialog
+            .open(ShareDialogComponent, {
+                width: '600px',
+                panelClass: 'adf-share-link-dialog',
+                data: {
+                    node,
+                    baseShareUrl: this.baseShareUrl
+                }
+            })
+            .afterClosed()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => this.refreshShareState());
     }
 
     ngOnChanges() {
-        this.zone.onStable.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-            if (this.node?.entry) {
-                this.isFile = this.node.entry.isFile;
-                this.isShared = this.node.entry.properties ? this.node.entry.properties['qshare:sharedId'] : false;
-            }
-        });
+        afterNextRender(() => this.refreshShareState(), { injector: this.injector });
     }
 
     @HostListener('click')
     onClick() {
         if (this.node) {
             this.shareNode(this.node);
+        }
+    }
+
+    private refreshShareState() {
+        if (this.node?.entry) {
+            this.isFile = this.node.entry.isFile;
+            this.isShared = this.node.entry.properties ? this.node.entry.properties['qshare:sharedId'] : false;
+            this.changeDetectorRef.markForCheck();
         }
     }
 }

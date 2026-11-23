@@ -710,7 +710,7 @@
       "NOT_FIRST_LEVEL": "Úroveň {{ level }} • V {{ ancestorName }}",
       "CURRENT_LEVEL": "Již v této složce",
       "CURRENT_LEVEL_ICON_LABEL": "Aktuální",
-      "LIBRARY_CONTAINER_LEVEL": "Pouze navigace knihovny",
+      "LIBRARY_CONTAINER_LEVEL": "Soubor/složku nelze přesunout do seznamu knihoven.",
       "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Nedostupné",
       "DROP_HINT": "Přesunout zde"
     }

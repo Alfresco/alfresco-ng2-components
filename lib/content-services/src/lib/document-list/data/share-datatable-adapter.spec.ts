@@ -21,6 +21,7 @@ import { ERR_OBJECT_NOT_FOUND, ShareDataRow } from './share-data-row.model';
 import { ERR_COL_NOT_FOUND, ERR_ROW_NOT_FOUND, ShareDataTableAdapter } from './share-datatable-adapter';
 import { TestBed } from '@angular/core/testing';
 import { ContentService } from '../../common/services/content.service';
+import { firstValueFrom } from 'rxjs';
 
 describe('ShareDataTableAdapter', () => {
     let thumbnailService: ThumbnailService;
@@ -110,6 +111,16 @@ describe('ShareDataTableAdapter', () => {
 
         adapter.setRows(null);
         expect(adapter.getRows()).toEqual([]);
+    });
+
+    it('should notify rowsChanged with the loaded rows when a page is loaded', async () => {
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
+        const rowsChangedPromise = firstValueFrom(adapter.rowsChanged);
+
+        adapter.loadPage({ list: { entries: [new FileNode()] } });
+
+        expect(await rowsChangedPromise).toBe(adapter.getRows());
+        expect(adapter.getRows().length).toBe(1);
     });
 
     it('should sort new rows', () => {

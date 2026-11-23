@@ -16,6 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { SearchService } from '../services/search.service';
 import { differentResult, result, SimpleSearchTestComponent } from '../../mock';
 import { of, Subject, throwError } from 'rxjs';
@@ -181,5 +182,28 @@ describe('SearchComponent', () => {
                 done();
             });
         });
+    });
+});
+
+describe('SearchComponent without zone.js', () => {
+    it('should update panel classes when results are loaded and the panel is hidden outside a change detection pass', async () => {
+        TestBed.configureTestingModule({
+            imports: [SimpleSearchTestComponent],
+            providers: [provideZonelessChangeDetection()]
+        });
+        const fixture = TestBed.createComponent(SimpleSearchTestComponent);
+        await fixture.whenStable();
+        const panel: HTMLElement = fixture.nativeElement.querySelector('#adf-search-results-content');
+        expect(panel.classList).toContain('adf-search-hide');
+
+        fixture.componentInstance.search.onSearchDataLoaded(result);
+        await fixture.whenStable();
+        expect(panel.classList).toContain('adf-search-show');
+        expect(panel.classList).not.toContain('adf-search-hide');
+
+        fixture.componentInstance.search.hidePanel();
+        await fixture.whenStable();
+        expect(panel.classList).toContain('adf-search-hide');
+        expect(panel.classList).not.toContain('adf-search-show');
     });
 });
