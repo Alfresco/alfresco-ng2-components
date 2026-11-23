@@ -114,3 +114,12 @@ If saved values are present on the field (`value` array), row count is derived f
 -   [`FormFieldValidator`](../../../lib/core/src/lib/form/components/widgets/core/form-field-validator.ts)
 -   [Form rendering service](../services/form-rendering.service.md)
 -   [Form component](../components/form.component.md)
+
+## Checkbox group values
+
+`FormFieldTypes.CHECKBOX_GROUP` (`checkbox-group`) always allows multiple selections
+and submits an array of `{id, name}` options or `[]` when cleared. Empty
+values remain explicit when saving and reopening a form. Shared value adapters,
+formatters, required validation, and named themes support this field type. See the
+[Checkbox group widget](../../process-services/components/checkbox-group.widget.md)
+for configuration and examples.
