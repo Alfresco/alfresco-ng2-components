@@ -414,7 +414,7 @@ describe('CategoriesManagementComponent', () => {
             expect(isTitleCorrect).toBeTrue();
         });
 
-        it('should have correct category label name', () => {
+        it('should pass the category name to the delete category announcement translation', () => {
             const translateSpy = spyOn(TranslatePipe.prototype, 'transform').and.callThrough();
             fixture.detectChanges();
 
