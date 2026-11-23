@@ -43,6 +43,7 @@ function releaseSatisfyingRanges(name, current, ranges) {
 
 /**
  * Tells whether the required peers of a release are satisfied by what is installed.
+ * A required peer that is not installed is not satisfied.
  * @param name package name
  * @param version release to check
  * @returns true when the release fits
@@ -52,7 +53,7 @@ function fitsInstalledPackages(name, version) {
         .filter((peer) => !peer.optional)
         .every((peer) => {
             const installed = installedVersion(peer.name);
-            return !installed || satisfiesRange(installed, peer.range);
+            return !!installed && satisfiesRange(installed, peer.range);
         });
 }
 
