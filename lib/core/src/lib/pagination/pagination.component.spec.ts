@@ -76,7 +76,7 @@ describe('PaginationComponent', () => {
             expect(srAnnouncementElement.textContent.trim()).toBe('CORE.PAGINATION.TOTAL_ITEMS_FOUND');
         });
 
-        it('should announce correct number of items', () => {
+        it('should announce correct number of items getting displayed on screen', () => {
             const translateSpy = spyOn(TranslatePipe.prototype, 'transform').and.callThrough();
             fixture.detectChanges();
 
