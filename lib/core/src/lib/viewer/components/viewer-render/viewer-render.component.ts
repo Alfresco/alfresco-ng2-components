@@ -18,6 +18,7 @@
 import { AppExtensionService, ExtensionsModule, ViewerExtensionRef, PreviewExtensionComponent } from '@alfresco/adf-extensions';
 import { NgComponentOutlet, NgForOf, NgTemplateOutlet } from '@angular/common';
 import {
+    ChangeDetectorRef,
     Component,
     effect,
     EventEmitter,
@@ -73,6 +74,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     private readonly extensionService = inject(AppExtensionService);
     dialog = inject(MatDialog);
     readonly injector = inject(Injector);
+    private readonly cdr = inject(ChangeDetectorRef);
 
     readonly pdfViewerComponent: Type<PdfViewerRef> | null = inject(PDF_VIEWER_COMPONENT, { optional: true });
 
@@ -240,6 +242,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     markAsLoaded() {
         this.isLoading = false;
+        this.cdr.markForCheck();
     }
 
     private setUpBlobData() {
@@ -292,6 +295,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
     onUnsupportedFile() {
         this.viewerType = 'unknown';
         this.isLoading = false;
+        this.cdr.markForCheck();
     }
 
     onClose() {

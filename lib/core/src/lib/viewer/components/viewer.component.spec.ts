@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DebugElement, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, DebugElement, EventEmitter, Output, SimpleChange, SimpleChanges, TemplateRef, Input } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
@@ -35,6 +35,9 @@ import { ViewerComponent } from './viewer.component';
 import { ThumbnailService } from '../../common/services/thumbnail.service';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { ViewerRenderComponent } from './viewer-render/viewer-render.component';
+import { PDF_VIEWER_COMPONENT } from '../tokens/pdf-viewer.token';
+import { PdfViewerRef } from '../tokens/pdf-viewer-ref';
+import { By } from '@angular/platform-browser';
 
 @Component({
     selector: 'adf-dialog-dummy',
@@ -931,5 +934,65 @@ describe('ViewerComponent', () => {
             expect(event2.preventDefault).toHaveBeenCalled();
             expect(component.onNavigateNextClick).toHaveBeenCalledWith(event2);
         });
+    });
+});
+
+@Component({
+    selector: 'adf-mock-pdf-viewer',
+    template: ''
+})
+class MockPdfViewerComponent implements PdfViewerRef {
+    @Input() urlFile = '';
+    @Input() blobFile: Blob;
+    @Input() fileName = '';
+    @Input() allowThumbnails = false;
+    @Input() thumbnailsTemplate: TemplateRef<unknown> = null;
+    @Input() cacheType = '';
+    @Output() pagesLoaded = new EventEmitter<void>();
+    @Output() error = new EventEmitter<void>();
+    @Output() close = new EventEmitter<void>();
+}
+
+describe('ViewerComponent with PDF viewer', () => {
+    let fixture: ComponentFixture<ViewerComponent<unknown>>;
+    let testingUtils: UnitTestingUtils;
+
+    const getSpinner = () => testingUtils.getByCSS('.adf-viewer-render-main-loader');
+    const getPdfViewer = (): MockPdfViewerComponent => fixture.debugElement.query(By.directive(MockPdfViewerComponent)).componentInstance;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [MatIconTestingModule],
+            providers: [MatDialog, { provide: PDF_VIEWER_COMPONENT, useValue: MockPdfViewerComponent }]
+        });
+
+        fixture = TestBed.createComponent(ViewerComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
+        fixture.componentRef.setInput('blobFile', new Blob(['%PDF'], { type: 'application/pdf' }));
+        fixture.componentRef.setInput('fileName', 'file.pdf');
+        fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
+    });
+
+    it('should show the spinner until the PDF viewer emits pagesLoaded', () => {
+        expect(getSpinner()).not.toBeNull();
+    });
+
+    it('should hide the spinner when the PDF viewer emits pagesLoaded', () => {
+        getPdfViewer().pagesLoaded.emit();
+        fixture.detectChanges();
+
+        expect(getSpinner()).toBeNull();
+    });
+
+    it('should hide the spinner and show the unknown format view when the PDF viewer emits error', () => {
+        getPdfViewer().error.emit();
+        fixture.detectChanges();
+
+        expect(getSpinner()).toBeNull();
+        expect(testingUtils.getByCSS('adf-viewer-unknown-format')).not.toBeNull();
     });
 });
