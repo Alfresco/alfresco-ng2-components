@@ -34,7 +34,7 @@ import {
 import { FavoritePaging, FavoritePagingList, Node, NodeEntry, NodePaging } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, Injector, QueryList, runInInjectionContext, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Injector, QueryList, runInInjectionContext, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { By } from '@angular/platform-browser';
@@ -2163,8 +2163,12 @@ describe('DocumentListComponent rendering', () => {
         fixture.destroy();
     });
 
+    const markDocumentListForCheck = () =>
+        fixture.debugElement.query(By.directive(DocumentListComponent)).injector.get(ChangeDetectorRef).markForCheck();
+
     it('should display custom loading template if defined', () => {
         component.customDocumentList.loading = true;
+        markDocumentListForCheck();
         fixture.detectChanges();
         element = fixture.nativeElement.querySelector('span[id="custom-loading-template"]');
         expect(element).toBeDefined();
@@ -2181,6 +2185,7 @@ describe('DocumentListComponent rendering', () => {
 
     it('should display custom no permission template if defined', () => {
         component.customDocumentList.noPermission = true;
+        markDocumentListForCheck();
         fixture.detectChanges();
         element = fixture.nativeElement.querySelector('span[id="custom-no-permission-template"]');
         expect(element).toBeDefined();
@@ -2211,5 +2216,66 @@ describe('DocumentListComponent rendering', () => {
         expect(cell2.innerText).toBe('Name 2');
         const cell3 = fixture.nativeElement.querySelector('div[title="Id"][data-automation-id="Name 3"]');
         expect(cell3.innerText).toBe('3');
+    });
+});
+
+@Component({
+    imports: [DocumentListComponent],
+    template: `<adf-document-list [currentFolderId]="'123'" />`
+})
+class OnPushHostComponent {
+    @ViewChild(DocumentListComponent)
+    documentList: DocumentListComponent;
+}
+
+describe('DocumentListComponent OnPush change detection', () => {
+    let fixture: ComponentFixture<OnPushHostComponent>;
+    let loader: HarnessLoader;
+    let documentListService: DocumentListService;
+    let folder$: Subject<any>;
+
+    const noPermissionTemplate = () => fixture.debugElement.query(By.css('.adf-no-permission__template'));
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [NoopAuthModule, OnPushHostComponent]
+        });
+        documentListService = TestBed.inject(DocumentListService);
+        folder$ = new Subject();
+        spyOn(documentListService, 'loadFolderByNodeId').and.returnValue(folder$);
+        fixture = TestBed.createComponent(OnPushHostComponent);
+        loader = TestbedHarnessEnvironment.loader(fixture);
+        fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
+    });
+
+    it('should render loading template while a folder is loading', async () => {
+        fixture.detectChanges();
+
+        const loadingSpinner = await loader.hasHarness(MatProgressSpinnerHarness);
+
+        expect(loadingSpinner).toBe(true);
+    });
+
+    it('should hide loading template once the folder is loaded', async () => {
+        folder$.next({ currentNode: null, children: { list: { entries: [], pagination: {} } } });
+        folder$.complete();
+        fixture.detectChanges();
+
+        const loadingSpinner = await loader.hasHarness(MatProgressSpinnerHarness);
+
+        expect(loadingSpinner).toBe(false);
+    });
+
+    it('should render no permission template when loading a folder fails with 403', () => {
+        expect(noPermissionTemplate()).toBeNull();
+
+        folder$.error({ message: '{ "error": { "statusCode": 403 } }' });
+        fixture.detectChanges();
+
+        expect(noPermissionTemplate()).not.toBeNull();
     });
 });

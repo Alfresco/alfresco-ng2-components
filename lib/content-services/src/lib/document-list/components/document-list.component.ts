@@ -47,6 +47,8 @@ import {
 import { LazyApi, Node, NodeEntry, NodePaging, NodesApi, Pagination } from '@alfresco/js-api';
 import {
     AfterContentInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     ContentChild,
     DestroyRef,
@@ -106,6 +108,7 @@ const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
     styleUrls: ['./document-list.component.scss'],
     providers: [DataTableService],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     host: { class: 'adf-document-list' }
 })
 export class DocumentListComponent extends DataTableSchema implements OnInit, OnChanges, AfterContentInit, PaginatedComponent {
@@ -120,6 +123,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     private readonly dataTableService = inject(DataTableService);
     private readonly lockService = inject(LockService);
     private readonly dialog = inject(MatDialog);
+    private readonly cdr = inject(ChangeDetectorRef);
 
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
@@ -505,6 +509,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
 
         this.nodeService.nodeUpdated.pipe(takeUntilDestroyed()).subscribe((node) => {
             this.dataTableService.rowUpdate.next({ id: node.id, obj: { entry: node } });
+            this.cdr.markForCheck();
         });
 
         this.userPreferencesService
@@ -512,6 +517,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             .pipe(takeUntilDestroyed())
             .subscribe((pagSize) => {
                 this.maxItems = this._pagination.maxItems = pagSize;
+                this.cdr.markForCheck();
             });
     }
 
@@ -584,14 +590,17 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         this.documentListService.reload$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             this.resetSelection();
             this.reload();
+            this.cdr.markForCheck();
         });
 
         this.documentListService.reloadSilently$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             this.reloadWithoutResettingSelection();
+            this.cdr.markForCheck();
         });
 
         this.documentListService.resetSelection$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             this.resetSelection();
+            this.cdr.markForCheck();
         });
     }
 
@@ -600,6 +609,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             this.columnList.columns.changes.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
                 this.createColumns();
                 this.data.setColumns(this.columns);
+                this.cdr.markForCheck();
             });
         }
         this.createDatatableSchema();
@@ -665,6 +675,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             this.onPreselectNodes();
             this.syncPagination();
             this.onDataReady(this.node);
+            this.cdr.markForCheck();
         } else {
             this.loadFolder(hideLoadingSpinner);
         }
@@ -800,11 +811,17 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     }
 
     private setLoadingState(value: boolean) {
+        this.updateLoadingState(value);
+        this.cdr.markForCheck();
+    }
+
+    private updateLoadingState(value: boolean) {
         if (this.data?.getRows().length > 0) {
             if (value) {
                 clearTimeout(this.loadingTimeout);
                 this.loadingTimeout = setTimeout(() => {
                     this.loading = true;
+                    this.cdr.markForCheck();
                 }, 1000);
             } else {
                 clearTimeout(this.loadingTimeout);
@@ -856,6 +873,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             this.onPreselectNodes();
             this.setLoadingState(false);
             this.onDataReady(nodePaging);
+            this.cdr.markForCheck();
         }
     }
 
@@ -1114,6 +1132,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             }
         }
         this.setLoadingState(false);
+        this.cdr.markForCheck();
         this.error.emit(err);
     }
 
