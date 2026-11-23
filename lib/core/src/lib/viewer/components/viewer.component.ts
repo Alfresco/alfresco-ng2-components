@@ -18,6 +18,8 @@
 import { A11yModule } from '@angular/cdk/a11y';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
 import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     ContentChild,
     DestroyRef,
@@ -68,6 +70,7 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
     selector: 'adf-viewer',
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     host: { class: 'adf-viewer' },
     encapsulation: ViewEncapsulation.None,
     imports: [
@@ -314,6 +317,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     public mimeTypeIconUrl: string;
 
     private readonly destroyRef = inject(DestroyRef);
+    private readonly cdr = inject(ChangeDetectorRef);
 
     /** Override Content title. */
     @Input()
@@ -420,6 +424,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     onClose() {
         this.showViewer = false;
         this.showViewerChange.emit(this.showViewer);
+        this.cdr.markForCheck();
     }
 
     toggleRightSidebar() {

@@ -524,8 +524,8 @@ describe('ViewerComponent', () => {
 
         describe('SideBar Test', () => {
             it('should NOT display sidebar if is not allowed', (done) => {
-                component.showRightSidebar = true;
-                component.allowRightSidebar = false;
+                fixture.componentRef.setInput('showRightSidebar', true);
+                fixture.componentRef.setInput('allowRightSidebar', false);
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
@@ -535,8 +535,8 @@ describe('ViewerComponent', () => {
             });
 
             it('should display sidebar on the right side', (done) => {
-                component.allowRightSidebar = true;
-                component.showRightSidebar = true;
+                fixture.componentRef.setInput('allowRightSidebar', true);
+                fixture.componentRef.setInput('showRightSidebar', true);
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
@@ -547,8 +547,8 @@ describe('ViewerComponent', () => {
             });
 
             it('should NOT display left sidebar if is not allowed', (done) => {
-                component.showLeftSidebar = true;
-                component.allowLeftSidebar = false;
+                fixture.componentRef.setInput('showLeftSidebar', true);
+                fixture.componentRef.setInput('allowLeftSidebar', false);
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
@@ -558,8 +558,8 @@ describe('ViewerComponent', () => {
             });
 
             it('should display sidebar on the left side', (done) => {
-                component.allowLeftSidebar = true;
-                component.showLeftSidebar = true;
+                fixture.componentRef.setInput('allowLeftSidebar', true);
+                fixture.componentRef.setInput('showLeftSidebar', true);
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
@@ -574,16 +574,16 @@ describe('ViewerComponent', () => {
             const infoButton = () => testingUtils.getByDataAutomationId('adf-toolbar-sidebar');
 
             it('should NOT display info button on the right side', () => {
-                component.allowRightSidebar = true;
-                component.hideInfoButton = true;
+                fixture.componentRef.setInput('allowRightSidebar', true);
+                fixture.componentRef.setInput('hideInfoButton', true);
                 fixture.detectChanges();
 
                 expect(infoButton()).toBeNull();
             });
 
             it('should display info button on the right side', () => {
-                component.allowRightSidebar = true;
-                component.hideInfoButton = false;
+                fixture.componentRef.setInput('allowRightSidebar', true);
+                fixture.componentRef.setInput('hideInfoButton', false);
                 fixture.detectChanges();
 
                 expect(infoButton()).not.toBeNull();
@@ -593,8 +593,8 @@ describe('ViewerComponent', () => {
         describe('View', () => {
             describe('Overlay mode true', () => {
                 beforeEach(() => {
-                    component.overlayMode = true;
-                    component.fileName = 'fake-test-file.pdf';
+                    fixture.componentRef.setInput('overlayMode', true);
+                    fixture.componentRef.setInput('fileName', 'fake-test-file.pdf');
                     fixture.detectChanges();
                 });
 
@@ -660,7 +660,7 @@ describe('ViewerComponent', () => {
 
             describe('Overlay mode false', () => {
                 beforeEach(() => {
-                    component.overlayMode = false;
+                    fixture.componentRef.setInput('overlayMode', false);
                     fixture.detectChanges();
                 });
 
@@ -683,7 +683,7 @@ describe('ViewerComponent', () => {
             });
 
             it('should viewer be hide if showViewer value is false', () => {
-                component.showViewer = false;
+                fixture.componentRef.setInput('showViewer', false);
 
                 fixture.detectChanges();
                 expect(testingUtils.getByCSS('.adf-viewer-content')).toBeNull();
@@ -695,8 +695,8 @@ describe('ViewerComponent', () => {
             const getLeftCloseButton = () => testingUtils.getByDataAutomationId('adf-toolbar-left-back');
 
             it('should show close button on left side when closeButtonPosition is left and allowGoBack is true', () => {
-                component.allowGoBack = true;
-                component.closeButtonPosition = CloseButtonPosition.Left;
+                fixture.componentRef.setInput('allowGoBack', true);
+                fixture.componentRef.setInput('closeButtonPosition', CloseButtonPosition.Left);
                 fixture.detectChanges();
 
                 expect(getLeftCloseButton()).not.toBeNull();
@@ -704,8 +704,8 @@ describe('ViewerComponent', () => {
             });
 
             it('should show close button on right side when closeButtonPosition is right and allowGoBack is true', () => {
-                component.allowGoBack = true;
-                component.closeButtonPosition = CloseButtonPosition.Right;
+                fixture.componentRef.setInput('allowGoBack', true);
+                fixture.componentRef.setInput('closeButtonPosition', CloseButtonPosition.Right);
                 fixture.detectChanges();
 
                 expect(getRightCloseButton()).not.toBeNull();
@@ -713,7 +713,7 @@ describe('ViewerComponent', () => {
             });
 
             it('should hide close button allowGoBack is false', () => {
-                component.allowGoBack = false;
+                fixture.componentRef.setInput('allowGoBack', false);
                 fixture.detectChanges();
 
                 expect(getRightCloseButton()).toBeNull();
@@ -844,6 +844,17 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
 
             expect(component.downloadFile.emit).toHaveBeenCalled();
+        }));
+
+        it('should hide the viewer when DownloadPromptDialog returns DownloadPromptActions.DOWNLOAD', fakeAsync(() => {
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.DOWNLOAD) } as ReturnType<MatDialog['open']>);
+            fixture.detectChanges();
+            expect(testingUtils.getByCSS('.adf-viewer-content')).not.toBeNull();
+
+            tick(3000);
+            fixture.detectChanges();
+
+            expect(testingUtils.getByCSS('.adf-viewer-content')).toBeNull();
         }));
     });
 
