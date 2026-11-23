@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, Input, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, Input, inject, OnInit } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { IconModule } from '../../icon';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
@@ -29,7 +29,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-empty-content' }
 })
-export class EmptyContentComponent {
+export class EmptyContentComponent implements OnInit {
     private readonly liveAnnouncer = inject(LiveAnnouncer);
     private readonly translate = inject(TranslateService);
 
