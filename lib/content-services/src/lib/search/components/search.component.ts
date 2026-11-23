@@ -18,6 +18,7 @@
 import { SearchService } from '../services/search.service';
 import {
     AfterContentInit,
+    ChangeDetectorRef,
     Component,
     ContentChild,
     ElementRef,
@@ -52,6 +53,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class SearchComponent implements SearchComponentInterface, AfterContentInit, OnChanges {
     private readonly searchService = inject(SearchService);
     private readonly _elementRef = inject(ElementRef);
+    private readonly changeDetectorRef = inject(ChangeDetectorRef);
     private readonly searchRequestStream = new Subject<string>();
 
     @ViewChild('panel', { static: true })
@@ -188,6 +190,7 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
             this._classList['adf-search-show'] = false;
             this._classList['adf-search-hide'] = true;
             this.isOpen = false;
+            this.changeDetectorRef.markForCheck();
         }
     }
 
@@ -195,5 +198,6 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
         this.showPanel = !!this.results && !!this.results.list;
         this._classList['adf-search-show'] = this.showPanel;
         this._classList['adf-search-hide'] = !this.showPanel;
+        this.changeDetectorRef.markForCheck();
     }
 }
