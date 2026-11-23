@@ -8,6 +8,12 @@ minimumReleaseAgeStrict: true
 overrides:
   # Security fixes
   "minimatch@10.2.5": "10.2.6"
+  # GHSA-g3hv-75wg-m249: minimatch 11 removed makeRe(), so only parents that don't use it are moved to 11.
+  # nx still calls minimatch.makeRe() and stays on 10.2.6 until https://github.com/nrwl/nx/issues/37727 is fixed.
+  'eslint>minimatch@<11.0.1': 11.0.5
+  '@eslint/config-array>minimatch@<11.0.1': 11.0.5
+  '@typescript-eslint/typescript-estree>minimatch@<11.0.1': 11.0.5
+  '@nx/devkit>minimatch@<11.0.1': 11.0.5
   "brace-expansion@1": "1.1.21"
   "brace-expansion@5": "5.0.12"
   serialize-javascript: '>=7.0.5'

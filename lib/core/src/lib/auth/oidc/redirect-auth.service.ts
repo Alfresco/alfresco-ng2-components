@@ -29,14 +29,21 @@ import {
     OAuthLogger
 } from 'angular-oauth2-oidc';
 import { WebCryptoJwksValidationHandler } from './web-crypto-jwks-validation-handler';
-import { from, Observable, race, ReplaySubject } from 'rxjs';
-import { distinctUntilChanged, filter, map, shareReplay, switchMap, take } from 'rxjs/operators';
+import { defer, EMPTY, from, fromEvent, Observable, race, ReplaySubject, timer } from 'rxjs';
+import { catchError, distinctUntilChanged, filter, map, scan, shareReplay, switchMap, take, takeUntil } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { AUTH_MODULE_CONFIG, AuthModuleConfig } from './auth-config';
 import { RetryLoginService } from './retry-login.service';
 import { TimeSyncService } from '../services/time-sync.service';
 
 const isPromise = <T>(value: T | Promise<T>): value is Promise<T> => value && typeof (value as Promise<T>).then === 'function';
+
+const TOKEN_REFRESH_RETRY_DELAY_MS = 5000;
+
+interface ConsecutiveTokenRefreshErrors {
+    count: number;
+    lastError?: OAuthErrorEvent;
+}
 
 @Injectable()
 export class RedirectAuthService extends AuthService {
@@ -85,7 +92,9 @@ export class RedirectAuthService extends AuthService {
     firstOauthErrorEventExcludingTokenRefreshError$: Observable<OAuthErrorEvent>;
 
     /**
-     * Observable stream that emits the second OAuth token refresh error event that occurs.
+     * Observable stream that emits the second consecutive OAuth token refresh error event.
+     * The count restarts whenever a new token is received, so a failure that was recovered by a retry
+     * does not count towards a later one.
      */
     secondTokenRefreshErrorEventOccur$: Observable<OAuthErrorEvent>;
 
@@ -165,14 +174,19 @@ export class RedirectAuthService extends AuthService {
         this.firstOauthErrorEventOccur$ = this.oauthErrorEvent$.pipe(take(1));
 
         this.firstOauthErrorEventExcludingTokenRefreshError$ = this.oauthErrorEvent$.pipe(
-            filter((event) => event instanceof OAuthErrorEvent && event.type !== 'token_refresh_error'),
+            filter(
+                (event) => event.type !== 'token_refresh_error' &&
+                event.type !== 'token_error' &&
+                event.type !== 'silent_refresh_error' &&
+                event.type !== 'silent_refresh_timeout'
+            ),
             take(1)
         );
 
-        this.secondTokenRefreshErrorEventOccur$ = this.oauthErrorEvent$.pipe(
-            filter((event) => event.type === 'token_refresh_error'),
-            take(2),
-            filter((_, index) => index === 1)
+        this.secondTokenRefreshErrorEventOccur$ = this.consecutiveTokenRefreshErrors$().pipe(
+            filter(({ count }) => count === 2),
+            map(({ lastError }) => lastError),
+            take(1)
         );
 
         this.oauthErrorEventOccurDueToClockOutOfSync$ = this.oauthErrorEvent$.pipe(
@@ -250,6 +264,8 @@ export class RedirectAuthService extends AuthService {
             filter((event): event is OAuthErrorEvent => event.type === 'discovery_document_load_error'),
             map((event) => event.reason as Error)
         );
+
+        this.retryTokenRefreshAfterFirstFailure();
     }
 
     init(): Promise<boolean> {
@@ -402,6 +418,56 @@ export class RedirectAuthService extends AuthService {
 
     updateIDPConfiguration(config: AuthConfig) {
         this.oauthService.configure(config);
+    }
+
+    private consecutiveTokenRefreshErrors$(): Observable<ConsecutiveTokenRefreshErrors> {
+        return this.oauthService.events.pipe(
+            filter(
+                (event) =>
+                    event.type === 'token_refresh_error' ||
+                    event.type === 'token_error' ||
+                    event.type === 'silent_refresh_error' ||
+                    event.type === 'silent_refresh_timeout' ||
+                    event.type === 'token_received' ||
+                    event.type === 'logout'
+            ),
+            scan(
+                (errors: ConsecutiveTokenRefreshErrors, event): ConsecutiveTokenRefreshErrors =>
+                    event.type === 'token_refresh_error' ||
+                    event.type === 'token_error' ||
+                    event.type === 'silent_refresh_error' ||
+                    event.type === 'silent_refresh_timeout'
+                        ? { count: errors.count + 1, lastError: event as OAuthErrorEvent }
+                        : { count: 0 },
+                { count: 0 }
+            )
+        );
+    }
+
+    /**
+     * The automatic refresh timers are only re-armed when a token is received. When the refresh fails
+     * after both timers already fired (e.g. the device woke up from sleep while offline), nothing would
+     * ever refresh the token again and every request would keep sending the expired one.
+     * Retry once: a second consecutive failure triggers the logout through `secondTokenRefreshErrorEventOccur$`.
+     */
+    private retryTokenRefreshAfterFirstFailure(): void {
+        this.consecutiveTokenRefreshErrors$()
+            .pipe(
+                switchMap(({ count }) => (count === 1 ? this.waitBeforeTokenRefreshRetry() : EMPTY)),
+                switchMap(() => defer(() => this.refreshTokens()).pipe(catchError(() => EMPTY))),
+                takeUntil(this.onLogout$)
+            )
+            .subscribe();
+    }
+
+    private waitBeforeTokenRefreshRetry(): Observable<unknown> {
+        return navigator.onLine ? timer(TOKEN_REFRESH_RETRY_DELAY_MS) : fromEvent(window, 'online').pipe(take(1));
+    }
+
+    private refreshTokens(): Promise<unknown> {
+        return this.oauthService.responseType === 'code' && !this.oauthService.useSilentRefresh
+            ? this.oauthService.refreshToken()
+            : this.oauthService.silentRefresh();
     }
 
     /**
