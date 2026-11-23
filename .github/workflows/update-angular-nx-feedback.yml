@@ -48,7 +48,7 @@ jobs:
             echo "head-ref=$(jq -r '.head.ref' <<< "$PR")"
             echo "head-sha=$(jq -r '.head.sha' <<< "$PR")"
             echo "head-repository=$(jq -r '.head.repo.full_name // ""' <<< "$PR")"
-            echo "role=$(gh api "repos/$REPOSITORY/collaborators/$COMMENTER/permission" --jq '.role_name' 2>/dev/null || echo none)"
+            echo "role=$(gh api "repos/$REPOSITORY/collaborators/$COMMENTER/permission" --jq '.permission' 2>/dev/null || echo none)"
           } >> "$GITHUB_OUTPUT"
       - name: Handle the command
         id: handle
