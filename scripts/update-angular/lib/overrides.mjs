@@ -94,7 +94,7 @@ export function removeOverrides(file, keys) {
  * @returns name, range, parent name and parent range
  */
 export function parseSelector(key) {
-    const parts = key.split('>');
+    const parts = key.split(/(?<![@\s|])>/);
     const [, name, range] = parts.at(-1).match(/^(@?[^@]+)(?:@(.+))?$/);
     const [, parent, parentRange] = parts.length > 1 ? parts.at(-2).match(/^(@?[^@]+)(?:@(.+))?$/) : [];
 
