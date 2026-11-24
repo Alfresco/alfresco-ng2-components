@@ -86,6 +86,11 @@ Any content in the body of `<adf-form>` will be shown when no form definition is
 | formLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/src/lib/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is loaded or reloaded. |
 | formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/src/lib/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
 
+## Checkbox groups
+
+Use the [`checkbox-group` widget](checkbox-group.widget.md) for a labeled group of
+checkboxes bound to one field, with multiple selection.
+
 ## Details
 
 All `formXXX` events receive a [`FormModel`](../../../lib/core/src/lib/form/components/widgets/core/form.model.ts) instance as their argument:

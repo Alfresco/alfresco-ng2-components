@@ -126,6 +126,11 @@
           "HEADING": "heading",
           "TITLE": "title"
         },
+        "CHECKBOX_GROUP": {
+          "NORMAL": "normal",
+          "STRONG": "strong",
+          "HEADING": "heading"
+        },
         "RADIO_BUTTONS": {
           "NORMAL": "normal",
           "STRONG": "strong",

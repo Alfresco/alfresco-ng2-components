@@ -51,6 +51,7 @@ describe('resetFormToDefaults', () => {
         ['datetime', '2024-01-15 10:00 AM'],
         ['dropdown', 'a'],
         ['radio-buttons', 'a'],
+        ['checkbox-group', [{ id: 'a', name: 'A' }]],
         ['people', [{ username: 'author' }]],
         ['functional-group', [{ id: 'group' }]],
         ['upload', [{ id: 'authored-file' }]]

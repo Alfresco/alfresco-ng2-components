@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { getCheckboxGroupValue } from '../components/widgets/core/checkbox-group-value';
 import { Injectable } from '@angular/core';
 import { FormFieldModel } from '../components/widgets/core/form-field.model';
 import { FormFieldTypes } from '../components/widgets/core/form-field-types';
@@ -51,6 +52,7 @@ export class FormFieldValueAdapterService {
     constructor() {
         this.register(FormFieldTypes.PEOPLE, (value) => this.adaptPeople(value));
         this.register(FormFieldTypes.FUNCTIONAL_GROUP, (value) => this.adaptGroup(value));
+        this.register(FormFieldTypes.CHECKBOX_GROUP, (value, field) => getCheckboxGroupValue(value, field.options));
         this.register(FormFieldTypes.DROPDOWN, (value, field) => this.adaptDropdown(value, field));
         this.register(FormFieldTypes.RADIO_BUTTONS, (value) => this.adaptRadio(value));
     }
