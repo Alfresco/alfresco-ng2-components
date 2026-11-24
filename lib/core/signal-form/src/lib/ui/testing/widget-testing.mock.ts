@@ -61,12 +61,12 @@ export const renderWidget = <TWidget>(component: Type<TWidget>, form: SignalForm
 };
 
 /**
- * Types a text into an input, as a user does: the value changes, then the input event fires.
+ * Types a text into an input or a textarea, as a user does: the value changes, then the input event fires.
  *
- * @param input the input
+ * @param input the input or textarea
  * @param text the text
  */
-export const typeInto = (input: HTMLInputElement, text: string): void => {
+export const typeInto = (input: HTMLInputElement | HTMLTextAreaElement, text: string): void => {
     input.value = text;
     input.dispatchEvent(new Event('input'));
 };
