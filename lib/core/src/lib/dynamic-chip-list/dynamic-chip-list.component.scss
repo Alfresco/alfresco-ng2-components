@@ -84,13 +84,14 @@
     }
 
     .adf-dynamic-chip-list-chip {
-        word-break: break-word;
+        overflow-wrap: anywhere;
         margin-top: 0;
         margin-bottom: 0;
         padding: 6px 11px;
 
         #{ms.$mat-evolution-chip-action} {
-            padding: 2px 12px;
+            padding: 0 12px;
+            box-sizing: border-box;
         }
     }
 }
