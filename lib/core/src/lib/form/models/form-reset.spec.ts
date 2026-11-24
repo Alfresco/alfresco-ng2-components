@@ -83,6 +83,40 @@ describe('resetFormToDefaults', () => {
         }
     }
 
+    for (const [authored, serialized] of [
+        ['2026-01-03T16:00:00.000Z', '2026-01-03T16:00:00.000Z'],
+        ['2026-01-03T09:00:00-07:00', '2026-01-03T16:00:00.000Z'],
+        ['2026-01-03T16:00:00', '2026-01-03T16:00:00.000Z']
+    ]) {
+        it(`should restore the authored ISO datetime default ${authored} when the field holds a draft`, async () => {
+            const model = form([{ id: 'field', type: 'datetime', value: authored }]);
+            const field = model.getFieldById('field');
+            field.restoreRuntimeValue(new Date(2026, 0, 27, 16, 15));
+            expect((await model.resetToDefaults(context(model))).status).toBe('complete');
+            expect(field.value).toBe(authored);
+            expect(model.values.field).toBe(serialized);
+        });
+    }
+
+    it('should restore the authored ISO datetime default over a hydrated task value', async () => {
+        const model = form([{ id: 'field', type: 'datetime', value: '2026-01-03T16:00:00.000Z' }], { field: '2026-01-27T23:15:00.000Z' });
+        expect(model.values.field).toBe('2026-01-27T23:15:00.000Z');
+        expect((await model.resetToDefaults(context(model))).status).toBe('complete');
+        expect(model.getFieldById('field').value).toBe('2026-01-03T16:00:00.000Z');
+        expect(model.values.field).toBe('2026-01-03T16:00:00.000Z');
+    });
+
+    it('should restore the authored ISO datetime default again on a repeated reset', async () => {
+        const model = form([{ id: 'field', type: 'datetime', value: '2026-01-03T16:00:00.000Z' }]);
+        const field = model.getFieldById('field');
+        const write = context(model);
+        await model.resetToDefaults(write);
+        field.restoreRuntimeValue(new Date(2026, 1, 2, 8, 30));
+        expect((await model.resetToDefaults(write)).status).toBe('complete');
+        expect(field.value).toBe('2026-01-03T16:00:00.000Z');
+        expect(model.values.field).toBe('2026-01-03T16:00:00.000Z');
+    });
+
     it('should restore the first-seen default when task hydration wrote into the shared definition', async () => {
         const definition = { id: 'field', type: 'text', value: 'authored' };
         const first = form([definition], { field: 'task' });
@@ -240,7 +274,9 @@ describe('resetFormToDefaults', () => {
         ['radio-buttons', 'missing'],
         ['integer', 'abc'],
         ['date', 'not-a-date'],
-        ['datetime', 'not-a-date']
+        ['datetime', 'not-a-date'],
+        ['datetime', '2026-02-30T16:00:00Z'],
+        ['datetime', '01/03/2026 16:00']
     ]) {
         it(`should restore an empty ${type} value when the authored default ${value} is malformed`, async () => {
             const model = form([{ id: 'field', type, value, options: [{ id: 'a', name: 'A' }] }], { field: type === 'integer' ? 5 : 'a' });
@@ -248,6 +284,12 @@ describe('resetFormToDefaults', () => {
             expect(model.getFieldById('field').value).toBeNull();
         });
     }
+
+    it('should restore an empty datetime value when the authored ISO default cannot be serialized', async () => {
+        const model = form([{ id: 'field', type: 'datetime', value: '20260103T160000Z' }], { field: 'a' });
+        expect((await model.resetToDefaults(context(model))).status).toBe('complete');
+        expect(model.getFieldById('field').value).toBeNull();
+    });
 
     for (const [type, value] of [
         ['date', 'today'],
@@ -691,6 +733,45 @@ describe('resetFormToDefaults', () => {
         expect(model.values.rows[0].inSection).toBe('row literal');
         expect(model.values.rows[0].date).toBe('2024-01-15T00:00:00.000Z');
         expect(model.values.rows[1].inSection).toBe('template');
+    });
+
+    it('should rebuild repeatable rows from ISO datetime row literals and the template default', async () => {
+        const model = form([
+            {
+                id: 'rows',
+                type: 'repeatable-section',
+                params: { initialNumberOfRows: 4 },
+                value: [{ meeting: '2026-02-01T08:30:00.000Z' }, { meeting: null }, {}, { meeting: '2026-02-30T16:00:00Z' }],
+                fields: { 1: [{ id: 'meeting', type: 'datetime', value: '2026-01-03T16:00:00.000Z' }] }
+            }
+        ]);
+        model.getFieldById('rows').rows.forEach((row) => (row.columns[0].fields[0].value = new Date(2026, 0, 27, 16, 15)));
+        expect((await model.resetToDefaults(context(model))).status).toBe('complete');
+        const values = model.getFieldById('rows').rows.map((row) => row.columns[0].fields[0].value);
+        expect(values).toEqual(['2026-02-01T08:30:00.000Z', null, '2026-01-03T16:00:00.000Z', null]);
+        expect(model.values.rows).toEqual([
+            { meeting: '2026-02-01T08:30:00.000Z' },
+            { meeting: null },
+            { meeting: '2026-01-03T16:00:00.000Z' },
+            { meeting: null }
+        ]);
+    });
+
+    it('should add a row with the ISO datetime template default after resetting a zero-row section', async () => {
+        const model = form([
+            {
+                id: 'rows',
+                type: 'repeatable-section',
+                params: { initialNumberOfRows: 0 },
+                fields: { 1: [{ id: 'meeting', type: 'datetime', value: '2026-01-03T16:00:00.000Z' }] }
+            }
+        ]);
+        expect((await model.resetToDefaults(context(model))).status).toBe('complete');
+        expect(model.values.rows).toEqual([]);
+        const section = model.getFieldById('rows');
+        section.addRow(section.fields, model);
+        expect(section.rows[0].columns[0].fields[0].value).toBe('2026-01-03T16:00:00.000Z');
+        expect(model.values.rows).toEqual([{ meeting: '2026-01-03T16:00:00.000Z' }]);
     });
 
     it('should resolve a contextual people default inside a section of a repeatable row once', async () => {
