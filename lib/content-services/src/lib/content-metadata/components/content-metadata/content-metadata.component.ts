@@ -252,7 +252,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
                 const selectedNode = selections?.[0];
                 if (selectedNode) {
                     const smartFolderTarget = target as CardViewSelectNodeItemModel;
-                    const nodeReference = `${NODE_REF_PREFIX}${selectedNode.id}`;
+                    const nodeReference = `N${NODE_REF_PREFIX}${selectedNode.id}`;
                     smartFolderTarget.displayName = selectedNode.name;
                     smartFolderTarget.value = nodeReference;
                     this.cardViewContentUpdateService.update(smartFolderTarget, nodeReference);

@@ -77,4 +77,13 @@
             <mat-icon adf-icon="print" />
         </button>
     </adf-viewer-toolbar-custom-actions>
+    @if (nodeEntry && showBreadcrumbs) {
+        <adf-breadcrumb
+            [folderNode]="nodeEntry.entry"
+            [root]="breadcrumbsRoot"
+            [compactMode]="true"
+            [hideCurrentLocation]="true"
+            (navigate)="breadcrumbNavigate.emit($event)"
+            class="adf-viewer-toolbar-breadcrumb" />
+    }
 </adf-viewer>

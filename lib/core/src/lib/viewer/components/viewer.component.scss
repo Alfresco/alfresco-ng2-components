@@ -23,6 +23,39 @@
         &-right-sidebar-icon {
             color: var(--mat-sys-secondary);
         }
+
+        .adf-viewer-toolbar-breadcrumb {
+            margin-left: 8px;
+        }
+
+        .adf-toolbar-container:has(.adf-viewer-toolbar-breadcrumb) {
+            @media screen and (width < 1020px) {
+                flex-flow: wrap-reverse;
+                height: auto;
+
+                .adf-viewer-toolbar-breadcrumb {
+                    width: 100%;
+                    flex: auto;
+                    margin-bottom: 9px;
+
+                    & + .adf-viewer__file-title {
+                        left: 132px;
+                        align-self: start;
+                        top: 4px;
+                    }
+                }
+            }
+
+            @media screen and (width < 635px) {
+                .adf-viewer-toolbar-actions {
+                    width: 100%;
+                }
+
+                .adf-viewer-close-button {
+                    margin-left: auto;
+                }
+            }
+        }
     }
 
     &-main {
@@ -47,8 +80,10 @@
         flex-direction: row;
         align-items: center;
 
-        @media screen and (width <=1450px) {
-            left: 30%;
+        :not(.adf-viewer-toolbar-breadcrumb) + & {
+            @media screen and (width <=1450px) {
+                left: 30%;
+            }
         }
     }
 

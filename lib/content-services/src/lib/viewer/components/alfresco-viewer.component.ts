@@ -45,10 +45,23 @@ import {
     ViewUtilService
 } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { ContentApi, LazyApi, Node, NodeEntry, NodesApi, RenditionEntry, SharedlinksApi, Version, VersionEntry, VersionsApi } from '@alfresco/js-api';
+import {
+    ContentApi,
+    LazyApi,
+    Node,
+    NodeEntry,
+    NodesApi,
+    PathElement,
+    RenditionEntry,
+    SharedlinksApi,
+    Version,
+    VersionEntry,
+    VersionsApi
+} from '@alfresco/js-api';
 import { RenditionService } from '../../common/services/rendition.service';
 import { MatDialog } from '@angular/material/dialog';
-import { filter } from 'rxjs/operators';
+import { firstValueFrom, Observable, of } from 'rxjs';
+import { catchError, filter, map, shareReplay } from 'rxjs/operators';
 import { ContentService } from '../../common/services/content.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
@@ -59,11 +72,14 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { NodeDownloadDirective } from '../../directives';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BreadcrumbComponent } from '../../breadcrumb';
+import { PeopleContentService } from '../../common';
 
 @Component({
     selector: 'adf-alfresco-viewer',
-    imports: [CommonModule, TranslatePipe, MatButtonModule, IconModule, ...VIEWER_DIRECTIVES, NodeDownloadDirective],
+    imports: [CommonModule, TranslatePipe, MatButtonModule, IconModule, ...VIEWER_DIRECTIVES, NodeDownloadDirective, BreadcrumbComponent],
     templateUrl: './alfresco-viewer.component.html',
+    styleUrl: 'alfresco-viewer.component.scss',
     host: { class: 'adf-alfresco-viewer' },
     encapsulation: ViewEncapsulation.None,
     providers: [ViewUtilService]
@@ -78,6 +94,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     dialog = inject(MatDialog);
     private readonly cdr = inject(ChangeDetectorRef);
     private readonly nodeActionsService = inject(NodeActionsService);
+    private readonly peopleContentService = inject(PeopleContentService);
 
     @ViewChild('adfViewer')
     adfViewer: ViewerComponent<{ node: Node }>;
@@ -205,6 +222,18 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     @Input()
     showToolbarDividers = true;
 
+    /** If true breadcrumbs will be displayed in the viewer. */
+    @Input()
+    showBreadcrumbs = false;
+
+    /**
+     * Name of the root element of the breadcrumb. You can use
+     * this property to rename "Company Home" to "Personal Files" for
+     * example. You can use an i18n resource key for the property value.
+     */
+    @Input()
+    breadcrumbsRoot?: string;
+
     /** Emitted when the shared link used is not valid. */
     @Output()
     invalidSharedLink = new EventEmitter<void>();
@@ -221,6 +250,11 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     @Output()
     showViewerChange = new EventEmitter<boolean>();
 
+    /** Emitted when the user clicks on a breadcrumb. */
+    @Output()
+    breadcrumbNavigate = new EventEmitter<PathElement>();
+
+    private adminUser$?: Observable<boolean>;
     private cacheBusterNumber: number;
 
     versionEntry: VersionEntry;
@@ -317,7 +351,14 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
 
     private async setupNode() {
         try {
-            this.nodeEntry = await this.nodesApi.getNode(this.nodeId, { include: ['allowableOperations'] });
+            const [nodeEntry, adminUser] = await Promise.all([
+                this.nodesApi.getNode(this.nodeId, {
+                    include: this.showBreadcrumbs ? ['allowableOperations', 'path'] : ['allowableOperations']
+                }),
+                this.showBreadcrumbs ? firstValueFrom(this.getAdminUser$().pipe(catchError(() => of(false)))) : Promise.resolve(false)
+            ]);
+            this.nodeEntry = nodeEntry;
+            this.prepareNodePath(this.nodeEntry.entry, adminUser);
             if (this.versionId) {
                 this.versionEntry = await this.versionsApi.getVersion(this.nodeId, this.versionId);
                 await this.setUpNodeFile(this.nodeEntry.entry, this.versionEntry.entry);
@@ -327,6 +368,29 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
             this.cdr.detectChanges();
         } catch {
             this.urlFileContent = 'invalid-node';
+        }
+    }
+
+    private getAdminUser$(): Observable<boolean> {
+        this.adminUser$ ??= this.peopleContentService.getCurrentPerson().pipe(
+            map((user) => user.capabilities?.isAdmin ?? false),
+            shareReplay(1)
+        );
+        return this.adminUser$;
+    }
+
+    private prepareNodePath(node: Node, adminUser = false) {
+        if (node?.path?.elements) {
+            const elements = node.path.elements;
+            if (elements.length > 1) {
+                if (elements[1].name === 'User Homes') {
+                    if (!adminUser) {
+                        elements.splice(0, 2);
+                    }
+                } else if (elements[1].nodeType === 'st:sites') {
+                    node.path.elements = elements.filter((element) => element.nodeType !== 'st:sites' && element.name !== 'documentLibrary');
+                }
+            }
         }
     }
 

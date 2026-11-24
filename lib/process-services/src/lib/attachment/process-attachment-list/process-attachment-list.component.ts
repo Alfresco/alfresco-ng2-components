@@ -129,13 +129,16 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
 
     add(content: any): void {
         this.ngZone.run(() => {
-            this.attachments.push({
-                id: content.id,
-                name: content.name,
-                created: content.created,
-                createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
-                icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
-            });
+            this.attachments = [
+                ...this.attachments,
+                {
+                    id: content.id,
+                    name: content.name,
+                    created: content.created,
+                    createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
+                    icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
+                }
+            ];
         });
     }
 
@@ -207,15 +210,13 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
             const isRelatedContent = 'true';
             this.processContentService.getProcessRelatedContent(processInstanceId, { isRelatedContent }).subscribe(
                 (res) => {
-                    res.data.forEach((content) => {
-                        this.attachments.push({
-                            id: content.id,
-                            name: content.name,
-                            created: content.created,
-                            createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
-                            icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
-                        });
-                    });
+                    this.attachments = res.data.map((content) => ({
+                        id: content.id,
+                        name: content.name,
+                        created: content.created,
+                        createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
+                        icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
+                    }));
                     this.success.emit(this.attachments);
                     this.isLoading = false;
                 },

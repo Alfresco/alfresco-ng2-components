@@ -1,0 +1,65 @@
+name: "Update Angular packages"
+description: "Bump every Angular package to the target major and regenerate the lockfile"
+inputs:
+  angular-major:
+    description: "Target Angular major version"
+    required: true
+  version:
+    description: "Resolved @angular/core version, used in the commit message"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Update Angular packages
+      id: stage
+      shell: bash
+      env:
+        TARGET_MAJOR: ${{ inputs.angular-major }}
+        VERSION: ${{ inputs.version }}
+      run: |
+        {
+          PLAN=$(node scripts/update-angular/plan-angular-packages.mjs "$TARGET_MAJOR" "$RUNNER_TEMP/missing-releases.log")
+          echo "$PLAN"
+          mkdir -p "$RUNNER_TEMP/migrations" "$RUNNER_TEMP/reported"
+          COUNT=0
+          MIGRATION_FILES=()
+          while read -r spec; do
+            ./node_modules/.bin/nx migrate "$spec"
+            if [ -f migrations.json ]; then
+              mv migrations.json "$RUNNER_TEMP/migrations/$COUNT.json"
+              MIGRATION_FILES+=("$RUNNER_TEMP/migrations/$COUNT.json")
+            fi
+            COUNT=$((COUNT+1))
+          done <<< "$PLAN"
+          node scripts/update-angular/merge-migrations.mjs migrations.json "${MIGRATION_FILES[@]}"
+          pnpm install --no-frozen-lockfile
+          node scripts/update-angular/verify-versions.mjs "$TARGET_MAJOR"
+          cp migrations.json "$RUNNER_TEMP/reported/angular.json"
+          git add -A
+          git commit -m "chore: update Angular to $VERSION"
+        } 2>&1 | tee "$RUNNER_TEMP/validation.log"
+    - name: Record result
+      if: ${{ always() }}
+      uses: ./.github/actions/update-angular/record-validation-result
+      with:
+        name: update-angular-packages
+        outcome: ${{ steps.stage.outcome }}
+    - name: Check available releases
+      id: available
+      if: ${{ always() }}
+      shell: bash
+      run: |
+        if [ -f "$RUNNER_TEMP/missing-releases.log" ]; then
+          cp "$RUNNER_TEMP/missing-releases.log" "$RUNNER_TEMP/validation.log"
+          if [ -s "$RUNNER_TEMP/missing-releases.log" ]; then
+            echo "outcome=failure" >> "$GITHUB_OUTPUT"
+          else
+            echo "outcome=success" >> "$GITHUB_OUTPUT"
+          fi
+        fi
+    - name: Record available releases
+      if: ${{ always() && steps.available.outputs.outcome != '' }}
+      uses: ./.github/actions/update-angular/record-validation-result
+      with:
+        name: available-releases
+        outcome: ${{ steps.available.outputs.outcome }}

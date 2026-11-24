@@ -56,7 +56,7 @@ ADF Libraries list:
 - [Core](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/core)
 - [Extensions](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/extensions)
 - [Insights](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/insights)
-- [Process Service Cloud](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/process-services-cloud)
+- [Process Service Cloud](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/process-services-cloud) (maintenance mode: critical bug fixes only, no new features)
 - [Process service](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/process-services)
 - [Stories](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/stories)
 

@@ -43,7 +43,7 @@ export class FormListComponent implements OnChanges {
 
     getForms() {
         this.modelService.getForms().subscribe((forms) => {
-            this.forms.push(...forms);
+            this.forms = [...this.forms, ...forms];
         });
     }
 }

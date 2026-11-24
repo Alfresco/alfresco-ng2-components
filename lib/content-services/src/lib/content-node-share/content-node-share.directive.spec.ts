@@ -17,7 +17,9 @@
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
+import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { NodeSharedDirective } from './content-node-share.directive';
 import { NoopAuthModule } from '@alfresco/adf-core';
@@ -133,5 +135,52 @@ describe('NodeSharedDirective', () => {
         fixture.detectChanges();
 
         expect(document.querySelector('.adf-share-link-dialog')).not.toBe(null);
+    });
+});
+
+describe('NodeSharedDirective without zone.js', () => {
+    it('should set isFile and isShared after the next render', async () => {
+        TestBed.configureTestingModule({
+            imports: [NoopAuthModule, NodeShareTestComponent, MatNativeDatetimeModule],
+            providers: [provideZonelessChangeDetection()]
+        });
+        const fixture = TestBed.createComponent(NodeShareTestComponent);
+        fixture.componentInstance.documentList.selection = [{ entry: { isFile: true, properties: { 'qshare:sharedId': 'someId' } } }] as any;
+        await fixture.whenStable();
+
+        const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
+        expect(button.disabled).toBe(false);
+        expect(button.title).toBe('Shared');
+    });
+});
+
+describe('NodeSharedDirective share state refresh', () => {
+    it('should refresh isShared when node is shared and unshared in place without replacing the node reference', async () => {
+        const closed$ = new Subject<void>();
+        TestBed.configureTestingModule({
+            imports: [NoopAuthModule, NodeShareTestComponent, MatNativeDatetimeModule],
+            providers: [provideZonelessChangeDetection()]
+        });
+        spyOn(TestBed.inject(MatDialog), 'open').and.returnValue({ afterClosed: () => closed$.asObservable() } as any);
+
+        const fixture = TestBed.createComponent(NodeShareTestComponent);
+        const selection = { entry: { isFile: true, properties: {} as Record<string, any> } };
+        fixture.componentInstance.documentList.selection = [selection] as any;
+        await fixture.whenStable();
+
+        const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
+        expect(button.title).toBe('Not Shared');
+
+        button.click();
+        selection.entry.properties['qshare:sharedId'] = 'someId';
+        closed$.next();
+        await fixture.whenStable();
+        expect(button.title).toBe('Shared');
+
+        button.click();
+        selection.entry.properties['qshare:sharedId'] = null;
+        closed$.next();
+        await fixture.whenStable();
+        expect(button.title).toBe('Not Shared');
     });
 });
