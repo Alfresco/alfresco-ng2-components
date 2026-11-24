@@ -1,0 +1,74 @@
+/*!
+ * @license
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { DateFnsUtils } from '@alfresco/adf-core';
+import type { FieldDefinition, NumberFieldValue } from '../../definition/form-definition.interface';
+import { dateFieldRange, maxLengthOf } from '../../validation/field-validators';
+
+export type FieldErrorParams = Record<string, string | number | undefined>;
+
+export interface FieldErrorMessage {
+    key: string;
+    params?: FieldErrorParams;
+}
+
+const localized = (limit: NumberFieldValue | undefined): string => {
+    if (typeof limit === 'number') {
+        return limit.toLocaleString();
+    }
+    return limit ?? '';
+};
+
+const shownDate = (date: Date | null, field: FieldDefinition): string =>
+    date ? DateFnsUtils.formatDate(date, field.dateDisplayFormat).toLocaleUpperCase() : '';
+
+/**
+ * Returns the message for text longer than the given limit.
+ *
+ * @param limit the maximum length
+ * @returns the message to show
+ */
+export const maxLengthMessage = (limit: number): FieldErrorMessage => ({
+    key: 'FORM.FIELD.VALIDATOR.NO_LONGER_THAN',
+    params: { maxLength: localized(limit) }
+});
+
+const MESSAGES: Readonly<Record<string, (field: FieldDefinition) => FieldErrorMessage>> = {
+    required: () => ({ key: 'FORM.FIELD.REQUIRED' }),
+    dropdown: () => ({ key: 'FORM.FIELD.REQUIRED' }),
+    number: () => ({ key: 'FORM.FIELD.VALIDATOR.INVALID_NUMBER' }),
+    minLength: ({ minLength }) => ({ key: 'FORM.FIELD.VALIDATOR.AT_LEAST_LONG', params: { minLength: localized(minLength) } }),
+    maxLength: (field) => maxLengthMessage(maxLengthOf(field)),
+    minValue: ({ minValue }) => ({ key: 'FORM.FIELD.VALIDATOR.NOT_LESS_THAN', params: { minValue: localized(minValue) } }),
+    maxValue: ({ maxValue }) => ({ key: 'FORM.FIELD.VALIDATOR.NOT_GREATER_THAN', params: { maxValue: localized(maxValue) } }),
+    pattern: () => ({ key: 'FORM.FIELD.VALIDATOR.INVALID_VALUE' }),
+    decimal: () => ({ key: 'FORM.FIELD.VALIDATOR.INVALID_DECIMAL_NUMBER' }),
+    precision: ({ precision }) => ({ key: 'FORM.FIELD.VALIDATOR.INVALID_DECIMAL_PRECISION', params: { precision } }),
+    dateFormat: ({ dateDisplayFormat }) => ({ key: 'FORM.FIELD.VALIDATOR.INVALID_DATE_FORMAT', params: { format: dateDisplayFormat } }),
+    dateMin: (field) => ({ key: 'FORM.FIELD.VALIDATOR.NOT_LESS_THAN', params: { minValue: shownDate(dateFieldRange(field).min, field) } }),
+    dateMax: (field) => ({ key: 'FORM.FIELD.VALIDATOR.NOT_GREATER_THAN', params: { maxValue: shownDate(dateFieldRange(field).max, field) } })
+};
+
+/**
+ * Returns the translation key and parameters for a validation error, using ADF's existing messages. An error kind
+ * defined by a custom widget is used as the translation key.
+ *
+ * @param kind the error kind
+ * @param field the field definition
+ * @returns the message to show
+ */
+export const fieldErrorMessage = (kind: string, field: FieldDefinition): FieldErrorMessage => MESSAGES[kind]?.(field) ?? { key: kind };
