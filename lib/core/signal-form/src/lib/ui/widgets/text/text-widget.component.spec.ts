@@ -17,20 +17,11 @@
 
 import { TestBed } from '@angular/core/testing';
 import { NoopTranslateModule } from '../../../../../../src/lib/testing/noop-translate.module';
-import { createFieldsForm, renderWidget, typeInto } from '../../testing/widget-testing.mock';
+import { createFieldsForm, errorText, pasteInto, renderWidget, typeInto } from '../../testing/widget-testing.mock';
 import { SignalTextWidgetComponent } from './text-widget.component';
 
 describe('SignalTextWidgetComponent', () => {
-    const errorText = (element: HTMLElement): string | undefined => element.querySelector('.adf-error-text')?.textContent?.trim();
     const textInput = (element: HTMLElement): HTMLInputElement => element.querySelector('input');
-
-    const paste = (input: HTMLInputElement, text: string): ClipboardEvent => {
-        const clipboardData = new DataTransfer();
-        clipboardData.setData('text', text);
-        const event = new ClipboardEvent('paste', { clipboardData, cancelable: true });
-        input.dispatchEvent(event);
-        return event;
-    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({ imports: [NoopTranslateModule] });
@@ -47,28 +38,28 @@ describe('SignalTextWidgetComponent', () => {
     });
 
     it('should refuse a paste that makes the text too long, until the text is edited', () => {
-        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'abc', maxLength: 5 }]);
+        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'Ada', maxLength: 5 }]);
         const fixture = renderWidget(SignalTextWidgetComponent, form, 'code');
         const element: HTMLElement = fixture.nativeElement;
 
-        const refused = paste(textInput(element), 'defgh');
+        const refused = pasteInto(textInput(element), 'Byron');
         fixture.detectChanges();
 
         expect(refused.defaultPrevented).toBeTrue();
         expect(errorText(element)).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
 
-        typeInto(textInput(element), 'abcd');
+        typeInto(textInput(element), 'Adam');
         fixture.detectChanges();
 
         expect(errorText(element)).toBeUndefined();
     });
 
     it('should keep a refused paste reported while the input event is the paste itself', () => {
-        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'abc', maxLength: 5 }]);
+        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'Ada', maxLength: 5 }]);
         const fixture = renderWidget(SignalTextWidgetComponent, form, 'code');
         const element: HTMLElement = fixture.nativeElement;
 
-        paste(textInput(element), 'defgh');
+        pasteInto(textInput(element), 'Byron');
         textInput(element).dispatchEvent(new InputEvent('input', { inputType: 'insertFromPaste' }));
         fixture.detectChanges();
 
@@ -76,10 +67,10 @@ describe('SignalTextWidgetComponent', () => {
     });
 
     it('should refuse a paste that makes a string field longer than its text limit', () => {
-        const form = createFieldsForm([{ id: 'code', type: 'string', value: 'abc', maxLength: 5 }]);
+        const form = createFieldsForm([{ id: 'code', type: 'string', value: 'Ada', maxLength: 5 }]);
         const fixture = renderWidget(SignalTextWidgetComponent, form, 'code');
 
-        const refused = paste(textInput(fixture.nativeElement), 'defgh');
+        const refused = pasteInto(textInput(fixture.nativeElement), 'Byron');
         fixture.detectChanges();
 
         expect(refused.defaultPrevented).toBeTrue();
@@ -87,15 +78,20 @@ describe('SignalTextWidgetComponent', () => {
     });
 
     it('should accept a paste that fits', () => {
-        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'abc', maxLength: 5 }]);
+        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'Ada', maxLength: 5 }]);
         const fixture = renderWidget(SignalTextWidgetComponent, form, 'code');
 
-        expect(paste(textInput(fixture.nativeElement), 'de').defaultPrevented).toBeFalse();
+        const accepted = pasteInto(textInput(fixture.nativeElement), 'Jo');
+
+        expect(accepted.defaultPrevented).toBeFalse();
     });
 
     it('should style text fields as today', () => {
         const form = createFieldsForm([{ id: 'name', type: 'text' }]);
 
-        expect(renderWidget(SignalTextWidgetComponent, form, 'name').nativeElement.querySelector('.adf-text-widget')).not.toBeNull();
+        const fixture = renderWidget(SignalTextWidgetComponent, form, 'name');
+        const styledElement = fixture.nativeElement.querySelector('.adf-text-widget');
+
+        expect(styledElement).not.toBeNull();
     });
 });

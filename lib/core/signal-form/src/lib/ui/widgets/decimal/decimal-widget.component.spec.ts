@@ -17,19 +17,11 @@
 
 import { TestBed } from '@angular/core/testing';
 import { NoopTranslateModule } from '../../../../../../src/lib/testing/noop-translate.module';
-import { createFieldsForm, renderWidget } from '../../testing/widget-testing.mock';
+import { createFieldsForm, pasteInto, renderWidget } from '../../testing/widget-testing.mock';
 import { SignalDecimalWidgetComponent } from './decimal-widget.component';
 
 describe('SignalDecimalWidgetComponent', () => {
     const textInput = (element: HTMLElement): HTMLInputElement => element.querySelector('input');
-
-    const paste = (input: HTMLInputElement, text: string): ClipboardEvent => {
-        const clipboardData = new DataTransfer();
-        clipboardData.setData('text', text);
-        const event = new ClipboardEvent('paste', { clipboardData, cancelable: true });
-        input.dispatchEvent(event);
-        return event;
-    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({ imports: [NoopTranslateModule] });
@@ -39,12 +31,17 @@ describe('SignalDecimalWidgetComponent', () => {
         const form = createFieldsForm([{ id: 'ratio', type: 'bigdecimal' }]);
         const fixture = renderWidget(SignalDecimalWidgetComponent, form, 'ratio');
 
-        expect(paste(textInput(fixture.nativeElement), '1'.repeat(2000)).defaultPrevented).toBeFalse();
+        const accepted = pasteInto(textInput(fixture.nativeElement), '1'.repeat(2000));
+
+        expect(accepted.defaultPrevented).toBeFalse();
     });
 
     it('should style decimal fields as today', () => {
         const form = createFieldsForm([{ id: 'ratio', type: 'bigdecimal' }]);
 
-        expect(renderWidget(SignalDecimalWidgetComponent, form, 'ratio').nativeElement.querySelector('.adf-decimal-widget')).not.toBeNull();
+        const fixture = renderWidget(SignalDecimalWidgetComponent, form, 'ratio');
+        const styledElement = fixture.nativeElement.querySelector('.adf-decimal-widget');
+
+        expect(styledElement).not.toBeNull();
     });
 });

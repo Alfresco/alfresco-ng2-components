@@ -20,11 +20,10 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { NoopTranslateModule } from '../../../../../../src/lib/testing/noop-translate.module';
 import { SignalForm } from '../../../state/signal-form';
-import { createFieldsForm, typeInto } from '../../testing/widget-testing.mock';
+import { createFieldsForm, errorText, pasteInto, typeInto } from '../../testing/widget-testing.mock';
 import { SignalTextFieldComponent } from './text-field.component';
 
 describe('SignalTextFieldComponent', () => {
-    const errorText = (element: HTMLElement): string | undefined => element.querySelector('.adf-error-text')?.textContent?.trim();
     const textInput = (element: HTMLElement): HTMLInputElement => element.querySelector('input');
     const floatingLabel = async (fixture: ComponentFixture<SignalTextFieldComponent>): Promise<string | null> =>
         (await TestbedHarnessEnvironment.loader(fixture).getHarness(MatFormFieldHarness)).getLabel();
@@ -38,14 +37,6 @@ describe('SignalTextFieldComponent', () => {
         fixture.componentRef.setInput('pasteLimit', pasteLimit);
         fixture.detectChanges();
         return fixture;
-    };
-
-    const paste = (input: HTMLInputElement, text: string): ClipboardEvent => {
-        const clipboardData = new DataTransfer();
-        clipboardData.setData('text', text);
-        const event = new ClipboardEvent('paste', { clipboardData, cancelable: true });
-        input.dispatchEvent(event);
-        return event;
     };
 
     beforeEach(() => {
@@ -87,35 +78,35 @@ describe('SignalTextFieldComponent', () => {
     });
 
     it('should show any other error at once', () => {
-        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'abc', regexPattern: '[0-9]+' }]);
+        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'Ada', regexPattern: '[0-9]+' }]);
         const fixture = renderTextField(form, 'code');
 
         expect(errorText(fixture.nativeElement)).toBe('FORM.FIELD.VALIDATOR.INVALID_VALUE');
     });
 
     it('should report a refused paste until the text is edited', () => {
-        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'abc', maxLength: 5 }]);
+        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'Ada', maxLength: 5 }]);
         const fixture = renderTextField(form, 'code', 5);
         const element: HTMLElement = fixture.nativeElement;
 
-        const refused = paste(textInput(element), 'defgh');
+        const refused = pasteInto(textInput(element), 'Byron');
         fixture.detectChanges();
 
         expect(refused.defaultPrevented).toBeTrue();
         expect(errorText(element)).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
 
-        typeInto(textInput(element), 'abcd');
+        typeInto(textInput(element), 'Adam');
         fixture.detectChanges();
 
         expect(errorText(element)).toBeUndefined();
     });
 
     it('should keep a refused paste reported while the input event is the paste itself', () => {
-        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'abc', maxLength: 5 }]);
+        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'Ada', maxLength: 5 }]);
         const fixture = renderTextField(form, 'code', 5);
         const element: HTMLElement = fixture.nativeElement;
 
-        paste(textInput(element), 'defgh');
+        pasteInto(textInput(element), 'Byron');
         textInput(element).dispatchEvent(new InputEvent('input', { inputType: 'insertFromPaste' }));
         fixture.detectChanges();
 
@@ -123,17 +114,21 @@ describe('SignalTextFieldComponent', () => {
     });
 
     it('should accept any paste when there is no paste limit', () => {
-        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'abc', maxLength: 5 }]);
+        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'Ada', maxLength: 5 }]);
         const fixture = renderTextField(form, 'code');
 
-        expect(paste(textInput(fixture.nativeElement), 'defghijkl').defaultPrevented).toBeFalse();
+        const accepted = pasteInto(textInput(fixture.nativeElement), 'Lord Byron');
+
+        expect(accepted.defaultPrevented).toBeFalse();
     });
 
     it('should accept a paste that fits', () => {
-        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'abc', maxLength: 5 }]);
+        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'Ada', maxLength: 5 }]);
         const fixture = renderTextField(form, 'code', 5);
 
-        expect(paste(textInput(fixture.nativeElement), 'de').defaultPrevented).toBeFalse();
+        const accepted = pasteInto(textInput(fixture.nativeElement), 'Jo');
+
+        expect(accepted.defaultPrevented).toBeFalse();
     });
 
     it('should edit the text through the input mask when the field has one', () => {

@@ -19,12 +19,7 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, computed, input }
 
 @Component({
     selector: 'adf-signal-left-label',
-    template: `<label class="adf-label adf-signal-form-left-label" [id]="labelId()" [attr.for]="target()"
-        >{{ text() }}
-        @if (required()) {
-            <span class="adf-asterisk" aria-hidden="true">*</span>
-        }
-    </label>`,
+    templateUrl: './left-label.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignalLeftLabelComponent {

@@ -17,19 +17,11 @@
 
 import { TestBed } from '@angular/core/testing';
 import { NoopTranslateModule } from '../../../../../../src/lib/testing/noop-translate.module';
-import { createFieldsForm, renderWidget } from '../../testing/widget-testing.mock';
+import { createFieldsForm, errorText, pasteInto, renderWidget } from '../../testing/widget-testing.mock';
 import { SignalIntegerWidgetComponent } from './integer-widget.component';
 
 describe('SignalIntegerWidgetComponent', () => {
     const textInput = (element: HTMLElement): HTMLInputElement => element.querySelector('input');
-
-    const paste = (input: HTMLInputElement, text: string): ClipboardEvent => {
-        const clipboardData = new DataTransfer();
-        clipboardData.setData('text', text);
-        const event = new ClipboardEvent('paste', { clipboardData, cancelable: true });
-        input.dispatchEvent(event);
-        return event;
-    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({ imports: [NoopTranslateModule] });
@@ -39,19 +31,28 @@ describe('SignalIntegerWidgetComponent', () => {
         const form = createFieldsForm([{ id: 'count', type: 'integer' }]);
         const fixture = renderWidget(SignalIntegerWidgetComponent, form, 'count');
 
-        expect(paste(textInput(fixture.nativeElement), '1'.repeat(11)).defaultPrevented).toBeTrue();
+        const refused = pasteInto(textInput(fixture.nativeElement), '1'.repeat(11));
+        fixture.detectChanges();
+
+        expect(refused.defaultPrevented).toBeTrue();
+        expect(errorText(fixture.nativeElement)).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
     });
 
     it('should accept a paste that fits an integer', () => {
         const form = createFieldsForm([{ id: 'count', type: 'integer' }]);
         const fixture = renderWidget(SignalIntegerWidgetComponent, form, 'count');
 
-        expect(paste(textInput(fixture.nativeElement), '1'.repeat(10)).defaultPrevented).toBeFalse();
+        const accepted = pasteInto(textInput(fixture.nativeElement), '1'.repeat(10));
+
+        expect(accepted.defaultPrevented).toBeFalse();
     });
 
     it('should style integer fields as today', () => {
         const form = createFieldsForm([{ id: 'count', type: 'integer' }]);
 
-        expect(renderWidget(SignalIntegerWidgetComponent, form, 'count').nativeElement.querySelector('.adf-number-widget')).not.toBeNull();
+        const fixture = renderWidget(SignalIntegerWidgetComponent, form, 'count');
+        const styledElement = fixture.nativeElement.querySelector('.adf-number-widget');
+
+        expect(styledElement).not.toBeNull();
     });
 });

@@ -70,3 +70,26 @@ export const typeInto = (input: HTMLInputElement, text: string): void => {
     input.value = text;
     input.dispatchEvent(new Event('input'));
 };
+
+/**
+ * Pastes a text into an input, as a user does.
+ *
+ * @param input the input
+ * @param text the text
+ * @returns the paste event, so a test can see whether the paste was refused
+ */
+export const pasteInto = (input: HTMLInputElement, text: string): ClipboardEvent => {
+    const clipboardData = new DataTransfer();
+    clipboardData.setData('text', text);
+    const event = new ClipboardEvent('paste', { clipboardData, cancelable: true });
+    input.dispatchEvent(event);
+    return event;
+};
+
+/**
+ * Reads the text of the error a widget shows.
+ *
+ * @param element the widget element
+ * @returns the error text, or undefined when no error is shown
+ */
+export const errorText = (element: HTMLElement): string | undefined => element.querySelector('.adf-error-text')?.textContent?.trim();

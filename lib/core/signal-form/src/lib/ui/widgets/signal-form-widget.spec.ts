@@ -104,7 +104,7 @@ describe('SignalFormWidget', () => {
     });
 
     it("should show the form author's message for a pattern error", () => {
-        const { widget } = probe({ value: 'abc', regexPattern: '[0-9]+', customValidationMessage: 'APP.DIGITS_ONLY' });
+        const { widget } = probe({ value: 'Ada', regexPattern: '[0-9]+', customValidationMessage: 'APP.DIGITS_ONLY' });
 
         expect(widget.probedError()).toEqual({ key: 'APP.DIGITS_ONLY' });
     });

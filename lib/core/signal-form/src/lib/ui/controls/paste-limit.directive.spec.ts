@@ -17,6 +17,7 @@
 
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { pasteInto } from '../testing/widget-testing.mock';
 import { SignalPasteLimitDirective } from './paste-limit.directive';
 
 @Component({
@@ -25,7 +26,7 @@ import { SignalPasteLimitDirective } from './paste-limit.directive';
     template: `<input [value]="text()" [adf-signal-paste-limit]="limit()" (pasteRefused)="refusals.push($event)" />`
 })
 class SignalPasteLimitHostComponent {
-    readonly text = signal('abc');
+    readonly text = signal('Ada');
     readonly limit = signal(5);
     readonly refusals: boolean[] = [];
 }
@@ -35,13 +36,7 @@ describe('SignalPasteLimitDirective', () => {
     let host: SignalPasteLimitHostComponent;
     let textInput: HTMLInputElement;
 
-    const paste = (text: string): ClipboardEvent => {
-        const clipboardData = new DataTransfer();
-        clipboardData.setData('text', text);
-        const event = new ClipboardEvent('paste', { clipboardData, cancelable: true });
-        textInput.dispatchEvent(event);
-        return event;
-    };
+    const paste = (text: string): ClipboardEvent => pasteInto(textInput, text);
 
     beforeEach(() => {
         TestBed.configureTestingModule({});
@@ -53,14 +48,14 @@ describe('SignalPasteLimitDirective', () => {
     });
 
     it('should refuse a paste that makes the text longer than the limit', () => {
-        const refused = paste('defgh');
+        const refused = paste('Byron');
 
         expect(refused.defaultPrevented).toBeTrue();
         expect(host.refusals).toEqual([true]);
     });
 
     it('should accept a paste that fits', () => {
-        const accepted = paste('de');
+        const accepted = paste('Jo');
 
         expect(accepted.defaultPrevented).toBeFalse();
         expect(host.refusals).toEqual([false]);
@@ -69,7 +64,7 @@ describe('SignalPasteLimitDirective', () => {
     it('should accept a paste that replaces the selected text and fits', () => {
         textInput.setSelectionRange(0, 3);
 
-        const accepted = paste('defgh');
+        const accepted = paste('Byron');
 
         expect(accepted.defaultPrevented).toBeFalse();
         expect(host.refusals).toEqual([false]);
@@ -88,7 +83,7 @@ describe('SignalPasteLimitDirective', () => {
         host.limit.set(0);
         fixture.detectChanges();
 
-        const accepted = paste('defghijkl');
+        const accepted = paste('Lord Byron');
 
         expect(accepted.defaultPrevented).toBeFalse();
         expect(host.refusals).toEqual([]);

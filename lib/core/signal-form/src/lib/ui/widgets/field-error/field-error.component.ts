@@ -22,8 +22,7 @@ import { FieldErrorMessage } from '../field-error-message';
 
 @Component({
     selector: 'adf-signal-field-error',
-    template: `<mat-icon class="adf-error-icon" aria-hidden="true">error_outline</mat-icon
-        ><span class="adf-error-text">{{ message().key | translate: message().params }}</span>`,
+    templateUrl: './field-error.component.html',
     styleUrl: './field-error.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [MatIconModule, TranslatePipe]

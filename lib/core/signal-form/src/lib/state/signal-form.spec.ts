@@ -665,7 +665,7 @@ describe('SignalForm', () => {
                             id: 'root',
                             type: 'container',
                             numberOfColumns: 1,
-                            fields: { 1: [{ id: 'code', type: 'text', value: 'abc', regexPattern: '[0-9]+', customValidationMessage }] }
+                            fields: { 1: [{ id: 'code', type: 'text', value: 'Ada', regexPattern: '[0-9]+', customValidationMessage }] }
                         }
                     ],
                     outcomes: [],

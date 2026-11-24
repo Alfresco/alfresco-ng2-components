@@ -22,17 +22,7 @@ import { SignalTextFieldComponent } from '../text-field/text-field.component';
 
 @Component({
     selector: 'adf-signal-text-widget',
-    template: `
-        <adf-signal-text-field
-            [form]="form()"
-            [field]="field()"
-            [definition]="definition()"
-            [elementId]="elementId()"
-            [row]="row()"
-            widgetClass="adf-text-widget"
-            [pasteLimit]="pasteLimit()"
-        />
-    `,
+    templateUrl: './text-widget.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [SignalTextFieldComponent]
 })
