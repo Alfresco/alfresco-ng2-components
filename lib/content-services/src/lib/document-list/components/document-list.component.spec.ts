@@ -2164,7 +2164,7 @@ describe('DocumentListComponent rendering', () => {
     });
 
     it('should display custom loading template if defined', () => {
-        component.customDocumentList.dataTable.loading = true;
+        component.customDocumentList.loading = true;
         fixture.detectChanges();
         element = fixture.nativeElement.querySelector('span[id="custom-loading-template"]');
         expect(element).toBeDefined();
@@ -2180,7 +2180,7 @@ describe('DocumentListComponent rendering', () => {
     });
 
     it('should display custom no permission template if defined', () => {
-        component.customDocumentList.dataTable.noPermission = true;
+        component.customDocumentList.noPermission = true;
         fixture.detectChanges();
         element = fixture.nativeElement.querySelector('span[id="custom-no-permission-template"]');
         expect(element).toBeDefined();

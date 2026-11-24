@@ -1,0 +1,229 @@
+/*!
+ * @license
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import fs from 'node:fs';
+import path from 'node:path';
+import process from 'node:process';
+import { main } from './lib/cli.mjs';
+import { fenced, shareBudget, truncateMarkdown } from './lib/markdown.mjs';
+
+const NOT_RUN = 'not run';
+
+const UPDATE_STAGES = [
+    { name: 'update-nx', todo: 'Move Nx to a release that supports the target Angular, then run `pnpm install`.' },
+    { name: 'update-angular-packages', todo: 'Bump the Angular packages with `pnpm nx migrate <package>@<version>`, then run `pnpm install`.' },
+    { name: 'align-peers', todo: 'Run `pnpm peers check`, upgrade the packages with unmet peers, then run `pnpm install`.' },
+    { name: 'run-migrations', todo: 'Run `pnpm nx migrate --run-migrations --create-commits`, delete `migrations.json`, then run `pnpm install`.' },
+    {
+        name: 'format-and-lint-fix',
+        todo: 'Run `pnpm nx format:write` and `pnpm nx run-many -t lint --fix`, then fix by hand what they report.',
+        continuesOnFailure: true
+    },
+    { name: 'lockfile', todo: 'Run `pnpm install` and commit `pnpm-lock.yaml`.' },
+    {
+        name: 'peers',
+        todo: 'Go through the peer dependencies section: check the changelog of every package moved to a new major, upgrade by hand what is listed there, and fix the unmet peers.'
+    }
+];
+const OPTIONAL_STAGES = [
+    {
+        name: 'available-releases',
+        todo: 'Upgrade the packages listed in the log once a release for the new Angular is old enough to install (`minimumReleaseAge`).'
+    }
+];
+const VALIDATION_STAGES = [
+    { name: 'clean-overrides', todo: 'Compare the overrides in `pnpm-workspace.yaml` with a lockfile resolved without them.' },
+    { name: 'build', todo: 'Fix the build errors shown in the log.' },
+    { name: 'lint', todo: 'Fix the lint errors shown in the log.' }
+];
+const TEST_TODO = 'Fix the failing unit tests shown in the log.';
+const MAX_BODY_CHARS = 60000;
+const MIN_DETAILS_CHARS = 8000;
+const LOG_OVERHEAD_CHARS = 300;
+const SEPARATORS_ROOM_CHARS = 200;
+const MIN_LOG_CHARS = 800;
+const MAX_LOG_CHARS = 6000;
+
+/**
+ * Reads a file, or returns an empty text when it does not exist.
+ * @param file file to read
+ * @returns file content
+ */
+function readIfExists(file) {
+    return fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
+}
+
+/**
+ * Reads the outcome and log of every step recorded by the workflow.
+ * @param validationDir directory with a <name>.status and a <name>.log file per step
+ * @returns recorded steps with their name, outcome and log
+ */
+function readRecordedSteps(validationDir) {
+    if (!fs.existsSync(validationDir)) {
+        return [];
+    }
+
+    return fs
+        .readdirSync(validationDir)
+        .filter((file) => file.endsWith('.status'))
+        .sort()
+        .map((file) => {
+            const name = path.basename(file, '.status');
+            return {
+                name,
+                outcome: readIfExists(path.join(validationDir, file)).trim(),
+                log: readIfExists(path.join(validationDir, `${name}.log`)).trimEnd()
+            };
+        });
+}
+
+/**
+ * Lists every step of the workflow in execution order, marking the ones that left no result as not run.
+ * @param recorded steps recorded by the workflow
+ * @returns steps with their name, outcome, log and what to do when they did not succeed
+ */
+function listSteps(recorded) {
+    const find = (name) => recorded.find((step) => step.name === name);
+    const optional = OPTIONAL_STAGES.filter((stage) => find(stage.name));
+    const known = [...UPDATE_STAGES, ...optional, ...VALIDATION_STAGES].map((stage) => ({
+        log: '',
+        outcome: NOT_RUN,
+        ...find(stage.name),
+        ...stage
+    }));
+    const tests = recorded.filter((step) => step.name.startsWith('test-')).map((step) => ({ ...step, todo: TEST_TODO }));
+
+    return [...known, ...(tests.length ? tests : [{ name: 'unit tests', outcome: NOT_RUN, log: '', todo: TEST_TODO }])];
+}
+
+/**
+ * Builds the table with the result of every step.
+ * @param steps all steps
+ * @returns markdown
+ */
+function resultsTable(steps) {
+    const icons = (step) => {
+        if (step.outcome === 'success') {
+            return '✅ passed';
+        }
+        return step.outcome === NOT_RUN ? '⏭ not run' : `❌ ${step.outcome}`;
+    };
+
+    return ['| Step | Result |', '| --- | --- |', ...steps.map((step) => `| ${step.name} | ${icons(step)} |`)].join('\n');
+}
+
+/**
+ * Shortens a text to a number of characters, keeping its beginning, which is where the errors of a log are.
+ * @param text text to shorten
+ * @param limit maximum number of characters kept
+ * @returns the text, with a note when it was shortened
+ */
+function clip(text, limit) {
+    return text.length > limit ? `${text.slice(0, limit)}\n… (shortened, see the full log)` : text;
+}
+
+/**
+ * Builds a collapsible block with the log excerpt of every failed step and where to find its full log.
+ * The excerpts share the budget, and are left out when it is too small to show anything useful.
+ * @param steps all steps
+ * @param runUrl URL of the workflow run
+ * @param budget number of characters available
+ * @returns markdown
+ */
+function failureDetails(steps, runUrl, budget) {
+    const failed = steps.filter((step) => step.log && step.outcome !== 'success');
+    const limit = Math.min(MAX_LOG_CHARS, Math.floor(budget / Math.max(failed.length, 1)) - LOG_OVERHEAD_CHARS);
+
+    if (failed.length && limit < MIN_LOG_CHARS) {
+        return 'The log excerpts were left out because the description would be too long. They are in the `full-log-*` artifacts of the workflow run.';
+    }
+
+    return failed
+        .map(
+            (step) =>
+                `<details><summary>${step.name}</summary>\n\n${fenced(clip(step.log, limit))}\n\nFull log: the \`full-log-${step.name}\` artifact of the [workflow run](${runUrl}).\n\n</details>`
+        )
+        .join('\n\n');
+}
+
+/**
+ * Builds the list of what a reviewer has to do for every step that failed or did not run.
+ * @param steps all steps
+ * @returns markdown, empty when everything succeeded
+ */
+function nextSteps(steps) {
+    const pending = steps.filter((step) => step.outcome !== 'success');
+    const items = pending.map((step) =>
+        step.outcome === NOT_RUN ? `- **${step.name}** (${NOT_RUN}): ${step.todo}` : `- **${step.name}** (failed, see its log below): ${step.todo}`
+    );
+
+    return pending.length ? `### What needs to be done\n\nWork on this branch, in this order:\n\n${items.join('\n')}` : '';
+}
+
+/**
+ * Builds the warning shown when the update itself stopped before the validation.
+ * @param steps all steps
+ * @returns markdown, empty when the update completed
+ */
+function stoppedWarning(steps) {
+    const stopped = steps.find(
+        (step) => UPDATE_STAGES.some((stage) => stage.name === step.name) && !step.continuesOnFailure && step.outcome !== 'success'
+    );
+
+    return stopped
+        ? `> ⚠️ **The automated update did not complete.** It stopped at \`${stopped.name}\`. This branch holds the work done up to that point, and the steps after it were not run.`
+        : '';
+}
+
+/**
+ * Writes the pull request body and prints whether the pull request needs manual fixes.
+ * @param bodyFile file to write
+ * @param validationDir directory with the recorded steps
+ * @param reportDir directory with migration-report.md, peers.md and overrides.md
+ * @param version Angular version the update moves to
+ * @param runUrl URL of the workflow run
+ * @param jobResults results of the workflow jobs
+ */
+function buildPullRequestBody(bodyFile, validationDir, reportDir, version, runUrl, ...jobResults) {
+    const steps = listSteps(readRecordedSteps(validationDir));
+    const needsFixes = steps.some((step) => step.outcome !== 'success') || jobResults.some((result) => result !== 'success');
+    const readReport = (file) => readIfExists(path.join(reportDir, file)).trim();
+    const join = (sections) => `${sections.filter(Boolean).join('\n\n')}\n`;
+
+    const head = [
+        `Automated update of Angular and Nx packages to Angular ${version}.`,
+        stoppedWarning(steps),
+        `### Steps\n\n${resultsTable(steps)}`,
+        nextSteps(steps)
+    ];
+    const runLink = `[Workflow run](${runUrl}) · Comment \`/update-angular help\` on this pull request to see what the workflow can do for you.`;
+    const available = MAX_BODY_CHARS - join([...head, runLink]).length - SEPARATORS_ROOM_CHARS;
+
+    const reports = shareBudget(
+        [readReport('migration-report.md'), readReport('peers.md'), readReport('overrides.md')],
+        available - MIN_DETAILS_CHARS
+    );
+    const reportsLength = reports.reduce((total, report) => total + report.length, 0);
+    const details = failureDetails(steps, runUrl, available - reportsLength);
+
+    const body = truncateMarkdown(join([...head, details, runLink, ...reports]), MAX_BODY_CHARS);
+
+    fs.writeFileSync(bodyFile, body);
+    process.stdout.write(needsFixes ? 'draft' : 'ready');
+}
+
+main(buildPullRequestBody);

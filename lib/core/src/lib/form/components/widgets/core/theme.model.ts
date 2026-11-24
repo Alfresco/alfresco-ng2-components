@@ -27,7 +27,9 @@ export type ReadonlyTextThemeVariable = '--adf-readonly-text-font-size' | '--adf
 export type HeaderThemeVariable = '--adf-header-font-size' | '--adf-header-font-weight' | '--adf-header-color';
 export type RadioButtonsThemeVariable = '--adf-radio-buttons-font-size' | '--adf-radio-buttons-font-weight' | '--adf-radio-buttons-color';
 
-export type SupportedWidgetType = 'radio-buttons' | 'group' | 'readonly-text';
+export type CheckboxGroupThemeVariable = '--adf-checkbox-group-font-size' | '--adf-checkbox-group-font-weight' | '--adf-checkbox-group-color';
+
+export type SupportedWidgetType = 'checkbox-group' | 'radio-buttons' | 'group' | 'readonly-text';
 
 export interface ThemeModel {
     form?: {
@@ -46,6 +48,7 @@ export interface ThemeModel {
                 styles: { [variable in HeaderThemeVariable]?: string };
             };
         };
+        ['checkbox-group']?: WidgetSchemaPredefinedStyle<CheckboxGroupThemeVariable>;
         ['radio-buttons']?: {
             [styleKey: string]: {
                 name: string;
@@ -69,6 +72,7 @@ export interface PredefinedThemeModel {
     widgets?: {
         ['readonly-text']?: WidgetSchemaPredefinedStyle<ReadonlyTextThemeVariable>;
         ['group']?: WidgetSchemaPredefinedStyle<HeaderThemeVariable>;
+        ['checkbox-group']?: WidgetSchemaPredefinedStyle<CheckboxGroupThemeVariable>;
         ['radio-buttons']?: WidgetSchemaPredefinedStyle<RadioButtonsThemeVariable>;
     };
 }

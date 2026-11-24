@@ -710,7 +710,7 @@
       "NOT_FIRST_LEVEL": "Ebene {{ level }} • In {{ ancestorName }}",
       "CURRENT_LEVEL": "Bereits in diesem Ordner",
       "CURRENT_LEVEL_ICON_LABEL": "Aktuell",
-      "LIBRARY_CONTAINER_LEVEL": "Nur Bibliotheksnavigation",
+      "LIBRARY_CONTAINER_LEVEL": "Datei/Ordner kann nicht in die Bibliotheksliste verschoben werden.",
       "LIBRARY_CONTAINER_LEVEL_ICON_LABEL": "Nicht verfügbar",
       "DROP_HINT": "Hier verschieben"
     }

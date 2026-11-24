@@ -103,6 +103,20 @@ describe('TaskAttachmentList', () => {
         expect(fixture.debugElement.queryAll(By.css('.adf-datatable-body > .adf-datatable-row')).length).toBe(2);
     });
 
+    it('should display a newly added attachment', async () => {
+        component.ngOnChanges({ taskId: new SimpleChange(null, '123', true) });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        component.add({ ...mockTaskAttachments.data[0], id: 99, name: 'added-attachment.pdf' });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const rows = fixture.debugElement.queryAll(By.css('.adf-datatable-body > .adf-datatable-row'));
+        expect(rows.length).toBe(3);
+        expect(rows[2].nativeElement.textContent).toContain('added-attachment.pdf');
+    });
+
     it('emit document when a user wants to view the document', () => {
         component.emitDocumentContent(mockTaskAttachments.data[1]);
         fixture.detectChanges();

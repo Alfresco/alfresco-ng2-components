@@ -94,6 +94,20 @@ describe('ProcessAttachmentListComponent', () => {
         expect(fixture.debugElement.queryAll(By.css('.adf-datatable-body > .adf-datatable-row')).length).toBe(2);
     });
 
+    it('should display a newly added attachment', async () => {
+        component.ngOnChanges({ processInstanceId: new SimpleChange(null, '123', true) });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        component.add({ ...mockProcessAttachments.data[0], id: 99, name: 'added-attachment.pdf' });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const rows = fixture.debugElement.queryAll(By.css('.adf-datatable-body > .adf-datatable-row'));
+        expect(rows.length).toBe(3);
+        expect(rows[2].nativeElement.textContent).toContain('added-attachment.pdf');
+    });
+
     it('should display all actions if attachments are not read only', async () => {
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ processInstanceId: change });

@@ -38,6 +38,7 @@ export class RequiredFieldValidator implements FormFieldValidator {
         FormFieldTypes.PEOPLE,
         FormFieldTypes.FUNCTIONAL_GROUP,
         FormFieldTypes.RADIO_BUTTONS,
+        FormFieldTypes.CHECKBOX_GROUP,
         FormFieldTypes.UPLOAD,
         FormFieldTypes.AMOUNT,
         FormFieldTypes.DYNAMIC_TABLE,
@@ -69,6 +70,11 @@ export class RequiredFieldValidator implements FormFieldValidator {
 
             if (field.type === FormFieldTypes.BOOLEAN) {
                 return !!field.value;
+            }
+
+            if (field.type === FormFieldTypes.CHECKBOX_GROUP) {
+                const value = field.getFormValue();
+                return Array.isArray(value) && value.length > 0;
             }
 
             if (field.value === null || field.value === undefined || field.value === '') {

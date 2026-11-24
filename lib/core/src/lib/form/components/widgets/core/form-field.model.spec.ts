@@ -272,6 +272,24 @@ describe('FormFieldModel', () => {
             ]);
         });
 
+        it('should add saved checkbox group selections missing from the static options', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                id: 'choices',
+                type: FormFieldTypes.CHECKBOX_GROUP,
+                options: [{ id: 'a', name: 'A' }],
+                value: ['a', 'stale']
+            });
+
+            expect(field.options).toEqual([
+                { id: 'a', name: 'A' },
+                { id: 'stale', name: 'stale' }
+            ]);
+            expect(field.value).toEqual([
+                { id: 'a', name: 'A' },
+                { id: 'stale', name: 'stale' }
+            ]);
+        });
+
         it('should parse dropdown with multiple options', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DROPDOWN,

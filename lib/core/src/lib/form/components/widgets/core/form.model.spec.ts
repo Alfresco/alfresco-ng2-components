@@ -24,6 +24,7 @@ import { FORM_FIELD_VALIDATORS, FormFieldValidator } from './form-field-validato
 import { FormFieldModel } from './form-field.model';
 import { FormOutcomeModel } from './form-outcome.model';
 import { FormModel } from './form.model';
+import { FormValues } from './form-values';
 import { TabModel } from './tab.model';
 import { fakeMetadataForm, mockDisplayExternalPropertyForm, mockFormWithSections, fakeValidatorMock } from '../../mock/form.mock';
 import { TestBed } from '@angular/core/testing';
@@ -1049,6 +1050,77 @@ describe('FormModel', () => {
             expect(form.values['pfx_property_six']).toEqual('text-value');
             expect(form.values['pfx_property_seven']).toBeNull();
             expect(form.values['pfx_property_eight']).toBeNull();
+        });
+    });
+
+    describe('external field values', () => {
+        const textForm = (values: FormValues) =>
+            new FormModel({ fields: [{ id: 'textField', name: 'Field', type: FormFieldTypes.TEXT, value: 'saved' }] }, values);
+
+        describe('existing field types (unchanged behavior)', () => {
+            for (const value of [null, undefined]) {
+                for (const key of ['textField', 'variables.Field']) {
+                    it(`should keep the saved value when ${key} is ${value}`, () => {
+                        expect(textForm({ [key]: value }).values.textField).toBe('saved');
+                    });
+                }
+            }
+
+            it('should ignore a null variable and use the field value', () => {
+                expect(textForm({ 'variables.Field': null, textField: 'fallback' }).values.textField).toBe('fallback');
+            });
+
+            it('should fall back to the field value when the variable is falsy', () => {
+                for (const value of ['', 0, false]) {
+                    expect(textForm({ 'variables.Field': value, textField: 'fallback' }).values.textField).toBe('fallback');
+                }
+            });
+
+            it('should use a truthy variable over the field value', () => {
+                expect(textForm({ 'variables.Field': 'variable', textField: 'fallback' }).values.textField).toBe('variable');
+            });
+        });
+
+        describe('checkbox group (same rules as other fields)', () => {
+            const options = [
+                { id: 'a', name: 'Alpha' },
+                { id: 'b', name: 'Beta' }
+            ];
+            const groupForm = (values: FormValues) =>
+                new FormModel({ fields: [{ id: 'group', name: 'Group', type: FormFieldTypes.CHECKBOX_GROUP, options, value: ['a'] }] }, values);
+
+            for (const key of ['group', 'variables.Group']) {
+                it(`should clear the saved selection with an empty array from ${key}`, () => {
+                    const form = groupForm({ [key]: [] });
+
+                    expect(form.getFormFields()[0].value).toEqual([]);
+                    expect(form.values.group).toEqual([]);
+                });
+
+                it(`should keep the saved selection when ${key} is null or undefined`, () => {
+                    for (const value of [null, undefined]) {
+                        expect(groupForm({ [key]: value }).values.group).toEqual([{ id: 'a', name: 'Alpha' }]);
+                    }
+                });
+            }
+
+            it('should prefer an empty variable over a populated field value', () => {
+                expect(groupForm({ 'variables.Group': [], group: ['b'] }).values.group).toEqual([]);
+            });
+
+            it('should prefer a populated variable over the field value', () => {
+                expect(groupForm({ 'variables.Group': ['b'], group: ['a'] }).values.group).toEqual([{ id: 'b', name: 'Beta' }]);
+            });
+
+            it('should fall back to the field value when the variable is null or undefined', () => {
+                for (const value of [null, undefined]) {
+                    expect(groupForm({ 'variables.Group': value, group: ['b'] }).values.group).toEqual([{ id: 'b', name: 'Beta' }]);
+                }
+            });
+
+            it('should retain the saved selection when external values are missing', () => {
+                expect(groupForm({}).values.group).toEqual([{ id: 'a', name: 'Alpha' }]);
+            });
         });
     });
 

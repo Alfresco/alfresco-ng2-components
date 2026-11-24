@@ -373,7 +373,7 @@
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {
-    "RETRIEVE_METADATA": "AutoAusfüllen-Formular"
+    "RETRIEVE_METADATA": "Automatische Formularausfüllung"
   },
   "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
     "ASSIGNED_TO": "Zugewiesen an",
