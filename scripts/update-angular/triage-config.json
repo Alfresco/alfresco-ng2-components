@@ -1,0 +1,18 @@
+{
+  "maxEscalationsPerRun": 8,
+  "agentTimeoutMinutes": 20,
+  "maxAgentTimeoutMinutes": 45,
+  "timeoutUtilisation": 0.7,
+  "batchOverheadMinutes": 4,
+  "minutesPerRecord": {
+    "escalate": 2,
+    "blocked": 1,
+    "auto-fixable": 0.5,
+    "parse-assist": 1
+  },
+  "maxRecordsPerBatch": 25,
+  "maxAgentInvocations": 12,
+  "localSelectorPrefixes": ["adf-"],
+  "knownRenames": [],
+  "knownModuleMoves": []
+}
