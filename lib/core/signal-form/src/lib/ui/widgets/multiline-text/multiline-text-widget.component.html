@@ -1,0 +1,37 @@
+<div
+    class="adf-multiline-text-widget"
+    [class.adf-multiline-text-widget--capped]="definition().autoGrow === false"
+    [class.adf-invalid]="showError()"
+    [class.adf-readonly]="readOnly()"
+    [class.adf-signal-form-left-label-field]="leftLabel()"
+>
+    @if (leftLabel()) {
+        <adf-signal-left-label [target]="inputId()" [text]="definition().name ?? '' | translate" [required]="fieldRequired()" />
+    }
+    <mat-form-field class="adf-form-field-input" subscriptSizing="dynamic" [floatLabel]="definition().placeholder ? 'always' : 'auto'">
+        @if (showsFloatingLabel()) {
+            <mat-label class="adf-label adf-multiline-text-widget-label" data-automation-id="adf-multiline-text-widget-label">
+                {{ definition().name | translate }}
+            </mat-label>
+        }
+        <textarea
+            matInput
+            class="adf-input"
+            rows="3"
+            [cdkTextareaAutosize]="definition().autoGrow !== false"
+            [id]="inputId()"
+            [formField]="field()"
+            [placeholder]="definition().placeholder ?? ''"
+            [title]="definition().tooltip ?? ''"
+            [errorStateMatcher]="errorStateMatcher"
+        ></textarea>
+        @if (definition().maxLength > 0) {
+            <mat-hint class="adf-multiline-counter-block" align="end">{{ characterCount() }}/{{ definition().maxLength }}</mat-hint>
+        }
+        @if (shownError(); as message) {
+            <mat-error class="adf-form-field-status-slot">
+                <adf-signal-field-error [message]="message" />
+            </mat-error>
+        }
+    </mat-form-field>
+</div>

@@ -59,6 +59,10 @@ const TEXT_VALIDATORS = [requiredValidator, minLengthValidator, maxLengthValidat
 const textWidget = () => import('../ui/widgets/text/text-widget.component').then((widgets) => widgets.SignalTextWidgetComponent);
 const integerWidget = () => import('../ui/widgets/integer/integer-widget.component').then((widgets) => widgets.SignalIntegerWidgetComponent);
 const decimalWidget = () => import('../ui/widgets/decimal/decimal-widget.component').then((widgets) => widgets.SignalDecimalWidgetComponent);
+const multilineTextWidget = () =>
+    import('../ui/widgets/multiline-text/multiline-text-widget.component').then((widgets) => widgets.SignalMultilineTextWidgetComponent);
+const amountWidget = () => import('../ui/widgets/amount/amount-widget.component').then((widgets) => widgets.SignalAmountWidgetComponent);
+const checkboxWidget = () => import('../ui/widgets/checkbox/checkbox-widget.component').then((widgets) => widgets.SignalCheckboxWidgetComponent);
 
 const TEXT_FIELD_TYPE: FieldTypeDefinition = { type: FormFieldType.Text, component: textWidget, validators: TEXT_VALIDATORS };
 
@@ -69,7 +73,7 @@ const TEXT_FIELD_TYPE: FieldTypeDefinition = { type: FormFieldType.Text, compone
 export const BUILT_IN_FIELD_TYPES: readonly FieldTypeDefinition[] = [
     TEXT_FIELD_TYPE,
     fieldTypeAlias(TEXT_FIELD_TYPE, FormFieldType.String),
-    { type: FormFieldType.MultilineText, validators: TEXT_VALIDATORS },
+    { type: FormFieldType.MultilineText, component: multilineTextWidget, validators: TEXT_VALIDATORS },
     {
         type: FormFieldType.Integer,
         component: integerWidget,
@@ -78,6 +82,7 @@ export const BUILT_IN_FIELD_TYPES: readonly FieldTypeDefinition[] = [
     },
     {
         type: FormFieldType.Amount,
+        component: amountWidget,
         submittedValue: numberSubmittedValue,
         validators: [requiredValidator, numberValidator, minValueValidator, maxValueValidator]
     },
@@ -90,6 +95,7 @@ export const BUILT_IN_FIELD_TYPES: readonly FieldTypeDefinition[] = [
     },
     {
         type: FormFieldType.Boolean,
+        component: checkboxWidget,
         initialValue: booleanInitialValue,
         submittedValue: booleanSubmittedValue,
         validators: [requiredValidator]

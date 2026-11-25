@@ -1,0 +1,20 @@
+<div class="adf-checkbox-widget-container" [class.adf-invalid]="showError()" [class.adf-readonly]="readOnly()">
+    <mat-checkbox
+        class="adf-checkbox"
+        data-automation-id="adf-checkbox-widget"
+        [id]="inputId()"
+        [formField]="field()"
+        [title]="definition().tooltip ?? ''"
+        (change)="field()().markAsTouched()"
+    >
+        {{ definition().name | translate }}
+        @if (fieldRequired()) {
+            <span class="adf-asterisk" data-automation-id="adf-checkbox-widget-asterisk">*</span>
+        }
+    </mat-checkbox>
+    @if (shownError(); as message) {
+        <div class="adf-error-messages-container">
+            <adf-signal-field-error [message]="message" />
+        </div>
+    }
+</div>
