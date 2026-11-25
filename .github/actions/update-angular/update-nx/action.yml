@@ -24,7 +24,6 @@ runs:
             git add -A
             git diff --cached --quiet || git commit -m "chore: update Nx to ${NX_SPEC#nx@}"
           fi
-          # Also runs the migrations an attempt that stopped half way saved on the branch.
           if [ -f migrations.json ]; then
             cp migrations.json "$RUNNER_TEMP/reported/nx.json"
             pnpm nx migrate --run-migrations --create-commits

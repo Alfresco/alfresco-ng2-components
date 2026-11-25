@@ -41,7 +41,6 @@ function supportsAngular(nxVersion, angular) {
  * @param target requested Angular major
  */
 function planNx(target) {
-    // The next-major rule was enforced on the base branch when the version was resolved. A resumed branch may already hold @angular/core at the target.
     const targetMajor = parseTargetMajor(target, { allowReached: true });
     const dependencies = workspaceDependencies();
 
