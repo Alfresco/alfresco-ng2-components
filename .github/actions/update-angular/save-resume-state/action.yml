@@ -33,5 +33,4 @@ runs:
           ${{ runner.temp }}/reported
           ${{ runner.temp }}/peers-aligned.json
         retention-days: 7
-        # Every attempt replaces the state of the previous one.
         overwrite: true
