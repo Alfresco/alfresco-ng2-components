@@ -193,7 +193,7 @@ function stoppedWarning(steps) {
  * Writes the pull request body and prints whether the pull request needs manual fixes.
  * @param bodyFile file to write
  * @param validationDir directory with the recorded steps
- * @param reportDir directory with migration-report.md, peers.md and overrides.md
+ * @param reportDir directory with triage-report.md, migration-report.md, peers.md and overrides.md
  * @param version Angular version the update moves to
  * @param runUrl URL of the workflow run
  * @param jobResults results of the workflow jobs
@@ -214,7 +214,7 @@ function buildPullRequestBody(bodyFile, validationDir, reportDir, version, runUr
     const available = MAX_BODY_CHARS - join([...head, runLink]).length - SEPARATORS_ROOM_CHARS;
 
     const reports = shareBudget(
-        [readReport('migration-report.md'), readReport('peers.md'), readReport('overrides.md')],
+        [readReport('triage-report.md'), readReport('migration-report.md'), readReport('peers.md'), readReport('overrides.md')],
         available - MIN_DETAILS_CHARS
     );
     const reportsLength = reports.reduce((total, report) => total + report.length, 0);

@@ -17,10 +17,15 @@ inputs:
     description: "Branch the pull request targets"
     required: false
     default: develop
+outputs:
+  number:
+    description: "Number of the pull request"
+    value: ${{ steps.create.outputs.number }}
 runs:
   using: "composite"
   steps:
     - name: Create pull request
+      id: create
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.github-token }}
@@ -38,4 +43,6 @@ runs:
           DRAFT_FLAG="--draft"
           TITLE="$TITLE (needs manual fixes)"
         fi
-        gh pr create --base "$BASE_BRANCH" --head "$BRANCH" --title "$TITLE" --body-file body.md $DRAFT_FLAG
+        URL=$(gh pr create --base "$BASE_BRANCH" --head "$BRANCH" --title "$TITLE" --body-file body.md $DRAFT_FLAG)
+        echo "$URL"
+        echo "number=${URL##*/}" >> "$GITHUB_OUTPUT"
