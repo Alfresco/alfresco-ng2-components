@@ -1,0 +1,5 @@
+@use 'styles/mixins' as mixins;
+
+.adf-error-icon {
+    @include mixins.adf-error-icon;
+}

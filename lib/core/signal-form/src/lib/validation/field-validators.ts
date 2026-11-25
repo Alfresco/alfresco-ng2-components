@@ -168,6 +168,14 @@ const dateRangeError = (field: FieldDefinition, date: Date | null): string | nul
 };
 
 /**
+ * Returns the maximum length of text typed into a text input: the field's own, or the default text limit.
+ *
+ * @param field the field
+ * @returns the maximum length
+ */
+export const textMaxLength = (field: FieldDefinition): number => (field.maxLength > 0 ? field.maxLength : DEFAULT_TEXT_MAX_LENGTH);
+
+/**
  * Returns the maximum length a text or integer field is checked against: its own, or the default limit.
  *
  * @param field the field
@@ -178,7 +186,7 @@ export const maxLengthOf = (field: FieldDefinition): number => {
         return DEFAULT_INTEGER_MAX_LENGTH;
     }
     if (field.type === FormFieldType.Text) {
-        return field.maxLength > 0 ? field.maxLength : DEFAULT_TEXT_MAX_LENGTH;
+        return textMaxLength(field);
     }
     return field.type === FormFieldType.MultilineText ? field.maxLength : 0;
 };

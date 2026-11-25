@@ -1,0 +1,156 @@
+/*!
+ * @license
+ * Copyright © 2005-2026 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { NoopTranslateModule } from '../../../../../../src/lib/testing/noop-translate.module';
+import { SignalForm } from '../../../state/signal-form';
+import { createFieldsForm, errorText, pasteInto, typeInto } from '../../testing/widget-testing.mock';
+import { SignalTextFieldComponent } from './text-field.component';
+
+describe('SignalTextFieldComponent', () => {
+    const textInput = (element: HTMLElement): HTMLInputElement => element.querySelector('input');
+    const floatingLabel = async (fixture: ComponentFixture<SignalTextFieldComponent>): Promise<string | null> =>
+        (await TestbedHarnessEnvironment.loader(fixture).getHarness(MatFormFieldHarness)).getLabel();
+
+    const renderTextField = (form: SignalForm, fieldId: string, pasteLimit = 0): ComponentFixture<SignalTextFieldComponent> => {
+        const fixture = TestBed.createComponent(SignalTextFieldComponent);
+        fixture.componentRef.setInput('form', form);
+        fixture.componentRef.setInput('field', form.fieldNode(fieldId));
+        fixture.componentRef.setInput('definition', form.fieldDefinition(fieldId));
+        fixture.componentRef.setInput('widgetClass', 'adf-sample-widget');
+        fixture.componentRef.setInput('pasteLimit', pasteLimit);
+        fixture.detectChanges();
+        return fixture;
+    };
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({ imports: [NoopTranslateModule] });
+    });
+
+    it('should show the field label and write what is typed into the form', async () => {
+        const form = createFieldsForm([{ id: 'name', name: 'Name', type: 'text' }]);
+        const fixture = renderTextField(form, 'name');
+        const element: HTMLElement = fixture.nativeElement;
+
+        typeInto(textInput(element), 'Ada');
+        fixture.detectChanges();
+
+        expect(await floatingLabel(fixture)).toBe('Name');
+        expect(textInput(element).id).toBe('name');
+        expect(form.submittedValues()['name']).toBe('Ada');
+    });
+
+    it('should name the label after the widget class', () => {
+        const form = createFieldsForm([{ id: 'name', name: 'Name', type: 'text' }]);
+        const fixture = renderTextField(form, 'name');
+
+        expect(fixture.nativeElement.querySelector('[data-automation-id="adf-sample-widget-label"]')).not.toBeNull();
+        expect(fixture.nativeElement.querySelector('.adf-sample-widget')).not.toBeNull();
+    });
+
+    it('should show a missing value only once the field is touched', () => {
+        const form = createFieldsForm([{ id: 'name', name: 'Name', type: 'text', required: true }]);
+        const fixture = renderTextField(form, 'name');
+        const element: HTMLElement = fixture.nativeElement;
+
+        expect(errorText(element)).toBeUndefined();
+
+        textInput(element).dispatchEvent(new Event('blur'));
+        fixture.detectChanges();
+
+        expect(errorText(element)).toBe('FORM.FIELD.REQUIRED');
+    });
+
+    it('should show any other error at once', () => {
+        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'Ada', regexPattern: '[0-9]+' }]);
+        const fixture = renderTextField(form, 'code');
+
+        expect(errorText(fixture.nativeElement)).toBe('FORM.FIELD.VALIDATOR.INVALID_VALUE');
+    });
+
+    it('should report a refused paste until the text is edited', () => {
+        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'Ada', maxLength: 5 }]);
+        const fixture = renderTextField(form, 'code', 5);
+        const element: HTMLElement = fixture.nativeElement;
+
+        const refused = pasteInto(textInput(element), 'Byron');
+        fixture.detectChanges();
+
+        expect(refused.defaultPrevented).toBeTrue();
+        expect(errorText(element)).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
+
+        typeInto(textInput(element), 'Adam');
+        fixture.detectChanges();
+
+        expect(errorText(element)).toBeUndefined();
+    });
+
+    it('should keep a refused paste reported while the input event is the paste itself', () => {
+        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'Ada', maxLength: 5 }]);
+        const fixture = renderTextField(form, 'code', 5);
+        const element: HTMLElement = fixture.nativeElement;
+
+        pasteInto(textInput(element), 'Byron');
+        textInput(element).dispatchEvent(new InputEvent('input', { inputType: 'insertFromPaste' }));
+        fixture.detectChanges();
+
+        expect(errorText(element)).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
+    });
+
+    it('should accept any paste when there is no paste limit', () => {
+        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'Ada', maxLength: 5 }]);
+        const fixture = renderTextField(form, 'code');
+
+        const accepted = pasteInto(textInput(fixture.nativeElement), 'Lord Byron');
+
+        expect(accepted.defaultPrevented).toBeFalse();
+    });
+
+    it('should accept a paste that fits', () => {
+        const form = createFieldsForm([{ id: 'code', type: 'text', value: 'Ada', maxLength: 5 }]);
+        const fixture = renderTextField(form, 'code', 5);
+
+        const accepted = pasteInto(textInput(fixture.nativeElement), 'Jo');
+
+        expect(accepted.defaultPrevented).toBeFalse();
+    });
+
+    it('should edit the text through the input mask when the field has one', () => {
+        const form = createFieldsForm([
+            { id: 'phone', type: 'text', params: { inputMask: '(000) 000-0000', inputMaskPlaceholder: '(___) ___-____' } }
+        ]);
+        const fixture = renderTextField(form, 'phone');
+        const element: HTMLElement = fixture.nativeElement;
+
+        typeInto(textInput(element), '1234567890');
+        fixture.detectChanges();
+
+        expect(textInput(element).placeholder).toBe('(___) ___-____');
+        expect(form.submittedValues()['phone']).toBe('(123) 456-7890');
+    });
+
+    it('should show the label to the left when the form asks for it', async () => {
+        const form = createFieldsForm([{ id: 'name', name: 'Name', type: 'text', required: true }], { leftLabels: true });
+        const fixture = renderTextField(form, 'name');
+        const element: HTMLElement = fixture.nativeElement;
+
+        expect(element.querySelector('label.adf-signal-form-left-label[for="name"]')?.textContent).toContain('Name');
+        expect(await floatingLabel(fixture)).toBeNull();
+    });
+});
