@@ -1,5 +1,5 @@
 name: "Create pull request"
-description: "Open the update pull request, as a draft when validation did not fully pass"
+description: "Open the update pull request, or update it when a re-run of the workflow resumed the branch, as a draft when validation did not fully pass"
 inputs:
   github-token:
     description: "Token allowed to open pull requests"
@@ -20,7 +20,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Create pull request
+    - name: Create or update pull request
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.github-token }}
@@ -38,4 +38,16 @@ runs:
           DRAFT_FLAG="--draft"
           TITLE="$TITLE (needs manual fixes)"
         fi
-        gh pr create --base "$BASE_BRANCH" --head "$BRANCH" --title "$TITLE" --body-file body.md $DRAFT_FLAG
+        EXISTING=$(gh pr list --head "$BRANCH" --base "$BASE_BRANCH" --state open --json number,isDraft --jq '.[0] // empty | "\(.number) \(.isDraft)"')
+        if [ -z "$EXISTING" ]; then
+          gh pr create --base "$BASE_BRANCH" --head "$BRANCH" --title "$TITLE" --body-file body.md $DRAFT_FLAG
+          exit 0
+        fi
+        read -r NUMBER IS_DRAFT <<< "$EXISTING"
+        echo "Updating pull request #$NUMBER"
+        gh api -X PATCH "repos/$GH_REPO/pulls/$NUMBER" -f title="$TITLE" -F body=@body.md > /dev/null
+        if [ "$STATE" == "draft" ] && [ "$IS_DRAFT" == "false" ]; then
+          gh pr ready "$NUMBER" --undo
+        elif [ "$STATE" != "draft" ] && [ "$IS_DRAFT" == "true" ]; then
+          gh pr ready "$NUMBER"
+        fi
