@@ -18,7 +18,6 @@ runs:
         OUTCOME: ${{ inputs.outcome }}
       run: |
         SAFE_NAME="${CHECK_NAME//\//-}"
-        # Each check uploads only its own files, so every file of the merged results comes from a single artifact.
         RESULTS="$RUNNER_TEMP/validation-results/$SAFE_NAME"
         mkdir -p "$RESULTS"
         echo "$OUTCOME" > "$RESULTS/$SAFE_NAME.status"
@@ -48,7 +47,6 @@ runs:
         name: validation-${{ steps.write.outputs.safe-name }}
         path: ${{ runner.temp }}/validation-results/${{ steps.write.outputs.safe-name }}
         retention-days: 7
-        # A re-run of the job uploads again under the same name.
         overwrite: true
     - name: Upload full log
       if: ${{ inputs.outcome != 'success' }}
@@ -58,5 +56,4 @@ runs:
         path: ${{ runner.temp }}/validation-clean.log
         if-no-files-found: ignore
         retention-days: 7
-        # A re-run of the job uploads again under the same name.
         overwrite: true
