@@ -75,7 +75,6 @@
         "targetName": "lint"
       },
       "include": [
-        "eslint.config.mjs",
         "lib/cli/**/*",
         "lib/content-services/**/*",
         "lib/core/**/*",

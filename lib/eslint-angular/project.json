@@ -39,8 +39,10 @@
       }
     },
     "lint": {
+      "executor": "nx:run-commands",
       "options": {
-        "command": "eslint \"**/*.ts\" --no-error-on-unmatched-pattern"
+        "command": "eslint \"**/*.ts\" --no-error-on-unmatched-pattern",
+        "cwd": "lib/eslint-angular"
       }
     }
   }
