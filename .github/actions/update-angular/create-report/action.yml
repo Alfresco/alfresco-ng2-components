@@ -24,3 +24,5 @@ runs:
         name: migration-report
         path: ${{ runner.temp }}/report
         retention-days: 7
+        # A re-run of the job uploads again under the same name.
+        overwrite: true

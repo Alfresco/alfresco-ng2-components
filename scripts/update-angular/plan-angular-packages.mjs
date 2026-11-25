@@ -45,7 +45,8 @@ function coreFirst(a, b) {
  * @param missingFile optional file receiving one line per best-effort package left out, empty when there is none
  */
 function planAngularPackages(target, missingFile) {
-    const targetMajor = parseTargetMajor(target);
+    // The next-major rule was enforced on the base branch when the version was resolved. A resumed branch may already hold @angular/core at the target.
+    const targetMajor = parseTargetMajor(target, { allowReached: true });
     const dependencies = workspaceDependencies();
     const specs = [];
     const missing = [];

@@ -8,9 +8,12 @@ runs:
       shell: bash
       run: |
         {
-          node scripts/update-angular/align-peers.mjs "$RUNNER_TEMP/peers-baseline.json" "$RUNNER_TEMP/peers-aligned.json"
+          node scripts/update-angular/align-peers.mjs "$RUNNER_TEMP/peers-baseline.json" "$RUNNER_TEMP/peers-aligned.json" "$RUNNER_TEMP/align-peers-message.txt"
           git add -A
-          git diff --cached --quiet || git commit -m "chore: align peer dependencies"
+          # The commit keeps the decisions of the stage even when it changed nothing, a resumed run reads them back.
+          if [ -f "$RUNNER_TEMP/align-peers-message.txt" ]; then
+            git commit --allow-empty -F "$RUNNER_TEMP/align-peers-message.txt"
+          fi
         } 2>&1 | tee "$RUNNER_TEMP/validation.log"
     - name: Record result
       if: ${{ always() }}

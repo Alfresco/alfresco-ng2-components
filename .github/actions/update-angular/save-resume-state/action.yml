@@ -1,0 +1,37 @@
+name: "Save resume state"
+description: "Save what a re-run of the job needs to continue the branch: the version, the base commit, the completed stages, the migrations reported and the peer alignment report"
+inputs:
+  version:
+    description: "Resolved @angular/core version"
+    required: true
+  branch:
+    description: "Branch of the update"
+    required: true
+  base-sha:
+    description: "Commit the update started from"
+    required: true
+  pushed:
+    description: "true when the branch was pushed in this attempt"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Write resume state
+      shell: bash
+      env:
+        VERSION: ${{ inputs.version }}
+        BRANCH: ${{ inputs.branch }}
+        BASE_SHA: ${{ inputs.base-sha }}
+        PUSHED: ${{ inputs.pushed }}
+      run: node scripts/update-angular/save-resume-state.mjs "$RUNNER_TEMP/resume.json" "$RUNNER_TEMP/validation-results" "$VERSION" "$BRANCH" "$BASE_SHA" "$PUSHED"
+    - name: Upload resume state
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+      with:
+        name: resume-state
+        path: |
+          ${{ runner.temp }}/resume.json
+          ${{ runner.temp }}/reported
+          ${{ runner.temp }}/peers-aligned.json
+        retention-days: 7
+        # Every attempt replaces the state of the previous one.
+        overwrite: true
