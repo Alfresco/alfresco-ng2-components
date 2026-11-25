@@ -32,6 +32,24 @@ describe('SignalRadioWidgetComponent', () => {
         TestBed.configureTestingModule({ imports: [NoopTranslateModule] });
     });
 
+    it('should name the radio group after its label', () => {
+        const form = createFieldsForm([{ id: 'size', name: 'Size', type: 'radio-buttons', options: sizes }]);
+        const fixture = renderWidget(SignalRadioWidgetComponent, form, 'size');
+        const labelId = fixture.nativeElement.querySelector('label').id;
+        const labelledBy = fixture.nativeElement.querySelector('#size').getAttribute('aria-labelledby');
+
+        expect(labelId).toBe('size-label');
+        expect(labelledBy).toBe(labelId);
+    });
+
+    it('should show the configured tooltip', () => {
+        const form = createFieldsForm([{ id: 'size', name: 'Size', type: 'radio-buttons', tooltip: 'Pick the shirt size', options: sizes }]);
+        const fixture = renderWidget(SignalRadioWidgetComponent, form, 'size');
+        const tooltip = fixture.nativeElement.querySelector('#size').title;
+
+        expect(tooltip).toBe('Pick the shirt size');
+    });
+
     it('should submit the chosen option', async () => {
         const form = createFieldsForm([{ id: 'size', name: 'Size', type: 'radio-buttons', options: sizes }]);
         const fixture = renderWidget(SignalRadioWidgetComponent, form, 'size');

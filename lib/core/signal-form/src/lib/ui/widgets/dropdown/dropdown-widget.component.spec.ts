@@ -31,6 +31,16 @@ describe('SignalDropdownWidgetComponent', () => {
         TestBed.configureTestingModule({ imports: [NoopTranslateModule] });
     });
 
+    it('should show the configured tooltip', () => {
+        const form = createFieldsForm([
+            { id: 'country', name: 'Country', type: 'dropdown', tooltip: 'Pick your country', options: options('Italy') }
+        ]);
+        const fixture = renderWidget(SignalDropdownWidgetComponent, form, 'country');
+        const tooltip = fixture.nativeElement.querySelector('#country').title;
+
+        expect(tooltip).toBe('Pick your country');
+    });
+
     it('should submit the chosen option of a single dropdown', async () => {
         const form = createFieldsForm([
             { id: 'country', name: 'Country', type: 'dropdown', hasEmptyValue: true, options: options('Italy', 'France') }

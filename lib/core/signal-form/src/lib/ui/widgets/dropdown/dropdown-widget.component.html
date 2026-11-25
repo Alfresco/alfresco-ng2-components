@@ -16,6 +16,7 @@
             [id]="inputId()"
             [formField]="field()"
             [multiple]="definition().multiple"
+            [title]="definition().tooltip ?? ''"
             [compareWith]="sameOption"
             [aria-labelledby]="leftLabel() ? inputId() + '-label' : null"
             [errorStateMatcher]="errorStateMatcher"
