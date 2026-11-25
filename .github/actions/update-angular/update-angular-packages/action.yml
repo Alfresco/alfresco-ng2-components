@@ -23,12 +23,20 @@ runs:
           mkdir -p "$RUNNER_TEMP/migrations" "$RUNNER_TEMP/reported"
           COUNT=0
           MIGRATION_FILES=()
+          # A resumed attempt keeps the migrations collected by the attempt that stopped half way, saved on the branch.
+          if [ -f migrations.json ]; then
+            mv migrations.json "$RUNNER_TEMP/migrations/previous.json"
+            MIGRATION_FILES+=("$RUNNER_TEMP/migrations/previous.json")
+          fi
           while read -r spec; do
+            [ -n "$spec" ] || continue
             ./node_modules/.bin/nx migrate "$spec"
             if [ -f migrations.json ]; then
               mv migrations.json "$RUNNER_TEMP/migrations/$COUNT.json"
               MIGRATION_FILES+=("$RUNNER_TEMP/migrations/$COUNT.json")
             fi
+            # Keep what was collected so far in the working tree, so a failure further on saves it on the branch.
+            node scripts/update-angular/merge-migrations.mjs migrations.json "${MIGRATION_FILES[@]}"
             COUNT=$((COUNT+1))
           done <<< "$PLAN"
           node scripts/update-angular/merge-migrations.mjs migrations.json "${MIGRATION_FILES[@]}"
@@ -36,7 +44,7 @@ runs:
           node scripts/update-angular/verify-versions.mjs "$TARGET_MAJOR"
           cp migrations.json "$RUNNER_TEMP/reported/angular.json"
           git add -A
-          git commit -m "chore: update Angular to $VERSION"
+          git diff --cached --quiet || git commit -m "chore: update Angular to $VERSION"
         } 2>&1 | tee "$RUNNER_TEMP/validation.log"
     - name: Record result
       if: ${{ always() }}

@@ -24,6 +24,9 @@ jobs:
     if: ${{ github.ref == 'refs/heads/develop' }}
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    permissions:
+      contents: read
+      actions: read
     outputs:
       branch: ${{ steps.prepare.outputs.branch }}
       version: ${{ steps.prepare.outputs.version }}
@@ -37,30 +40,56 @@ jobs:
         uses: ./.github/actions/setup
         with:
           full-setup: 'false'
+      - name: Save peer dependency baseline
+        run: node scripts/update-angular/save-peer-baseline.mjs "$RUNNER_TEMP/peers-baseline.json"
+      - name: Download resume state
+        if: ${{ github.run_attempt != '1' }}
+        continue-on-error: true
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: resume-state
+          path: ${{ runner.temp }}/resume-state
+      - name: Plan resume
+        id: resume
+        uses: ./.github/actions/update-angular/plan-resume
+        with:
+          github-token: ${{ github.token }}
       - name: Prepare branch
         id: prepare
         uses: ./.github/actions/update-angular/prepare-branch
         with:
           angular-major: ${{ inputs.angular-major }}
-      - name: Save peer dependency baseline
-        run: node scripts/update-angular/save-peer-baseline.mjs "$RUNNER_TEMP/peers-baseline.json"
+          resume: ${{ steps.resume.outputs.resume }}
+          done: ${{ steps.resume.outputs.done }}
+          version: ${{ steps.resume.outputs.version }}
+          base-sha: ${{ steps.resume.outputs.base-sha }}
       - name: Configure git identity
         uses: ./.github/actions/update-angular/configure-git-identity
         with:
           git-user: ${{ vars.HXPS_GIT_USERNAME }}
           git-email: ${{ vars.HXPS_GIT_EMAIL }}
+      - name: Resume branch
+        if: ${{ steps.prepare.outputs.resumed == 'true' }}
+        uses: ./.github/actions/update-angular/resume-branch
+        with:
+          base-sha: ${{ steps.prepare.outputs.base-sha }}
+          done: ${{ steps.prepare.outputs.done }}
       - name: Update Nx
+        if: ${{ !contains(fromJson(steps.prepare.outputs.done || '[]'), 'update-nx') }}
         uses: ./.github/actions/update-angular/update-nx
         with:
           angular-major: ${{ inputs.angular-major }}
       - name: Update Angular packages
+        if: ${{ !contains(fromJson(steps.prepare.outputs.done || '[]'), 'update-angular-packages') }}
         uses: ./.github/actions/update-angular/update-angular-packages
         with:
           angular-major: ${{ inputs.angular-major }}
           version: ${{ steps.prepare.outputs.version }}
       - name: Align peer dependencies
+        if: ${{ !contains(fromJson(steps.prepare.outputs.done || '[]'), 'align-peers') }}
         uses: ./.github/actions/update-angular/align-peers
       - name: Run migrations
+        if: ${{ !contains(fromJson(steps.prepare.outputs.done || '[]'), 'run-migrations') }}
         uses: ./.github/actions/update-angular/run-migrations
       - name: Fix format and lint
         uses: ./.github/actions/update-angular/fix-format-and-lint
@@ -77,6 +106,7 @@ jobs:
           private-key: ${{ secrets.GH_APP_ENGINEERING_CONTRIB_PRIVATE_KEY }}
           permission-contents: write
       - name: Sign and push branch
+        id: push
         if: ${{ always() && steps.prepare.outputs.branch != '' }}
         uses: ./.github/actions/update-angular/push-branch
         with:
@@ -88,6 +118,14 @@ jobs:
         uses: ./.github/actions/update-angular/create-report
         with:
           base-sha: ${{ steps.prepare.outputs.base-sha }}
+      - name: Save resume state
+        if: ${{ always() && steps.prepare.outputs.branch != '' }}
+        uses: ./.github/actions/update-angular/save-resume-state
+        with:
+          version: ${{ steps.prepare.outputs.version }}
+          branch: ${{ steps.prepare.outputs.branch }}
+          base-sha: ${{ steps.prepare.outputs.base-sha }}
+          pushed: ${{ steps.push.outcome == 'success' }}
 
   clean-overrides:
     name: "🧹 Clean overrides"
