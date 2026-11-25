@@ -18,7 +18,10 @@
 import { FormFieldType } from '../definition/form-field-types';
 import { SignalAmountWidgetComponent } from '../ui/widgets/amount/amount-widget.component';
 import { SignalCheckboxWidgetComponent } from '../ui/widgets/checkbox/checkbox-widget.component';
+import { SignalDateWidgetComponent } from '../ui/widgets/date/date-widget.component';
+import { SignalDropdownWidgetComponent } from '../ui/widgets/dropdown/dropdown-widget.component';
 import { SignalMultilineTextWidgetComponent } from '../ui/widgets/multiline-text/multiline-text-widget.component';
+import { SignalRadioWidgetComponent } from '../ui/widgets/radio/radio-widget.component';
 import { BUILT_IN_FIELD_TYPE_RESOLVER } from './built-in-field-types';
 
 describe('BUILT_IN_FIELD_TYPES', () => {
@@ -38,5 +41,23 @@ describe('BUILT_IN_FIELD_TYPES', () => {
         const widget = await BUILT_IN_FIELD_TYPE_RESOLVER.definitionFor(FormFieldType.Boolean)?.component?.();
 
         expect(widget).toBe(SignalCheckboxWidgetComponent);
+    });
+
+    it('should show a dropdown field with the dropdown widget', async () => {
+        const widget = await BUILT_IN_FIELD_TYPE_RESOLVER.definitionFor(FormFieldType.Dropdown)?.component?.();
+
+        expect(widget).toBe(SignalDropdownWidgetComponent);
+    });
+
+    it('should show a radio buttons field with the radio widget', async () => {
+        const widget = await BUILT_IN_FIELD_TYPE_RESOLVER.definitionFor(FormFieldType.RadioButtons)?.component?.();
+
+        expect(widget).toBe(SignalRadioWidgetComponent);
+    });
+
+    it('should show a date field with the date widget', async () => {
+        const widget = await BUILT_IN_FIELD_TYPE_RESOLVER.definitionFor(FormFieldType.Date)?.component?.();
+
+        expect(widget).toBe(SignalDateWidgetComponent);
     });
 });

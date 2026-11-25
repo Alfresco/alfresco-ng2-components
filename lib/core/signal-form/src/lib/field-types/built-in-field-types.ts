@@ -63,6 +63,9 @@ const multilineTextWidget = () =>
     import('../ui/widgets/multiline-text/multiline-text-widget.component').then((widgets) => widgets.SignalMultilineTextWidgetComponent);
 const amountWidget = () => import('../ui/widgets/amount/amount-widget.component').then((widgets) => widgets.SignalAmountWidgetComponent);
 const checkboxWidget = () => import('../ui/widgets/checkbox/checkbox-widget.component').then((widgets) => widgets.SignalCheckboxWidgetComponent);
+const dropdownWidget = () => import('../ui/widgets/dropdown/dropdown-widget.component').then((widgets) => widgets.SignalDropdownWidgetComponent);
+const radioWidget = () => import('../ui/widgets/radio/radio-widget.component').then((widgets) => widgets.SignalRadioWidgetComponent);
+const dateWidget = () => import('../ui/widgets/date/date-widget.component').then((widgets) => widgets.SignalDateWidgetComponent);
 
 const TEXT_FIELD_TYPE: FieldTypeDefinition = { type: FormFieldType.Text, component: textWidget, validators: TEXT_VALIDATORS };
 
@@ -102,6 +105,7 @@ export const BUILT_IN_FIELD_TYPES: readonly FieldTypeDefinition[] = [
     },
     {
         type: FormFieldType.Dropdown,
+        component: dropdownWidget,
         options: completeDropdownOptions,
         initialValue: dropdownInitialValue,
         submittedValue: dropdownSubmittedValue,
@@ -110,6 +114,7 @@ export const BUILT_IN_FIELD_TYPES: readonly FieldTypeDefinition[] = [
     },
     {
         type: FormFieldType.RadioButtons,
+        component: radioWidget,
         options: completeRadioOptions,
         initialValue: radioInitialValue,
         submittedValue: radioSubmittedValue,
@@ -118,6 +123,7 @@ export const BUILT_IN_FIELD_TYPES: readonly FieldTypeDefinition[] = [
     },
     {
         type: FormFieldType.Date,
+        component: dateWidget,
         initialValue: dateInitialValue,
         submittedValue: dateSubmittedValue,
         validators: [dateValidator]
