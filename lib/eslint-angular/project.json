@@ -4,6 +4,7 @@
   "sourceRoot": "lib/eslint-angular/src",
   "projectType": "library",
   "prefix": "adf",
+  "tags": ["scope:eslint-angular", "type:tooling"],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
@@ -12,12 +13,6 @@
         "outputPath": "lib/eslint-angular/dist",
         "main": "lib/eslint-angular/index.ts",
         "tsConfig": "lib/eslint-angular/tsconfig.lib.json"
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": ["lib/eslint-angular/**/*.ts"]
       }
     },
     "bundle": {
@@ -42,7 +37,13 @@
           }
         ]
       }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"**/*.ts\" --no-error-on-unmatched-pattern",
+        "cwd": "lib/eslint-angular"
+      }
     }
-  },
-  "tags": ["scope:eslint-angular", "type:tooling"]
+  }
 }
