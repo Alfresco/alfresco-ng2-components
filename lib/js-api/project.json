@@ -58,35 +58,28 @@
         ]
       }
     },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["lib/js-api/**/*.ts"]
-      }
-    },
     "bundle": {
       "executor": "nx:run-commands",
+      "dependsOn": ["copyToNodeModules"],
       "options": {
         "commands": [
           {
             "command": "echo js-api bundle created"
           }
         ]
-      },
-      "dependsOn": ["copyToNodeModules"]
+      }
     },
     "copyToNodeModules": {
       "executor": "nx:run-commands",
       "cache": false,
+      "dependsOn": ["build"],
       "options": {
         "commands": [
           {
             "command": "rm -rf ./node_modules/@alfresco/js-api/ && mkdir -p ./node_modules/@alfresco/js-api/ && cp -R ./dist/libs/js-api/* ./node_modules/@alfresco/js-api/"
           }
         ]
-      },
-      "dependsOn": ["build"]
+      }
     },
     "test": {
       "executor": "nx:run-commands",
@@ -97,6 +90,11 @@
             "command": "TS_NODE_PROJECT=lib/js-api/tsconfig.spec.json TS_NODE_TRANSPILE_ONLY=true node --require ts-node/register --test 'lib/js-api/test/**/*.spec.ts'"
           }
         ]
+      }
+    },
+    "lint": {
+      "options": {
+        "command": "eslint \"**/*.ts\" --no-error-on-unmatched-pattern"
       }
     }
   }

@@ -8,6 +8,7 @@
   "targets": {
     "build": {
       "executor": "@angular/build:ng-packagr",
+      "defaultConfiguration": "production",
       "options": {
         "tsConfig": "lib/process-services-cloud/tsconfig.lib.json",
         "project": "lib/process-services-cloud/ng-package.json"
@@ -17,8 +18,7 @@
           "project": "lib/process-services-cloud/ng-package.json",
           "tsConfig": "lib/process-services-cloud/tsconfig.lib.prod.json"
         }
-      },
-      "defaultConfiguration": "production"
+      }
     },
     "test": {
       "executor": "@angular/build:karma",
@@ -32,12 +32,6 @@
         "stylePreprocessorOptions": {
           "includePaths": ["lib", "lib/core/src/lib"]
         }
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": ["lib/process-services-cloud/**/*.ts", "lib/process-services-cloud/**/*.html"]
       }
     },
     "stylelint": {
@@ -61,6 +55,11 @@
             "forwardAllArgs": true
           }
         ]
+      }
+    },
+    "lint": {
+      "options": {
+        "command": "eslint \"**/*.ts\" \"**/*.html\" --no-error-on-unmatched-pattern"
       }
     }
   }

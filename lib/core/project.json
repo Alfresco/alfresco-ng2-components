@@ -8,11 +8,12 @@
   "targets": {
     "build": {
       "executor": "@angular/build:ng-packagr",
+      "dependsOn": ["^build", "license"],
+      "defaultConfiguration": "production",
       "options": {
         "tsConfig": "lib/core/tsconfig.lib.json",
         "project": "lib/core/ng-package.json"
       },
-      "dependsOn": ["^build", "license"],
       "configurations": {
         "production": {
           "project": "lib/core/ng-package.json",
@@ -21,8 +22,7 @@
         "development": {
           "tsConfig": "lib/core/tsconfig.lib.json"
         }
-      },
-      "defaultConfiguration": "production"
+      }
     },
     "build-schematics": {
       "executor": "@nx/js:tsc",
@@ -46,23 +46,6 @@
         "stylePreprocessorOptions": {
           "includePaths": ["lib", "lib/core/src/lib"]
         }
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "lib/core/**/*.ts",
-          "lib/core/**/*.html",
-          "lib/core/api/**/*.ts",
-          "lib/core/api/**/*.html",
-          "lib/core/auth/**/*.ts",
-          "lib/core/auth/**/*.html",
-          "lib/core/shell/**/*.ts",
-          "lib/core/shell/**/*.html",
-          "lib/core/breadcrumbs/**/*.ts",
-          "lib/core/breadcrumbs/**/*.html"
-        ]
       }
     },
     "stylelint": {
@@ -99,6 +82,11 @@
         "stylePreprocessorOptions": {
           "includePaths": ["lib", "lib/core/src/lib"]
         }
+      }
+    },
+    "lint": {
+      "options": {
+        "command": "eslint \"**/*.ts\" \"**/*.html\" --no-error-on-unmatched-pattern"
       }
     }
   }

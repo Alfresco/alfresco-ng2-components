@@ -67,5 +67,25 @@
   "cacheDirectory": "nxcache",
   "defaultBase": "develop",
   "analytics": false,
-  "neverConnectToCloud": true
+  "neverConnectToCloud": true,
+  "plugins": [
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      },
+      "include": [
+        "lib/cli/**/*",
+        "lib/content-services/**/*",
+        "lib/core/**/*",
+        "lib/eslint-angular/**/*",
+        "lib/extensions/**/*",
+        "lib/insights/**/*",
+        "lib/js-api/**/*",
+        "lib/process-services/**/*",
+        "lib/process-services-cloud/**/*"
+      ],
+      "exclude": ["lib/cli/tooling/**/*"]
+    }
+  ]
 }
