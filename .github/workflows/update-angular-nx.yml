@@ -26,7 +26,7 @@ permissions:
 jobs:
   migrate:
     name: "🔄 Migrate"
-    if: ${{ github.ref == 'refs/heads/develop' }}
+    # if: ${{ github.ref == 'refs/heads/develop' }}
     runs-on: ubuntu-latest
     timeout-minutes: 90
     outputs:
