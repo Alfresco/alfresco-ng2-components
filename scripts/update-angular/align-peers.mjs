@@ -20,6 +20,7 @@ import { main } from './lib/cli.mjs';
 import { installedVersion, setDependencyVersions, workspaceDependencies } from './lib/package-json.mjs';
 import { findPeerIssues, issueKey, readBaselineKeys } from './lib/peers.mjs';
 import { installableReleases, peerDependenciesOf } from './lib/registry.mjs';
+import { alignPeersCommitMessage } from './lib/resume.mjs';
 import { runVisibly } from './lib/shell.mjs';
 import { compareVersions, exactVersion, isVersionRange, majorVersion, satisfiesRange } from './lib/versions.mjs';
 
@@ -139,8 +140,9 @@ function chooseUpgrades(issues, dependencies, tried) {
  * Issues that were already there before the update are left alone, they are only reported.
  * @param baselineFile issues saved before the update
  * @param reportFile JSON file listing the `upgrades` made, the `manual` upgrades left to a person and the `skipped` dependencies
+ * @param messageFile file receiving the message of the stage commit, written only when the stage changed or decided something
  */
-function alignPeers(baselineFile, reportFile) {
+function alignPeers(baselineFile, reportFile, messageFile) {
     const baselineKeys = readBaselineKeys(baselineFile);
     const report = { upgrades: [], manual: [], skipped: [] };
     const tried = new Set();
@@ -161,6 +163,10 @@ function alignPeers(baselineFile, reportFile) {
     }
 
     fs.writeFileSync(reportFile, `${JSON.stringify(report, null, 2)}\n`);
+    const message = alignPeersCommitMessage(report);
+    if (message) {
+        fs.writeFileSync(messageFile, message);
+    }
 }
 
 main(alignPeers);

@@ -89,31 +89,54 @@ function upgradesSection(aligned) {
 }
 
 /**
+ * Builds the markdown about the dependencies changed before a resumed run continued the branch.
+ * @param earlierChanges dependencies changed after the Angular update by an earlier attempt or by hand
+ * @returns markdown, empty when there is none
+ */
+function earlierChangesSection(earlierChanges) {
+    return earlierChanges.length
+        ? [
+              '**Changed before this run resumed**: by an earlier attempt of the workflow run, or by hand on this branch.',
+              '',
+              '| Package | From | To | Note |',
+              '| --- | --- | --- | --- |',
+              ...earlierChanges.map(
+                  (change) =>
+                      `| \`${change.name}\` | ${escapeTableCell(change.from)} | ${escapeTableCell(change.to)} | ${isMajorUpgrade(change) ? '⚠️ new major, check its changelog' : ''} |`
+              )
+          ].join('\n')
+        : '';
+}
+
+/**
  * Builds the markdown section about the peer dependencies.
  * @param aligned upgrades made and manual upgrades, as written by align-peers
+ * @param earlierChanges dependencies changed before a resumed run continued the branch
  * @param newIssues issues introduced by the update
  * @param oldIssues issues that were already there
  * @returns markdown
  */
-function buildSection(aligned, newIssues, oldIssues) {
+function buildSection(aligned, earlierChanges, newIssues, oldIssues) {
     const added = newIssues.length ? `**New unmet peers (${newIssues.length})**\n\n${issuesTable(newIssues).join('\n')}` : 'No new unmet peers.';
     const existing = oldIssues.length
         ? `<details><summary>Unmet peers already present before the update (${oldIssues.length})</summary>\n\n${issuesTable(oldIssues).join('\n')}\n\n</details>\n`
         : '';
+    const upgrades = [upgradesSection(aligned), earlierChangesSection(earlierChanges)].filter(Boolean).join('\n\n');
 
-    return `### Peer dependencies\n\n${upgradesSection(aligned)}\n\n${added}\n\n${existing}`;
+    return `### Peer dependencies\n\n${upgrades}\n\n${added}\n\n${existing}`;
 }
 
 /**
  * Lists what needs a person to look at: unmet peers, upgrades to a new major and upgrades left to do by hand.
  * @param aligned upgrades made and manual upgrades, as written by align-peers
+ * @param earlierChanges dependencies changed before a resumed run continued the branch
  * @param newIssues issues introduced by the update
  * @returns one line per finding
  */
-function findingsLog(aligned, newIssues) {
+function findingsLog(aligned, earlierChanges, newIssues) {
     return [
         ...newIssues.map((issue) => `${issue.peer} ${issue.installed} does not satisfy ${issue.wanted} (required by ${issue.requiredBy})`),
-        ...aligned.upgrades
+        ...[...aligned.upgrades, ...earlierChanges]
             .filter(isMajorUpgrade)
             .map((upgrade) => `${upgrade.name} was moved to a new major (${upgrade.from} -> ${upgrade.to}), check its changelog`),
         ...aligned.manual.map((upgrade) => `${upgrade.name} ${upgrade.from} needs the new major ${upgrade.to} to fit its peers, upgrade it by hand`),
@@ -128,17 +151,23 @@ function findingsLog(aligned, newIssues) {
  * @param reportDir directory receiving peers.md
  * @param logFile validation log receiving what needs attention
  * @param alignedFile JSON file written by align-peers
+ * @param earlierChangesFile JSON file written by restore-progress when the run resumed its branch, optional
  */
-function reportPeers(baselineFile, reportDir, logFile, alignedFile) {
+function reportPeers(baselineFile, reportDir, logFile, alignedFile, earlierChangesFile) {
     const baselineKeys = readBaselineKeys(baselineFile);
     const issues = findPeerIssues();
     const newIssues = issues.filter((issue) => !baselineKeys.has(issueKey(issue)));
     const oldIssues = issues.filter((issue) => baselineKeys.has(issueKey(issue)));
     const aligned = fs.existsSync(alignedFile) ? JSON.parse(fs.readFileSync(alignedFile, 'utf8')) : { upgrades: [], manual: [], skipped: [] };
-    const findings = findingsLog(aligned, newIssues);
+    const alignedNames = new Set(aligned.upgrades.map((upgrade) => upgrade.name));
+    const earlierChanges =
+        earlierChangesFile && fs.existsSync(earlierChangesFile)
+            ? JSON.parse(fs.readFileSync(earlierChangesFile, 'utf8')).filter((change) => !alignedNames.has(change.name))
+            : [];
+    const findings = findingsLog(aligned, earlierChanges, newIssues);
 
     fs.mkdirSync(reportDir, { recursive: true });
-    fs.writeFileSync(path.join(reportDir, 'peers.md'), buildSection(aligned, newIssues, oldIssues));
+    fs.writeFileSync(path.join(reportDir, 'peers.md'), buildSection(aligned, earlierChanges, newIssues, oldIssues));
     fs.writeFileSync(logFile, findings.join('\n'));
     process.stdout.write(findings.length ? 'failure' : 'success');
 }

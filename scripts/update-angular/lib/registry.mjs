@@ -16,6 +16,7 @@
  */
 
 import fs from 'node:fs';
+import process from 'node:process';
 import { run } from './shell.mjs';
 import { compareVersions, isStable } from './versions.mjs';
 
@@ -41,12 +42,17 @@ function remember(cache, key, compute) {
 
 /**
  * Returns the newest publish time pnpm accepts, based on minimumReleaseAge. It is read once per script run.
+ * The age is counted from UPDATE_ANGULAR_RELEASES_AS_OF when set, so every attempt of a workflow run sees the same releases.
  * @returns epoch milliseconds
  */
 function newestAllowedPublishTime() {
     if (publishTimeLimit === undefined) {
         const minimumAge = fs.readFileSync('pnpm-workspace.yaml', 'utf8').match(/^minimumReleaseAge:\s*(\d+)/m);
-        publishTimeLimit = Date.now() - (minimumAge ? Number(minimumAge[1]) : 0) * MS_PER_MINUTE;
+        const asOf = process.env.UPDATE_ANGULAR_RELEASES_AS_OF ? Date.parse(process.env.UPDATE_ANGULAR_RELEASES_AS_OF) : Date.now();
+        if (Number.isNaN(asOf)) {
+            throw new Error(`UPDATE_ANGULAR_RELEASES_AS_OF is not a date: ${process.env.UPDATE_ANGULAR_RELEASES_AS_OF}`);
+        }
+        publishTimeLimit = asOf - (minimumAge ? Number(minimumAge[1]) : 0) * MS_PER_MINUTE;
     }
     return publishTimeLimit;
 }

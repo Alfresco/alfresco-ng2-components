@@ -23,6 +23,7 @@ import { fenced, shareBudget, truncateMarkdown } from './lib/markdown.mjs';
 
 const NOT_RUN = 'not run';
 
+const RESUME_STAGE = { name: 'resume', todo: 'Make `pnpm install` pass on this branch.' };
 const UPDATE_STAGES = [
     { name: 'update-nx', todo: 'Move Nx to a release that supports the target Angular, then run `pnpm install`.' },
     { name: 'update-angular-packages', todo: 'Bump the Angular packages with `pnpm nx migrate <package>@<version>`, then run `pnpm install`.' },
@@ -98,8 +99,9 @@ function readRecordedSteps(validationDir) {
  */
 function listSteps(recorded) {
     const find = (name) => recorded.find((step) => step.name === name);
+    const resumed = [RESUME_STAGE].filter((stage) => find(stage.name));
     const optional = OPTIONAL_STAGES.filter((stage) => find(stage.name));
-    const known = [...UPDATE_STAGES, ...optional, ...VALIDATION_STAGES].map((stage) => ({
+    const known = [...resumed, ...UPDATE_STAGES, ...optional, ...VALIDATION_STAGES].map((stage) => ({
         log: '',
         outcome: NOT_RUN,
         ...find(stage.name),
@@ -163,15 +165,17 @@ function failureDetails(steps, runUrl, budget) {
 /**
  * Builds the list of what a reviewer has to do for every step that failed or did not run.
  * @param steps all steps
+ * @param runUrl URL of the workflow run
  * @returns markdown, empty when everything succeeded
  */
-function nextSteps(steps) {
+function nextSteps(steps, runUrl) {
     const pending = steps.filter((step) => step.outcome !== 'success');
     const items = pending.map((step) =>
         step.outcome === NOT_RUN ? `- **${step.name}** (${NOT_RUN}): ${step.todo}` : `- **${step.name}** (failed, see its log below): ${step.todo}`
     );
+    const resume = `To let the workflow continue instead, push your fixes to this branch and use **Re-run failed jobs** on the [workflow run](${runUrl}). It resumes from the step that did not pass and updates this pull request. A new run of the workflow never overwrites this branch.`;
 
-    return pending.length ? `### What needs to be done\n\nWork on this branch, in this order:\n\n${items.join('\n')}` : '';
+    return pending.length ? `### What needs to be done\n\nWork on this branch, in this order:\n\n${items.join('\n')}\n\n${resume}` : '';
 }
 
 /**
@@ -181,7 +185,7 @@ function nextSteps(steps) {
  */
 function stoppedWarning(steps) {
     const stopped = steps.find(
-        (step) => UPDATE_STAGES.some((stage) => stage.name === step.name) && !step.continuesOnFailure && step.outcome !== 'success'
+        (step) => [RESUME_STAGE, ...UPDATE_STAGES].some((stage) => stage.name === step.name) && !step.continuesOnFailure && step.outcome !== 'success'
     );
 
     return stopped
@@ -208,7 +212,7 @@ function buildPullRequestBody(bodyFile, validationDir, reportDir, version, runUr
         `Automated update of Angular and Nx packages to Angular ${version}.`,
         stoppedWarning(steps),
         `### Steps\n\n${resultsTable(steps)}`,
-        nextSteps(steps)
+        nextSteps(steps, runUrl)
     ];
     const runLink = `[Workflow run](${runUrl}) · Comment \`/update-angular help\` on this pull request to see what the workflow can do for you.`;
     const available = MAX_BODY_CHARS - join([...head, runLink]).length - SEPARATORS_ROOM_CHARS;

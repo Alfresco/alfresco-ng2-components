@@ -1,0 +1,48 @@
+name: "Resume branch"
+description: "Restore what the earlier attempts of the run kept on their runner, and install the dependencies of the resumed branch"
+inputs:
+  base-sha:
+    description: "Commit the update started from"
+    required: true
+  done:
+    description: "JSON list of the stages that passed in an earlier attempt and are skipped"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Record the skipped stages
+      shell: bash
+      env:
+        DONE: ${{ inputs.done }}
+      run: |
+        # The artifacts of the attempts that ran them are gone, so the skipped stages are recorded as passed.
+        SKIPPED="$RUNNER_TEMP/validation-results/skipped-stages"
+        mkdir -p "$SKIPPED"
+        echo "$DONE" | jq -r '.[]' | while read -r RECORD; do
+          echo "success" > "$SKIPPED/$RECORD.status"
+        done
+    - name: Upload the skipped stages
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+      with:
+        name: validation-skipped-stages
+        path: ${{ runner.temp }}/validation-results/skipped-stages
+        if-no-files-found: ignore
+        retention-days: 7
+        # A re-run of the job uploads again under the same name.
+        overwrite: true
+    - name: Resume branch
+      id: stage
+      shell: bash
+      env:
+        BASE_SHA: ${{ inputs.base-sha }}
+      run: |
+        {
+          node scripts/update-angular/restore-progress.mjs "$BASE_SHA" "$RUNNER_TEMP/reported" "$RUNNER_TEMP/peers-earlier-changes.json" "$RUNNER_TEMP/peers-aligned.json" "$RUNNER_TEMP/resume-state"
+          pnpm install --no-frozen-lockfile
+        } 2>&1 | tee "$RUNNER_TEMP/validation.log"
+    - name: Record result
+      if: ${{ always() }}
+      uses: ./.github/actions/update-angular/record-validation-result
+      with:
+        name: resume
+        outcome: ${{ steps.stage.outcome }}
