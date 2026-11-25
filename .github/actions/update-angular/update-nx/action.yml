@@ -18,12 +18,13 @@ runs:
           NX_SPEC=$(node scripts/update-angular/plan-nx.mjs "$TARGET_MAJOR")
           if [ -z "$NX_SPEC" ]; then
             echo "Installed Nx already supports Angular $TARGET_MAJOR"
-            exit 0
+          else
+            pnpm nx migrate "$NX_SPEC" --include=required
+            pnpm install --no-frozen-lockfile
+            git add -A
+            git diff --cached --quiet || git commit -m "chore: update Nx to ${NX_SPEC#nx@}"
           fi
-          pnpm nx migrate "$NX_SPEC" --include=required
-          pnpm install --no-frozen-lockfile
-          git add -A
-          git commit -m "chore: update Nx to ${NX_SPEC#nx@}"
+          # Also runs the migrations an attempt that stopped half way saved on the branch.
           if [ -f migrations.json ]; then
             cp migrations.json "$RUNNER_TEMP/reported/nx.json"
             pnpm nx migrate --run-migrations --create-commits
