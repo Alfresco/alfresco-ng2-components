@@ -126,6 +126,11 @@
           "HEADING": "cabeçalho",
           "TITLE": "título"
         },
+        "CHECKBOX_GROUP": {
+          "NORMAL": "normal",
+          "STRONG": "forte",
+          "HEADING": "cabeçalho"
+        },
         "RADIO_BUTTONS": {
           "NORMAL": "normal",
           "STRONG": "forte",

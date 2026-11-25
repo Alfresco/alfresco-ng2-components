@@ -126,6 +126,11 @@
           "HEADING": "عنوان",
           "TITLE": "العنوان"
         },
+        "CHECKBOX_GROUP": {
+          "NORMAL": "متوسطة",
+          "STRONG": "قوي",
+          "HEADING": "عنوان"
+        },
         "RADIO_BUTTONS": {
           "NORMAL": "متوسطة",
           "STRONG": "قوي",

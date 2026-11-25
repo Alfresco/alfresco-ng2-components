@@ -126,6 +126,11 @@
           "HEADING": "nadpis",
           "TITLE": "označení"
         },
+        "CHECKBOX_GROUP": {
+          "NORMAL": "normální",
+          "STRONG": "silné",
+          "HEADING": "nadpis"
+        },
         "RADIO_BUTTONS": {
           "NORMAL": "normální",
           "STRONG": "silné",

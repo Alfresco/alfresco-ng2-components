@@ -126,6 +126,11 @@
           "HEADING": "otsake",
           "TITLE": "otsikko"
         },
+        "CHECKBOX_GROUP": {
+          "NORMAL": "normaali",
+          "STRONG": "vahva",
+          "HEADING": "otsake"
+        },
         "RADIO_BUTTONS": {
           "NORMAL": "normaali",
           "STRONG": "vahva",
