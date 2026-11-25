@@ -21,7 +21,7 @@ import { createFieldsForm, errorText, renderWidget } from '../../testing/widget-
 import { SignalCheckboxWidgetComponent } from './checkbox-widget.component';
 
 describe('SignalCheckboxWidgetComponent', () => {
-    const checkboxInput = (element: HTMLElement): HTMLInputElement => element.querySelector('input[type="checkbox"]');
+    const checkboxInput = (element: HTMLElement): HTMLInputElement => element.querySelector('[data-automation-id="adf-checkbox-widget"] input');
 
     beforeEach(() => {
         TestBed.configureTestingModule({ imports: [NoopTranslateModule] });
@@ -54,7 +54,7 @@ describe('SignalCheckboxWidgetComponent', () => {
         const form = createFieldsForm([{ id: 'agree', name: 'Agree', type: 'boolean', required: true }]);
 
         const fixture = renderWidget(SignalCheckboxWidgetComponent, form, 'agree');
-        const asterisk = fixture.nativeElement.querySelector('.adf-asterisk');
+        const asterisk = fixture.nativeElement.querySelector('[data-automation-id="adf-checkbox-widget-asterisk"]');
 
         expect(asterisk).not.toBeNull();
     });
@@ -65,7 +65,7 @@ describe('SignalCheckboxWidgetComponent', () => {
 
         form.setRequired('agree', true);
         fixture.detectChanges();
-        const asterisk = fixture.nativeElement.querySelector('.adf-asterisk');
+        const asterisk = fixture.nativeElement.querySelector('[data-automation-id="adf-checkbox-widget-asterisk"]');
 
         expect(asterisk).not.toBeNull();
     });
@@ -74,7 +74,7 @@ describe('SignalCheckboxWidgetComponent', () => {
         const form = createFieldsForm([{ id: 'agree', name: 'Agree', type: 'boolean' }]);
 
         const fixture = renderWidget(SignalCheckboxWidgetComponent, form, 'agree');
-        const asterisk = fixture.nativeElement.querySelector('.adf-asterisk');
+        const asterisk = fixture.nativeElement.querySelector('[data-automation-id="adf-checkbox-widget-asterisk"]');
 
         expect(asterisk).toBeNull();
     });
