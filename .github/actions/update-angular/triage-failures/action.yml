@@ -1,0 +1,59 @@
+name: "Triage failures"
+description: "Parse and classify every failure of the update as auto-fixable, escalate or blocked, apply the escalation budget, and batch the failures for bounded agent invocations"
+inputs:
+  escalation-budget:
+    description: "Maximum number of escalations for this run, empty to use triage-config.json"
+    required: false
+    default: ""
+outputs:
+  status:
+    description: "`completed`, or `aborted` when the escalation budget was exceeded"
+    value: ${{ steps.triage.outputs.status }}
+  matrix:
+    description: "JSON list of the batches to analyse, with their kind and timeout"
+    value: ${{ steps.triage.outputs.matrix }}
+runs:
+  using: "composite"
+  steps:
+    - name: Download step results
+      continue-on-error: true
+      uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+      with:
+        pattern: validation-*
+        path: ${{ runner.temp }}/validation
+        merge-multiple: true
+    - name: Download full logs
+      continue-on-error: true
+      uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+      with:
+        pattern: full-log-*
+        path: ${{ runner.temp }}/full-logs
+    - name: Triage
+      id: triage
+      shell: bash
+      env:
+        ESCALATION_BUDGET: ${{ inputs.escalation-budget }}
+      run: |
+        OUT="$RUNNER_TEMP/triage"
+        STATUS=$(node scripts/update-angular/triage-failures.mjs "$RUNNER_TEMP/validation" "$RUNNER_TEMP/full-logs" "$OUT" "$ESCALATION_BUDGET")
+        {
+          echo "status=$STATUS"
+          echo "matrix=$(cat "$OUT/matrix.json")"
+        } >> "$GITHUB_OUTPUT"
+        cat "$OUT/triage-report.md" >> "$GITHUB_STEP_SUMMARY"
+    - name: Upload triage report
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+      with:
+        name: triage-report
+        path: |
+          ${{ runner.temp }}/triage/triage-report.md
+          ${{ runner.temp }}/triage/triage.json
+        retention-days: 7
+    - name: Upload agent batches
+      if: ${{ steps.triage.outputs.status == 'completed' }}
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+      with:
+        name: triage-batches
+        path: ${{ runner.temp }}/triage/batches
+        if-no-files-found: ignore
+        retention-days: 7

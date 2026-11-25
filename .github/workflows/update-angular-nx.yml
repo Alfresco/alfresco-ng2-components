@@ -7,6 +7,11 @@ on:
         description: "Target Angular major version (must be the next major, e.g. 22)"
         required: true
         type: string
+      escalation-budget:
+        description: "Maximum number of failures escalated to a human before the triage aborts (empty uses scripts/update-angular/triage-config.json)"
+        required: false
+        type: string
+        default: ""
 
 concurrency:
   group: ${{ github.workflow }}
@@ -196,11 +201,43 @@ jobs:
           name: test-${{ matrix.project }}
           command: xvfb-run --auto-servernum pnpm nx run ${{ matrix.project }}:test --skip-nx-cache
 
-  pull-request:
-    name: "🔀 Open pull request"
+  triage:
+    name: "🩺 Triage failures"
     needs: [migrate, clean-overrides, build, lint, unit-tests]
     if: ${{ always() && needs.migrate.outputs.branch != '' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      status: ${{ steps.triage.outputs.status }}
+      matrix: ${{ steps.triage.outputs.matrix }}
+    steps:
+      - name: Checkout migration branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.migrate.outputs.branch }}
+          persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+      - name: Triage failures
+        id: triage
+        uses: ./.github/actions/update-angular/triage-failures
+        with:
+          escalation-budget: ${{ inputs.escalation-budget }}
+      - name: Abort when the escalation budget is exceeded
+        if: ${{ steps.triage.outputs.status == 'aborted' }}
+        run: |
+          echo "::error::The escalation budget is exceeded. The triage was aborted without asking any agent; the full report is in the job summary and the pull request."
+          exit 1
+
+  pull-request:
+    name: "🔀 Open pull request"
+    needs: [migrate, clean-overrides, build, lint, unit-tests, triage]
+    if: ${{ always() && needs.migrate.outputs.branch != '' }}
+    runs-on: ubuntu-latest
+    outputs:
+      number: ${{ steps.create.outputs.number }}
     steps:
       - name: Generate app token
         id: app-token
@@ -226,6 +263,12 @@ jobs:
         with:
           name: overrides-report
           path: report
+      - name: Download triage report
+        continue-on-error: true
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: triage-report
+          path: report
       - name: Download validation results
         continue-on-error: true
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
@@ -234,6 +277,7 @@ jobs:
           path: validation
           merge-multiple: true
       - name: Create pull request
+        id: create
         uses: ./.github/actions/update-angular/create-pull-request
         with:
           github-token: ${{ steps.app-token.outputs.token }}
@@ -245,3 +289,36 @@ jobs:
         run: |
           echo "::error::The update did not complete. A draft pull request with the report was opened."
           exit 1
+
+  triage-agents:
+    name: "🤖 Dispatch triage agents"
+    needs: [migrate, triage, pull-request]
+    if: ${{ always() && needs.triage.outputs.status == 'completed' && needs.triage.outputs.matrix != '[]' && needs.pull-request.outputs.number != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Dispatch one bounded agent invocation per batch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          MATRIX: ${{ needs.triage.outputs.matrix }}
+          PR_NUMBER: ${{ needs.pull-request.outputs.number }}
+          BRANCH: ${{ needs.migrate.outputs.branch }}
+          REF: ${{ github.ref_name }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          jq -c '.[]' <<< "$MATRIX" | while read -r BATCH; do
+            ID=$(jq -r '.batch' <<< "$BATCH")
+            KIND=$(jq -r '.kind' <<< "$BATCH")
+            TIMEOUT=$(jq -r '.timeout' <<< "$BATCH")
+            WORKFLOW=update-angular-triage.lock.yml
+            if [ "$KIND" = "parse-assist" ]; then
+              WORKFLOW=update-angular-parse-assist.lock.yml
+            fi
+            echo "Dispatching $ID ($KIND, $TIMEOUT minutes) to $WORKFLOW"
+            gh workflow run "$WORKFLOW" --ref "$REF" \
+              -f pull-request="$PR_NUMBER" -f run-id="$RUN_ID" -f batch="$ID" -f branch="$BRANCH" -f timeout-minutes="$TIMEOUT"
+          done
