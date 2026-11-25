@@ -126,6 +126,11 @@
           "HEADING": "nagłówek",
           "TITLE": "tytuł"
         },
+        "CHECKBOX_GROUP": {
+          "NORMAL": "normalny",
+          "STRONG": "pogrubienie",
+          "HEADING": "nagłówek"
+        },
         "RADIO_BUTTONS": {
           "NORMAL": "normalny",
           "STRONG": "silny",

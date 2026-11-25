@@ -126,6 +126,11 @@
           "HEADING": "标题",
           "TITLE": "标题"
         },
+        "CHECKBOX_GROUP": {
+          "NORMAL": "正常",
+          "STRONG": "加粗",
+          "HEADING": "标题"
+        },
         "RADIO_BUTTONS": {
           "NORMAL": "正常",
           "STRONG": "加粗",

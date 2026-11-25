@@ -126,6 +126,11 @@
           "HEADING": "encabezado",
           "TITLE": "título"
         },
+        "CHECKBOX_GROUP": {
+          "NORMAL": "media",
+          "STRONG": "mayor",
+          "HEADING": "encabezado"
+        },
         "RADIO_BUTTONS": {
           "NORMAL": "media",
           "STRONG": "mayor",

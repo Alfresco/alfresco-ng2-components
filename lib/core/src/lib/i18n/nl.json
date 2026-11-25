@@ -126,6 +126,11 @@
           "HEADING": "kop",
           "TITLE": "titel"
         },
+        "CHECKBOX_GROUP": {
+          "NORMAL": "normaal",
+          "STRONG": "sterk",
+          "HEADING": "kop"
+        },
         "RADIO_BUTTONS": {
           "NORMAL": "normaal",
           "STRONG": "sterk",

@@ -126,6 +126,11 @@
           "HEADING": "надпись",
           "TITLE": "заголовок"
         },
+        "CHECKBOX_GROUP": {
+          "NORMAL": "обычный",
+          "STRONG": "выделенный",
+          "HEADING": "надпись"
+        },
         "RADIO_BUTTONS": {
           "NORMAL": "обычный",
           "STRONG": "выделенный",

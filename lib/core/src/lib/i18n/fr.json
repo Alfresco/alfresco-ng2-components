@@ -126,6 +126,11 @@
           "HEADING": "intitulé",
           "TITLE": "titre"
         },
+        "CHECKBOX_GROUP": {
+          "NORMAL": "normal",
+          "STRONG": "gras",
+          "HEADING": "intitulé"
+        },
         "RADIO_BUTTONS": {
           "NORMAL": "normal",
           "STRONG": "gras",

@@ -126,6 +126,11 @@
           "HEADING": "見出し",
           "TITLE": "タイトル"
         },
+        "CHECKBOX_GROUP": {
+          "NORMAL": "標準",
+          "STRONG": "強調",
+          "HEADING": "見出し"
+        },
         "RADIO_BUTTONS": {
           "NORMAL": "標準",
           "STRONG": "強調",

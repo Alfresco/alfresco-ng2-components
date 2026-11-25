@@ -126,6 +126,11 @@
           "HEADING": "intestazione",
           "TITLE": "titolo"
         },
+        "CHECKBOX_GROUP": {
+          "NORMAL": "normale",
+          "STRONG": "forte",
+          "HEADING": "intestazione"
+        },
         "RADIO_BUTTONS": {
           "NORMAL": "normale",
           "STRONG": "forte",
