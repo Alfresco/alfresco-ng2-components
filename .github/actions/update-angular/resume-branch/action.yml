@@ -15,7 +15,6 @@ runs:
       env:
         DONE: ${{ inputs.done }}
       run: |
-        # The artifacts of the attempts that ran them are gone, so the skipped stages are recorded as passed.
         SKIPPED="$RUNNER_TEMP/validation-results/skipped-stages"
         mkdir -p "$SKIPPED"
         echo "$DONE" | jq -r '.[]' | while read -r RECORD; do
@@ -28,7 +27,6 @@ runs:
         path: ${{ runner.temp }}/validation-results/skipped-stages
         if-no-files-found: ignore
         retention-days: 7
-        # A re-run of the job uploads again under the same name.
         overwrite: true
     - name: Resume branch
       id: stage

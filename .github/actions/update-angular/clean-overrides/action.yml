@@ -34,5 +34,4 @@ runs:
         path: ${{ runner.temp }}/overrides-report
         if-no-files-found: ignore
         retention-days: 7
-        # A re-run of the job uploads again under the same name.
         overwrite: true
