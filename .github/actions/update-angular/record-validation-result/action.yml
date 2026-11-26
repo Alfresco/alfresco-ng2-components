@@ -54,7 +54,7 @@ runs:
       with:
         name: validation-${{ steps.write.outputs.safe-name }}
         path: ${{ runner.temp }}/validation-results/${{ steps.write.outputs.safe-name }}
-        retention-days: 7
+        retention-days: 30
         overwrite: true
     - name: Upload full log
       if: ${{ inputs.outcome != 'success' }}
@@ -63,5 +63,5 @@ runs:
         name: full-log-${{ steps.write.outputs.safe-name }}
         path: ${{ runner.temp }}/validation-clean.log
         if-no-files-found: ignore
-        retention-days: 7
+        retention-days: 30
         overwrite: true
