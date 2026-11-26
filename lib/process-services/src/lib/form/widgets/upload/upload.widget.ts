@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { ThumbnailService, ContentLinkModel, WidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
-import { Component, ElementRef, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { ProcessContentService } from '../../services/process-content.service';
 import { mergeMap, map } from 'rxjs/operators';
@@ -44,6 +44,7 @@ import { MatIconModule } from '@angular/material/icon';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class UploadWidgetComponent extends WidgetComponent implements OnInit {

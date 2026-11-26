@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ADF_COMMENTS_SERVICE, CommentModel, CommentsComponent } from '@alfresco/adf-core';
 import { NodeCommentsService } from './services/node-comments.service';
 
@@ -24,6 +24,7 @@ import { NodeCommentsService } from './services/node-comments.service';
     imports: [CommentsComponent],
     templateUrl: './node-comments.component.html',
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [
         {
             provide: ADF_COMMENTS_SERVICE,

@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramElement } from '../diagram-element';
 import { DiagramGatewayComponent } from './diagram-gateway.component';
@@ -26,6 +26,7 @@ import { RaphaelCircleDirective } from '../raphael/raphael-circle.component';
 @Component({
     selector: 'diagram-inclusive-gateway',
     imports: [DiagramGatewayComponent, RaphaelCircleDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-inclusive-gateway.component.html'
 })
 export class DiagramInclusiveGatewayComponent extends DiagramElement implements OnInit {

@@ -16,7 +16,7 @@
  */
 
 import { FileModel, FileUploadStatus } from '../../common/models/file.model';
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 
 import { MatListModule } from '@angular/material/list';
 import { FileSizePipe, IconModule } from '@alfresco/adf-core';
@@ -34,6 +34,7 @@ interface ToggleIconState {
     imports: [IconModule, MatListModule, MatChipsModule, TranslatePipe, FileSizePipe, MatButtonModule],
     templateUrl: './file-uploading-list-row.component.html',
     styleUrls: ['./file-uploading-list-row.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class FileUploadingListRowComponent {

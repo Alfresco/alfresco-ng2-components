@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Form } from '../../models/form.model';
 import { TaskListService } from '../../services/tasklist.service';
 import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
@@ -33,6 +33,7 @@ import { FormComponent } from '../../../form';
     selector: 'adf-attach-form',
     imports: [CommonModule, MatCardModule, TranslatePipe, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, MatButtonModule, FormComponent],
     templateUrl: './attach-form.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./attach-form.component.scss']
 })
 export class AttachFormComponent implements OnInit, OnChanges {

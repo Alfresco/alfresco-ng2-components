@@ -16,13 +16,14 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ScreenRenderingService } from '../../../services/screen-rendering.service';
 import { TaskScreenCloudComponent } from './screen-cloud.component';
 
 @Component({
     selector: 'adf-cloud-test-component',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <div class="adf-cloud-test-container">
             test component
@@ -61,6 +62,7 @@ class TestComponent implements OnDestroy {
             (taskCompleted)="onTaskCompleted()"
         />
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TaskScreenCloudComponent]
 })
 class TestWrapperComponent {
@@ -133,6 +135,7 @@ describe('TaskScreenCloudComponent', () => {
             <adf-cloud-task-screen [taskId]="'1'" [appName]="'app-name-test'" [screenId]="'test'" (taskCompleted)="onTaskCompleted()" />
         }
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TaskScreenCloudComponent]
 })
 class TestConditionalWrapperComponent {

@@ -16,7 +16,7 @@
  */
 
 import { UrlService, ContentLinkModel, FormService, DownloadService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProcessContentService } from '../../services/process-content.service';
 import { CommonModule } from '@angular/common';
@@ -30,6 +30,7 @@ import { MatButtonModule } from '@angular/material/button';
     imports: [CommonModule, TranslatePipe, MatCardModule, MatIconModule, MatButtonModule],
     templateUrl: './content.widget.html',
     styleUrls: ['./content.widget.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class ContentWidgetComponent implements OnChanges {

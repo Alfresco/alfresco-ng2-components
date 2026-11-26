@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, Input, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { FacetField } from '../../../models/facet-field.interface';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
@@ -41,6 +41,7 @@ import { IconModule } from '@alfresco/adf-core';
     ],
     templateUrl: './search-facet-chip.component.html',
     styleUrls: ['./search-facet-chip.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFacetChipComponent {

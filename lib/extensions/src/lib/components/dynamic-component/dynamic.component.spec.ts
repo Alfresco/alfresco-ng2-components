@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DynamicExtensionComponent } from './dynamic.component';
 import { ComponentRegisterService } from '../../services/component-register.service';
@@ -26,6 +26,7 @@ import { By } from '@angular/platform-browser';
 
 @Component({
     selector: 'test-component',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: '<div data-automation-id="found-me">Hey I am the mighty test component!</div>'
 })
 export class TestComponent implements OnChanges {

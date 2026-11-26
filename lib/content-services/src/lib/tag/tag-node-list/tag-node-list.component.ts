@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { TagService } from '../services/tag.service';
 import { TagEntry } from '@alfresco/js-api';
 import { Chip, DynamicChipListComponent } from '@alfresco/adf-core';
@@ -30,6 +30,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     selector: 'adf-tag-node-list',
     imports: [DynamicChipListComponent],
     templateUrl: './tag-node-list.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class TagNodeListComponent implements OnChanges, OnInit {

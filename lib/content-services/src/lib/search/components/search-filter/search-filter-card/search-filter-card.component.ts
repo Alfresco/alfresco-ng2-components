@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { SearchWidgetContainerComponent } from '../../search-widget-container/search-widget-container.component';
 import { SearchCategory } from '../../../models/search-category.interface';
 import { CommonModule } from '@angular/common';
@@ -26,6 +26,7 @@ import { MatButtonModule } from '@angular/material/button';
     selector: 'adf-search-filter-card',
     imports: [CommonModule, SearchWidgetContainerComponent, TranslatePipe, MatButtonModule],
     templateUrl: './search-filter-card.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterCardComponent {

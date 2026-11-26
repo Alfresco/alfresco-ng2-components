@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -26,6 +26,7 @@ import { BaseCardView } from '../base-card-view';
 @Component({
     selector: 'adf-card-view-select-node-item',
     imports: [FormsModule, MatFormFieldModule, MatInputModule, TranslatePipe],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './card-view-select-node-item.component.html'
 })
 export class CardViewSelectNodeItemComponent extends BaseCardView<CardViewSelectNodeItemModel> {

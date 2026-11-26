@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramElement } from '../diagram-element';
 import { RaphaelRectDirective } from '../raphael/raphael-rect.component';
@@ -26,6 +26,7 @@ import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
 @Component({
     selector: 'diagram-subprocess',
     imports: [RaphaelRectDirective, DiagramTooltipComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-subprocess.component.html'
 })
 export class DiagramSubprocessComponent extends DiagramElement implements OnInit {

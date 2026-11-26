@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramElement } from '../diagram-element';
 import { DiagramGatewayComponent } from './diagram-gateway.component';
@@ -27,6 +27,7 @@ import { RaphaelPentagonDirective } from '../raphael/raphael-pentagon.component'
 @Component({
     selector: 'diagram-event-gateway',
     imports: [DiagramGatewayComponent, RaphaelCircleDirective, RaphaelPentagonDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-event-gateway.component.html'
 })
 export class DiagramEventGatewayComponent extends DiagramElement implements OnInit {

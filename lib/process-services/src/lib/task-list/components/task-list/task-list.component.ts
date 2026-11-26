@@ -33,17 +33,18 @@ import {
     UserPreferenceValues
 } from '@alfresco/adf-core';
 import {
-    AfterContentInit,
-    Component,
-    ContentChild,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges
+  AfterContentInit,
+  Component,
+  ContentChild,
+  DestroyRef,
+  EventEmitter,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { taskPresetsDefaultModel } from '../../models/task-preset.model';
@@ -69,6 +70,7 @@ export const PRESET_KEY = 'adf-task-list.presets';
         NoContentTemplateDirective
     ],
     templateUrl: './task-list.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent, OnInit {

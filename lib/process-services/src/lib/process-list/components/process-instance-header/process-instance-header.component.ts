@@ -24,7 +24,7 @@ import {
     CardViewTextItemModel,
     TranslationService
 } from '@alfresco/adf-core';
-import { Component, Input, OnChanges, inject } from '@angular/core';
+import { Component, Input, OnChanges, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ProcessInstanceRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -33,6 +33,7 @@ import { MatCardModule } from '@angular/material/card';
     selector: 'adf-process-instance-header',
     imports: [CommonModule, MatCardModule, CardViewComponent],
     templateUrl: './process-instance-header.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./process-instance-header.component.css']
 })
 export class ProcessInstanceHeaderComponent implements OnChanges {

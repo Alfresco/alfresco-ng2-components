@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, ViewEncapsulation, inject } from '@angular/core';
+import { Component, Input, OnChanges, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ModelService } from '../services/model.service';
 import { CommonModule } from '@angular/common';
 import { DataColumnComponent, DataColumnListComponent, DataTableComponent } from '@alfresco/adf-core';
@@ -24,6 +24,7 @@ import { DataColumnComponent, DataColumnListComponent, DataTableComponent } from
     selector: 'adf-form-list',
     imports: [CommonModule, DataTableComponent, DataColumnListComponent, DataColumnComponent],
     templateUrl: './form-list.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class FormListComponent implements OnChanges {

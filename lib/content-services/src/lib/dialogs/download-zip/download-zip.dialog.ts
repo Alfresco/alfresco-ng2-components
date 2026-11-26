@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { DownloadZipService } from './services/download-zip.service';
@@ -32,6 +32,7 @@ import { MatButtonModule } from '@angular/material/button';
     templateUrl: './download-zip.dialog.html',
     styleUrls: ['./download-zip.dialog.scss'],
     host: { class: 'adf-download-zip-dialog' },
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class DownloadZipDialogComponent implements OnInit {

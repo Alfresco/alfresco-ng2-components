@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import {
     CustomEmptyContentTemplateDirective,
     DataColumnComponent,
@@ -88,6 +88,7 @@ export const defaultValidation = () => true;
     styleUrls: ['./content-node-selector-panel.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-content-node-selector-panel' },
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [SearchQueryBuilderService]
 })
 export class ContentNodeSelectorPanelComponent implements OnInit {

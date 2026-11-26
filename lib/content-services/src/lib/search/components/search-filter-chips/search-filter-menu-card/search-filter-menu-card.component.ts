@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -27,6 +27,7 @@ import { IconModule } from '@alfresco/adf-core';
     imports: [CommonModule, MatButtonModule, TranslatePipe, IconModule, MatDividerModule],
     templateUrl: './search-filter-menu-card.component.html',
     styleUrls: ['./search-filter-menu-card.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterMenuCardComponent {

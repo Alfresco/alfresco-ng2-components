@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { LoginFooterDirective } from '../../directives/login-footer.directive';
 import { LoginHeaderDirective } from '../../directives/login-header.directive';
 import { LoginSuccessEvent } from '../../models/login-success.event';
@@ -26,6 +26,7 @@ import { LoginComponent } from '../login/login.component';
     templateUrl: './login-dialog-panel.component.html',
     styleUrls: ['./login-dialog-panel.component.scss'],
     imports: [LoginComponent, LoginHeaderDirective, LoginFooterDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class LoginDialogPanelComponent {

@@ -16,7 +16,7 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { AppConfigService } from '../../../app-config';
 
 @Component({
@@ -24,6 +24,7 @@ import { AppConfigService } from '../../../app-config';
     templateUrl: './txt-viewer.component.html',
     styleUrls: ['./txt-viewer.component.scss'],
     host: { class: 'adf-txt-viewer' },
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class TxtViewerComponent implements OnChanges {

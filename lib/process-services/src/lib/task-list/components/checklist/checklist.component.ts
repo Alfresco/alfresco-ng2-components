@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskRepresentation } from '@alfresco/js-api';
@@ -42,6 +42,7 @@ import { FormsModule } from '@angular/forms';
         FormsModule
     ],
     templateUrl: './checklist.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./checklist.component.scss']
 })
 export class ChecklistComponent implements OnChanges {

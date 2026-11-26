@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { ProcessContentService } from '../../form/services/process-content.service';
 import { CommonModule } from '@angular/common';
 import { RelatedContentRepresentation } from '@alfresco/js-api';
@@ -27,6 +27,7 @@ import { MatIconModule } from '@angular/material/icon';
     selector: 'adf-create-task-attachment',
     imports: [CommonModule, MatButtonModule, UploadDirective, MatIconModule],
     styleUrls: ['./create-task-attachment.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './create-task-attachment.component.html'
 })
 export class AttachmentComponent implements OnChanges {

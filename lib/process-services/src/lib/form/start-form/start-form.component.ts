@@ -16,17 +16,18 @@
  */
 
 import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation
+  Component,
+  ElementRef,
+  EventEmitter,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { FormComponent } from '../form.component';
 import { ContentLinkModel, FormOutcomeModel, FormRendererComponent } from '@alfresco/adf-core';
@@ -42,6 +43,7 @@ import { MatIconModule } from '@angular/material/icon';
     imports: [CommonModule, TranslatePipe, MatButtonModule, MatCardModule, FormRendererComponent, MatIconModule],
     templateUrl: './start-form.component.html',
     styleUrls: ['./start-form.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class StartFormComponent extends FormComponent implements OnChanges, OnInit {

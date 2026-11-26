@@ -16,18 +16,19 @@
  */
 
 import {
-    Component,
-    DestroyRef,
-    ElementRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation
+  Component,
+  DestroyRef,
+  ElementRef,
+  EventEmitter,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { ENTER } from '@angular/cdk/keycodes';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -59,6 +60,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ],
     templateUrl: './search-chip-autocomplete-input.component.html',
     styleUrls: ['./search-chip-autocomplete-input.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class SearchChipAutocompleteInputComponent implements OnInit, OnChanges {

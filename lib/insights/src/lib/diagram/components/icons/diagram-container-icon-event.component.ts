@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
 import { CommonModule } from '@angular/common';
 import { DiagramIconTimerComponent } from './diagram-icon-timer.component';
@@ -28,6 +28,7 @@ import { DiagramIconMessageComponent } from './diagram-icon-message.component';
 @Component({
     selector: 'diagram-container-icon-event',
     imports: [CommonModule, DiagramIconTimerComponent, DiagramIconErrorComponent, DiagramIconSignalComponent, DiagramIconMessageComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-container-icon-event.component.html'
 })
 export class DiagramContainerIconEventTaskComponent extends DiagramElement {

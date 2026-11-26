@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramElement } from '../diagram-element';
 import { DiagramGatewayComponent } from './diagram-gateway.component';
@@ -26,6 +26,7 @@ import { RaphaelPlusDirective } from '../raphael/raphael-plus.component';
 @Component({
     selector: 'diagram-parallel-gateway',
     imports: [DiagramGatewayComponent, RaphaelPlusDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-parallel-gateway.component.html'
 })
 export class DiagramParallelGatewayComponent extends DiagramElement implements OnInit {

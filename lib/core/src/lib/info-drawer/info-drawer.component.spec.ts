@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { InfoDrawerComponent, InfoDrawerTabComponent } from './info-drawer.component';
@@ -80,6 +80,7 @@ describe('InfoDrawerComponent', () => {
 
 @Component({
     imports: [InfoDrawerTabComponent, InfoDrawerComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <adf-info-drawer [selectedIndex]="tabIndex" [icon]="icon" title="Fake Title Custom">
             <adf-info-drawer-tab label="Tab1" />
@@ -157,6 +158,7 @@ describe('Custom InfoDrawer', () => {
 
 @Component({
     imports: [InfoDrawerComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <adf-info-drawer [showHeader]="showHeader" [icon]="icon" title="Fake Visibility Info Drawer Title" /> `
 })
 class VisibilityInfoDrawerComponent extends InfoDrawerComponent {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import {
     StartProcessScreenCloud,
     StartProcessScreenDefaultButtons
@@ -24,6 +24,7 @@ import { TaskVariableCloud } from '../form/models/task-variable-cloud.model';
 
 @Component({
     selector: 'adf-cloud-mock-screen-component',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<div>Mock Screen Component</div>`
 })
 export class MockedTaskScreenCloudComponent implements StartProcessScreenCloud {

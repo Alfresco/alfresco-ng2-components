@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, OnDestroy, ViewChild, ViewContainerRef, ComponentRef, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ViewChild, ViewContainerRef, ComponentRef, OnChanges, SimpleChanges, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { ExtensionService } from '../../services/extension.service';
 
 @Component({
     selector: 'adf-dynamic-tab',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<div #content></div>`
 })
 export class DynamicTabComponent implements OnInit, OnChanges, OnDestroy {

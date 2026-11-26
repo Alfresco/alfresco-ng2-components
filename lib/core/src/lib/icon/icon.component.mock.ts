@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IconModule } from './icon.module';
 
 @Component({
     template: `<mat-icon [adf-icon]="name" />`,
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IconModule]
 })
 export class IconComponent {

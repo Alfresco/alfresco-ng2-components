@@ -19,7 +19,7 @@ import { FocusKeyManager } from '@angular/cdk/a11y';
 import { MatMenuItem, MatMenuModule } from '@angular/material/menu';
 import { ContextMenuOverlayRef } from './context-menu-overlay';
 import { CONTEXT_MENU_DATA } from './context-menu.tokens';
-import { AfterViewInit, Component, HostListener, QueryList, ViewChildren, ViewEncapsulation, inject } from '@angular/core';
+import { AfterViewInit, Component, HostListener, QueryList, ViewChildren, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import { IconModule } from '../icon/icon.module';
@@ -34,6 +34,7 @@ import { ContextMenuItem } from './interfaces';
         class: 'adf-context-menu'
     },
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IconModule, MatMenuModule, TranslatePipe]
 })
 export class ContextMenuListComponent implements AfterViewInit {

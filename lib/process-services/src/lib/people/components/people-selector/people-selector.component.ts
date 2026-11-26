@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, ViewEncapsulation, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation, EventEmitter, Input, Output, inject, ChangeDetectionStrategy } from '@angular/core';
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
 import { TranslationService } from '@alfresco/adf-core';
 import { PeopleSearchFieldComponent } from '../people-search-field/people-search-field.component';
@@ -36,6 +36,7 @@ const DEFAULT_ASSIGNEE_PLACEHOLDER = 'ADF_TASK_LIST.PEOPLE.ASSIGNEE';
     templateUrl: './people-selector.component.html',
     styleUrls: ['./people-selector.component.scss'],
     host: { class: 'adf-people-selector' },
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleSelectorComponent {

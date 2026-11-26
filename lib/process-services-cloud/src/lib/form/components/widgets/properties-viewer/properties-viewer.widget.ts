@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { BaseViewerWidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { PropertiesViewerWrapperComponent } from './properties-viewer-wrapper/properties-viewer-wrapper.component';
@@ -29,6 +29,7 @@ import { CommonModule } from '@angular/common';
     imports: [CommonModule, ErrorWidgetComponent, PropertiesViewerWrapperComponent, TranslatePipe],
     templateUrl: './properties-viewer.widget.html',
     styleUrls: ['./properties-viewer.widget.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class PropertiesViewerWidgetComponent extends BaseViewerWidgetComponent {

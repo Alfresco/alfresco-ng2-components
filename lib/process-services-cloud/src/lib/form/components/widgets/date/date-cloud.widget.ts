@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit, ViewEncapsulation, DestroyRef, inject } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, DestroyRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DateAdapter, ErrorStateMatcher, MAT_DATE_FORMATS } from '@angular/material/core';
 import {
     ADF_DATE_FORMATS,
@@ -65,6 +65,7 @@ export const getDateCloudWidgetRange = (field: FormFieldModel, today: Date): { m
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class DateCloudWidgetComponent extends WidgetComponent implements OnInit, ReactiveFormWidget {

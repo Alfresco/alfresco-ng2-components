@@ -77,6 +77,7 @@ import { FormEvent } from '../events/form.event';
 
 @Component({
     selector: 'adf-test-reporting-date-widget',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ''
 })
 class ReportingDateWidgetComponent extends WidgetComponent implements OnInit {

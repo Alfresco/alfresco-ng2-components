@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
+import { Component, Input, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { FacetFieldBucket } from '../../models/facet-field-bucket.interface';
 import { FacetField } from '../../models/facet-field.interface';
@@ -44,6 +44,7 @@ import { SearchFacetTabbedContentComponent } from '../search-filter-chips';
     templateUrl: './search-filter.component.html',
     styleUrls: ['./search-filter.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-search-filter' }
 })
 export class SearchFilterComponent {

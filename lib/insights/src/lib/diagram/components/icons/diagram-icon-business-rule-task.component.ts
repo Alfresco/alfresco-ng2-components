@@ -17,13 +17,14 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
 import { RaphaelIconBusinessRuleDirective } from '../raphael/icons/raphael-icon-business-rule.component';
 
 @Component({
     selector: 'diagram-icon-business-rule-task',
     imports: [RaphaelIconBusinessRuleDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-icon-business-rule-task.component.html'
 })
 export class DiagramIconBusinessRuleTaskComponent extends DiagramElement implements OnInit {

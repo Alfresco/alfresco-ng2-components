@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { ProcessContentService } from '../../form/services/process-content.service';
 import { RelatedContentRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
@@ -27,6 +27,7 @@ import { MatIconModule } from '@angular/material/icon';
     selector: 'adf-create-process-attachment',
     imports: [CommonModule, UploadDirective, MatButtonModule, MatIconModule],
     styleUrls: ['./create-process-attachment.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './create-process-attachment.component.html'
 })
 export class CreateProcessAttachmentComponent implements OnChanges {

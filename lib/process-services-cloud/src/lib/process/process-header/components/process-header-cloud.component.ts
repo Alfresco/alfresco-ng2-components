@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import {
     AppConfigService,
     CardViewBaseItemModel,
@@ -36,6 +36,7 @@ import { NgIf } from '@angular/common';
     imports: [CardViewComponent, MatCardModule, NgIf],
     templateUrl: './process-header-cloud.component.html',
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-cloud-process-header' }
 })
 export class ProcessHeaderCloudComponent implements OnChanges, OnInit {

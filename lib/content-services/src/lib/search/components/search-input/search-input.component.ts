@@ -17,7 +17,7 @@
 
 import { AppConfigService } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -28,6 +28,7 @@ import { SearchConfiguration } from '../../models';
     imports: [CommonModule, MatFormFieldModule, MatInputModule, TranslatePipe],
     templateUrl: `./search-input.component.html`,
     styleUrls: ['./search-input.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class SearchInputComponent implements OnInit {

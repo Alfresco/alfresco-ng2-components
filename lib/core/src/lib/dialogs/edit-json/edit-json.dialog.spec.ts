@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, input, model } from '@angular/core';
+import { Component, input, model, ChangeDetectionStrategy } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
@@ -26,7 +26,8 @@ import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 import { EditJsonDialogComponent } from './edit-json.dialog';
 import { EDIT_JSON_EDITOR, JsonEditorComponent } from './edit-json-editor.token';
 
-@Component({ template: '<span data-automation-id="stub-json-editor">{{ value() }}</span>' })
+@Component({ changeDetection: ChangeDetectionStrategy.Eager,
+ template: '<span data-automation-id="stub-json-editor">{{ value() }}</span>' })
 class StubJsonEditorComponent implements JsonEditorComponent {
     readonly value = model('');
     readonly readOnly = input(false);

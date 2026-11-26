@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { WidgetComponent } from '@alfresco/adf-core';
 import { UntypedFormControl } from '@angular/forms';
 import { filter } from 'rxjs/operators';
@@ -45,6 +45,7 @@ import { GroupCloudComponent } from '../../../../group/components/group-cloud.co
         '(select)': 'event($event)'
     },
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [ReactivePreselectionService]
 })
 export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit {

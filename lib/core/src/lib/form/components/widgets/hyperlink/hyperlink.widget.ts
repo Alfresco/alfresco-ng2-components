@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormFieldModel } from '../core';
 import { WidgetComponent } from '../widget.component';
@@ -38,6 +38,7 @@ import { WidgetComponent } from '../widget.component';
         '(select)': 'event($event)'
     },
     imports: [TranslatePipe],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class HyperlinkWidgetComponent extends WidgetComponent implements OnInit {

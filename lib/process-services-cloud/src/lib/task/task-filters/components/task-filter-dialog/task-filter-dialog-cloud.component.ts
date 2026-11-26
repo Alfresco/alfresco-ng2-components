@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AbstractControl, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -29,6 +29,7 @@ import { MatButtonModule } from '@angular/material/button';
     imports: [CommonModule, TranslatePipe, MatInputModule, ReactiveFormsModule, MatDialogModule, MatCardModule, MatButtonModule],
     templateUrl: './task-filter-dialog-cloud.component.html',
     styleUrls: ['./task-filter-dialog-cloud.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class TaskFilterDialogCloudComponent implements OnInit {

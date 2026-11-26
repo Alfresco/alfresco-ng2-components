@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, output, Output, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, output, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { Node, Version } from '@alfresco/js-api';
 import { ContentService } from '../common/services/content.service';
 import { UploadService } from '../common/services/upload.service';
@@ -46,6 +46,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     templateUrl: './version-upload.component.html',
     styleUrls: ['./version-upload.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-version-upload' }
 })
 export class VersionUploadComponent implements OnInit {

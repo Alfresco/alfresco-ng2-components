@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -29,6 +29,7 @@ import { CommonModule } from '@angular/common';
     imports: [CommonModule, MatDialogModule, TranslatePipe, MatButtonModule, AspectListComponent, AutoFocusDirective],
     templateUrl: './aspect-list-dialog.component.html',
     styleUrls: ['./aspect-list-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class AspectListDialogComponent implements OnInit {

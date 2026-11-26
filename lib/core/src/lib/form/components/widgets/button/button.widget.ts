@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { WidgetComponent } from '../widget.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,6 +31,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         '[class]': 'hostClasses'
     },
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TranslatePipe, MatButtonModule, MatTooltipModule]
 })
 export class ButtonWidgetComponent extends WidgetComponent {

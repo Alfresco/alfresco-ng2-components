@@ -16,19 +16,20 @@
  */
 
 import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    QueryList,
-    TemplateRef,
-    ViewChildren,
-    ViewEncapsulation,
-    inject
+  Component,
+  DestroyRef,
+  EventEmitter,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  QueryList,
+  TemplateRef,
+  ViewChildren,
+  ViewEncapsulation,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { BehaviorSubject, merge, Observable, Subject, EMPTY } from 'rxjs';
 import { TreeNode, TreeNodeType } from '../models/tree-node.interface';
@@ -64,6 +65,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     templateUrl: './tree.component.html',
     styleUrls: ['./tree.component.scss'],
     host: { class: 'adf-tree' },
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {

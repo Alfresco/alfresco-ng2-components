@@ -16,7 +16,7 @@
  */
 
 import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { ReportParameterDetailsModel } from '../../../../diagram/models/report/report-parameter-details.model';
@@ -45,6 +45,7 @@ interface DateRangeProps {
         { provide: DateAdapter, useClass: AdfDateFnsAdapter },
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS }
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class DateRangeWidgetComponent implements OnInit {

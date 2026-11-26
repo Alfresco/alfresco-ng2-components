@@ -16,20 +16,21 @@
  */
 
 import {
-    ChangeDetectorRef,
-    Compiler,
-    Component,
-    ComponentFactory,
-    ComponentRef,
-    DestroyRef,
-    inject,
-    Input,
-    NgModule,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation
+  ChangeDetectorRef,
+  Compiler,
+  Component,
+  ComponentFactory,
+  ComponentRef,
+  DestroyRef,
+  inject,
+  Input,
+  NgModule,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { FormRenderingService } from '../../services/form-rendering.service';
 import { WidgetVisibilityService } from '../../services/widget-visibility.service';
@@ -53,6 +54,7 @@ declare const adf: any;
     selector: 'adf-form-field',
     templateUrl: './form-field.component.html',
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FieldStylePipe]
 })
 export class FormFieldComponent implements OnInit, OnDestroy {

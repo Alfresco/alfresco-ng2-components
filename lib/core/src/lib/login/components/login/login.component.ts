@@ -16,7 +16,7 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, TemplateRef, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -71,6 +71,7 @@ interface LoginFormValues {
         MatProgressSpinnerModule,
         MatCheckboxModule
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-login' }
 })
 export class LoginComponent implements OnInit {

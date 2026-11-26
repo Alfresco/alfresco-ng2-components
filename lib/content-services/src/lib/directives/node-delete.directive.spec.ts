@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeDeleteDirective } from './node-delete.directive';
@@ -24,6 +24,7 @@ import { EMPTY, of, Subscription } from 'rxjs';
 
 @Component({
     imports: [NodeDeleteDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<div id="delete-component" [adf-delete]="selection" (delete)="onDelete()"></div>`
 })
 class TestComponent {
@@ -37,6 +38,7 @@ class TestComponent {
 
 @Component({
     imports: [NodeDeleteDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<div id="delete-component" [adf-delete]="selection" (delete)="onDelete($event)"></div>`
 })
 class TestWithPermissionsComponent {
@@ -50,6 +52,7 @@ class TestWithPermissionsComponent {
 
 @Component({
     imports: [NodeDeleteDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` delete permanent
         <div id="delete-permanent" [adf-delete]="selection" [permanent]="permanent" (delete)="onDelete($event)"></div>`
 })

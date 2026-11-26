@@ -17,13 +17,14 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { RaphaelRectDirective } from '../raphael/raphael-rect.component';
 import { RaphaelTextDirective } from '../raphael/raphael-text.component';
 
 @Component({
     selector: 'diagram-pool',
     imports: [RaphaelRectDirective, RaphaelTextDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-pool.component.html'
 })
 export class DiagramPoolComponent implements OnInit {

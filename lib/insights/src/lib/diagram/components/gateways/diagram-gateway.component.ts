@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramElement } from '../diagram-element';
 import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
@@ -26,6 +26,7 @@ import { RaphaelRhombusDirective } from '../raphael/raphael-rhombus.component';
 @Component({
     selector: 'diagram-gateway',
     imports: [DiagramTooltipComponent, RaphaelRhombusDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-gateway.component.html'
 })
 export class DiagramGatewayComponent extends DiagramElement implements OnInit {

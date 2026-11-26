@@ -21,7 +21,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { FormService, FormSpinnerEvent } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormSpinnerComponent } from '../../components/spinner/form-spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
@@ -32,6 +32,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 @Component({
     selector: 'adf-cloud-overlay-test',
     template: `<div>adf-cloud-overlay-test</div>`,
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 class SpinnerTestComponent {

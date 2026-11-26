@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { NodeEntry, PermissionElement } from '@alfresco/js-api';
 import { AddPermissionDialogData } from './add-permission-dialog-data.interface';
@@ -48,6 +48,7 @@ import { UserRoleColumnComponent } from '../user-role-column/user-role-column.co
     ],
     templateUrl: './add-permission-dialog.component.html',
     styleUrls: ['./add-permission-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class AddPermissionDialogComponent {

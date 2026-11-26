@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
@@ -26,6 +26,7 @@ import { MatButtonModule } from '@angular/material/button';
     imports: [CommonModule, TranslatePipe, MatCardModule, MatButtonModule],
     templateUrl: './task-standalone.component.html',
     styleUrls: ['./task-standalone.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class TaskStandaloneComponent {

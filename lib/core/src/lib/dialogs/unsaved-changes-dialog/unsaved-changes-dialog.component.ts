@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { UnsavedChangesDialogData } from './unsaved-changes-dialog.model';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
@@ -41,6 +41,7 @@ import { IconModule } from '../../icon/icon.module';
     templateUrl: './unsaved-changes-dialog.component.html',
     styleUrls: ['./unsaved-changes-dialog.component.scss'],
     host: { class: 'adf-unsaved-changes-dialog' },
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatDialogModule, TranslatePipe, MatButtonModule, IconModule, CommonModule, MatCheckboxModule, ReactiveFormsModule]
 })
 export class UnsavedChangesDialogComponent implements OnInit {

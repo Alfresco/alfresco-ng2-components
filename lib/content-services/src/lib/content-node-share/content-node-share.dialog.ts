@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -56,6 +56,7 @@ interface SharedDialogFormProps {
     templateUrl: './content-node-share.dialog.html',
     styleUrls: ['./content-node-share.dialog.scss'],
     host: { class: 'adf-share-dialog' },
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class ShareDialogComponent implements OnInit {

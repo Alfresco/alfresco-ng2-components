@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Component, ViewEncapsulation, inject, model, viewChild, ViewContainerRef, inputBinding, twoWayBinding } from '@angular/core';
+import { AfterViewInit, Component, ViewEncapsulation, inject, model, viewChild, ViewContainerRef, inputBinding, twoWayBinding, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,6 +36,7 @@ export interface EditJsonDialogSettings {
     templateUrl: './edit-json.dialog.html',
     styleUrls: ['./edit-json.dialog.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-edit-json-dialog' }
 })
 export class EditJsonDialogComponent implements AfterViewInit {

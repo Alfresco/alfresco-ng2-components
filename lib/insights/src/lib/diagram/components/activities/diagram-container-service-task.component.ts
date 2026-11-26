@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
 import { CommonModule } from '@angular/common';
 import { DiagramSendTaskComponent } from './diagram-send-task.component';
@@ -42,6 +42,7 @@ import { DiagramServiceTaskComponent } from './diagram-service-task.component';
         DiagramBoxPublishTaskComponent,
         DiagramServiceTaskComponent
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-container-service-task.component.html'
 })
 export class DiagramContainerServiceTaskComponent extends DiagramElement {}

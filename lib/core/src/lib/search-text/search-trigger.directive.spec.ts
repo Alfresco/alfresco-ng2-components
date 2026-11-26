@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, provideZonelessChangeDetection, signal, viewChild } from '@angular/core';
+import { Component, ElementRef, provideZonelessChangeDetection, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs';
 import { SearchTriggerDirective } from './search-trigger.directive';
@@ -23,6 +23,7 @@ import { SearchTriggerDirective } from './search-trigger.directive';
 @Component({
     selector: 'adf-search-trigger-test',
     imports: [SearchTriggerDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<input [searchAutocomplete]="panel()" />`
 })
 class SearchTriggerTestComponent {

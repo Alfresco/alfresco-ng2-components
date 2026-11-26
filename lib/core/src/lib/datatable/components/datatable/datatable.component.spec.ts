@@ -56,6 +56,7 @@ import { DragDropStateService } from '../../../services/drag-drop-state.service'
 
 @Component({
     selector: 'adf-custom-column-template-component',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <ng-template #tmplRef /> `
 })
 class CustomColumnTemplateComponent {
@@ -64,6 +65,7 @@ class CustomColumnTemplateComponent {
 
 @Component({
     selector: 'adf-custom-column-header-component',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <ng-template #tmplRef> CUSTOM HEADER </ng-template> `
 })
 class CustomColumnHeaderComponent {
@@ -93,6 +95,7 @@ class DatatableProjectedColumnsComponent {
 @Component({
     selector: 'adf-datatable-mutable-rows',
     imports: [DataTableComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<adf-datatable [rows]="rows" [columns]="columns" />`
 })
 class DatatableMutableRowsComponent {

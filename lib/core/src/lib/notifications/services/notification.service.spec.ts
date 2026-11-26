@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, inject as inject_1 } from '@angular/core';
+import { Component, inject as inject_1, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationService } from './notification.service';
@@ -26,6 +26,7 @@ import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 
 @Component({
     template: '<div>Test div</div>',
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [NotificationService]
 })
 class ProvidesNotificationServiceComponent {

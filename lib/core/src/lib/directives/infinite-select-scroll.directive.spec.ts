@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directive';
@@ -31,6 +31,7 @@ import { UnitTestingUtils } from '../testing/unit-testing-utils';
         </mat-option>
     </mat-select>`,
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatSelectModule, InfiniteSelectScrollDirective, CommonModule]
 })
 class TestComponent {

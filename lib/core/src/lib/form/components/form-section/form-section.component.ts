@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, inject, Input, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { WidgetVisibilityService } from '../../services/widget-visibility.service';
 import { FormFieldModel } from '../widgets/core/form-field.model';
 import { FormFieldComponent } from '../form-field/form-field.component';
@@ -26,6 +26,7 @@ import { FormLayoutColumn, getFormLayoutColumnWidth } from '../helpers/column-wi
     templateUrl: './form-section.component.html',
     encapsulation: ViewEncapsulation.None,
     styleUrl: './form-section.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormFieldComponent]
 })
 export class FormSectionComponent implements OnInit {

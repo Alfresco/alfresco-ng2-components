@@ -16,7 +16,7 @@
  */
 
 import { CommentModel } from '../models/comment.model';
-import { Component, ElementRef, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { CommentsService } from './interfaces/comments-service.interface';
 import { CommonModule } from '@angular/common';
@@ -41,6 +41,7 @@ import { CommentListComponent } from './comment-list';
     ],
     templateUrl: './comments.component.html',
     styleUrls: ['./comments.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class CommentsComponent implements OnChanges {

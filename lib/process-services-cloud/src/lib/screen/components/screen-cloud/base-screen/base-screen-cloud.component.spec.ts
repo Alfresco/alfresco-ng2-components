@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ComponentRef, OnDestroy } from '@angular/core';
+import { Component, ComponentRef, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { BaseScreenCloudComponent } from './base-screen-cloud.component';
@@ -24,6 +24,7 @@ import { ScreenRenderingService } from '../../../services/screen-rendering.servi
 
 @Component({
     selector: 'adf-cloud-test-dynamic-screen',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<div class="adf-cloud-test-dynamic-screen">dynamic screen</div>`
 })
 class TestDynamicScreenComponent implements OnDestroy {
@@ -36,6 +37,7 @@ class TestDynamicScreenComponent implements OnDestroy {
 
 @Component({
     selector: 'adf-cloud-test-host-screen',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<ng-container #container />`
 })
 class TestHostScreenComponent extends BaseScreenCloudComponent<TestDynamicScreenComponent> {
@@ -62,6 +64,7 @@ class TestHostScreenComponent extends BaseScreenCloudComponent<TestDynamicScreen
 /** Same host component, but without the `#container` anchor in its template. */
 @Component({
     selector: 'adf-cloud-test-host-screen-without-container',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<div class="adf-cloud-no-container"></div>`
 })
 class TestHostScreenWithoutContainerComponent extends TestHostScreenComponent {}

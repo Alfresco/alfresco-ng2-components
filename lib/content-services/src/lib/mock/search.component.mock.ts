@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { SearchComponent } from '../search/components/search.component';
 import { SearchRequest, ResultSetPaging, ResultSetRowEntry, ContentInfo, UserInfo, ResultNode } from '@alfresco/js-api';
 import { SearchModule } from '../search';
@@ -106,6 +106,7 @@ export const noResult = {
         </adf-search>
         <span id="component-result-message">{{ message }}</span>
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [SearchModule, CommonModule]
 })
 export class SimpleSearchTestComponent {

@@ -16,7 +16,7 @@
  */
 
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject, Injector, runInInjectionContext } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject, Injector, runInInjectionContext, ChangeDetectionStrategy } from '@angular/core';
 import { TreeBaseNode } from '../models/tree-view.model';
 import { TreeViewDataSource } from '../data/tree-view-datasource';
 import { TreeViewService } from '../services/tree-view.service';
@@ -31,6 +31,7 @@ import { IconModule } from '@alfresco/adf-core';
     selector: 'adf-tree-view-list',
     imports: [CommonModule, MatTreeModule, MatButtonModule, IconModule, TranslatePipe],
     templateUrl: './tree-view.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./tree-view.component.scss']
 })
 export class TreeViewComponent implements OnChanges {

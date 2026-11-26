@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange, Component } from '@angular/core';
+import { SimpleChange, Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
@@ -254,6 +254,7 @@ describe('ProcessAttachmentListComponent', () => {
 
 @Component({
     imports: [EmptyListHeaderDirective, EmptyListComponent, ProcessAttachmentListComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <adf-process-attachment-list>
             <adf-empty-list>

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { CardViewArrayItemModel } from '../../models/card-view-arrayitem.model';
 import { BaseCardView } from '../base-card-view';
 import { CommonModule } from '@angular/common';
@@ -31,6 +31,7 @@ import { IconModule } from '../../../icon/icon.module';
     imports: [CommonModule, MatChipsModule, TranslatePipe, IconModule, MatMenuModule, MatCardModule, MatButtonModule],
     templateUrl: './card-view-arrayitem.component.html',
     styleUrls: ['./card-view-arrayitem.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class CardViewArrayItemComponent extends BaseCardView<CardViewArrayItemModel> {

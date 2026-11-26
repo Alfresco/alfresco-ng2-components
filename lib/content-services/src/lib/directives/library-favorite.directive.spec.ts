@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { LibraryFavoriteDirective } from './library-favorite.directive';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { LibraryEntity } from '../interfaces/library-entity.interface';
@@ -24,6 +24,7 @@ import { NotificationService } from '@alfresco/adf-core';
 @Component({
     imports: [LibraryFavoriteDirective],
     selector: 'app-test-component',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<button #favoriteLibrary="favoriteLibrary" [adf-favorite-library]="selection">Favorite</button>`
 })
 class TestComponent {

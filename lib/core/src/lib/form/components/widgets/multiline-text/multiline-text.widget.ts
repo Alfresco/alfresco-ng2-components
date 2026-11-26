@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -48,6 +48,7 @@ import { FIELD_STATUS_TEMPLATE } from '../core/field-status-template.directive';
         '(select)': 'event($event)'
     },
     imports: [MatFormFieldModule, TranslatePipe, MatInputModule, FormsModule, MatIconModule, NgTemplateOutlet],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class MultilineTextWidgetComponentComponent extends WidgetComponent implements OnInit {

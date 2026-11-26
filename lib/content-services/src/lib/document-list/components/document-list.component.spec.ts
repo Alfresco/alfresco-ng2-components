@@ -34,7 +34,7 @@ import {
 import { FavoritePaging, FavoritePagingList, Node, NodeEntry, NodePaging } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectorRef, Component, Injector, QueryList, runInInjectionContext, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Injector, QueryList, runInInjectionContext, SimpleChange, SimpleChanges, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { By } from '@angular/platform-browser';
@@ -2126,6 +2126,7 @@ describe('DocumentList', () => {
 
 @Component({
     imports: [DocumentListComponent, CustomLoadingContentTemplateDirective, CustomNoPermissionTemplateDirective, CustomEmptyContentTemplateDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <adf-document-list #customDocumentList>
             <adf-custom-loading-content-template>
@@ -2221,6 +2222,7 @@ describe('DocumentListComponent rendering', () => {
 
 @Component({
     imports: [DocumentListComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<adf-document-list [currentFolderId]="'123'" />`
 })
 class OnPushHostComponent {

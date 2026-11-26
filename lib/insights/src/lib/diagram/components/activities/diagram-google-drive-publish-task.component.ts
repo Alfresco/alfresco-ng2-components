@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
 import { DiagramTaskComponent } from './diagram-task.component';
 import { DiagramIconGoogleDrivePublishTaskComponent } from '../icons/diagram-icon-google-drive-publish-task.component';
@@ -25,6 +25,7 @@ import { DiagramIconGoogleDrivePublishTaskComponent } from '../icons/diagram-ico
 @Component({
     selector: 'diagram-google-drive-publish-task',
     imports: [DiagramTaskComponent, DiagramIconGoogleDrivePublishTaskComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-google-drive-publish-task.component.html'
 })
 export class DiagramGoogleDrivePublishTaskComponent extends DiagramElement {}

@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ParameterValueModel } from '../../../../diagram/models/report/parameter-value.model';
 import { ReportParameterDetailsModel } from '../../../../diagram/models/report/report-parameter-details.model';
@@ -33,6 +33,7 @@ import { MatInputModule } from '@angular/material/input';
     imports: [CommonModule, MatFormFieldModule, TranslatePipe, FormsModule, DropdownWidgetAnalyticsComponent, MatInputModule],
     templateUrl: './duration.widget.html',
     styleUrls: ['./duration.widget.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class DurationWidgetComponent extends NumberWidgetAnalyticsComponent implements OnInit {

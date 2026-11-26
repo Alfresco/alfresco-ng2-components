@@ -16,7 +16,7 @@
  */
 
 import { from, Observable } from 'rxjs';
-import { Component, DestroyRef, EventEmitter, inject, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, OnInit, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import {
     AbstractControl,
     FormsModule,
@@ -65,6 +65,7 @@ interface VisibilityOption {
     styleUrls: ['./library.dialog.scss'],
     templateUrl: './library.dialog.html',
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-library-dialog' }
 })
 export class LibraryDialogComponent implements OnInit {

@@ -19,13 +19,14 @@ import { TranslationService } from '@alfresco/adf-core';
 import { UploadService } from '../../common/services/upload.service';
 import { FileModel, FileUploadStatus } from '../../common/models/file.model';
 
-import { Component, ContentChild, Input, Output, TemplateRef, EventEmitter, inject } from '@angular/core';
+import { Component, ContentChild, Input, Output, TemplateRef, EventEmitter, inject, ChangeDetectionStrategy } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
     selector: 'adf-file-uploading-list',
     imports: [NgTemplateOutlet],
     templateUrl: './file-uploading-list.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./file-uploading-list.component.scss']
 })
 export class FileUploadingListComponent {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange, Component, DebugElement } from '@angular/core';
+import { SimpleChange, Component, DebugElement, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, Subscription, throwError } from 'rxjs';
@@ -300,6 +300,7 @@ describe('TaskAttachmentList', () => {
             </adf-empty-list>
         </adf-task-attachment-list>
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 class CustomEmptyTemplateComponent {}

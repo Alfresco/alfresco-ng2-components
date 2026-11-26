@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockFeatureFlags } from '../mocks/features-service-mock.factory';
 import { FeaturesDirective } from './features.directive';
@@ -29,6 +29,7 @@ import { UnitTestingUtils } from '../../../../src/lib/testing/unit-testing-utils
         </div>
     `,
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FeaturesDirective]
 })
 class TestWithEnabledFlagComponent {
@@ -42,6 +43,7 @@ class TestWithEnabledFlagComponent {
         </div>
     `,
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FeaturesDirective]
 })
 class TestWithDisabledFlagComponent {

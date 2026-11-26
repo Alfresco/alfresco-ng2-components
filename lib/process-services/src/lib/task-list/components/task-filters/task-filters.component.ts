@@ -16,7 +16,7 @@
  */
 
 import { AppsProcessService } from '../../../services/apps-process.service';
-import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { TaskFilterService } from '../../services/task-filter.service';
 import { TaskListService } from '../../services/tasklist.service';
 import { IconModel } from '../../../app-list/icon.model';
@@ -42,6 +42,7 @@ const LEGACY_DEFAULT_TASK_FILTER_TRANSLATION_KEYS: Record<string, string> = {
     imports: [CommonModule, TranslatePipe, MatButtonModule, MatIconModule],
     templateUrl: './task-filters.component.html',
     styleUrls: ['./task-filters.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class TaskFiltersComponent implements OnInit, OnChanges {

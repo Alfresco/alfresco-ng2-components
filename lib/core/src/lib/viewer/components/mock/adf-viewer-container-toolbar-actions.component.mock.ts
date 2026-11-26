@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { ViewerComponent } from '../viewer.component';
 import { ViewerToolbarActionsComponent } from '../viewer-toolbar-actions.component';
@@ -24,6 +24,7 @@ import { IconModule } from '../../../icon/icon.module';
 @Component({
     selector: 'adf-viewer-container-toolbar-actions',
     imports: [ViewerComponent, IconModule, MatButtonModule, ViewerToolbarActionsComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <adf-viewer>
             <adf-viewer-toolbar-actions>

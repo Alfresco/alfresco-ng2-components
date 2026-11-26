@@ -17,20 +17,21 @@
 
 import { SearchService } from '../services/search.service';
 import {
-    AfterContentInit,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation,
-    inject
+  AfterContentInit,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { NodePaging, ResultSetPaging } from '@alfresco/js-api';
 import { EMPTY, Subject } from 'rxjs';
@@ -48,6 +49,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None,
     preserveWhitespaces: false,
     exportAs: 'searchAutocomplete',
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-search' }
 })
 export class SearchComponent implements SearchComponentInterface, AfterContentInit, OnChanges {

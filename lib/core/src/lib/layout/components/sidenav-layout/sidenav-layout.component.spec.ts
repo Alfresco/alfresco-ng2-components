@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidenavLayoutComponent } from './sidenav-layout.component';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { SidenavLayoutContentDirective } from '../../directives/sidenav-layout-content.directive';
 import { SidenavLayoutHeaderDirective } from '../../directives/sidenav-layout-header.directive';
@@ -29,6 +29,7 @@ import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 @Component({
     selector: 'adf-test-component-for-sidenav',
     imports: [SidenavLayoutComponent, SidenavLayoutHeaderDirective, SidenavLayoutNavigationDirective, SidenavLayoutContentDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="320" [stepOver]="600" [hideSidenav]="false">
         <adf-sidenav-layout-header>
             <ng-template let-toggleMenu="toggleMenu">

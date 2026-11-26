@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
 import { CommonModule } from '@angular/common';
@@ -54,6 +54,7 @@ describe('SidebarActionMenuComponent', () => {
 @Component({
     imports: [CommonModule, SidebarActionMenuComponent, IconModule, MatMenuModule],
 
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <adf-sidebar-action-menu [expanded]="expanded" [title]="title">
             <mat-icon adf-sidebar-menu-title-icon adf-icon="arrow_drop_down" />

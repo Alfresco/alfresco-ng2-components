@@ -16,17 +16,18 @@
  */
 
 import {
-    Component,
-    Input,
-    ViewChild,
-    ViewContainerRef,
-    OnInit,
-    OnDestroy,
-    ComponentRef,
-    SimpleChanges,
-    OnChanges,
-    Injector,
-    inject
+  Component,
+  Input,
+  ViewChild,
+  ViewContainerRef,
+  OnInit,
+  OnDestroy,
+  ComponentRef,
+  SimpleChanges,
+  OnChanges,
+  Injector,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { SearchFilterService } from '../../services/search-filter.service';
 import { Observable } from 'rxjs';
@@ -34,6 +35,7 @@ import { SearchHeaderQueryBuilderService, SearchQueryBuilderService } from '../.
 
 @Component({
     selector: 'adf-search-widget-container',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: '<div #content></div>'
 })
 export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChanges {

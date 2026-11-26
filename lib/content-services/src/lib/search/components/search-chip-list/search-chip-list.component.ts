@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input, inject } from '@angular/core';
+import { Component, ViewEncapsulation, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 import { SearchFilterComponent } from '../../components/search-filter/search-filter.component';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { CommonModule } from '@angular/common';
@@ -29,6 +29,7 @@ import { IconModule } from '@alfresco/adf-core';
     templateUrl: './search-chip-list.component.html',
     styleUrls: ['./search-chip-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-search-chip-list' }
 })
 export class SearchChipListComponent {

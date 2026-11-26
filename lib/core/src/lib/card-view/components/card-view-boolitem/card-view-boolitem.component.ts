@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CardViewBoolItemModel } from '../../models/card-view-boolitem.model';
 import { BaseCardView } from '../base-card-view';
@@ -29,6 +29,7 @@ import { MatError } from '@angular/material/form-field';
     selector: 'adf-card-view-boolitem',
     imports: [CommonModule, MatCheckboxModule, TranslatePipe, CardViewPropertyValidatorDirective, FormsModule, MatError],
     templateUrl: './card-view-boolitem.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: [
         `
             .adf-property-value {

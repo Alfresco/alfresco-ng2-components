@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ErrorMessageModel, ErrorWidgetComponent, FormFieldOption, WidgetComponent } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -43,6 +43,7 @@ import { FormsModule } from '@angular/forms';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements OnInit {

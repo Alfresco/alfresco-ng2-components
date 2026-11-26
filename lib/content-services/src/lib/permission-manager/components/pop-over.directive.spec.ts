@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -23,6 +23,7 @@ import { PopOverDirective } from './pop-over.directive';
 
 @Component({
     imports: [PopOverDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <div
             [adf-pop-over]="popOver"

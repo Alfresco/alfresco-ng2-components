@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramElement } from '../diagram-element';
 import { RaphaelCircleDirective } from '../raphael/raphael-circle.component';
@@ -27,6 +27,7 @@ import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
 @Component({
     selector: 'diagram-throw-event',
     imports: [RaphaelCircleDirective, DiagramContainerIconEventTaskComponent, DiagramTooltipComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-throw-event.component.html'
 })
 export class DiagramThrowEventComponent extends DiagramElement implements OnInit {

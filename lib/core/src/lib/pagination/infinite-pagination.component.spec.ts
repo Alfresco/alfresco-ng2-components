@@ -20,12 +20,13 @@ import { PaginationModel } from '../models/pagination.model';
 import { InfinitePaginationComponent } from './infinite-pagination.component';
 import { PaginatedComponent } from './paginated-component.interface';
 import { BehaviorSubject } from 'rxjs';
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { RequestPaginationModel } from '../models/request-pagination.model';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
 
 @Component({
     template: ``,
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true
 })
 class TestPaginatedComponent implements PaginatedComponent {

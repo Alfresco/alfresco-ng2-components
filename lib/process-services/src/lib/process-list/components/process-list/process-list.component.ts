@@ -34,7 +34,7 @@ import {
     NoContentTemplateDirective,
     ObjectDataRow
 } from '@alfresco/adf-core';
-import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ProcessService } from '../../services/process.service';
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -80,6 +80,7 @@ export const processPresetsDefaultModel = {
         NoContentTemplateDirective
     ],
     styleUrls: ['./process-list.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './process-list.component.html'
 })
 export class ProcessInstanceListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {

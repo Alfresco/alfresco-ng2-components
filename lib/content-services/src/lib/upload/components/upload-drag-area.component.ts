@@ -16,7 +16,7 @@
  */
 
 import { FileInfo, FileUtils, NotificationService } from '@alfresco/adf-core';
-import { Component, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { UploadBase } from './base-upload/upload-base';
 import { AllowableOperationsEnum } from '../../common/models/allowable-operations.enum';
 import { ContentService } from '../../common/services/content.service';
@@ -30,6 +30,7 @@ import { FileDraggableDirective } from '../directives/file-draggable.directive';
     templateUrl: './upload-drag-area.component.html',
     styleUrls: ['./upload-drag-area.component.scss'],
     host: { class: 'adf-upload-drag-area' },
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class UploadDragAreaComponent extends UploadBase {

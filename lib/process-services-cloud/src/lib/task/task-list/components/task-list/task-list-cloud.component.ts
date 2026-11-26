@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
+import { Component, Input, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
     AdfDateFnsAdapter,
     ColumnsSelectorComponent,
@@ -68,6 +68,7 @@ const PRESET_KEY = 'adf-cloud-task-list.presets';
     ],
     templateUrl: './task-list-cloud.component.html',
     styleUrls: ['./task-list-cloud.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessListDataColumnCustomData> {

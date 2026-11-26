@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { Component, inject, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { TaskFilterAction, TaskFilterCloudModel, TaskFilterProperties, TaskStatusFilter } from '../../../models/filter-cloud.model';
@@ -61,6 +61,7 @@ import { TaskAssignmentFilterCloudComponent } from '../../task-assignment-filter
     ],
     templateUrl: './edit-task-filter-cloud.component.html',
     styleUrls: ['./edit-task-filter-cloud.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent<TaskFilterCloudModel> {

@@ -16,7 +16,7 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { Component, ComponentRef, DestroyRef, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, ComponentRef, DestroyRef, EventEmitter, inject, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { UserTaskCustomUi } from './screen-cloud.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -26,6 +26,7 @@ import { BaseScreenCloudComponent } from '../base-screen/base-screen-cloud.compo
 @Component({
     selector: 'adf-cloud-task-screen',
     imports: [CommonModule, MatCardModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './screen-cloud.component.html'
 })
 export class TaskScreenCloudComponent extends BaseScreenCloudComponent<UserTaskCustomUi> {

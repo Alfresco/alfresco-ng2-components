@@ -19,18 +19,19 @@
 
 import { NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
 import {
-    Component,
-    EventEmitter,
-    HostListener,
-    inject,
-    InjectionToken,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
-    TemplateRef,
-    ViewEncapsulation
+  Component,
+  EventEmitter,
+  HostListener,
+  inject,
+  InjectionToken,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -99,6 +100,7 @@ export const PDFJS_VIEWER_MODULE = new InjectionToken('PDFJS_VIEWER_MODULE', { f
         ToolbarComponent,
         ToolbarDividerComponent
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class PdfViewerComponent implements OnChanges, OnDestroy {

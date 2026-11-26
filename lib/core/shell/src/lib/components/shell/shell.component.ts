@@ -23,7 +23,7 @@ import {
     SidenavLayoutNavigationDirective
 } from '@alfresco/adf-core';
 import { DynamicExtensionComponent } from '@alfresco/adf-extensions';
-import { Component, DestroyRef, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map, withLatestFrom } from 'rxjs/operators';
@@ -51,6 +51,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     templateUrl: './shell.component.html',
     styleUrls: ['./shell.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'app-shell' }
 })
 export class ShellLayoutComponent implements OnInit {

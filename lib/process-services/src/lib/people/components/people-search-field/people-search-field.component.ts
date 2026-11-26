@@ -16,7 +16,7 @@
  */
 
 import { DataColumnComponent, DataColumnListComponent, TranslationService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, Output, ViewEncapsulation, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -43,6 +43,7 @@ import { PeopleListComponent } from '../people-list/people-list.component';
     templateUrl: './people-search-field.component.html',
     styleUrls: ['./people-search-field.component.scss'],
     host: { class: 'adf-people-search-field' },
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleSearchFieldComponent {

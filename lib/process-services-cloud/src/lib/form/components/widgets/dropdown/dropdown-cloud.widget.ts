@@ -30,7 +30,7 @@ import {
     WidgetComponent
 } from '@alfresco/adf-core';
 import { AsyncPipe } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -66,6 +66,7 @@ export const DROPDOWN_CLOUD_WIDGET_SET_VALUE_DEBOUNCE = 100;
         '(click)': 'event($event)'
     },
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [AsyncPipe, ReactiveFormsModule, MatFormFieldModule, MatSelectModule, TranslatePipe, SelectFilterInputComponent, MatIconModule]
 })
 export class DropdownCloudWidgetComponent extends WidgetComponent implements OnInit, ReactiveFormWidget {

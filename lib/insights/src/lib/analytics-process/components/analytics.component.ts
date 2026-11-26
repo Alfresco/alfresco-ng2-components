@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ReportQuery } from '../../diagram/models/report/report-query.model';
 import { AnalyticsGeneratorComponent } from './analytics-generator.component';
 import { CommonModule } from '@angular/common';
@@ -26,6 +26,7 @@ import { AnalyticsReportParametersComponent } from './analytics-report-parameter
     imports: [CommonModule, AnalyticsGeneratorComponent, AnalyticsReportParametersComponent],
     templateUrl: './analytics.component.html',
     styleUrls: ['./analytics.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsComponent implements OnChanges {

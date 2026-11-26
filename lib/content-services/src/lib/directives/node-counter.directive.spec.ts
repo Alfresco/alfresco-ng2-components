@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NodeCounterDirective, NodeCounterComponent } from './node-counter.directive';
 import { By } from '@angular/platform-browser';
 
 @Component({
     imports: [NodeCounterDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<div [adf-node-counter]="count"></div>`
 })
 class TestComponent {

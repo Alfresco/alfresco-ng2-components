@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { NodeEntry } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
@@ -26,6 +26,7 @@ import { NodeDownloadDirective } from '../../../directives/node-download.directi
 @Component({
     selector: 'adf-file-auto-download',
     imports: [CommonModule, MatDialogModule, TranslatePipe, MatButtonModule, NodeDownloadDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './file-auto-download.component.html'
 })
 export class FileAutoDownloadComponent {

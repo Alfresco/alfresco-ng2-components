@@ -16,7 +16,7 @@
  */
 
 import { FormModel, NoopTranslateModule } from '@alfresco/adf-core';
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FormCloudComponent } from './form-cloud.component';
@@ -26,6 +26,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
     selector: 'adf-cloud-form-with-custom-outcomes',
     imports: [FormCustomOutcomesComponent, FormCloudComponent, MatButtonModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<adf-cloud-form #adfCloudForm>
         <adf-cloud-form-custom-outcomes>
             <button mat-button id="adf-custom-outcome-1" (click)="onCustomButtonOneClick()">CUSTOM-BUTTON-1</button>

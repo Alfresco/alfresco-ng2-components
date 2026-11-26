@@ -16,17 +16,18 @@
  */
 
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    DestroyRef,
-    inject,
-    Input,
-    OnInit,
-    QueryList,
-    ViewChild,
-    ViewChildren,
-    ViewEncapsulation
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  inject,
+  Input,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
 import { NOTIFICATION_TYPE, NotificationModel } from '../models/notification.model';
@@ -62,6 +63,7 @@ import { AppConfigService } from '../../app-config/app-config.service';
         InitialUsernamePipe,
         MatSnackBarModule
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class NotificationHistoryComponent implements OnInit, AfterViewInit {

@@ -17,7 +17,7 @@
 
 import { ConfirmDialogComponent, ConfirmDialogComponentProps, IconModule } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
-import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ContentApi, ContentPagingQuery, LazyApi, Node, NodeEntry, NodesApi, VersionEntry, VersionsApi } from '@alfresco/js-api';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentVersionService } from './content-version.service';
@@ -69,6 +69,7 @@ export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry
     templateUrl: './version-list.component.html',
     styleUrls: ['./version-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-version-list' }
 })
 export class VersionListComponent implements OnChanges, OnInit {

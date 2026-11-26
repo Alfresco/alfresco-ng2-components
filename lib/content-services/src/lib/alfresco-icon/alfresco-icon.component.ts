@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'adf-alfresco-icon',
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './alfresco-icon-component.svg'
 })
 export class AlfrescoIconComponent {}

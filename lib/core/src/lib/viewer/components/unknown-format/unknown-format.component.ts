@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IconModule } from '../../../icon/icon.module';
 
@@ -24,6 +24,7 @@ import { IconModule } from '../../../icon/icon.module';
     templateUrl: './unknown-format.component.html',
     styleUrls: ['./unknown-format.component.scss'],
     imports: [IconModule, TranslatePipe],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class UnknownFormatComponent {

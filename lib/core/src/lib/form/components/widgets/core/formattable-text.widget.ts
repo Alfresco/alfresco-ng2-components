@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { isObservable } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -27,6 +27,7 @@ import { ADF_TYPED_VALUE_FORMATTING_ENABLED } from '../../../services/form-field
 
 @Component({
     template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true
 })
 export abstract class FormattableTextWidgetComponent extends WidgetComponent implements OnInit {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { FacetField, SearchCategory, TabbedFacetField } from '../../models';
@@ -32,6 +32,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     imports: [CommonModule, MatChipsModule, TranslatePipe, SearchFacetChipTabbedComponent, SearchFacetChipComponent, SearchWidgetChipComponent],
     templateUrl: './search-filter-chips.component.html',
     styleUrls: ['./search-filter-chips.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterChipsComponent implements OnInit {

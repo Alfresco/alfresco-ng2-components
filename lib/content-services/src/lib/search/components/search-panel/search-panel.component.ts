@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ContentNodeSelectorPanelService } from '../../../content-node-selector/content-node-selector-panel/content-node-selector-panel.service';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { CommonModule } from '@angular/common';
@@ -27,6 +27,7 @@ import { SearchFilterComponent } from '../search-filter';
     templateUrl: './search-panel.component.html',
     styleUrls: ['./search-panel.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-search-panel' }
 })
 export class SearchPanelComponent implements OnInit {

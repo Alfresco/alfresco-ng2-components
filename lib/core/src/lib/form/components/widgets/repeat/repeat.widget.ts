@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { FieldStylePipe } from '../../../pipes/field-style.pipe';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,6 +27,7 @@ import { IconModule } from '../../../../icon/icon.module';
     templateUrl: './repeat.widget.html',
     styleUrls: ['./repeat.widget.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FieldStylePipe, IconModule, MatButtonModule, TranslatePipe]
 })
 export class RepeatWidgetComponent {

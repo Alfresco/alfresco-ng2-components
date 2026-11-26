@@ -17,7 +17,7 @@
 
 import { IconModule, ObjectDataRow } from '@alfresco/adf-core';
 import { PermissionElement } from '@alfresco/js-api';
-import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { PermissionDisplayModel } from '../../models/permission.model';
 import { PermissionListService } from './permission-list.service';
 import { CommonModule } from '@angular/common';
@@ -46,6 +46,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     ],
     templateUrl: './permission-list.component.html',
     styleUrls: ['./permission-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class PermissionListComponent implements OnInit {

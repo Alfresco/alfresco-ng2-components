@@ -19,7 +19,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
-import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { Component, provideZonelessChangeDetection, ChangeDetectionStrategy } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { NodeSharedDirective } from './content-node-share.directive';
 import { NoopAuthModule } from '@alfresco/adf-core';
@@ -28,6 +28,7 @@ import { MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 @Component({
     selector: 'adf-node-share-test-component',
     imports: [NodeSharedDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <button
             [disabled]="!shareRef.isFile"

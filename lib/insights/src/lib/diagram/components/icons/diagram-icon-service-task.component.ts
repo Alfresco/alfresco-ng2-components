@@ -17,13 +17,14 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
 import { RaphaelIconServiceDirective } from '../raphael/icons/raphael-icon-service.component';
 
 @Component({
     selector: 'diagram-icon-service-task',
     imports: [RaphaelIconServiceDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-icon-service-task.component.html'
 })
 export class DiagramIconServiceTaskComponent extends DiagramElement implements OnInit {

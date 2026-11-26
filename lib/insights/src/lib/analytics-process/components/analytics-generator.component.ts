@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, inject, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ReportQuery } from '../../diagram/models/report/report-query.model';
 import { Chart } from '../../diagram/models/chart/chart.model';
 import { AnalyticsService } from '../services/analytics.service';
@@ -42,6 +42,7 @@ import { AnalyticsReportHeatMapComponent } from './analytics-report-heat-map.com
     ],
     templateUrl: './analytics-generator.component.html',
     styleUrls: ['./analytics-generator.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsGeneratorComponent implements OnChanges {

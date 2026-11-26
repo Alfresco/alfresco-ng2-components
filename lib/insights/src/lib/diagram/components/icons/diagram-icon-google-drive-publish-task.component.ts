@@ -17,13 +17,14 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
 import { RaphaelIconGoogleDrivePublishDirective } from '../raphael/icons/raphael-icon-google-drive-publish.component';
 
 @Component({
     selector: 'diagram-icon-google-drive-publish-task',
     imports: [RaphaelIconGoogleDrivePublishDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-icon-google-drive-publish-task.component.html'
 })
 export class DiagramIconGoogleDrivePublishTaskComponent extends DiagramElement implements OnInit {

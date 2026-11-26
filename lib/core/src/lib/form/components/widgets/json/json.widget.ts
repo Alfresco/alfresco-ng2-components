@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { Component, inject, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { EditJsonDialogSettings, EditJsonDialogComponent } from '../../../../dialogs/edit-json/edit-json.dialog';
@@ -38,6 +38,7 @@ import { TranslatePipe } from '@ngx-translate/core';
         '(select)': 'event($event)'
     },
     imports: [TranslatePipe, MatFormFieldModule, MatButtonModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class JsonWidgetComponent extends WidgetComponent {

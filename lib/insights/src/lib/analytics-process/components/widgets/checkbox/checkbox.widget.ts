@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormGroup } from '@angular/forms';
 import { WidgetComponent } from '../widget.component';
 import { CommonModule } from '@angular/common';
@@ -28,6 +28,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     selector: 'analytics-checkbox-widget',
     imports: [CommonModule, TranslatePipe, ReactiveFormsModule, MatCheckboxModule],
     templateUrl: './checkbox.widget.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class CheckboxWidgetAnalyticsComponent extends WidgetComponent {

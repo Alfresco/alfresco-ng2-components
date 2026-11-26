@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { NgIf } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { DateAdapter, ErrorStateMatcher, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -49,6 +49,7 @@ import { ReactiveFormWidget } from '../reactive-widget.interface';
         '(click)': 'event($event)'
     },
     imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, MatDatetimepickerModule, ReactiveFormsModule, MatIconModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, ReactiveFormWidget {

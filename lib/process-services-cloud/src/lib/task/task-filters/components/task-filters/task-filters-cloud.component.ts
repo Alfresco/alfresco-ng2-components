@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { combineLatest, defer, EMPTY, Observable, of, Subscription } from 'rxjs';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
 import { FilterParamsModel, TaskFilterCloudModel } from '../../models/filter-cloud.model';
@@ -41,6 +41,7 @@ import { AsyncPipe } from '@angular/common';
     selector: 'adf-cloud-task-filters',
     imports: [AsyncPipe, MatProgressSpinnerModule, TranslatePipe, MatListModule, RouterLink, IconModule],
     templateUrl: './task-filters-cloud.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./task-filters-cloud.component.scss']
 })
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {

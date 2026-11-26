@@ -17,12 +17,13 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ContentActionModel } from './../../models/content-action.model';
 import { DocumentListComponent } from './../document-list.component';
 
 @Component({
     selector: 'content-actions',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ''
 })
 export class ContentActionListComponent {

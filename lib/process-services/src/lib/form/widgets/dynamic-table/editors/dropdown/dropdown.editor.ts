@@ -16,7 +16,7 @@
  */
 
 import { FormService, FormFieldModel } from '@alfresco/adf-core';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DynamicTableColumnOption } from '../models/dynamic-table-column-option.model';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
@@ -32,6 +32,7 @@ import { FormsModule } from '@angular/forms';
     selector: 'adf-dropdown-editor',
     imports: [CommonModule, MatFormFieldModule, MatSelectModule, FormsModule],
     templateUrl: './dropdown.editor.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./dropdown.editor.scss']
 })
 export class DropdownEditorComponent implements OnInit {

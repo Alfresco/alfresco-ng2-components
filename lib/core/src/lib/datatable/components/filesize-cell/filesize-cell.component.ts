@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { FileSizePipe } from '../../../pipes';
 import { AsyncPipe } from '@angular/common';
@@ -29,6 +29,7 @@ import { AsyncPipe } from '@angular/common';
     `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-filesize-cell' },
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [FileSizePipe]
 })
 export class FileSizeCellComponent extends DataTableCellComponent {}

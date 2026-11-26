@@ -17,7 +17,7 @@
 
 import { IconModule } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -44,6 +44,7 @@ import { TranslatePipe } from '@ngx-translate/core';
             }
         `
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <ng-container>
             <mat-icon [adf-icon]="expanded ? 'expand_more' : 'chevron_right'" />

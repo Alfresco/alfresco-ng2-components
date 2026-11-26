@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
@@ -25,6 +25,7 @@ import { UnitTestingUtils } from '../../testing/unit-testing-utils';
 @Component({
     selector: 'adf-test-component',
     imports: [EmptyContentComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <adf-empty-content icon="delete" [title]="'CUSTOM_TITLE'" [subtitle]="'CUSTOM_SUBTITLE'">
             <div class="adf-empty-content__text">SUBTITLE-1</div>

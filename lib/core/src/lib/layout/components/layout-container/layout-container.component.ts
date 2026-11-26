@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, OnInit, OnDestroy, ViewEncapsulation, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, ViewChild, OnInit, OnDestroy, ViewEncapsulation, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { Direction } from '@angular/cdk/bidi';
 import { CommonModule } from '@angular/common';
@@ -25,6 +25,7 @@ import { CommonModule } from '@angular/common';
     imports: [CommonModule, MatSidenavModule],
     templateUrl: './layout-container.component.html',
     styleUrls: ['./layout-container.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {

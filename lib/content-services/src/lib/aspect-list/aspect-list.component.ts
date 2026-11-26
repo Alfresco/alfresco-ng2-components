@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { NodesApiService } from '../common/services/nodes-api.service';
 import { EMPTY, forkJoin, Observable } from 'rxjs';
 import { expand, map, reduce } from 'rxjs/operators';
@@ -34,6 +34,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     imports: [CommonModule, MatExpansionModule, MatCheckboxModule, MatTableModule, TranslatePipe, MatProgressSpinnerModule],
     templateUrl: './aspect-list.component.html',
     styleUrls: ['./aspect-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class AspectListComponent implements OnInit {

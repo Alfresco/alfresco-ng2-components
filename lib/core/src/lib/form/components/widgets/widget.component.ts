@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation, inject } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormFieldEvent, FormRulesEvent } from '../../events';
 import { FormService } from '../../services/form.service';
 import { isFormMutating } from '../../models/form-state.model';
@@ -39,6 +39,7 @@ import { FormFieldModel } from './core';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class WidgetComponent implements AfterViewInit {

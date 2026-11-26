@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ViewerComponent } from '../viewer.component';
 import { ViewerToolbarComponent } from '../viewer-toolbar.component';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
     imports: [ViewerComponent, ViewerToolbarComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <adf-viewer>
             <adf-viewer-toolbar>

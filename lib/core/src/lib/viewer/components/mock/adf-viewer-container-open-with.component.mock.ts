@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { ViewerComponent } from '../viewer.component';
 import { ViewerOpenWithComponent } from '../viewer-open-with.component';
@@ -24,6 +24,7 @@ import { IconModule } from '../../../icon/icon.module';
 @Component({
     selector: 'adf-viewer-container-open-with',
     imports: [ViewerComponent, IconModule, MatMenuModule, ViewerOpenWithComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <adf-viewer>
             <adf-viewer-open-with>

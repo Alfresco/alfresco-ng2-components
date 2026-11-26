@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { NodesApiService } from '../../common/services/nodes-api.service';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { InheritPermissionDirective } from './inherited-button.directive';
 import { NgIf } from '@angular/common';
 import { NoopAuthModule } from '@alfresco/adf-core';
@@ -33,6 +33,7 @@ const fakeNodeWithInheritNoPermission: any = { id: 'fake-id', permissions: { isI
         <span id="update-notification" *ngIf="updatedNode"> NODE UPDATED </span>
     `,
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [InheritPermissionDirective, NgIf]
 })
 class SimpleInheritedPermissionTestComponent {

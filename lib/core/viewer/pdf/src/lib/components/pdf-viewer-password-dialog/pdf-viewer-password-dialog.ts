@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
@@ -32,6 +32,7 @@ declare const pdfjsLib: { PasswordResponses: { NEED_PASSWORD: number; INCORRECT_
     templateUrl: './pdf-viewer-password-dialog.html',
     styleUrls: ['./pdf-viewer-password-dialog.scss'],
     imports: [MatDialogModule, IconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, TranslatePipe, MatButtonModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class PdfPasswordDialogComponent implements OnInit {

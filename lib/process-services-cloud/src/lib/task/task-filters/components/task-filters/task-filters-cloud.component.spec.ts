@@ -16,7 +16,7 @@
  */
 
 import { AppConfigService, NoopAuthModule } from '@alfresco/adf-core';
-import { Component, SimpleChange } from '@angular/core';
+import { Component, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { first, NEVER, of, Subject, throwError } from 'rxjs';
@@ -39,7 +39,8 @@ import { FilterCountersCloudService } from '../../../../services/filter-counters
 import { FilterCounterEntityType } from '../../../../models/filter-counters-cloud.model';
 import { TaskCloudEngineEvent } from '../../../../models/engine-event-cloud.model';
 
-@Component({ selector: 'adf-cloud-dummy', template: '' })
+@Component({ selector: 'adf-cloud-dummy', changeDetection: ChangeDetectionStrategy.Eager,
+ template: '' })
 class DummyComponent {}
 
 describe('TaskFiltersCloudComponent', () => {

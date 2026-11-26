@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { InfiniteSelectScrollDirective, AuthenticationService } from '@alfresco/adf-core';
 import { SitePaging, SiteEntry, Site } from '@alfresco/js-api';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
@@ -37,6 +37,7 @@ export type Relations = (typeof Relations)[keyof typeof Relations];
     imports: [CommonModule, TranslatePipe, MatFormFieldModule, MatSelectModule, InfiniteSelectScrollDirective],
     templateUrl: './sites-dropdown.component.html',
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-sites-dropdown' }
 })
 export class DropdownSitesComponent implements OnInit {

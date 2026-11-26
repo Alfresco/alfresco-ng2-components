@@ -17,7 +17,7 @@
 
 import { IconModule, InitialUsernamePipe, User } from '@alfresco/adf-core';
 import { Group, NodeEntry } from '@alfresco/js-api';
-import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { CommonModule } from '@angular/common';
@@ -47,6 +47,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     `,
     styleUrls: ['./user-icon-column.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-user-icon-column adf-datatable-content-cell' }
 })
 export class UserIconColumnComponent implements OnInit {

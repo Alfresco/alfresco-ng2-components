@@ -16,16 +16,17 @@
  */
 
 import {
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    ElementRef,
-    OnDestroy,
-    OnInit,
-    QueryList,
-    ViewChild,
-    ViewEncapsulation,
-    inject
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewEncapsulation,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { SearchFilterTabDirective } from './search-filter-tab.directive';
 import { CommonModule } from '@angular/common';
@@ -37,6 +38,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     imports: [CommonModule, MatTabsModule, TranslatePipe],
     templateUrl: './search-filter-tabbed.component.html',
     styleUrls: ['./search-filter-tabbed.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterTabbedComponent implements OnInit, OnDestroy {

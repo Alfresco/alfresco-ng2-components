@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, Input, OnDestroy, input, output } from '@angular/core';
+import { Component, Input, OnDestroy, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { StartProcessScreenCloudComponent } from './start-process-screen-cloud.component';
 import { MockedTaskScreenCloudComponent } from '../../../../testing/start-process-screen-mock.component';
 import { provideScreen } from '../../../services/provide-screen';
@@ -95,6 +95,7 @@ describe('StartProcessScreenCloudComponent', () => {
 
 @Component({
     selector: 'adf-cloud-destroy-tracking-screen',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<div class="adf-cloud-destroy-tracking-screen">screen</div>`
 })
 class DestroyTrackingScreenComponent implements StartProcessScreenCloud, OnDestroy {
@@ -118,6 +119,7 @@ class DestroyTrackingScreenComponent implements StartProcessScreenCloud, OnDestr
             <adf-cloud-start-process-screen-cloud [screenId]="screenId" [processDefinitionId]="'definition-id'" />
         }
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [StartProcessScreenCloudComponent]
 })
 class TestStartProcessWrapperComponent {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
 
 import { SearchWidget } from '../../models/search-widget.interface';
@@ -41,6 +41,7 @@ export interface SearchRadioOption {
     templateUrl: './search-radio.component.html',
     styleUrls: ['./search-radio.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-search-radio' }
 })
 export class SearchRadioComponent implements SearchWidget, OnInit {

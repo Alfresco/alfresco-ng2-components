@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
 import { AnalyticsService } from '../services/analytics.service';
@@ -33,6 +33,7 @@ export const LAYOUT_GRID = 'GRID';
     imports: [CommonModule, MatListModule, MatIconModule, MatCardModule],
     templateUrl: './analytics-report-list.component.html',
     styleUrls: ['./analytics-report-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsReportListComponent implements OnInit {

@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { DataColumnComponent } from './data-column.component';
 
 @Component({
     imports: [DataColumnComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <data-column key="name">
             <ng-template />
@@ -34,6 +35,7 @@ class DirectTemplateHostComponent {
 
 @Component({
     imports: [DataColumnComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <data-column key="name">
             <div>

@@ -16,24 +16,26 @@
  */
 
 import {
-    Component,
-    Input,
-    ComponentRef,
-    OnInit,
-    ViewChild,
-    ViewContainerRef,
-    OnDestroy,
-    OnChanges,
-    EventEmitter,
-    Output,
-    DestroyRef,
-    inject
+  Component,
+  Input,
+  ComponentRef,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+  OnDestroy,
+  OnChanges,
+  EventEmitter,
+  Output,
+  DestroyRef,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { ExtensionService } from '../../services/extension.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-preview-extension',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<div #content></div>`
 })
 export class PreviewExtensionComponent implements OnInit, OnChanges, OnDestroy {

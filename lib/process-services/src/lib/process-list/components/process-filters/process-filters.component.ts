@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { ProcessFilterService } from '../../services/process-filter.service';
 import { AppsProcessService } from '../../../services/apps-process.service';
@@ -40,6 +40,7 @@ const LEGACY_DEFAULT_PROCESS_FILTER_TRANSLATION_KEYS: Record<string, string> = {
     imports: [CommonModule, TranslatePipe, MatButtonModule, MatIconModule],
     templateUrl: './process-filters.component.html',
     styleUrls: ['./process-filters.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessFiltersComponent implements OnInit, OnChanges {

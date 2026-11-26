@@ -17,17 +17,18 @@
 
 import { Category } from '@alfresco/js-api';
 import {
-    Component,
-    DestroyRef,
-    ElementRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    ViewChild,
-    ViewEncapsulation
+  Component,
+  DestroyRef,
+  ElementRef,
+  EventEmitter,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EMPTY, Observable, Subject, timer } from 'rxjs';
@@ -70,6 +71,7 @@ interface CategoryNameControlErrors {
     ],
     templateUrl: './categories-management.component.html',
     styleUrls: ['./categories-management.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class CategoriesManagementComponent implements OnInit, OnDestroy {

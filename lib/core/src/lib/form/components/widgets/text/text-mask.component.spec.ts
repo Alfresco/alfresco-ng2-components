@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { InputMaskDirective } from './text-mask.component';
 
 @Component({
     imports: [InputMaskDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<input [textMask]="settings" />`
 })
 class MaskedInputHostComponent {

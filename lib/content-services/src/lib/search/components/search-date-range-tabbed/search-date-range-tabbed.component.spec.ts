@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { SearchDateRange } from './search-date-range/search-date-range';
 import { SearchFilterTabbedComponent } from '../search-filter-tabbed/search-filter-tabbed.component';
 import { SearchDateRangeComponent } from './search-date-range/search-date-range.component';
@@ -29,6 +29,7 @@ import { ReplaySubject } from 'rxjs';
 @Component({
     selector: 'adf-search-filter-tabbed',
     template: ``,
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true
 })
 export class MockSearchFilterTabbedComponent {}
@@ -36,6 +37,7 @@ export class MockSearchFilterTabbedComponent {}
 @Component({
     selector: 'adf-search-date-range',
     template: ``,
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true
 })
 export class MockSearchDateRangeComponent {

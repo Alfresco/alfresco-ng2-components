@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ViewEncapsulation, OnInit, inject } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { WidgetComponent, FormService, ErrorWidgetComponent } from '@alfresco/adf-core';
 import { ContentNodeDialogService, NodesApiService } from '@alfresco/adf-content-services';
 import { Node } from '@alfresco/js-api';
@@ -43,6 +43,7 @@ import { MatButtonModule } from '@angular/material/button';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class AttachFolderWidgetComponent extends WidgetComponent implements OnInit {

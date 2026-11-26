@@ -16,16 +16,18 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ScreenRenderingService } from './screen-rendering.service';
 import { APP_CUSTOM_SCREEN_TOKEN, provideScreen } from './provide-screen';
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: '<div>Test Component 1</div>'
 })
 class TestComponent1 {}
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: '<div>Test Component 2</div>'
 })
 class TestComponent2 {}

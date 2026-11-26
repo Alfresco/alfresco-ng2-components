@@ -16,7 +16,7 @@
  */
 
 import { Node } from '@alfresco/js-api';
-import { Component, EventEmitter, OnInit, Output, ViewEncapsulation, inject } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { NewVersionUploaderDialogData, NewVersionUploaderData, NewVersionUploaderDataAction } from './models';
 import { CommonModule } from '@angular/common';
@@ -40,6 +40,7 @@ import { VersionListComponent } from '../version-manager/version-list.component'
     templateUrl: './new-version-uploader.dialog.html',
     styleUrls: ['./new-version-uploader.dialog.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: {
         class: 'adf-new-version-uploader-dialog'
     }

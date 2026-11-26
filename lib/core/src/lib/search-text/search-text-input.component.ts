@@ -18,20 +18,21 @@
 import { Direction } from '@angular/cdk/bidi';
 import { NgClass, NgStyle } from '@angular/common';
 import {
-    afterNextRender,
-    ChangeDetectorRef,
-    Component,
-    DestroyRef,
-    ElementRef,
-    EventEmitter,
-    inject,
-    Injector,
-    Input,
-    OnInit,
-    OnDestroy,
-    Output,
-    ViewChild,
-    ViewEncapsulation
+  afterNextRender,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  ElementRef,
+  EventEmitter,
+  inject,
+  Injector,
+  Input,
+  OnInit,
+  OnDestroy,
+  Output,
+  ViewChild,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule, MatIconButton } from '@angular/material/button';
@@ -52,6 +53,7 @@ import { IconModule } from '../icon/icon.module';
     styleUrls: ['./search-text-input.component.scss'],
     encapsulation: ViewEncapsulation.None,
     imports: [MatButtonModule, IconModule, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, SearchTriggerDirective, NgClass, NgStyle],
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: {
         class: 'adf-search-text-input'
     }

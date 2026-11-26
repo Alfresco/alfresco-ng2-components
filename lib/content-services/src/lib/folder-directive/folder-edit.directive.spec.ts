@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
@@ -28,6 +28,7 @@ import { NoopAuthModule } from '@alfresco/adf-core';
 @Component({
     template: '<div [adf-edit-folder]="folder" (success)="success($event)" title="edit-title"></div>',
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FolderEditDirective]
 })
 class TestComponent {

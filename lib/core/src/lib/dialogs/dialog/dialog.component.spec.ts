@@ -21,11 +21,12 @@ import { DIALOG_COMPONENT_DATA, DialogComponent } from './dialog.component';
 import { DialogData } from './dialog-data.interface';
 import { DialogSize } from './dialog.model';
 import { UnitTestingUtils } from '../../testing';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Component({
     template: ``,
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'adf-dummy-component'
 })
 class DummyComponent {

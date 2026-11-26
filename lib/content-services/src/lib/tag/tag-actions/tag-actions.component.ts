@@ -18,7 +18,7 @@
 import { IconModule, TranslationService } from '@alfresco/adf-core';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
-import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { TagService } from '../services/tag.service';
 import { TagPaging } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
@@ -51,6 +51,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     templateUrl: './tag-actions.component.html',
     styleUrls: ['./tag-actions.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-tag-node-actions-list' }
 })
 export class TagActionsComponent implements OnChanges, OnInit {

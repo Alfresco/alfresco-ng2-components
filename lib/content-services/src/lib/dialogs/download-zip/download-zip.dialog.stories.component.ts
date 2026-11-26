@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, inject, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, inject, Input, OnInit, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DownloadZipDialogComponent } from './download-zip.dialog';
 import { zipNode, downloadEntry } from './mock/download-zip-data.mock';
@@ -25,6 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
     selector: 'adf-download-zip-dialog-storybook',
     template: `<button mat-raised-button (click)="openDialog()">Open dialog</button>`,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatButtonModule]
 })
 export class DownloadZipDialogStorybookComponent implements OnInit, OnChanges {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Output, QueryList, ViewChildren, inject } from '@angular/core';
+import { Component, EventEmitter, Output, QueryList, ViewChildren, inject, ChangeDetectionStrategy } from '@angular/core';
 import { LanguageService } from './service/language.service';
 import { Observable } from 'rxjs';
 import { LanguageItem } from '../common/services/language-item.interface';
@@ -25,6 +25,7 @@ import { MatMenuItem, MatMenuModule } from '@angular/material/menu';
 @Component({
     selector: 'adf-language-menu',
     imports: [CommonModule, MatMenuModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <button mat-menu-item *ngFor="let language of languages$ | async" [attr.lang]="language.key" (click)="changeLanguage(language)">
             {{ language.label }}

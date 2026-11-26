@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ContainerModel } from '../core/container.model';
 import { FieldStylePipe } from './../../../pipes/field-style.pipe';
 import { NgTemplateOutlet } from '@angular/common';
@@ -28,6 +28,7 @@ import { IconModule } from '../../../../icon/icon.module';
     templateUrl: './header.widget.html',
     styleUrls: ['./header.widget.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FieldStylePipe, IconModule, MatButtonModule, TranslatePipe, NgTemplateOutlet]
 })
 export class HeaderWidgetComponent {

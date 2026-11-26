@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { DataSorting, HeaderFilterTemplateDirective, PaginationModel } from '@alfresco/adf-core';
 import { SearchHeaderQueryBuilderService } from '../../../search/services/search-header-query-builder.service';
 import { FilterSearch } from './../../../search/models/filter-search.interface';
@@ -26,6 +26,7 @@ import type { NodePaging } from '@alfresco/js-api';
 @Component({
     selector: 'adf-filter-header',
     imports: [HeaderFilterTemplateDirective, SearchFilterContainerComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './filter-header.component.html'
 })
 export class FilterHeaderComponent implements OnInit, OnChanges {

@@ -16,17 +16,18 @@
  */
 
 import {
-    ChangeDetectorRef,
-    Component,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  EventEmitter,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
     ContentLinkModel,
@@ -82,6 +83,7 @@ const WIDGET_FIELD_VALIDATORS: FormFieldValidator[] = [
     imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, TranslatePipe, FormRendererComponent, FormatSpacePipe],
     templateUrl: './form.component.html',
     styleUrls: ['./form.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class FormComponent extends FormBaseComponent implements OnInit, OnChanges {

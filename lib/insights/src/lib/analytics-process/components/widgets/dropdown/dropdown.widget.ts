@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { WidgetComponent } from '../widget.component';
 import { CommonModule } from '@angular/common';
@@ -28,6 +28,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     imports: [CommonModule, TranslatePipe, ReactiveFormsModule],
     templateUrl: './dropdown.widget.html',
     styleUrls: ['./dropdown.widget.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class DropdownWidgetAnalyticsComponent extends WidgetComponent implements OnInit {

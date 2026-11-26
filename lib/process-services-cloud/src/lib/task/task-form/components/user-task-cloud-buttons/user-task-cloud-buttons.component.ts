@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,6 +26,7 @@ import { ClaimTaskCloudDirective } from './claim-task/claim-task-cloud.directive
     selector: 'adf-cloud-user-task-cloud-buttons',
     imports: [CommonModule, TranslatePipe, UnClaimTaskCloudDirective, ClaimTaskCloudDirective, MatButtonModule],
     styles: ['button { margin-right: 8px; }'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './user-task-cloud-buttons.component.html'
 })
 export class UserTaskCloudButtonsComponent {

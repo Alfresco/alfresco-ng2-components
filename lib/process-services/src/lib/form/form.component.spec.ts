@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange, ComponentFactoryResolver, Injector, NgModule, Component, ViewChild, DebugElement } from '@angular/core';
+import { SimpleChange, ComponentFactoryResolver, Injector, NgModule, Component, ViewChild, DebugElement, ChangeDetectionStrategy } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TaskRepresentation } from '@alfresco/js-api';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
@@ -1079,6 +1079,7 @@ describe('FormComponent', () => {
 @Component({
     imports: [FormCustomOutcomesComponent, MatButtonModule, FormComponent],
     selector: 'adf-form-with-custom-outcomes',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <adf-form #adfForm>
         <adf-form-custom-outcomes>
             <button mat-button id="adf-custom-outcome-1" (click)="onCustomButtonOneClick()">CUSTOM-BUTTON-1</button>

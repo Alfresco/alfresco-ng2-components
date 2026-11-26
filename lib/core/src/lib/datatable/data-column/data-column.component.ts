@@ -17,12 +17,13 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
+import { Component, ContentChild, Input, OnInit, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { DataColumnType } from '@alfresco/adf-extensions';
 import { CurrencyConfig, DateConfig, DecimalConfig } from '../data/data-column.model';
 
 @Component({
     selector: 'data-column',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ''
 })
 export class DataColumnComponent implements OnInit {

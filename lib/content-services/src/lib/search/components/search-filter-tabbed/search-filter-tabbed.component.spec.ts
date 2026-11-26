@@ -18,13 +18,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MatTabGroup } from '@angular/material/tabs';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { SearchFilterTabbedComponent } from './search-filter-tabbed.component';
 import { SearchFilterTabDirective } from './search-filter-tab.directive';
 
 @Component({
     selector: 'adf-search-filter-tabbed-test',
     imports: [SearchFilterTabbedComponent, SearchFilterTabDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <adf-search-filter-tabbed>
             <div *adf-search-filter-tab="'Tab 1'">Tab 1 content</div>

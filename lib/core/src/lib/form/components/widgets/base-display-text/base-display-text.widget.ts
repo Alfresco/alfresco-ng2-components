@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, inject, AfterViewInit, OnInit, DestroyRef, InjectionToken } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, AfterViewInit, OnInit, DestroyRef, InjectionToken, ChangeDetectionStrategy } from '@angular/core';
 import { debounceTime, filter, isObservable, Observable } from 'rxjs';
 import { FormRulesEvent } from '../../../events';
 import { FormExpressionService } from '../../../services/form-expression.service';
@@ -33,6 +33,7 @@ export const ADF_DISPLAY_TEXT_SETTINGS = new InjectionToken<DisplayTextWidgetSet
 
 @Component({
     template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true
 })
 export abstract class BaseDisplayTextWidgetComponent extends WidgetComponent implements OnInit, AfterViewInit {

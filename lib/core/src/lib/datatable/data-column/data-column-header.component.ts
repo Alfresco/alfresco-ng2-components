@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, Component, ContentChild, TemplateRef, inject } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, TemplateRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DataColumnComponent } from './data-column.component';
 
 @Component({
     selector: 'adf-data-column-header',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ''
 })
 export class DateColumnHeaderComponent implements AfterContentInit {

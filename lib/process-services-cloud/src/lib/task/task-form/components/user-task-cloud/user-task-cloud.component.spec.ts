@@ -17,7 +17,7 @@
 
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, EventEmitter, Input, Output, SimpleChange } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatCardHarness } from '@angular/material/card/testing';
@@ -59,6 +59,7 @@ const createTaskDetailsCloudModel = (): TaskDetailsCloudModel => ({
 @Component({
     selector: 'adf-cloud-task-screen',
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ''
 })
 class TaskScreenCloudMockComponent {
