@@ -21,7 +21,7 @@ permissions:
 jobs:
   prepare:
     name: "🌱 Prepare update branch"
-    # if: ${{ github.ref == 'refs/heads/develop' }}
+    if: ${{ github.ref == 'refs/heads/develop' }}
     runs-on: ubuntu-latest
     timeout-minutes: 90
     permissions:
