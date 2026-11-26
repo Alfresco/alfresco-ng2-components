@@ -6,18 +6,7 @@ runs:
     - name: Run migrations
       id: stage
       shell: bash
-      run: |
-        {
-          PENDING_FILE="$RUNNER_TEMP/pending-migrations.json"
-          PENDING=$(node scripts/update-angular/pending-migrations.mjs migrations.json "$PENDING_FILE")
-          if [ "$PENDING" != "0" ]; then
-            pnpm nx migrate --run-migrations="$(realpath --relative-to=. "$PENDING_FILE")" --create-commits
-          fi
-          git rm -f --ignore-unmatch migrations.json
-          pnpm install --no-frozen-lockfile
-          git add -A
-          git diff --cached --quiet || git commit -m "chore: remove migrations file and refresh lockfile"
-        } 2>&1 | tee "$RUNNER_TEMP/validation.log"
+      run: scripts/update-angular/run-migrations.sh 2>&1 | tee "$RUNNER_TEMP/validation.log"
     - name: Record result
       if: ${{ always() }}
       uses: ./.github/actions/update-angular/record-validation-result
