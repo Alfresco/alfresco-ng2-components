@@ -115,9 +115,13 @@ function rejectOutdated(recorded, headSha) {
 function listSteps(recorded) {
     const find = (name) => recorded.find((step) => step.name === name);
     const optional = [
-        { name: 'format-and-check', todo: 'Make dependency installation and report downloads pass, then re-run the failed job.' },
+        {
+            name: 'format-and-check',
+            todo: 'Make dependency installation and report downloads pass, then re-run the failed job.',
+            hiddenOnSuccess: true
+        },
         ...OPTIONAL_STAGES
-    ].filter((stage) => find(stage.name));
+    ].filter((stage) => find(stage.name) && !(stage.hiddenOnSuccess && find(stage.name).outcome === 'success'));
     const known = [...UPDATE_STAGES, ...optional, ...VALIDATION_STAGES].map((stage) => ({
         log: '',
         outcome: NOT_RUN,
