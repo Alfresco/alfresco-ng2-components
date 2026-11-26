@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DebugElement, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, DebugElement, EventEmitter, Output, SimpleChange, SimpleChanges, TemplateRef, Input } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
@@ -35,6 +35,9 @@ import { ViewerComponent } from './viewer.component';
 import { ThumbnailService } from '../../common/services/thumbnail.service';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { ViewerRenderComponent } from './viewer-render/viewer-render.component';
+import { PDF_VIEWER_COMPONENT } from '../tokens/pdf-viewer.token';
+import { PdfViewerRef } from '../tokens/pdf-viewer-ref';
+import { By } from '@angular/platform-browser';
 
 @Component({
     selector: 'adf-dialog-dummy',
@@ -524,8 +527,8 @@ describe('ViewerComponent', () => {
 
         describe('SideBar Test', () => {
             it('should NOT display sidebar if is not allowed', (done) => {
-                component.showRightSidebar = true;
-                component.allowRightSidebar = false;
+                fixture.componentRef.setInput('showRightSidebar', true);
+                fixture.componentRef.setInput('allowRightSidebar', false);
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
@@ -535,8 +538,8 @@ describe('ViewerComponent', () => {
             });
 
             it('should display sidebar on the right side', (done) => {
-                component.allowRightSidebar = true;
-                component.showRightSidebar = true;
+                fixture.componentRef.setInput('allowRightSidebar', true);
+                fixture.componentRef.setInput('showRightSidebar', true);
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
@@ -547,8 +550,8 @@ describe('ViewerComponent', () => {
             });
 
             it('should NOT display left sidebar if is not allowed', (done) => {
-                component.showLeftSidebar = true;
-                component.allowLeftSidebar = false;
+                fixture.componentRef.setInput('showLeftSidebar', true);
+                fixture.componentRef.setInput('allowLeftSidebar', false);
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
@@ -558,8 +561,8 @@ describe('ViewerComponent', () => {
             });
 
             it('should display sidebar on the left side', (done) => {
-                component.allowLeftSidebar = true;
-                component.showLeftSidebar = true;
+                fixture.componentRef.setInput('allowLeftSidebar', true);
+                fixture.componentRef.setInput('showLeftSidebar', true);
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
@@ -574,16 +577,16 @@ describe('ViewerComponent', () => {
             const infoButton = () => testingUtils.getByDataAutomationId('adf-toolbar-sidebar');
 
             it('should NOT display info button on the right side', () => {
-                component.allowRightSidebar = true;
-                component.hideInfoButton = true;
+                fixture.componentRef.setInput('allowRightSidebar', true);
+                fixture.componentRef.setInput('hideInfoButton', true);
                 fixture.detectChanges();
 
                 expect(infoButton()).toBeNull();
             });
 
             it('should display info button on the right side', () => {
-                component.allowRightSidebar = true;
-                component.hideInfoButton = false;
+                fixture.componentRef.setInput('allowRightSidebar', true);
+                fixture.componentRef.setInput('hideInfoButton', false);
                 fixture.detectChanges();
 
                 expect(infoButton()).not.toBeNull();
@@ -593,8 +596,8 @@ describe('ViewerComponent', () => {
         describe('View', () => {
             describe('Overlay mode true', () => {
                 beforeEach(() => {
-                    component.overlayMode = true;
-                    component.fileName = 'fake-test-file.pdf';
+                    fixture.componentRef.setInput('overlayMode', true);
+                    fixture.componentRef.setInput('fileName', 'fake-test-file.pdf');
                     fixture.detectChanges();
                 });
 
@@ -660,7 +663,7 @@ describe('ViewerComponent', () => {
 
             describe('Overlay mode false', () => {
                 beforeEach(() => {
-                    component.overlayMode = false;
+                    fixture.componentRef.setInput('overlayMode', false);
                     fixture.detectChanges();
                 });
 
@@ -683,7 +686,7 @@ describe('ViewerComponent', () => {
             });
 
             it('should viewer be hide if showViewer value is false', () => {
-                component.showViewer = false;
+                fixture.componentRef.setInput('showViewer', false);
 
                 fixture.detectChanges();
                 expect(testingUtils.getByCSS('.adf-viewer-content')).toBeNull();
@@ -695,8 +698,8 @@ describe('ViewerComponent', () => {
             const getLeftCloseButton = () => testingUtils.getByDataAutomationId('adf-toolbar-left-back');
 
             it('should show close button on left side when closeButtonPosition is left and allowGoBack is true', () => {
-                component.allowGoBack = true;
-                component.closeButtonPosition = CloseButtonPosition.Left;
+                fixture.componentRef.setInput('allowGoBack', true);
+                fixture.componentRef.setInput('closeButtonPosition', CloseButtonPosition.Left);
                 fixture.detectChanges();
 
                 expect(getLeftCloseButton()).not.toBeNull();
@@ -704,8 +707,8 @@ describe('ViewerComponent', () => {
             });
 
             it('should show close button on right side when closeButtonPosition is right and allowGoBack is true', () => {
-                component.allowGoBack = true;
-                component.closeButtonPosition = CloseButtonPosition.Right;
+                fixture.componentRef.setInput('allowGoBack', true);
+                fixture.componentRef.setInput('closeButtonPosition', CloseButtonPosition.Right);
                 fixture.detectChanges();
 
                 expect(getRightCloseButton()).not.toBeNull();
@@ -713,7 +716,7 @@ describe('ViewerComponent', () => {
             });
 
             it('should hide close button allowGoBack is false', () => {
-                component.allowGoBack = false;
+                fixture.componentRef.setInput('allowGoBack', false);
                 fixture.detectChanges();
 
                 expect(getRightCloseButton()).toBeNull();
@@ -845,6 +848,16 @@ describe('ViewerComponent', () => {
 
             expect(component.downloadFile.emit).toHaveBeenCalled();
         }));
+
+        it('should hide the viewer when DownloadPromptDialog returns DownloadPromptActions.DOWNLOAD', fakeAsync(() => {
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.DOWNLOAD) } as ReturnType<MatDialog['open']>);
+            fixture.autoDetectChanges();
+            expect(testingUtils.getByCSS('.adf-viewer-content')).not.toBeNull();
+
+            tick(3000);
+
+            expect(testingUtils.getByCSS('.adf-viewer-content')).toBeNull();
+        }));
     });
 
     describe('keyboard events', () => {
@@ -920,5 +933,68 @@ describe('ViewerComponent', () => {
             expect(event2.preventDefault).toHaveBeenCalled();
             expect(component.onNavigateNextClick).toHaveBeenCalledWith(event2);
         });
+    });
+});
+
+@Component({
+    selector: 'adf-mock-pdf-viewer',
+    template: ''
+})
+class MockPdfViewerComponent implements PdfViewerRef {
+    @Input() urlFile = '';
+    @Input() blobFile: Blob;
+    @Input() fileName = '';
+    @Input() allowThumbnails = false;
+    @Input() thumbnailsTemplate: TemplateRef<unknown> = null;
+    @Input() cacheType = '';
+    @Output() pagesLoaded = new EventEmitter<void>();
+    @Output() error = new EventEmitter<void>();
+    @Output() close = new EventEmitter<void>();
+}
+
+describe('ViewerComponent with PDF viewer', () => {
+    let fixture: ComponentFixture<ViewerComponent<unknown>>;
+    let testingUtils: UnitTestingUtils;
+
+    const getSpinner = () => testingUtils.getByCSS('.adf-viewer-render-main-loader');
+    const getPdfViewer = (): MockPdfViewerComponent => fixture.debugElement.query(By.directive(MockPdfViewerComponent)).componentInstance;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [MatIconTestingModule],
+            providers: [MatDialog, { provide: PDF_VIEWER_COMPONENT, useValue: MockPdfViewerComponent }]
+        });
+
+        fixture = TestBed.createComponent(ViewerComponent);
+        testingUtils = new UnitTestingUtils(fixture.debugElement);
+        fixture.componentRef.setInput('blobFile', new Blob(['%PDF'], { type: 'application/pdf' }));
+        fixture.componentRef.setInput('fileName', 'file.pdf');
+        fixture.autoDetectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
+    });
+
+    it('should show the spinner until the PDF viewer emits pagesLoaded', async () => {
+        await fixture.whenStable();
+        expect(getSpinner()).not.toBeNull();
+    });
+
+    it('should hide the spinner when the PDF viewer emits pagesLoaded', async () => {
+        await fixture.whenStable();
+        getPdfViewer().pagesLoaded.emit();
+        await fixture.whenStable();
+
+        expect(getSpinner()).toBeNull();
+    });
+
+    it('should hide the spinner and show the unknown format view when the PDF viewer emits error', async () => {
+        await fixture.whenStable();
+        getPdfViewer().error.emit();
+        await fixture.whenStable();
+
+        expect(getSpinner()).toBeNull();
+        expect(testingUtils.getByCSS('adf-viewer-unknown-format')).not.toBeNull();
     });
 });

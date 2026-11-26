@@ -19,6 +19,7 @@
 
 import { NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
 import {
+    ChangeDetectorRef,
     Component,
     EventEmitter,
     HostListener,
@@ -179,6 +180,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     private readonly pdfjsWorkerDestroy$ = new Subject<boolean>();
 
     private readonly dialog = inject(MatDialog);
+    private readonly cdr = inject(ChangeDetectorRef);
     private readonly renderingQueueServices = inject(RenderingQueueServices);
     private readonly appConfigService = inject(AppConfigService);
 
@@ -274,6 +276,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             this.loadingTask.onProgress = (progressData: OnProgressParameters) => {
                 const level = progressData.loaded / progressData.total;
                 this.loadingPercent = Math.round(level * 100);
+                this.cdr.markForCheck();
             };
 
             this.isPanelDisabled = true;
@@ -284,11 +287,15 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                     this.page = 1;
                     this.displayPage = 1;
                     this.initPDFViewer(pdfDocument);
+                    this.cdr.markForCheck();
 
                     return pdfDocument.getPage(1);
                 })
                 .then(() => {
-                    setTimeout(() => this.scalePage('init'));
+                    setTimeout(() => {
+                        this.scalePage('init');
+                        this.cdr.markForCheck();
+                    });
                 })
                 .catch(() => {
                     this.error.emit();
@@ -649,6 +656,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         if (event.source?.container.id === `${this.randomPdfId}-viewer-pdf-viewer`) {
             this.page = event.pageNumber;
             this.displayPage = event.pageNumber;
+            this.cdr.markForCheck();
         }
     }
 
@@ -681,6 +689,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      */
     onPagesLoaded() {
         this.isPanelDisabled = false;
+        this.cdr.markForCheck();
         this.pagesLoaded.emit();
     }
 
