@@ -9,6 +9,10 @@ inputs:
     description: 'Run git-latest-tag, npm-tag, and before-install (requires fetch-depth: 0). Set to false for matrix jobs that only need node/cache.'
     required: false
     default: 'true'
+  install-dependencies:
+    description: 'Install and audit the dependencies of the checkout. Set to false to set up only pnpm and Node, for jobs that install another checkout themselves.'
+    required: false
+    default: 'true'
   act:
     description: 'enable act debug'
     required: false
@@ -39,9 +43,11 @@ runs:
         id: set-npm-tag
         uses: ./.github/actions/set-npm-tag
       - name: Install dependencies
+        if: ${{ inputs.install-dependencies == 'true' }}
         shell: bash
         run: pnpm install --frozen-lockfile
       - name: Security audit
+        if: ${{ inputs.install-dependencies == 'true' }}
         shell: bash
         run: pnpm audit --audit-level=critical
       - name: Restore nx cache

@@ -48,6 +48,11 @@ jobs:
         uses: ./.github/actions/setup
         with:
           full-setup: 'false'
+          install-dependencies: 'false'
+      - name: Install original dependencies
+        if: ${{ inputs.stage == 'align-peers' || inputs.stage == 'format-and-check' }}
+        shell: bash
+        run: pnpm install --frozen-lockfile
       - name: Save original peer baseline
         if: ${{ inputs.stage == 'align-peers' || inputs.stage == 'format-and-check' }}
         shell: bash
@@ -67,6 +72,9 @@ jobs:
         id: install
         shell: bash
         run: pnpm install --no-frozen-lockfile 2>&1 | tee "$RUNNER_TEMP/validation.log"
+      - name: Audit branch dependencies
+        shell: bash
+        run: pnpm audit --audit-level=critical 2>&1 | tee "$RUNNER_TEMP/validation.log"
       - name: Download peer alignment report
         if: ${{ inputs.stage == 'align-peers' || inputs.stage == 'format-and-check' }}
         continue-on-error: ${{ inputs.stage == 'align-peers' }}
