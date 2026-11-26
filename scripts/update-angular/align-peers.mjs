@@ -18,7 +18,7 @@
 import fs from 'node:fs';
 import { main } from './lib/cli.mjs';
 import { installedVersion, setDependencyVersions, workspaceDependencies } from './lib/package-json.mjs';
-import { findPeerIssues, issueKey, readBaselineKeys } from './lib/peers.mjs';
+import { findPeerIssues, issueKey, readAlignmentReport, readBaselineKeys } from './lib/peers.mjs';
 import { installableReleases, peerDependenciesOf } from './lib/registry.mjs';
 import { runVisibly } from './lib/shell.mjs';
 import { compareVersions, exactVersion, isVersionRange, majorVersion, satisfiesRange } from './lib/versions.mjs';
@@ -135,26 +135,6 @@ function chooseUpgrades(issues, dependencies, tried) {
 }
 
 /**
- * Reads the report an earlier attempt of this run left, so that a retry, which starts from the manifests that attempt already upgraded,
- * still reports its upgrades. Manual and skipped entries are kept only while their dependency is unchanged, as a person may have handled them since.
- * @param reportFile report of the earlier attempt
- * @returns the report to continue from
- */
-function readEarlierReport(reportFile) {
-    if (!fs.existsSync(reportFile)) {
-        return { upgrades: [], manual: [], skipped: [] };
-    }
-    const earlier = JSON.parse(fs.readFileSync(reportFile, 'utf8'));
-    const dependencies = workspaceDependencies();
-
-    return {
-        upgrades: earlier.upgrades ?? [],
-        manual: (earlier.manual ?? []).filter((entry) => dependencies[entry.name] === entry.from),
-        skipped: (earlier.skipped ?? []).filter((entry) => dependencies[entry.name] === entry.range)
-    };
-}
-
-/**
  * Adds entries to a report list, replacing the entry of the same package. An upgrade keeps the version it started from.
  * @param list report list to update
  * @param entries entries to add
@@ -180,7 +160,7 @@ function addByName(list, entries) {
  */
 function alignPeers(baselineFile, reportFile) {
     const baselineKeys = readBaselineKeys(baselineFile);
-    const report = readEarlierReport(reportFile);
+    const report = readAlignmentReport(reportFile);
     const save = () => fs.writeFileSync(reportFile, `${JSON.stringify(report, null, 2)}\n`);
     const tried = new Set();
 
