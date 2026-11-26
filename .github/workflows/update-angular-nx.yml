@@ -139,6 +139,7 @@ jobs:
   clean-overrides:
     name: "Clean overrides"
     needs: [prepare, format-and-check]
+    if: ${{ !cancelled() && needs.prepare.result == 'success' && (needs.format-and-check.result == 'success' || (needs.format-and-check.result == 'failure' && needs.format-and-check.outputs.lockfile-outcome == 'success')) }}
     uses: ./.github/workflows/update-angular-stage.yml
     secrets: inherit
     with:
