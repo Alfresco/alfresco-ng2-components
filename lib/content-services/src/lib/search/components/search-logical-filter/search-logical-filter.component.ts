@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
@@ -45,6 +45,7 @@ export type LogicalSearchCondition = LogicalSearchConditionEnumValuedKeys;
     imports: [CommonModule, MatFormFieldModule, TranslatePipe, FormsModule],
     templateUrl: './search-logical-filter.component.html',
     styleUrls: ['./search-logical-filter.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class SearchLogicalFilterComponent implements SearchWidget, OnInit {

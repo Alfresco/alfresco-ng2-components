@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, Input, Component, OnInit, OnChanges, ViewContainerRef, inject } from '@angular/core';
+import { Directive, Input, Component, OnInit, OnChanges, ViewContainerRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Directive({
@@ -47,6 +47,7 @@ export class NodeCounterDirective implements OnInit, OnChanges {
     standalone: true,
     imports: [TranslatePipe],
     selector: 'adf-node-counter',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <div>{{ 'NODE_COUNTER.SELECTED_COUNT' | translate: { count: counter } }}</div> `
 })
 export class NodeCounterComponent {

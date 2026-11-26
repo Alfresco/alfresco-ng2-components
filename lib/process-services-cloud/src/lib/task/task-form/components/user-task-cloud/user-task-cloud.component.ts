@@ -16,7 +16,7 @@
  */
 
 import { ContentLinkModel, EmptyContentComponent, FormModel, FormOutcomeEvent } from '@alfresco/adf-core';
-import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormCloudDisplayModeConfiguration } from '../../../../services/form-fields.interfaces';
 import { TaskCloudService } from '../../../services/task-cloud.service';
@@ -50,6 +50,7 @@ import { UserTaskContentType, TaskTypeResolverService, UserTaskType } from '../.
         MatCheckboxModule
     ],
     templateUrl: './user-task-cloud.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./user-task-cloud.component.scss']
 })
 export class UserTaskCloudComponent implements OnInit, OnChanges {

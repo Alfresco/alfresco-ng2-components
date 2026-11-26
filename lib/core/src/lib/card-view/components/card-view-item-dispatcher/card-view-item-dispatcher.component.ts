@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, SimpleChange, SimpleChanges, ViewChild, ViewContainerRef, inject } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChange, SimpleChanges, ViewChild, ViewContainerRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CardViewItem } from '../../interfaces/card-view-item.interface';
 import { CardItemTypeService } from '../../services/card-item-types.service';
 import { DEFAULT_SEPARATOR } from '../card-view-textitem/card-view-textitem.component';
 
 @Component({
     selector: 'adf-card-view-item-dispatcher',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: '<ng-template #content />'
 })
 export class CardViewItemDispatcherComponent implements OnChanges {

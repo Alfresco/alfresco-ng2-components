@@ -16,7 +16,7 @@
  */
 
 import { Observable } from 'rxjs';
-import { Component, DestroyRef, EventEmitter, inject, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, OnInit, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Node } from '@alfresco/js-api';
@@ -46,6 +46,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     templateUrl: './folder.dialog.html',
     styleUrls: ['./folder.dialog.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-folder-dialog' }
 })
 export class FolderDialogComponent implements OnInit {

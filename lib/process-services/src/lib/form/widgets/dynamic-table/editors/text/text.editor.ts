@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
@@ -27,6 +27,7 @@ import { MatInputModule } from '@angular/material/input';
     selector: 'adf-text-editor',
     imports: [CommonModule, MatFormFieldModule, MatInputModule],
     templateUrl: './text.editor.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./text.editor.scss']
 })
 export class TextEditorComponent implements OnInit {

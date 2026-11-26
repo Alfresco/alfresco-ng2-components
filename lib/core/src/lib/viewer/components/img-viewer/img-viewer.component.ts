@@ -17,19 +17,20 @@
 
 import { NgIf } from '@angular/common';
 import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    EventEmitter,
-    HostListener,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
-    inject
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -45,6 +46,7 @@ import { IconModule } from '../../../icon/icon.module';
     styleUrls: ['./img-viewer.component.scss'],
     host: { class: 'adf-image-viewer' },
     imports: [ToolbarComponent, TranslatePipe, IconModule, MatButtonModule, NgIf],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {

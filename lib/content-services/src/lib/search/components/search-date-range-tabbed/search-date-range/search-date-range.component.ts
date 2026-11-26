@@ -16,18 +16,19 @@
  */
 
 import {
-    AfterViewInit,
-    Component,
-    DestroyRef,
-    effect,
-    ElementRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnInit,
-    Output,
-    ViewChild,
-    ViewEncapsulation
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  effect,
+  ElementRef,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { endOfDay, isAfter, isBefore, isValid, parse } from 'date-fns';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
@@ -68,6 +69,7 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
         { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS }
     ],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-search-date-range' }
 })
 export class SearchDateRangeComponent implements OnInit, AfterViewInit {

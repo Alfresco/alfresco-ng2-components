@@ -19,7 +19,7 @@
 
 import { FormFieldOption, WidgetComponent } from '@alfresco/adf-core';
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
-import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, inject, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { TaskFormService } from '../../services/task-form.service';
@@ -47,6 +47,7 @@ import { MatInputModule } from '@angular/material/input';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit {

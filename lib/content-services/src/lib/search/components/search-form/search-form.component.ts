@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, inject, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, inject, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchForm } from '../../models/search-form.interface';
 import { CommonModule } from '@angular/common';
@@ -29,6 +29,7 @@ import { IconModule } from '@alfresco/adf-core';
     imports: [CommonModule, MatButtonModule, TranslatePipe, MatMenuModule, IconModule],
     templateUrl: './search-form.component.html',
     styleUrls: ['./search-form.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFormComponent {

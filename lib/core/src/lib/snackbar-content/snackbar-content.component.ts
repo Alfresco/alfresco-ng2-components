@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
 import { SnackBarData } from './snack-bar-data';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -27,6 +27,7 @@ import { IconModule } from '../icon/icon.module';
     imports: [IconModule, TranslatePipe, MatButtonModule],
     templateUrl: './snackbar-content.component.html',
     styleUrls: ['./snackbar-content.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: {
         class: 'mat-simple-snackbar'
     }

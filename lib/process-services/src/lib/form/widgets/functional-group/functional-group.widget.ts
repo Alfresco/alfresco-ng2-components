@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { GroupModel, WidgetComponent } from '@alfresco/adf-core';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { merge, of } from 'rxjs';
@@ -56,6 +56,7 @@ import { MatIconModule } from '@angular/material/icon';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class FunctionalGroupWidgetComponent extends WidgetComponent implements OnInit {

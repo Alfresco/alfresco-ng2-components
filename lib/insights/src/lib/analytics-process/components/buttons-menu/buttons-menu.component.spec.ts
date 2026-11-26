@@ -16,7 +16,7 @@
  */
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { ButtonsMenuComponent } from './buttons-menu.component';
@@ -24,6 +24,7 @@ import { ButtonsMenuComponent } from './buttons-menu.component';
 @Component({
     selector: 'adf-custom-container',
     imports: [ButtonsMenuComponent, MatMenuModule, MatIconModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <adf-buttons-action-menu>
             <button mat-menu-item (click)="assignValue()"><mat-icon>settings</mat-icon><span>Button</span></button>
@@ -41,6 +42,7 @@ export class CustomContainerComponent {
 @Component({
     selector: 'adf-custom-empty-container',
     template: ` <adf-buttons-action-menu />`,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ButtonsMenuComponent]
 })
 export class CustomEmptyContainerComponent {}

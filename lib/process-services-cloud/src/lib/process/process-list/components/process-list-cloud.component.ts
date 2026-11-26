@@ -16,18 +16,19 @@
  */
 
 import {
-    AfterContentInit,
-    Component,
-    ContentChild,
-    EventEmitter,
-    input,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
-    inject
+  AfterContentInit,
+  Component,
+  ContentChild,
+  EventEmitter,
+  input,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
     ColumnsSelectorComponent,
@@ -86,6 +87,7 @@ const PRESET_KEY = 'adf-cloud-process-list.presets';
     ],
     templateUrl: './process-list-cloud.component.html',
     styleUrls: ['./process-list-cloud.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessListCloudComponent

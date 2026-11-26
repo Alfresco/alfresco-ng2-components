@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
 import { DiagramTaskComponent } from './diagram-task.component';
 import { DiagramIconCamelTaskComponent } from '../icons/diagram-icon-camel-task.component';
@@ -25,6 +25,7 @@ import { DiagramIconCamelTaskComponent } from '../icons/diagram-icon-camel-task.
 @Component({
     selector: 'diagram-camel-task',
     imports: [DiagramTaskComponent, DiagramIconCamelTaskComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-camel-task.component.html'
 })
 export class DiagramCamelTaskComponent extends DiagramElement {}

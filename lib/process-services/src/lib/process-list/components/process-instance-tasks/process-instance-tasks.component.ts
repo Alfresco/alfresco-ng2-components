@@ -16,7 +16,7 @@
  */
 
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Observable, Observer } from 'rxjs';
 import { TaskDetailsEvent } from '../../../task-list';
@@ -35,6 +35,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     selector: 'adf-process-instance-tasks',
     imports: [CommonModule, MatButtonModule, TranslatePipe, MatChipsModule, MatListModule, MatIconModule, MatDialogModule, StartFormComponent],
     templateUrl: './process-instance-tasks.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./process-instance-tasks.component.css']
 })
 export class ProcessInstanceTasksComponent implements OnInit, OnChanges {

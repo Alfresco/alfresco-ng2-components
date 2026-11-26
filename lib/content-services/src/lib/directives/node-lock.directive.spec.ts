@@ -17,7 +17,7 @@
 
 import { TestBed, ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Component, DebugElement } from '@angular/core';
+import { Component, DebugElement, ChangeDetectionStrategy } from '@angular/core';
 import { NodeLockDirective } from './node-lock.directive';
 import type { Node } from '@alfresco/js-api';
 import { ContentNodeDialogService } from '../content-node-selector/content-node-dialog.service';
@@ -27,6 +27,7 @@ import { NoopAuthModule } from '@alfresco/adf-core';
 @Component({
     template: '<div [adf-node-lock]="node"></div>',
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [NodeLockDirective]
 })
 class TestComponent {

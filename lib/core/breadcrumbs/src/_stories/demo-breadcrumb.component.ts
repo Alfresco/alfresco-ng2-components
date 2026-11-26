@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { BreadcrumbItemComponent } from '../components/breadcrumb-item/breadcrumb-item.component';
@@ -63,6 +63,7 @@ import { IconModule } from '@alfresco/adf-core';
         </adf-breadcrumb>
     `,
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatButtonModule, MatMenuModule, IconModule, BreadcrumbItemComponent, BreadcrumbComponent, NgIf]
 })
 export class DemoBreadcrumbComponent {

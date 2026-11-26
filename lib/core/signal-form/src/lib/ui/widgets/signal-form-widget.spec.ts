@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { createFieldsForm, renderWidget } from '../testing/widget-testing.mock';
 import { SignalFormWidget } from './signal-form-widget';
 
-@Component({ selector: 'adf-signal-probe-widget', template: '' })
+@Component({ selector: 'adf-signal-probe-widget', changeDetection: ChangeDetectionStrategy.Eager,
+ template: '' })
 class SignalProbeWidgetComponent extends SignalFormWidget<string> {
     readonly probedInputId = this.inputId;
     readonly probedReadOnly = this.readOnly;

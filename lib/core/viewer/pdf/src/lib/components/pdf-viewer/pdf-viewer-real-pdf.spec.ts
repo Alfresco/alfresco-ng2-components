@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { provideCoreAuthTesting } from '@alfresco/adf-core';
@@ -50,6 +50,7 @@ function createRealPdfBlob(): Blob {
 
 @Component({
     imports: [PdfViewerComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<adf-pdf-viewer [blobFile]="blobFile" />`
 })
 class RealPdfTestHostComponent {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AuthenticationService, LoginDialogPanelComponent, TranslationService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
@@ -39,6 +39,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     templateUrl: './attach-file-widget-dialog.component.html',
     styleUrls: ['./attach-file-widget-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [
         AuthenticationService,
         DocumentListService,

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { ClipboardService } from './clipboard.service';
 import { ClipboardDirective } from './clipboard.directive';
@@ -35,6 +35,7 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
         <input #ref />
     `,
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatButtonModule, MatTooltipModule, ClipboardDirective]
 })
 class TestTargetClipboardComponent {}

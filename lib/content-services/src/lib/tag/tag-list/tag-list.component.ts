@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnInit, Output, ViewEncapsulation, inject } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { TagService } from '../services/tag.service';
 import { IconModule, PaginationModel } from '@alfresco/adf-core';
 import { TagEntry } from '@alfresco/js-api';
@@ -33,6 +33,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     templateUrl: './tag-list.component.html',
     styleUrls: ['./tag-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-tag-list' }
 })
 export class TagListComponent implements OnInit {

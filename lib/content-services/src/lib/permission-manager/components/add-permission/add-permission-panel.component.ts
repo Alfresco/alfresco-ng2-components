@@ -18,7 +18,7 @@
 import { SearchConfigurationService } from '../../../search/services/search-configuration.service';
 import { SearchService } from '../../../search/services/search.service';
 import { Node, NodeEntry } from '@alfresco/js-api';
-import { Component, EventEmitter, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { SearchPermissionConfigurationService } from './search-config-permission.service';
@@ -49,6 +49,7 @@ import { IconModule } from '@alfresco/adf-core';
     templateUrl: './add-permission-panel.component.html',
     styleUrls: ['./add-permission-panel.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [{ provide: SearchConfigurationService, useClass: SearchPermissionConfigurationService }, SearchService]
 })
 export class AddPermissionPanelComponent {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, ViewEncapsulation, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { UploadButtonComponent } from './upload-button.component';
 import { AllowableOperationsEnum } from '../../common/models/allowable-operations.enum';
@@ -31,6 +31,7 @@ import { MatIconModule } from '@angular/material/icon';
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-upload-version-button' }
 })
 export class UploadVersionButtonComponent extends UploadButtonComponent implements OnChanges, OnInit {

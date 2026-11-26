@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TooltipCardDirective } from './tooltip-card.directive';
 import { Overlay, OverlayContainer, OverlayModule } from '@angular/cdk/overlay';
@@ -33,6 +33,7 @@ const IMAGE_URL = 'alfresco-logo.svg';
         class="test-component"
     ></span>`,
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TooltipCardDirective]
 })
 class TestComponent {

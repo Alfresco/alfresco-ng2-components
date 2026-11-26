@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { AssignmentType, TaskFilterProperties, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { IdentityUserModel } from '../../../../people/models/identity-user.model';
@@ -32,6 +32,7 @@ import { PeopleCloudComponent } from '../../../../people/components/people-cloud
     selector: 'adf-cloud-task-assignment-filter',
     imports: [CommonModule, GroupCloudComponent, TranslatePipe, MatSelectModule, FormsModule, PeopleCloudComponent],
     templateUrl: './task-assignment-filter.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./task-assignment-filter.component.scss']
 })
 export class TaskAssignmentFilterCloudComponent implements OnInit, OnChanges {

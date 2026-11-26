@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FileDraggableDirective, INPUT_FOCUS_CSS_CLASS } from '../directives/file-draggable.directive';
 
 @Component({
     selector: 'adf-test-component',
     imports: [FileDraggableDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <div id="test-container" [adf-file-draggable]="true">
             <div id="test-content"></div>

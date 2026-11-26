@@ -17,13 +17,14 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
 import { RaphaelIconBoxPublishDirective } from '../raphael/icons/raphael-icon-box-publish.component';
 
 @Component({
     selector: 'diagram-icon-box-publish-task',
     imports: [RaphaelIconBoxPublishDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-icon-box-publish-task.component.html'
 })
 export class DiagramIconBoxPublishTaskComponent extends DiagramElement implements OnInit {

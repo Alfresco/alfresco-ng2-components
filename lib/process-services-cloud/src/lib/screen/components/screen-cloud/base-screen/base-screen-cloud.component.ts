@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, ComponentRef, inject, Input, OnDestroy, OnInit, signal, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentRef, inject, Input, OnDestroy, OnInit, signal, ViewChild, ViewContainerRef, ChangeDetectionStrategy } from '@angular/core';
 import { ScreenRenderingService } from '../../../services/screen-rendering.service';
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ''
 })
 export abstract class BaseScreenCloudComponent<TScreenComponent = unknown> implements OnInit, OnDestroy {

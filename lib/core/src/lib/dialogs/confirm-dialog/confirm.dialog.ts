@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, SecurityContext, ViewEncapsulation, inject } from '@angular/core';
+import { Component, SecurityContext, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -38,6 +38,7 @@ export interface ConfirmDialogComponentProps {
     host: { class: 'adf-confirm-dialog' },
     encapsulation: ViewEncapsulation.None,
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TranslatePipe, MatDialogModule, NgIf, MatButtonModule]
 })
 export class ConfirmDialogComponent {

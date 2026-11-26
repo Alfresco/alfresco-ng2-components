@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { catchError, concatMap, finalize } from 'rxjs/operators';
 import { forkJoin, of } from 'rxjs';
 import {
@@ -47,6 +47,7 @@ import { MatCardModule } from '@angular/material/card';
     imports: [CommonModule, MatProgressSpinnerModule, CardViewComponent, MatCardModule],
     templateUrl: './task-header-cloud.component.html',
     styleUrls: ['./task-header-cloud.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class TaskHeaderCloudComponent implements OnInit, OnChanges {

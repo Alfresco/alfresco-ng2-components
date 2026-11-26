@@ -18,21 +18,22 @@
 import { AppExtensionService, ExtensionsModule, ViewerExtensionRef, PreviewExtensionComponent } from '@alfresco/adf-extensions';
 import { NgComponentOutlet, NgForOf, NgTemplateOutlet } from '@angular/common';
 import {
-    Component,
-    effect,
-    EventEmitter,
-    Injector,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    TemplateRef,
-    Type,
-    ViewChild,
-    ViewEncapsulation,
-    inject,
-    viewChild
+  Component,
+  effect,
+  EventEmitter,
+  Injector,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  Type,
+  ViewChild,
+  ViewEncapsulation,
+  inject,
+  viewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -66,6 +67,7 @@ import { UnknownFormatComponent } from '../unknown-format/unknown-format.compone
         NgForOf,
         PreviewExtensionComponent
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [ViewUtilService]
 })
 export class ViewerRenderComponent implements OnChanges, OnInit {

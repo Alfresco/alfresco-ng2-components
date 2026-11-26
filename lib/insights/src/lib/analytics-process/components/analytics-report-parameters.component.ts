@@ -17,18 +17,19 @@
 
 import { ADF_DATE_FORMATS, AdfDateFnsAdapter, DownloadService, ToolbarComponent, ToolbarTitleComponent } from '@alfresco/adf-core';
 import {
-    AfterContentChecked,
-    Component,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation
+  AfterContentChecked,
+  Component,
+  DestroyRef,
+  EventEmitter,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -130,6 +131,7 @@ export interface ReportFormValues {
     ],
     templateUrl: './analytics-report-parameters.component.html',
     styleUrls: ['./analytics-report-parameters.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsReportParametersComponent implements OnInit, OnChanges, AfterContentChecked {

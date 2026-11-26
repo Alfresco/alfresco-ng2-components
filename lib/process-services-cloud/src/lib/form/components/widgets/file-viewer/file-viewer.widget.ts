@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { BaseViewerWidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
 import { AlfrescoViewerComponent } from '@alfresco/adf-content-services';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -27,6 +27,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     imports: [ErrorWidgetComponent, AlfrescoViewerComponent, TranslatePipe],
     templateUrl: './file-viewer.widget.html',
     styleUrls: ['./file-viewer.widget.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class FileViewerWidgetComponent extends BaseViewerWidgetComponent {}

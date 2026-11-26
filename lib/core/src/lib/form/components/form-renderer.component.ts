@@ -17,24 +17,25 @@
 
 import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import {
-    ChangeDetectorRef,
-    Component,
-    DestroyRef,
-    effect,
-    ErrorHandler,
-    inject,
-    InjectionToken,
-    Injector,
-    input,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    signal,
-    SimpleChanges,
-    untracked,
-    ViewChild,
-    ViewEncapsulation
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  effect,
+  ErrorHandler,
+  inject,
+  InjectionToken,
+  Injector,
+  input,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  signal,
+  SimpleChanges,
+  untracked,
+  ViewChild,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter, isObservable, Observable, Subscription } from 'rxjs';
@@ -98,6 +99,7 @@ export const ADF_MULTI_TAB_VALIDATION_INDICATORS_ENABLED = new InjectionToken<Ob
         MatTooltipModule,
         RepeatableRowLabelPipe
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class FormRendererComponent<T> implements OnChanges, OnInit, OnDestroy {

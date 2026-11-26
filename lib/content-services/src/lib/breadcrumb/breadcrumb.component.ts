@@ -16,19 +16,20 @@
  */
 
 import {
-    afterNextRender,
-    Component,
-    DestroyRef,
-    ElementRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation
+  afterNextRender,
+  Component,
+  DestroyRef,
+  ElementRef,
+  EventEmitter,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { Node, PathElement } from '@alfresco/js-api';
@@ -46,6 +47,7 @@ import { CompactBreadcrumbComponent } from './compact-breadcrumb.component';
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: {
         class: 'adf-breadcrumb',
         '(keyup.shift.arrowright)': 'goToNextDropList()'

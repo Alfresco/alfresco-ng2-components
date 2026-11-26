@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CommonModule } from '@angular/common';
 import { NavbarItem, NavbarItemComponent } from './navbar-item.component';
@@ -26,6 +26,7 @@ import { NavbarItem, NavbarItemComponent } from './navbar-item.component';
     styleUrls: ['./navbar.component.scss'],
     encapsulation: ViewEncapsulation.None,
     imports: [MatToolbarModule, CommonModule, NavbarItemComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-navbar' }
 })
 export class NavbarComponent {

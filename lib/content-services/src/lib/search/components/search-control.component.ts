@@ -17,17 +17,18 @@
 
 import { AuthenticationService, HighlightPipe, SearchTextInputComponent, ThumbnailService } from '@alfresco/adf-core';
 import {
-    Component,
-    ContentChild,
-    EventEmitter,
-    Input,
-    Output,
-    QueryList,
-    TemplateRef,
-    ViewChild,
-    ViewChildren,
-    ViewEncapsulation,
-    inject
+  Component,
+  ContentChild,
+  EventEmitter,
+  Input,
+  Output,
+  QueryList,
+  TemplateRef,
+  ViewChild,
+  ViewChildren,
+  ViewEncapsulation,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
@@ -44,6 +45,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     templateUrl: './search-control.component.html',
     styleUrls: ['./search-control.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-search-control' }
 })
 export class SearchControlComponent {

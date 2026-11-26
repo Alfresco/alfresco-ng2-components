@@ -18,18 +18,19 @@
 import { Chip, DynamicChipListComponent, NotificationService } from '@alfresco/adf-core';
 import { TagEntry, TagPaging } from '@alfresco/js-api';
 import {
-    Component,
-    DestroyRef,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    ViewChild,
-    ViewEncapsulation
+  Component,
+  DestroyRef,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -79,6 +80,7 @@ const DEFAULT_TAGS_SORTING = {
     ],
     templateUrl: './tags-creator.component.html',
     styleUrls: ['./tags-creator.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class TagsCreatorComponent implements OnInit, OnDestroy {

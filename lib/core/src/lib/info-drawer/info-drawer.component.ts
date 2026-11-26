@@ -16,16 +16,17 @@
  */
 
 import {
-    Component,
-    ContentChildren,
-    EventEmitter,
-    HostListener,
-    Input,
-    Output,
-    QueryList,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation
+  Component,
+  ContentChildren,
+  EventEmitter,
+  HostListener,
+  Input,
+  Output,
+  QueryList,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
@@ -36,6 +37,7 @@ import { IconModule } from '../icon/icon.module';
 @Component({
     selector: 'adf-info-drawer-tab',
     template: '<ng-template><ng-content /></ng-template>',
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class InfoDrawerTabComponent {
@@ -65,6 +67,7 @@ export class InfoDrawerTabComponent {
     templateUrl: './info-drawer.component.html',
     styleUrls: ['./info-drawer.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-info-drawer' }
 })
 export class InfoDrawerComponent {

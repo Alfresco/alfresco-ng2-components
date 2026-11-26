@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DiagramTooltipComponent } from './diagram-tooltip.component';
@@ -23,6 +23,7 @@ import { DiagramTooltipComponent } from './diagram-tooltip.component';
 @Component({
     template: ` <div id="diagram-element-id">Hover me</div>
         <diagram-tooltip [data]="data" />`,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [DiagramTooltipComponent]
 })
 class TestHostComponent {

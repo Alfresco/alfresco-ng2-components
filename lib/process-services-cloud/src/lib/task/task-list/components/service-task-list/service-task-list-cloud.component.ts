@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
+import { Component, Input, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
     ColumnsSelectorComponent,
     DataTableComponent,
@@ -52,6 +52,7 @@ const PRESET_KEY = 'adf-cloud-service-task-list.presets';
     ],
     templateUrl: './service-task-list-cloud.component.html',
     styleUrls: ['./service-task-list-cloud.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {

@@ -18,23 +18,24 @@
 import { A11yModule } from '@angular/cdk/a11y';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
 import {
-    Component,
-    ContentChild,
-    DestroyRef,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    HostListener,
-    inject,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation
+  Component,
+  ContentChild,
+  DestroyRef,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -83,6 +84,7 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
         ViewerRenderComponent,
         NgTemplateOutlet
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [ViewUtilService]
 })
 export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {

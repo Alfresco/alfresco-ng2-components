@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { ErrorWidgetComponent, WidgetComponent } from '@alfresco/adf-core';
-import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, inject, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 import { CommonModule } from '@angular/common';
@@ -42,6 +42,7 @@ import { FormsModule } from '@angular/forms';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class RadioButtonsWidgetComponent extends WidgetComponent implements OnInit {

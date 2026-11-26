@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { DynamicRowValidationSummary } from '../models/dynamic-row-validation-summary.model';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
@@ -52,6 +52,7 @@ export interface RowEditorReturnType {
         MatButtonModule
     ],
     templateUrl: './row.editor.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./row.editor.css']
 })
 export class RowEditorComponent {

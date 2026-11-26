@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import {
     ContentLinkModel,
     EmptyContentComponent,
@@ -56,6 +56,7 @@ import { FormComponent, FormCustomOutcomesComponent } from '../../../form';
     ],
     templateUrl: './task-form.component.html',
     styleUrls: ['./task-form.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class TaskFormComponent implements OnInit, OnChanges {

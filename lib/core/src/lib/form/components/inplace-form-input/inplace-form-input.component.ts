@@ -16,7 +16,7 @@
  */
 
 import { NgClass } from '@angular/common';
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -26,6 +26,7 @@ import { MatInputModule } from '@angular/material/input';
     templateUrl: './inplace-form-input.component.html',
     styleUrls: ['./inplace-form-input.component.scss'],
     imports: [MatFormFieldModule, ReactiveFormsModule, MatInputModule, NgClass],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class InplaceFormInputComponent {

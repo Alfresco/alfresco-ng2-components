@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { WidgetComponent } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { ContentWidgetComponent } from './content.widget';
@@ -35,6 +35,7 @@ import { ContentWidgetComponent } from './content.widget';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class DocumentWidgetComponent extends WidgetComponent implements OnInit {

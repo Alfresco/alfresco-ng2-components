@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewChildren } from '@angular/core';
+import { Component, ViewChildren, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HighlightTransformService } from '../common/services/highlight-transform.service';
 import { HighlightDirective } from './highlight.directive';
@@ -25,6 +25,7 @@ import { UnitTestingUtils } from '../testing/unit-testing-utils';
 @Component({
     selector: 'adf-test-component',
     imports: [HighlightDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <div id="outerDiv1" adf-highlight adf-highlight-selector=".highlightable" adf-highlight-class="highlight-for-free-willy">
             <div id="innerDiv11" class="highlightable">Lorem ipsum salana-eyong-aysis dolor sit amet</div>
             <div id="innerDiv12">Lorem ipsum salana-eyong-aysis dolor sit amet</div>

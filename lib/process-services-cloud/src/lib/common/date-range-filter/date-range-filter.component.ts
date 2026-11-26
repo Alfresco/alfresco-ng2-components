@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
+import { Component, Input, EventEmitter, Output, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { ProcessFilterProperties, ProcessFilterOptions } from '../../process/process-filters/models/process-filter-cloud.model';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -38,6 +38,7 @@ interface DateRangeFormProps {
     imports: [CommonModule, TranslatePipe, MatDatepickerModule, MatFormFieldModule, ReactiveFormsModule, MatSelectModule],
     styleUrls: ['./date-range-filter.component.scss'],
     templateUrl: './date-range-filter.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [
         { provide: DateAdapter, useClass: AdfDateFnsAdapter },
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS }

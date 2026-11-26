@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { LocalizedDatePipe, ThumbnailService, UploadDirective, DisplayableCMProperties, IconModule } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { NewVersionUploaderDialogData } from '@alfresco/adf-content-services';
@@ -34,6 +34,7 @@ const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
     imports: [CommonModule, IconModule, TranslatePipe, MatMenuModule, UploadDirective, MatButtonModule, MatTableModule, MatLineModule, MatListModule],
     providers: [LocalizedDatePipe],
     templateUrl: './file-properties-table-cloud.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./file-properties-table-cloud.component.scss']
 })
 export class FilePropertiesTableCloudComponent {

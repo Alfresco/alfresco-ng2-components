@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { NodeAspectService } from '../../../aspect-list/services/node-aspect.service';
 import { ContentMetadataCustomPanel, PresetConfig } from '../../interfaces/content-metadata.interfaces';
@@ -35,6 +35,7 @@ import { IconModule } from '@alfresco/adf-core';
     templateUrl: './content-metadata-card.component.html',
     styleUrls: ['./content-metadata-card.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-content-metadata-card' }
 })
 export class ContentMetadataCardComponent implements OnChanges {

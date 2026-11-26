@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     standalone: true,
     selector: 'adf-breadcrumb-item',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <ng-template #breadcrumbItemTemplate>
             <ng-content />

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnChanges, effect, Input, OnInit, SimpleChanges, ViewChild, ViewEncapsulation, inject, DestroyRef } from '@angular/core';
+import { Component, OnChanges, effect, Input, OnInit, SimpleChanges, ViewChild, ViewEncapsulation, inject, DestroyRef, ChangeDetectionStrategy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import {
     DatetimeAdapter,
@@ -70,6 +70,7 @@ const DEFAULT_DATE_FORMAT = 'MMM DD';
     templateUrl: './card-view-dateitem.component.html',
     styleUrls: ['./card-view-dateitem.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-card-view-dateitem' }
 })
 export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemModel> implements OnInit, OnChanges {

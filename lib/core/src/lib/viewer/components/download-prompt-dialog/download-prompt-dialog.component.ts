@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -24,6 +24,7 @@ import { DownloadPromptActions } from '../../models/download-prompt.actions';
 @Component({
     selector: 'adf-download-prompt-dialog',
     imports: [MatDialogModule, TranslatePipe, MatButtonModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './download-prompt-dialog.component.html'
 })
 export class DownloadPromptDialogComponent {

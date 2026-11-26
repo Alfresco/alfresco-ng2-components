@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
@@ -613,6 +613,7 @@ describe('TaskListComponent', () => {
 
 @Component({
     imports: [DataColumnComponent, DataColumnListComponent, TaskListComponent, FullNamePipe],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <adf-tasklist #taskList>
         <data-columns>
             <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column" [order]="3" />
@@ -659,6 +660,7 @@ describe('CustomTaskListComponent', () => {
 
 @Component({
     imports: [CustomEmptyContentTemplateDirective, TaskListComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <adf-tasklist [appId]="1">
             <adf-custom-empty-content-template>
@@ -702,6 +704,7 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
 
 @Component({
     imports: [CommonModule, TaskListComponent, DataColumnComponent, DataColumnListComponent, FullNamePipe],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <adf-tasklist [showContextMenu]="true" (showRowContextMenu)="onShowRowContextMenu($event)" #taskList>
         <data-columns>
             <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column" />

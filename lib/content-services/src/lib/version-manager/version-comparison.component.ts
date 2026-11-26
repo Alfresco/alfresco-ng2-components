@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
+import { Component, Input, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { FileTypePipe, ThumbnailService } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
@@ -26,6 +26,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     imports: [CommonModule, TranslatePipe, FileTypePipe],
     templateUrl: './version-comparison.component.html',
     styleUrls: ['./version-comparison.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class VersionComparisonComponent {

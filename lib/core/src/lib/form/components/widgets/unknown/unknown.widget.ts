@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { WidgetComponent } from '../widget.component';
 import { IconModule } from '../../../../icon/icon.module';
@@ -45,6 +45,7 @@ import { IconModule } from '../../../../icon/icon.module';
         '(select)': 'event($event)'
     },
     imports: [MatListModule, IconModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class UnknownWidgetComponent extends WidgetComponent {}

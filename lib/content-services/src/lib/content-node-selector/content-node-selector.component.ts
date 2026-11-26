@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, inject, OnInit, output, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { EmptyListComponent, IconModule, NotificationService, ToolbarComponent, ToolbarTitleComponent, TranslationService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
@@ -60,6 +60,7 @@ import { UploadFilesEvent } from '../upload/components/upload-files.event';
     ],
     templateUrl: './content-node-selector.component.html',
     styleUrls: ['./content-node-selector.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class ContentNodeSelectorComponent implements OnInit {

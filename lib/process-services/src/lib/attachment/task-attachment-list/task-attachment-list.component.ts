@@ -27,17 +27,18 @@ import {
     ThumbnailService
 } from '@alfresco/adf-core';
 import {
-    AfterContentInit,
-    Component,
-    ContentChild,
-    EventEmitter,
-    Input,
-    NgZone,
-    OnChanges,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation,
-    inject
+  AfterContentInit,
+  Component,
+  ContentChild,
+  EventEmitter,
+  Input,
+  NgZone,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewEncapsulation,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { ProcessContentService } from '../../form/services/process-content.service';
 import { CommonModule } from '@angular/common';
@@ -60,6 +61,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     ],
     styleUrls: ['./task-attachment-list.component.scss'],
     templateUrl: './task-attachment-list.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class TaskAttachmentListComponent implements OnChanges, AfterContentInit {

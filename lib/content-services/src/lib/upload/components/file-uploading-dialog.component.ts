@@ -17,19 +17,20 @@
 
 import { IconModule, UserPreferencesService } from '@alfresco/adf-core';
 import {
-    ChangeDetectorRef,
-    Component,
-    DestroyRef,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    ViewChild,
-    ViewEncapsulation
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { merge, Subject } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
@@ -50,6 +51,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     imports: [MatButtonModule, TranslatePipe, IconModule, FileUploadingListComponent, FileUploadingListRowComponent, A11yModule],
     templateUrl: './file-uploading-dialog.component.html',
     styleUrls: ['./file-uploading-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class FileUploadingDialogComponent implements OnInit, OnDestroy {

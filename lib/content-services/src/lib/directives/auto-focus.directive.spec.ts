@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AutoFocusDirective } from './auto-focus.directive';
 import { By } from '@angular/platform-browser';
 
 @Component({
     imports: [AutoFocusDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <div tabindex="0" adf-auto-focus>Test</div>`
 })
 class AutoFocusTestComponent {}

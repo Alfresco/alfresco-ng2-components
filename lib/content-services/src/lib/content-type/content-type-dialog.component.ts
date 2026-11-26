@@ -16,7 +16,7 @@
  */
 
 import { TypeEntry } from '@alfresco/js-api';
-import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ContentTypeDialogComponentData } from './content-type-metadata.interface';
 import { ContentTypeService } from './content-type.service';
@@ -31,6 +31,7 @@ import { MatButtonModule } from '@angular/material/button';
     imports: [CommonModule, MatDialogModule, TranslatePipe, MatExpansionModule, MatTableModule, MatButtonModule],
     templateUrl: './content-type-dialog.component.html',
     styleUrls: ['./content-type-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class ContentTypeDialogComponent implements OnInit {

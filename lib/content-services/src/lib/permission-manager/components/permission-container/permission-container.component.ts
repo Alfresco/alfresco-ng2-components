@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { PermissionDisplayModel } from '../../models/permission.model';
 import { RoleModel } from '../../models/role.model';
@@ -56,6 +56,7 @@ import { UserRoleColumnComponent } from '../user-role-column/user-role-column.co
     ],
     templateUrl: './permission-container.component.html',
     styleUrls: ['./permission-container.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class PermissionContainerComponent implements OnChanges {

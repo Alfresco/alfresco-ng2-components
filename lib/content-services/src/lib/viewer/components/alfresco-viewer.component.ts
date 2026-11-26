@@ -16,20 +16,21 @@
  */
 
 import {
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  DestroyRef,
+  EventEmitter,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
     CloseButtonPosition,
@@ -82,6 +83,7 @@ import { PeopleContentService } from '../../common';
     styleUrl: 'alfresco-viewer.component.scss',
     host: { class: 'adf-alfresco-viewer' },
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [ViewUtilService]
 })
 export class AlfrescoViewerComponent implements OnChanges, OnInit {

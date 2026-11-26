@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DateRangeType } from './search-date-range/date-range-type';
@@ -39,6 +39,7 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
     imports: [CommonModule, SearchFilterTabbedComponent, SearchDateRangeComponent, SearchFilterTabDirective],
     templateUrl: './search-date-range-tabbed.component.html',
     styleUrls: ['./search-date-range-tabbed.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, inject, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, inject, OnInit, OnChanges, Input, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EditJsonDialogComponent, EditJsonDialogSettings } from './edit-json.dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,6 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
     selector: 'adf-edit-json-dialog-storybook',
     template: `<button mat-raised-button (click)="openDialog()">Open dialog</button>`,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatButtonModule]
 })
 export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {

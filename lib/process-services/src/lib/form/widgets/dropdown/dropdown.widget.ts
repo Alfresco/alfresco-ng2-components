@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { FormService, FormFieldOption, WidgetComponent, FormFieldModel, ReactiveFormWidget } from '@alfresco/adf-core';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 import { TaskFormService } from '../../services/task-form.service';
@@ -79,6 +79,7 @@ export const dropdownRequiredValidator =
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class DropdownWidgetComponent extends WidgetComponent implements OnInit, ReactiveFormWidget {

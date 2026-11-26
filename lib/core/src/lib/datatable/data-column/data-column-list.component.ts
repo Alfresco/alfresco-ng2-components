@@ -17,11 +17,12 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ContentChildren, QueryList } from '@angular/core';
+import { Component, ContentChildren, QueryList, ChangeDetectionStrategy } from '@angular/core';
 import { DataColumnComponent } from './data-column.component';
 
 @Component({
     selector: 'data-columns',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ''
 })
 export class DataColumnListComponent {

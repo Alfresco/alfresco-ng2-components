@@ -16,7 +16,7 @@
  */
 
 import { Node, NodeEntry, PermissionElement } from '@alfresco/js-api';
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { RoleModel } from '../../models/role.model';
 import { ContentService } from '../../../common/services/content.service';
@@ -30,6 +30,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     selector: 'adf-add-permission',
     imports: [CommonModule, AddPermissionPanelComponent, MatButtonModule, TranslatePipe],
     templateUrl: './add-permission.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 /*

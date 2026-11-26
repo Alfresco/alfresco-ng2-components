@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -31,6 +31,7 @@ export interface NavbarItem {
     styleUrls: ['./navbar-item.component.scss'],
     encapsulation: ViewEncapsulation.None,
     imports: [MatButtonModule, CommonModule, RouterModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-navbar-item' }
 })
 export class NavbarItemComponent {

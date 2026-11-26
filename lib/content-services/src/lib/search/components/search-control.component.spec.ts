@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AuthenticationService, NoopAuthModule, SearchTextInputComponent, UserPreferencesService } from '@alfresco/adf-core';
@@ -34,6 +34,7 @@ import { EmptySearchResultComponent } from './empty-search-result.component';
         </adf-search-control>
     `,
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [SearchControlComponent, SearchTextInputComponent, EmptySearchResultComponent]
 })
 export class SimpleSearchTestCustomEmptyComponent {

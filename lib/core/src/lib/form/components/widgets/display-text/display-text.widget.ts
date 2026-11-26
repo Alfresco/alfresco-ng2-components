@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { BaseDisplayTextWidgetComponent } from '../base-display-text/base-display-text.widget';
 
@@ -37,6 +37,7 @@ import { BaseDisplayTextWidgetComponent } from '../base-display-text/base-displa
         '(select)': 'event($event)'
     },
     imports: [TranslatePipe],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class DisplayTextWidgetComponent extends BaseDisplayTextWidgetComponent {

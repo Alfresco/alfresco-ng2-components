@@ -17,13 +17,14 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
 import { RaphaelIconErrorDirective } from '../raphael/icons/raphael-icon-error.component';
 
 @Component({
     selector: 'diagram-icon-error',
     imports: [RaphaelIconErrorDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-icon-error.component.html'
 })
 export class DiagramIconErrorComponent extends DiagramElement implements OnInit {

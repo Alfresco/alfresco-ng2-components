@@ -16,7 +16,7 @@
  */
 
 import { ContentLinkModel, FormModel, FormOutcomeEvent, FormRenderingService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormCloudComponent } from '../../../../form/components/form-cloud.component';
 import { AttachFileCloudWidgetComponent } from '../../../../form/components/widgets/attach-file/attach-file-cloud-widget.component';
 import { DateCloudWidgetComponent } from '../../../../form/components/widgets/date/date-cloud.widget';
@@ -33,6 +33,7 @@ import { FormCustomOutcomesComponent } from '../../../../form/components/form-cl
     imports: [CommonModule, UserTaskCloudButtonsComponent, FormCustomOutcomesComponent, FormCloudComponent],
     templateUrl: './task-form-cloud.component.html',
     styleUrls: ['./task-form-cloud.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class TaskFormCloudComponent {

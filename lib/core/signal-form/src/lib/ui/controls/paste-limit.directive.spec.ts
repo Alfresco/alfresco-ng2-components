@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { pasteInto } from '../testing/widget-testing.mock';
 import { SignalPasteLimitDirective } from './paste-limit.directive';
@@ -23,6 +23,7 @@ import { SignalPasteLimitDirective } from './paste-limit.directive';
 @Component({
     selector: 'adf-signal-paste-limit-host',
     imports: [SignalPasteLimitDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<input [value]="text()" [adf-signal-paste-limit]="limit()" (pasteRefused)="refusals.push($event)" />`
 })
 class SignalPasteLimitHostComponent {

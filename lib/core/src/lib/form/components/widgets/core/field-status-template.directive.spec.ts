@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DebugElement } from '@angular/core';
+import { Component, DebugElement, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FIELD_STATUS_TEMPLATE, FieldStatusTemplateDirective } from './field-status-template.directive';
@@ -23,6 +23,7 @@ import { FIELD_STATUS_TEMPLATE, FieldStatusTemplateDirective } from './field-sta
 @Component({
     standalone: true,
     imports: [FieldStatusTemplateDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <div [adf-field-status-template]="statusTemplate"></div>
         <ng-template #statusTemplate />

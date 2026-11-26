@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnChanges, ViewEncapsulation } from '@angular/core';
+import { Component, OnChanges, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { CardViewKeyValuePairsItemModel } from '../../models/card-view.models';
 import { CardViewKeyValuePairsItemType } from '../../interfaces/card-view.interfaces';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -33,6 +33,7 @@ import { IconModule } from '../../../icon/icon.module';
     templateUrl: './card-view-keyvaluepairsitem.component.html',
     styleUrls: ['./card-view-keyvaluepairsitem.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-card-view-key-value-pairs-item' }
 })
 export class CardViewKeyValuePairsItemComponent extends BaseCardView<CardViewKeyValuePairsItemModel> implements OnChanges {

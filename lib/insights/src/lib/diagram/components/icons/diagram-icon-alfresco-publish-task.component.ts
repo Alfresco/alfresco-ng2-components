@@ -17,13 +17,14 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
 import { RaphaelIconAlfrescoPublishDirective } from '../raphael/icons/raphael-icon-alfresco-publish.component';
 
 @Component({
     selector: 'diagram-icon-alfresco-publish-task',
     imports: [RaphaelIconAlfrescoPublishDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-icon-alfresco-publish-task.component.html'
 })
 export class DiagramIconAlfrescoPublishTaskComponent extends DiagramElement implements OnInit {

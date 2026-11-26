@@ -17,7 +17,7 @@
 
 import { ADF_COMMENTS_SERVICE, CommentsComponent } from '@alfresco/adf-core';
 import { CommentProcessService } from './services/comment-process.service';
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'adf-process-instance-comments',
@@ -29,6 +29,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
         }
     ],
     templateUrl: './process-comments.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessCommentsComponent {

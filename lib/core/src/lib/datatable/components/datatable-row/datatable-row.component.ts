@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FocusableOption } from '@angular/cdk/a11y';
 import { DataRow } from '../../data/data-row.model';
 
@@ -23,6 +23,7 @@ import { DataRow } from '../../data/data-row.model';
     selector: 'adf-datatable-row',
     template: `<ng-content />`,
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: {
         class: 'adf-datatable-row',
         role: 'row'

@@ -16,17 +16,18 @@
  */
 
 import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation
+  Component,
+  DestroyRef,
+  EventEmitter,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { AppConfigService, AppConfigValues, EmptyContentComponent, FormValues, LocalizedDatePipe } from '@alfresco/adf-core';
 import { AppsProcessService } from '../../../services/apps-process.service';
@@ -79,6 +80,7 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}',
     ],
     templateUrl: './start-process.component.html',
     styleUrls: ['./start-process.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class StartProcessInstanceComponent implements OnChanges, OnInit {

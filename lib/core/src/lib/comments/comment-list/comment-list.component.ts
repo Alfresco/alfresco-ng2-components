@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, inject, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { CommentModel } from '../../models/comment.model';
 import { CommentsService } from '../interfaces/comments-service.interface';
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
@@ -30,6 +30,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     imports: [CommonModule, MatListModule, MatLineModule, TimeAgoPipe, TranslatePipe],
     templateUrl: './comment-list.component.html',
     styleUrls: ['./comment-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class CommentListComponent {

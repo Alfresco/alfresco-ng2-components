@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, DestroyRef, inject, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, inject, Input, OnChanges, SimpleChanges, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { BaseCardView } from '../base-card-view';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
@@ -58,6 +58,7 @@ const templateTypes = {
     templateUrl: './card-view-textitem.component.html',
     styleUrls: ['./card-view-textitem.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-card-view-textitem' }
 })
 export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnChanges {

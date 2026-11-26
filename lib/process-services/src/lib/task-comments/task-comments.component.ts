@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ADF_COMMENTS_SERVICE, CommentsComponent } from '@alfresco/adf-core';
 import { TaskCommentsService } from '../services/task-comments.service';
 import { CommonModule } from '@angular/common';
@@ -25,6 +25,7 @@ import { CommonModule } from '@angular/common';
     imports: [CommonModule, CommentsComponent],
     templateUrl: './task-comments.component.html',
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [
         {
             provide: ADF_COMMENTS_SERVICE,

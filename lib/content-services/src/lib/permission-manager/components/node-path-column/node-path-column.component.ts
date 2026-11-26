@@ -16,7 +16,7 @@
  */
 
 import { Node } from '@alfresco/js-api';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
@@ -28,6 +28,7 @@ import { CommonModule } from '@angular/common';
             {{ displayText$ | async }}
         </span>
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-node-path-column adf-datatable-content-cell' }
 })
 export class NodePathColumnComponent implements OnInit {

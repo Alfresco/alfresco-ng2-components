@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, inject, Input, ViewEncapsulation } from '@angular/core';
+import { Component, inject, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { FacetField } from '../../models/facet-field.interface';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { FacetFieldBucket } from '../../models/facet-field-bucket.interface';
@@ -36,6 +36,7 @@ import { FormsModule } from '@angular/forms';
     imports: [CommonModule, MatButtonModule, IconModule, MatFormFieldModule, MatInputModule, TranslatePipe, FormsModule, MatCheckboxModule],
     templateUrl: './search-facet-field.component.html',
     styleUrls: ['./search-facet-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFacetFieldComponent implements FacetWidget {

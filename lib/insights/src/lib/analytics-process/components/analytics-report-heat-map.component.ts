@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { AnalyticsService } from '../services/analytics.service';
 import { ParameterValueModel } from '../../diagram/models/report/parameter-value.model';
@@ -26,6 +26,7 @@ import { DiagramComponent } from '../../diagram/components/diagram.component';
 @Component({
     selector: 'adf-analytics-report-heat-map, analytics-report-heat-map',
     imports: [CommonModule, ReactiveFormsModule, DropdownWidgetAnalyticsComponent, DiagramComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './analytics-report-heat-map.component.html'
 })
 export class AnalyticsReportHeatMapComponent implements OnInit {

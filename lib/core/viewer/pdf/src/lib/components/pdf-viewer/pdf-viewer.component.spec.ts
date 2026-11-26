@@ -16,7 +16,7 @@
  */
 
 import { LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
-import { Component, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, SimpleChange, SimpleChanges, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
@@ -39,6 +39,7 @@ declare const pdfjsLib: {
 @Component({
     selector: 'adf-url-test-component',
     imports: [PdfViewerComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile" /> `
 })
 class UrlTestComponent {
@@ -55,6 +56,7 @@ class UrlTestComponent {
 @Component({
     selector: 'adf-url-test-password-component',
     imports: [PdfViewerComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile" /> `
 })
 class UrlTestPasswordComponent {
@@ -70,6 +72,7 @@ class UrlTestPasswordComponent {
 
 @Component({
     imports: [PdfViewerComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [blobFile]="blobFile" /> `
 })
 class BlobTestComponent {

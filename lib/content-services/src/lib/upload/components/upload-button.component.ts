@@ -16,7 +16,7 @@
  */
 
 import { FileUtils, IconModule } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { ContentService } from '../../common/services/content.service';
 import { AllowableOperationsEnum } from '../../common/models/allowable-operations.enum';
@@ -33,6 +33,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     imports: [MatButtonModule, TranslatePipe, IconModule],
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class UploadButtonComponent extends UploadBase implements OnInit, OnChanges {

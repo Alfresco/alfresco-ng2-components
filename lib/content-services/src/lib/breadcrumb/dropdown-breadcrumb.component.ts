@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnChanges, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { PathElement, Node } from '@alfresco/js-api';
 import { BreadcrumbComponent } from './breadcrumb.component';
@@ -29,6 +29,7 @@ import { IconModule } from '@alfresco/adf-core';
     templateUrl: './dropdown-breadcrumb.component.html',
     styleUrls: ['./dropdown-breadcrumb.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-dropdown-breadcrumb' }
 })
 export class DropdownBreadcrumbComponent extends BreadcrumbComponent implements OnChanges {

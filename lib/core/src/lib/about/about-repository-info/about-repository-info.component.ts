@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ObjectUtils, StringUtils } from '../../common/utils';
 import { LicenseData, StatusData } from '../interfaces';
 import { RepositoryInfo } from './repository-info.interface';
@@ -30,6 +30,7 @@ import { AboutStatusListComponent } from '../about-status-list/about-status-list
     templateUrl: './about-repository-info.component.html',
     styleUrls: ['./about-repository-info.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule, TranslatePipe, AboutLicenseListComponent, ModuleListComponent, AboutStatusListComponent]
 })
 export class AboutRepositoryInfoComponent implements OnInit {

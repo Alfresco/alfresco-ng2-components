@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
@@ -23,6 +23,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     standalone: true,
     imports: [TranslatePipe, MatProgressSpinnerModule],
     templateUrl: './form-spinner.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./form-spinner.component.scss']
 })
 export class FormSpinnerComponent {

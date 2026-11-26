@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
 import { DiagramTaskComponent } from './diagram-task.component';
 import { DiagramIconBoxPublishTaskComponent } from '../icons/diagram-icon-box-publish-task.component';
@@ -25,6 +25,7 @@ import { DiagramIconBoxPublishTaskComponent } from '../icons/diagram-icon-box-pu
 @Component({
     selector: 'diagram-box-publish-task',
     imports: [DiagramTaskComponent, DiagramIconBoxPublishTaskComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-box-publish-task.component.html'
 })
 export class DiagramBoxPublishTaskComponent extends DiagramElement {}

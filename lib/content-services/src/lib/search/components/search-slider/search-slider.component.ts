@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
@@ -33,6 +33,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     templateUrl: './search-slider.component.html',
     styleUrls: ['./search-slider.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-search-slider' }
 })
 export class SearchSliderComponent implements SearchWidget, OnInit {

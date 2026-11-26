@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, SimpleChange, ViewChild } from '@angular/core';
+import { Component, SimpleChange, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
@@ -130,6 +130,7 @@ const fakeProcessCloudList = {
 
 @Component({
     imports: [DataColumnComponent, DataColumnListComponent, ProcessListCloudComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <adf-cloud-process-list #processListCloud>
         <data-columns>
             <data-column key="name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column" [order]="3" />

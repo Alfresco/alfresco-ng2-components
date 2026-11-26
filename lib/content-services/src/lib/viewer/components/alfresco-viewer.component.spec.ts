@@ -41,7 +41,7 @@ import { UploadService } from '../../common/services/upload.service';
 import { FileModel } from '../../common/models/file.model';
 import { defer, of, throwError } from 'rxjs';
 import { PeopleContentService } from '../../common/services/people-content.service';
-import { Component, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, SimpleChange, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { By } from '@angular/platform-browser';
 import { MatIconModule } from '@angular/material/icon';
@@ -57,6 +57,7 @@ import { BreadcrumbComponent } from '../../breadcrumb';
 @Component({
     selector: 'adf-viewer-container-toolbar',
     imports: [ViewerToolbarComponent, AlfrescoViewerComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <adf-alfresco-viewer>
             <adf-viewer-toolbar>
@@ -71,6 +72,7 @@ class ViewerWithCustomToolbarComponent {}
     selector: 'adf-viewer-container-toolbar-actions',
     imports: [MatIconModule, MatButtonModule, ViewerToolbarActionsComponent, AlfrescoViewerComponent, IconModule],
 
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<adf-alfresco-viewer>
         <adf-viewer-toolbar-actions>
             <button mat-icon-button id="custom-button">
@@ -84,6 +86,7 @@ class ViewerWithCustomToolbarActionsComponent {}
 @Component({
     selector: 'adf-viewer-container-sidebar',
     imports: [ViewerSidebarComponent, AlfrescoViewerComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <adf-alfresco-viewer [allowRightSidebar]="true" [showRightSidebar]="true" [nodeId]="'1'">
             <adf-viewer-sidebar>
@@ -97,6 +100,7 @@ class ViewerWithCustomSidebarComponent {}
 @Component({
     selector: 'adf-dialog-dummy',
     template: ``,
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true
 })
 class DummyDialogComponent {}
@@ -105,6 +109,7 @@ class DummyDialogComponent {}
     selector: 'adf-viewer-container-open-with',
     imports: [MatIconModule, MatMenuModule, ViewerOpenWithComponent, AlfrescoViewerComponent, IconModule],
 
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <adf-alfresco-viewer>
             <adf-viewer-open-with>
@@ -130,6 +135,7 @@ class ViewerWithCustomOpenWithComponent {}
     selector: 'adf-viewer-container-more-actions',
     imports: [MatIconModule, MatMenuModule, ViewerMoreActionsComponent, AlfrescoViewerComponent, IconModule],
 
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <adf-alfresco-viewer>
         <adf-viewer-more-actions>
             <button mat-menu-item>

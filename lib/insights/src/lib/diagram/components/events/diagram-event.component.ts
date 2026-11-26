@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
 import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
 import { DiagramContainerIconEventTaskComponent } from '../icons/diagram-container-icon-event.component';
@@ -26,6 +26,7 @@ import { RaphaelCircleDirective } from '../raphael/raphael-circle.component';
 @Component({
     selector: 'diagram-event',
     imports: [DiagramTooltipComponent, DiagramContainerIconEventTaskComponent, RaphaelCircleDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-event.component.html'
 })
 export class DiagramEventComponent extends DiagramElement implements OnInit {

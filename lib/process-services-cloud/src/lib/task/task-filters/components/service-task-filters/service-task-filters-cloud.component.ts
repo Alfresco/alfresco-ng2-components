@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, inject, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, inject, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, shareReplay } from 'rxjs/operators';
 import { FilterParamsModel, ServiceTaskFilterCloudModel } from '../../models/filter-cloud.model';
@@ -33,6 +33,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     imports: [CommonModule, TranslatePipe, MatListModule, IconModule, MatProgressSpinnerModule],
     templateUrl: './service-task-filters-cloud.component.html',
     styleUrls: ['./service-task-filters-cloud.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {

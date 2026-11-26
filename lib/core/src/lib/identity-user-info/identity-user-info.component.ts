@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { MatMenuModule, MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { IdentityUserModel } from '../auth/models/identity-user.model';
 import { CommonModule } from '@angular/common';
@@ -29,6 +29,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     imports: [CommonModule, FullNamePipe, MatMenuModule, InitialUsernamePipe, MatButtonModule, MatCardModule, TranslatePipe],
     templateUrl: './identity-user-info.component.html',
     styleUrls: ['./identity-user-info.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class IdentityUserInfoComponent {

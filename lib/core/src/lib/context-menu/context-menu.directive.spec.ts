@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { UnitTestingUtils } from '../testing/unit-testing-utils';
@@ -24,6 +24,7 @@ import { ContextMenuDirective } from './context-menu.directive';
 @Component({
     selector: 'adf-test-component',
     template: ` <div id="target" [adf-context-menu]="actions" [adf-context-menu-enabled]="isEnabled"></div> `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ContextMenuDirective]
 })
 class TestComponent {

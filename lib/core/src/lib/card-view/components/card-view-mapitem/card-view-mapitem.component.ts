@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
 import { BaseCardView } from '../base-card-view';
 import { CommonModule } from '@angular/common';
@@ -25,6 +25,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     selector: 'adf-card-view-mapitem',
     imports: [CommonModule, TranslatePipe],
     templateUrl: './card-view-mapitem.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./card-view-mapitem.component.scss']
 })
 export class CardViewMapItemComponent extends BaseCardView<CardViewMapItemModel> {

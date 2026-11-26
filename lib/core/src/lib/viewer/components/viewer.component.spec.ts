@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DebugElement, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, DebugElement, SimpleChange, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
@@ -39,6 +39,7 @@ import { ViewerRenderComponent } from './viewer-render/viewer-render.component';
 @Component({
     selector: 'adf-dialog-dummy',
     template: ``,
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true
 })
 class DummyDialogComponent {}
@@ -46,6 +47,7 @@ class DummyDialogComponent {}
 @Component({
     selector: 'adf-viewer-breadcrumb-mock',
     imports: [ViewerComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <adf-viewer>
             <div class="adf-viewer-toolbar-breadcrumb"></div>

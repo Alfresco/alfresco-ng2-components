@@ -17,13 +17,14 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { DiagramLaneComponent } from './diagram-lane.component';
 import { NgForOf, NgIf } from '@angular/common';
 
 @Component({
     selector: 'diagram-lanes',
     imports: [DiagramLaneComponent, NgIf, NgForOf],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-lanes.component.html'
 })
 export class DiagramLanesComponent {

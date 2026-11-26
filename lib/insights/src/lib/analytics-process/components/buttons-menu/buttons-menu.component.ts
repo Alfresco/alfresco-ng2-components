@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ContentChildren, QueryList, AfterContentInit, ViewEncapsulation } from '@angular/core';
+import { Component, ContentChildren, QueryList, AfterContentInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { MatMenuItem, MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,6 +26,7 @@ import { CommonModule } from '@angular/common';
     imports: [CommonModule, MatButtonModule, MatMenuModule, MatIconModule],
     templateUrl: './buttons-menu.component.html',
     styleUrls: ['./buttons-menu.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class ButtonsMenuComponent implements AfterContentInit {

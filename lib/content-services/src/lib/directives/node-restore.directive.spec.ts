@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DebugElement } from '@angular/core';
+import { Component, DebugElement, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeRestoreDirective } from './node-restore.directive';
@@ -24,6 +24,7 @@ import { TrashcanApi } from '@alfresco/js-api';
 
 @Component({
     imports: [NodeRestoreDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <div [adf-restore]="selection" (restore)="doneSpy()"></div>`
 })
 class TestComponent {

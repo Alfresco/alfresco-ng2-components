@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, inject, InjectionToken, OnDestroy, OnInit, SecurityContext, ViewEncapsulation } from '@angular/core';
+import { Component, inject, InjectionToken, OnDestroy, OnInit, SecurityContext, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { BaseDisplayTextWidgetComponent, FormExpressionService } from '@alfresco/adf-core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
@@ -43,6 +43,7 @@ export const RICH_TEXT_PARSER_TOKEN = new InjectionToken<RichTextParserService>(
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class DisplayRichTextWidgetComponent extends BaseDisplayTextWidgetComponent implements OnInit, OnDestroy {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { Category } from '@alfresco/js-api';
@@ -34,6 +34,7 @@ export interface CategorySelectorDialogOptions {
     imports: [CommonModule, MatDialogModule, TranslatePipe, CategoriesManagementComponent, MatButtonModule],
     templateUrl: './category-selector.dialog.html',
     styleUrls: ['./category-selector.dialog.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class CategorySelectorDialogComponent implements OnInit {

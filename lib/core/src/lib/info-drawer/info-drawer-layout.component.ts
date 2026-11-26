@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Directive, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Directive, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -24,6 +24,7 @@ import { CommonModule } from '@angular/common';
     templateUrl: './info-drawer-layout.component.html',
     styleUrls: ['./info-drawer-layout.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-info-drawer-layout' }
 })
 export class InfoDrawerLayoutComponent {

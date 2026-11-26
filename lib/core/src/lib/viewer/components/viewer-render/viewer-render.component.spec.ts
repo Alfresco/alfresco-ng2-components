@@ -18,7 +18,7 @@
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
-import { Component, DebugElement, EventEmitter, Input, Output, SimpleChange, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, EventEmitter, Input, Output, SimpleChange, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, DeferBlockBehavior, TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { UnitTestingUtils } from '../../../testing';
@@ -31,6 +31,7 @@ import { ViewerExtensionDirective } from '../../directives/viewer-extension.dire
 
 @Component({
     selector: 'adf-pdf-viewer',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: '<div class="adf-pdf-viewer-mock"></div>'
 })
 class MockPdfViewerComponent implements PdfViewerRef {
@@ -48,6 +49,7 @@ class MockPdfViewerComponent implements PdfViewerRef {
 @Component({
     selector: 'adf-double-viewer',
     imports: [ViewerExtensionDirective, ViewerRenderComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <adf-viewer-render [urlFile]="urlFileViewer1" [viewerTemplateExtensions]="viewerTemplateExtensions" #viewer1 />
         <adf-viewer-render [urlFile]="urlFileViewer2" #viewer2 />

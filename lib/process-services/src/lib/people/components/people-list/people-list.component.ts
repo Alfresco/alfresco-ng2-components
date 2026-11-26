@@ -16,7 +16,7 @@
  */
 
 import { DataTableComponent, DataCellEvent, DataColumnListComponent, ShowHeaderMode } from '@alfresco/adf-core';
-import { AfterContentInit, Component, ContentChild, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, EventEmitter, Input, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { LightUserRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
@@ -25,6 +25,7 @@ import { CommonModule } from '@angular/common';
     selector: 'adf-people-list',
     imports: [CommonModule, DataTableComponent],
     templateUrl: './people-list.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./people-list.component.scss']
 })
 export class PeopleListComponent implements AfterContentInit {

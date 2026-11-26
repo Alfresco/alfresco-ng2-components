@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { RoleModel } from '../../models/role.model';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -56,6 +56,7 @@ export interface RoleModelOption {
     `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-user-role-column adf-datatable-content-cell adf-expand-cell-4' },
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./user-role-column.component.scss']
 })
 export class UserRoleColumnComponent implements OnChanges {

@@ -16,7 +16,7 @@
  */
 
 import { ADF_DATE_FORMATS, AdfDateFnsAdapter, DateFnsUtils } from '@alfresco/adf-core';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
@@ -36,6 +36,7 @@ import { FormsModule } from '@angular/forms';
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
         { provide: DateAdapter, useClass: AdfDateFnsAdapter }
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./date.editor.scss']
 })
 export class DateEditorComponent implements OnInit {

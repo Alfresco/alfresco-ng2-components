@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
 import { DiagramTaskComponent } from './diagram-task.component';
 import { DiagramIconBusinessRuleTaskComponent } from '../icons/diagram-icon-business-rule-task.component';
@@ -25,6 +25,7 @@ import { DiagramIconBusinessRuleTaskComponent } from '../icons/diagram-icon-busi
 @Component({
     selector: 'diagram-business-rule-task',
     imports: [DiagramTaskComponent, DiagramIconBusinessRuleTaskComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-business-rule-task.component.html'
 })
 export class DiagramBusinessRuleTaskComponent extends DiagramElement {}

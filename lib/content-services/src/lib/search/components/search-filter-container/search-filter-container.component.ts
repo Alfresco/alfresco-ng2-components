@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { DataColumn, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
@@ -35,6 +35,7 @@ import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
     imports: [CommonModule, MatButtonModule, MatMenuModule, MatIconModule, SearchWidgetContainerComponent, TranslatePipe, MatDialogModule],
     templateUrl: './search-filter-container.component.html',
     styleUrls: ['./search-filter-container.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterContainerComponent implements OnInit {

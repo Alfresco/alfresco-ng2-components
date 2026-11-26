@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, DestroyRef, inject, isDevMode, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, isDevMode, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { AppConfigService, AppConfigValues, DownloadService, ErrorWidgetComponent } from '@alfresco/adf-core';
 import { AlfrescoIconComponent, ContentNodeDialogService, ContentService } from '@alfresco/adf-content-services';
 import { AlfrescoEndpointRepresentation, Node, NodeChildAssociation, RelatedContentRepresentation } from '@alfresco/js-api';
@@ -40,6 +40,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     imports: [CommonModule, TranslatePipe, MatIconModule, MatButtonModule, MatMenuModule, MatListModule, ErrorWidgetComponent, AlfrescoIconComponent],
     templateUrl: './attach-file-widget.component.html',
     styleUrls: ['./attach-file-widget.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class AttachFileWidgetComponent extends UploadWidgetComponent implements OnInit {

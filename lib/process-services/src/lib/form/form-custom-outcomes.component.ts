@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'adf-form-custom-outcomes',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: '<ng-content />'
 })
 export class FormCustomOutcomesComponent {}

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';
+import { Component, HostBinding, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TOOLBAR_DIRECTIVES } from '../toolbar';
 import { NavbarItem } from './navbar/navbar-item.component';
@@ -29,6 +29,7 @@ export type HeaderVariant = 'minimal' | 'extended';
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     host: { class: 'adf-header' },
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class HeaderComponent {

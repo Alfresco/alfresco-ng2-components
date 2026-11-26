@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, InjectionToken, Injector, ViewEncapsulation, inject } from '@angular/core';
+import { Component, InjectionToken, Injector, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AdditionalDialogActionButton, DialogData } from './dialog-data.interface';
 import { BehaviorSubject } from 'rxjs';
@@ -33,6 +33,7 @@ export const DIALOG_COMPONENT_DATA = new InjectionToken<any>('dialog component d
     templateUrl: './dialog.component.html',
     styleUrls: ['./dialog.component.scss'],
     imports: [CommonModule, TranslatePipe, IconModule, MatDialogModule, MatButtonModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class DialogComponent {

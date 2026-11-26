@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { UploadBase } from './upload-base';
 import { UploadFilesEvent } from '../upload-files.event';
@@ -28,6 +28,7 @@ import { NoopAuthModule } from '@alfresco/adf-core';
 @Component({
     selector: 'adf-upload-button-test',
     template: 'test component',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true
 })
 export class UploadTestComponent extends UploadBase {}

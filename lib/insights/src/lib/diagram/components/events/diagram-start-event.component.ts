@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramElement } from '../diagram-element';
 import { DiagramEventComponent } from './diagram-event.component';
@@ -25,6 +25,7 @@ import { DiagramEventComponent } from './diagram-event.component';
 @Component({
     selector: 'diagram-start-event',
     imports: [DiagramEventComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-start-event.component.html'
 })
 export class DiagramStartEventComponent extends DiagramElement implements OnInit {

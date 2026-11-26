@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ContentChildren, QueryList, ViewEncapsulation } from '@angular/core';
+import { Component, ContentChildren, QueryList, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { AboutPanelDirective } from './about-panel.directive';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -25,6 +25,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     templateUrl: './about.component.html',
     styleUrls: ['about.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonModule, MatExpansionModule]
 })
 export class AboutComponent {

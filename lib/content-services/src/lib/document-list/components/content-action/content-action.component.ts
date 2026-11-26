@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges, OnDestroy, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges, OnDestroy, inject, ChangeDetectionStrategy } from '@angular/core';
 
 import { ContentActionHandler } from '../../models/content-action.model';
 import { DocumentActionsService } from '../../services/document-actions.service';
@@ -28,6 +28,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'content-action',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ''
 })
 export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {

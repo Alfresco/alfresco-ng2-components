@@ -16,19 +16,20 @@
  */
 
 import {
-    ChangeDetectorRef,
-    Component,
-    DestroyRef,
-    EventEmitter,
-    HostListener,
-    inject,
-    InjectionToken,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  EventEmitter,
+  HostListener,
+  inject,
+  InjectionToken,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { forkJoin, isObservable, merge, Observable, of, Subscription } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
@@ -105,6 +106,7 @@ export const ADF_FORM_TAB_NAV_ENABLED = new InjectionToken<Observable<boolean> |
     ],
     providers: [FormCloudSpinnerService],
     templateUrl: './form-cloud.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./form-cloud.component.scss']
 })
 export class FormCloudComponent extends FormBaseComponent implements OnChanges, OnInit {

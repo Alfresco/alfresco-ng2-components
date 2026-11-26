@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, Input, SimpleChange } from '@angular/core';
+import { Component, Input, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CardViewItem } from '../../interfaces/card-view-item.interface';
 import { CardItemTypeService } from '../../services/card-item-types.service';
@@ -26,6 +26,7 @@ import { UnitTestingUtils } from '../../../testing/unit-testing-utils';
 
 @Component({
     selector: 'whatever-you-want-to-have',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: '<div data-automation-id="found-me">Hey I am shiny!</div>'
 })
 export class CardViewShinyCustomElementItemComponent {

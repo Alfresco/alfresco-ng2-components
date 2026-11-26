@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramElement } from '../diagram-element';
 import { DiagramGatewayComponent } from './diagram-gateway.component';
@@ -26,6 +26,7 @@ import { RaphaelCrossDirective } from '../raphael/raphael-cross.component';
 @Component({
     selector: 'diagram-exclusive-gateway',
     imports: [DiagramGatewayComponent, RaphaelCrossDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-exclusive-gateway.component.html'
 })
 export class DiagramExclusiveGatewayComponent extends DiagramElement implements OnInit {

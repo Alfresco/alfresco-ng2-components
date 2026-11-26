@@ -16,16 +16,17 @@
  */
 
 import {
-    Component,
-    Input,
-    ComponentRef,
-    ViewChild,
-    ViewContainerRef,
-    OnDestroy,
-    OnChanges,
-    SimpleChanges,
-    AfterViewInit,
-    inject
+  Component,
+  Input,
+  ComponentRef,
+  ViewChild,
+  ViewContainerRef,
+  OnDestroy,
+  OnChanges,
+  SimpleChanges,
+  AfterViewInit,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { ExtensionService } from '../../services/extension.service';
 import { ExtensionComponent } from '../../services/component-register.service';
@@ -34,6 +35,7 @@ import { MatMenuItem } from '@angular/material/menu';
 // cSpell:words lifecycle
 @Component({
     selector: 'adf-dynamic-component',
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<div #content></div>`
 })
 export class DynamicExtensionComponent implements OnChanges, OnDestroy, AfterViewInit {

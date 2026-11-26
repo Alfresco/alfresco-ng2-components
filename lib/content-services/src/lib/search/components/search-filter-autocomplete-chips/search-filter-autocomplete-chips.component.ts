@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { BehaviorSubject, Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { SearchWidget } from '../../models/search-widget.interface';
@@ -43,6 +43,7 @@ interface AutocompleteFetchState {
     selector: 'adf-search-filter-autocomplete-chips',
     imports: [CommonModule, SearchChipAutocompleteInputComponent, TranslatePipe, MatButtonModule],
     templateUrl: './search-filter-autocomplete-chips.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnInit {

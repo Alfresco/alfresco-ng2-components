@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
 import { RaphaelCircleDirective } from '../raphael/raphael-circle.component';
 import { RaphaelIconTimerDirective } from '../raphael/icons/raphael-icon-timer.component';
@@ -26,6 +26,7 @@ import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
 @Component({
     selector: 'diagram-icon-timer',
     imports: [RaphaelCircleDirective, RaphaelIconTimerDirective, DiagramTooltipComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-icon-timer.component.html'
 })
 export class DiagramIconTimerComponent extends DiagramElement implements OnInit {

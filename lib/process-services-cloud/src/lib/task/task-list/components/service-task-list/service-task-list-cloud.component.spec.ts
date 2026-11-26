@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, SimpleChange, ViewChild } from '@angular/core';
+import { Component, SimpleChange, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
@@ -47,6 +47,7 @@ import { provideCloudPreferences } from '../../../../providers';
         </data-columns>
     </adf-cloud-service-task-list>`,
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ServiceTaskListCloudComponent, DataColumnComponent, DataColumnListComponent]
 })
 class CustomTaskListComponent {
@@ -63,6 +64,7 @@ class CustomTaskListComponent {
         </adf-cloud-service-task-list>
     `,
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CustomEmptyContentTemplateDirective, ServiceTaskListCloudComponent]
 })
 class EmptyTemplateComponent {}
@@ -75,6 +77,7 @@ class EmptyTemplateComponent {}
         </data-columns>
     </adf-cloud-service-task-list>`,
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ServiceTaskListCloudComponent, DataColumnComponent, DataColumnListComponent]
 })
 class CustomCopyContentTaskListComponent {

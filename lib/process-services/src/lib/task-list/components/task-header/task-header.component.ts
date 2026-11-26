@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import {
     AppConfigService,
     CardViewBaseItemModel,
@@ -48,6 +48,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     imports: [CommonModule, MatCardModule, MatButtonModule, UnclaimTaskDirective, ClaimTaskDirective, TranslatePipe, CardViewComponent],
     templateUrl: './task-header.component.html',
     styleUrls: ['./task-header.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class TaskHeaderComponent implements OnChanges, OnInit {

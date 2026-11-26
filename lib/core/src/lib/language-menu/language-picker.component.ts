@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Component, EventEmitter, Output, QueryList, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Output, QueryList, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { LanguageItem } from '../common/services/language-item.interface';
 import { CommonModule } from '@angular/common';
 import { MatMenu, MatMenuItem, MatMenuModule } from '@angular/material/menu';
@@ -26,6 +26,7 @@ import { IconModule } from '../icon/icon.module';
 @Component({
     selector: 'adf-picker-button',
     imports: [CommonModule, MatMenuModule, TranslatePipe, LanguageMenuComponent, IconModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <button mat-menu-item [matMenuTriggerFor]="langMenu">
             <mat-icon adf-icon="language" />

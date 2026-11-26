@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'adf-toolbar-title',
     template: '<ng-content />',
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-toolbar-title' }
 })
 export class ToolbarTitleComponent {}

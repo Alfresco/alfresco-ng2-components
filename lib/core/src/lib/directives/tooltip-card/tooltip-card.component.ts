@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, SecurityContext, inject } from '@angular/core';
+import { Component, Input, SecurityContext, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 
@@ -23,6 +23,7 @@ import { CommonModule } from '@angular/common';
     selector: 'adf-tooltip-card-component',
     imports: [CommonModule],
     templateUrl: './tooltip-card.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./tooltip-card.component.scss']
 })
 export class TooltipCardComponent {

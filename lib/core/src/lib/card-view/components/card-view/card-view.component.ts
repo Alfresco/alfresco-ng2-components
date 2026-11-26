@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { CardViewItem } from '../../interfaces/card-view-item.interface';
 import { DEFAULT_SEPARATOR } from '../card-view-textitem/card-view-textitem.component';
 import { CommonModule } from '@angular/common';
@@ -26,6 +26,7 @@ import { CardViewItemDispatcherComponent } from '../card-view-item-dispatcher/ca
     imports: [CommonModule, CardViewItemDispatcherComponent],
     templateUrl: './card-view.component.html',
     styleUrls: ['./card-view.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class CardViewComponent {

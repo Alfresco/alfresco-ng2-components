@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { VersionCompatibilityService } from './version-compatibility.service';
@@ -36,6 +36,7 @@ import { VersionCompatibilityDirective } from './version-compatibility.directive
         <div *adf-acs-version="'6'" class="visible-content-3">My visible content 3</div>
     `,
     imports: [VersionCompatibilityDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true
 })
 class TestComponent {}

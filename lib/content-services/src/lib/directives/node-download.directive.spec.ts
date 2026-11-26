@@ -18,7 +18,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { NodeDownloadDirective } from './node-download.directive';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
@@ -28,6 +28,7 @@ import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 
 @Component({
     imports: [NodeDownloadDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: '<div [adfNodeDownload]="selection" [version]="version"></div>'
 })
 class TestComponent {

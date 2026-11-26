@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FlagsComponent } from './flags/flags.component';
 
 @Component({
@@ -26,6 +26,7 @@ import { FlagsComponent } from './flags/flags.component';
             <adf-feature-flags-overrides />
         </div>
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: [
         `
             .adf-feature-flags-wrapper {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { BehaviorSubject } from 'rxjs';
 import { Site } from '@alfresco/js-api';
@@ -32,6 +32,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
             {{ displayText$ | async | translate }}
         </span>
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-library-status-column adf-datatable-content-cell' }
 })
 export class LibraryStatusColumnComponent implements OnInit {

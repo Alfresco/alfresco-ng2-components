@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,6 +29,7 @@ import { IconModule } from '../../../icon/icon.module';
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-layout-header' }
 })
 export class HeaderLayoutComponent implements OnInit {

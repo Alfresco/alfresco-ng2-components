@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
@@ -28,6 +28,7 @@ import { provideRouter } from '@angular/router';
 @Component({
     selector: 'adf-test-component',
     imports: [SearchChipListComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <adf-search-chip-list [searchFilter]="searchFilter" [clearAll]="allowClear" /> `
 })
 class TestComponent {

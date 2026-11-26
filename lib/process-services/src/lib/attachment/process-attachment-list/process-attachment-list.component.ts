@@ -26,17 +26,18 @@ import {
     ThumbnailService
 } from '@alfresco/adf-core';
 import {
-    AfterContentInit,
-    Component,
-    ContentChild,
-    EventEmitter,
-    Input,
-    NgZone,
-    OnChanges,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation,
-    inject
+  AfterContentInit,
+  Component,
+  ContentChild,
+  EventEmitter,
+  Input,
+  NgZone,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewEncapsulation,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { ProcessContentService } from '../../form/services/process-content.service';
 import { CommonModule } from '@angular/common';
@@ -58,6 +59,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ],
     styleUrls: ['./process-attachment-list.component.scss'],
     templateUrl: './process-attachment-list.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessAttachmentListComponent implements OnChanges, AfterContentInit {

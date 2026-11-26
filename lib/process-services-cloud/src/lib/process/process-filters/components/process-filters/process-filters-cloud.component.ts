@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { combineLatest, defer, EMPTY, Observable, of, Subscription } from 'rxjs';
 import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
 import { ProcessFilterCloudModel } from '../../models/process-filter-cloud.model';
@@ -39,6 +39,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
     selector: 'adf-cloud-process-filters',
     imports: [TranslatePipe, IconModule, MatProgressSpinnerModule, MatListModule, AsyncPipe, RouterLink],
     templateUrl: './process-filters-cloud.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./process-filters-cloud.component.scss']
 })
 export class ProcessFiltersCloudComponent implements OnInit, OnChanges {

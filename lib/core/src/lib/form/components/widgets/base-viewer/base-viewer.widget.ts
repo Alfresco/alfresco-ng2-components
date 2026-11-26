@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ViewerComponent } from '../../../../viewer';
 import { ErrorWidgetComponent } from '../error/error.component';
@@ -31,6 +31,7 @@ import { WidgetComponent } from '../widget.component';
         '(click)': 'event($event)'
     },
     imports: [TranslatePipe, ViewerComponent, ErrorWidgetComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class BaseViewerWidgetComponent extends WidgetComponent implements OnInit {

@@ -17,19 +17,20 @@
 
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import {
-    AfterViewInit,
-    Component,
-    DestroyRef,
-    ElementRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  ElementRef,
+  EventEmitter,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, mergeMap, switchMap, tap } from 'rxjs/operators';
@@ -68,6 +69,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     providers: [FullNamePipe],
     templateUrl: './people-cloud.component.html',
     styleUrls: ['./people-cloud.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {

@@ -16,7 +16,7 @@
  */
 
 import { ADF_DATE_FORMATS, AdfDateFnsAdapter, DateFnsUtils, FormFieldModel, FormModel } from '@alfresco/adf-core';
-import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { DateAdapter, ErrorStateMatcher, MAT_DATE_FORMATS } from '@angular/material/core';
 import { EMPTY, Observable } from 'rxjs';
 import { Form } from '../../models/form.model';
@@ -61,6 +61,7 @@ const MAX_LENGTH = 255;
         { provide: DateAdapter, useClass: AdfDateFnsAdapter },
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS }
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class StartTaskComponent implements OnInit {

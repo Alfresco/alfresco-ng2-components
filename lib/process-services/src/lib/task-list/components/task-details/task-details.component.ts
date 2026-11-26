@@ -28,18 +28,19 @@ import {
     UpdateNotification
 } from '@alfresco/adf-core';
 import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation,
-    inject
+  Component,
+  DestroyRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Observer, of } from 'rxjs';
@@ -86,6 +87,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     ],
     templateUrl: './task-details.component.html',
     styleUrls: ['./task-details.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class TaskDetailsComponent implements OnInit, OnChanges {

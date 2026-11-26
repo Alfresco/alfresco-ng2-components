@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { of, throwError, Subject } from 'rxjs';
 import { By } from '@angular/platform-browser';
@@ -487,6 +487,7 @@ describe('ProcessInstanceListComponent', () => {
 
 @Component({
     imports: [ProcessInstanceListComponent, DataColumnListComponent, DataColumnComponent, FullNamePipe],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <adf-process-instance-list #processListComponentInstance>
         <data-columns>
             <data-column key="name" title="ADF_PROCESS_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column" [order]="3" />
@@ -529,6 +530,7 @@ describe('CustomProcessListComponent', () => {
 
 @Component({
     imports: [CustomEmptyContentTemplateDirective, ProcessInstanceListComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <adf-process-instance-list [appId]="1">
             <adf-custom-empty-content-template>
@@ -571,6 +573,7 @@ describe('Process List: Custom EmptyTemplateComponent', () => {
 
 @Component({
     imports: [ProcessInstanceListComponent, DataColumnComponent, DataColumnListComponent, FullNamePipe],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <adf-process-instance-list
         [appId]="appId"
         [showContextMenu]="true"

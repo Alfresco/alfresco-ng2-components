@@ -16,18 +16,19 @@
  */
 
 import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    HostListener,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation
+  Component,
+  DestroyRef,
+  EventEmitter,
+  HostListener,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
     ADF_DISPLAY_TEXT_SETTINGS,
@@ -101,6 +102,7 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = /%{processdefinition}/i;
     providers: [LocalizedDatePipe],
     templateUrl: './start-process-cloud.component.html',
     styleUrls: ['./start-process-cloud.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class StartProcessCloudComponent implements OnChanges, OnInit {

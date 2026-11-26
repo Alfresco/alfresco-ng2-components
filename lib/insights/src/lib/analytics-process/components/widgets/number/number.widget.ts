@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
 import { WidgetComponent } from '../widget.component';
 import { CommonModule } from '@angular/common';
@@ -30,6 +30,7 @@ import { MatInputModule } from '@angular/material/input';
     imports: [CommonModule, TranslatePipe, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
     templateUrl: './number.widget.html',
     styleUrls: ['./number.widget.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class NumberWidgetAnalyticsComponent extends WidgetComponent implements OnInit {

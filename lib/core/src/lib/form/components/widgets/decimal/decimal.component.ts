@@ -16,7 +16,7 @@
  */
 
 import { NgIf } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, FormGroupDirective, NgForm, UntypedFormControl } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -43,6 +43,7 @@ import { WidgetComponent } from '../widget.component';
         '(select)': 'event($event)'
     },
     imports: [NgIf, TranslatePipe, MatFormFieldModule, MatInputModule, FormsModule, MatIconModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class DecimalWidgetComponent extends WidgetComponent implements OnInit {

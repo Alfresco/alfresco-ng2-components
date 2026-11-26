@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
 import { FacetWidget } from '../../../models/facet-widget.interface';
@@ -33,6 +33,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     selector: 'adf-search-facet-tabbed-content',
     imports: [CommonModule, SearchChipAutocompleteInputComponent, SearchFilterTabbedComponent, SearchFilterTabDirective],
     templateUrl: './search-facet-tabbed-content.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFacetTabbedContentComponent implements OnInit, OnChanges, FacetWidget {

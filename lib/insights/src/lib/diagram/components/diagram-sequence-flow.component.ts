@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { RaphaelFlowArrowDirective } from './raphael/raphael-flow-arrow.component';
 import { DiagramTooltipComponent } from './tooltip/diagram-tooltip.component';
 
 @Component({
     selector: 'adf-diagram-sequence-flow',
     imports: [RaphaelFlowArrowDirective, DiagramTooltipComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram-sequence-flow.component.html'
 })
 export class DiagramSequenceFlowComponent {

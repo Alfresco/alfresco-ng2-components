@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DiagramElementModel } from '../models/diagram/diagram-element.model';
 import { DiagramModel } from '../models/diagram/diagram.model';
 import { DiagramColorService } from '../services/diagram-color.service';
@@ -70,6 +70,7 @@ const PADDING_HEIGHT: number = 60;
         DiagramPoolsComponent
     ],
     styleUrls: ['./diagram.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './diagram.component.html'
 })
 export class DiagramComponent implements OnChanges {

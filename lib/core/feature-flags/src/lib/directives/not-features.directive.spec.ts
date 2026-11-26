@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockFeatureFlags } from '../mocks/features-service-mock.factory';
 import { NotFeaturesDirective } from './not-features.directive';
@@ -28,6 +28,7 @@ import { UnitTestingUtils } from '../../../../src/lib/testing/unit-testing-utils
             <div id="underFeatureFlag" *adfNotForFeatures="features"></div>
         </div>
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [NotFeaturesDirective]
 })
 class TestWithEnabledFlagComponent {
@@ -41,6 +42,7 @@ class TestWithEnabledFlagComponent {
             <div id="underFeatureFlag" *adfNotForFeatures="features"></div>
         </div>
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [NotFeaturesDirective]
 })
 class TestWithDisabledFlagComponent {

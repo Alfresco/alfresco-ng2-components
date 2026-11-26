@@ -16,7 +16,7 @@
  */
 
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject, ChangeDetectionStrategy } from '@angular/core';
 import { TaskDetailsEvent } from '../../../task-list';
 import { ProcessService } from '../../services/process.service';
 import { ProcessInstanceHeaderComponent } from '../process-instance-header/process-instance-header.component';
@@ -39,6 +39,7 @@ import { ProcessCommentsComponent } from '../../../process-comments';
         ProcessInstanceHeaderComponent
     ],
     templateUrl: './process-instance-details.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./process-instance-details.component.css']
 })
 export class ProcessInstanceDetailsComponent implements OnChanges {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CardViewPropertyValidatorDirective } from './card-view-property-validator.directive';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
@@ -26,6 +26,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     imports: [CardViewPropertyValidatorDirective, ReactiveFormsModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `<input [formControl]="control" adf-card-view-property-validator [property]="property" />`
 })
 class MockComponent {

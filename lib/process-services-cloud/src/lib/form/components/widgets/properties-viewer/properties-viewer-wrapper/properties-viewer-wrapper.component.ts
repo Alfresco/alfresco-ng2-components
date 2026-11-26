@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, inject, ChangeDetectionStrategy } from '@angular/core';
 import { PresetConfig, NodesApiService, ContentMetadataComponent } from '@alfresco/adf-content-services';
 import { Node } from '@alfresco/js-api';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -27,6 +27,7 @@ import { CommonModule } from '@angular/common';
     selector: 'adf-properties-viewer-wrapper',
     imports: [CommonModule, MatProgressSpinnerModule, ContentMetadataComponent],
     templateUrl: './properties-viewer-wrapper.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class PropertiesViewerWrapperComponent implements OnInit, OnChanges {

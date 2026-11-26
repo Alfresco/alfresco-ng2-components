@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
 
 const POSITION = { bottom: 'bottom', left: 'left', right: 'right', top: 'top' };
@@ -28,6 +28,7 @@ const IS_ACTIVE_CLASS = 'adf-is-active';
     selector: 'diagram-tooltip',
     templateUrl: './diagram-tooltip.component.html',
     imports: [NgIf, NgForOf],
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./diagram-tooltip.component.scss']
 })
 export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, SimpleChange } from '@angular/core';
+import { Component, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { first, of, Subject, throwError } from 'rxjs';
 import { ProcessFilterCloudService } from '../../services/process-filter-cloud.service';
@@ -36,7 +36,8 @@ import { FilterCountersCloudService } from '../../../../services/filter-counters
 import { FilterCounterEntityType, FilterCountersResult } from '../../../../models/filter-counters-cloud.model';
 import { ProcessFilterCloudModel } from '../../models/process-filter-cloud.model';
 
-@Component({ selector: 'adf-cloud-dummy', template: '' })
+@Component({ selector: 'adf-cloud-dummy', changeDetection: ChangeDetectionStrategy.Eager,
+ template: '' })
 class DummyComponent {}
 
 const ProcessFilterCloudServiceMock = {

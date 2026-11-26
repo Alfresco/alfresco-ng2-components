@@ -16,20 +16,21 @@
  */
 
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  DestroyRef,
+  EventEmitter,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { UserPreferencesService } from '../../../common/services/user-preferences.service';
@@ -48,6 +49,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     templateUrl: './sidenav-layout.component.html',
     styleUrls: ['./sidenav-layout.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { class: 'adf-sidenav-layout' }
 })
 export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy {

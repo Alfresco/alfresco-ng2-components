@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchFacetFiltersService } from '../services/search-facet-filters.service';
 import { SearchQueryBuilderService } from '../services/search-query-builder.service';
@@ -25,6 +25,7 @@ import { provideRouter } from '@angular/router';
 @Component({
     template: `<button adf-reset-search>Reset</button>`,
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ResetSearchDirective]
 })
 class TestComponent {}
