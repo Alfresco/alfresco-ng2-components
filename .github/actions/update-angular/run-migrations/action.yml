@@ -1,5 +1,5 @@
 name: "Run migrations"
-description: "Run the collected Nx migrations, one commit each, then remove the migrations file"
+description: "Run the collected Nx migrations that an earlier attempt did not commit yet, one commit each, then remove the migrations file"
 runs:
   using: "composite"
   steps:
@@ -8,7 +8,11 @@ runs:
       shell: bash
       run: |
         {
-          pnpm nx migrate --run-migrations --create-commits
+          PENDING_FILE="$RUNNER_TEMP/pending-migrations.json"
+          PENDING=$(node scripts/update-angular/pending-migrations.mjs migrations.json "$PENDING_FILE")
+          if [ "$PENDING" != "0" ]; then
+            pnpm nx migrate --run-migrations="$(realpath --relative-to=. "$PENDING_FILE")" --create-commits
+          fi
           git rm -f --ignore-unmatch migrations.json
           pnpm install --no-frozen-lockfile
           git add -A
