@@ -1,42 +1,16 @@
 name: "Prepare update branch"
-description: "Resolve the target Angular version and create the branch of the update, or check it out when the run resumes it"
+description: "Resolve the target Angular version and create an update branch owned by this workflow run"
 inputs:
   angular-major:
     description: "Target Angular major version"
     required: true
-  resume:
-    description: "true when an earlier attempt of this run created the branch, so this attempt continues it"
-    required: false
-    default: "false"
-  version:
-    description: "Version saved by an earlier attempt of this run, resolved again when empty"
-    required: false
-    default: ""
-  base-sha:
-    description: "Base commit saved by an earlier attempt of this run, the merge base with the base branch when empty"
-    required: false
-    default: ""
-  done:
-    description: "JSON list of the stages that passed in an earlier attempt of this run"
-    required: false
-    default: "[]"
-  base-branch:
-    description: "Branch the update starts from"
-    required: false
-    default: develop
 outputs:
   version:
     description: "Resolved @angular/core version"
     value: ${{ steps.version.outputs.version }}
   branch:
     description: "Name of the created or resumed branch"
-    value: ${{ steps.branch.outputs.name }}
-  resumed:
-    description: "true when the branch was checked out to continue it"
-    value: ${{ steps.branch.outputs.resumed }}
-  done:
-    description: "JSON list of the stages to skip: the earlier ones when the branch is resumed, none when it starts again"
-    value: ${{ steps.branch.outputs.done }}
+    value: ${{ steps.branch.outputs.branch }}
   base-sha:
     description: "Commit the update starts from"
     value: ${{ steps.branch.outputs.base-sha }}
@@ -48,39 +22,15 @@ runs:
       shell: bash
       env:
         TARGET_MAJOR: ${{ inputs.angular-major }}
-        SAVED_VERSION: ${{ inputs.version }}
       run: |
-        VERSION=${SAVED_VERSION:-$(node scripts/update-angular/resolve-angular-version.mjs "$TARGET_MAJOR")}
+        VERSION=$(node scripts/update-angular/resolve-angular-version.mjs "$TARGET_MAJOR")
         echo "Resolved @angular/core $VERSION"
         echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-    - name: Create or resume branch
+    - name: Create branch
       id: branch
       shell: bash
       env:
         VERSION: ${{ steps.version.outputs.version }}
-        BASE_BRANCH: ${{ inputs.base-branch }}
-        RESUME: ${{ inputs.resume }}
-        DONE: ${{ inputs.done }}
-        SAVED_BASE_SHA: ${{ inputs.base-sha }}
+        RUN_ID: ${{ github.run_id }}
       run: |
-        BRANCH="chore/update-angular-$VERSION"
-        if git rev-parse --verify --quiet "refs/remotes/origin/$BRANCH" > /dev/null; then
-          if [ "$RESUME" != "true" ]; then
-            echo "::error::Branch $BRANCH already exists and was not created by this run, so it is left untouched. To continue it, push your fixes and use 'Re-run failed jobs' on the run that created it. To start over, delete the branch and its pull request first."
-            exit 1
-          fi
-          git checkout -b "$BRANCH" "origin/$BRANCH"
-          echo "Resuming $BRANCH at $(git rev-parse HEAD)"
-          echo "resumed=true" >> "$GITHUB_OUTPUT"
-          echo "done=$DONE" >> "$GITHUB_OUTPUT"
-          echo "base-sha=${SAVED_BASE_SHA:-$(git merge-base HEAD "origin/$BASE_BRANCH")}" >> "$GITHUB_OUTPUT"
-        else
-          if [ "$RESUME" == "true" ]; then
-            echo "::notice::An earlier attempt of this run created $BRANCH but it was never pushed, or it was deleted since, so the update starts again."
-          fi
-          git checkout -b "$BRANCH"
-          echo "resumed=false" >> "$GITHUB_OUTPUT"
-          echo "done=[]" >> "$GITHUB_OUTPUT"
-          echo "base-sha=$(git rev-parse "origin/$BASE_BRANCH")" >> "$GITHUB_OUTPUT"
-        fi
-        echo "name=$BRANCH" >> "$GITHUB_OUTPUT"
+        node scripts/update-angular/prepare-branch.mjs "$VERSION" "$RUN_ID" >> "$GITHUB_OUTPUT"
