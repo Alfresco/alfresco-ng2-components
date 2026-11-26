@@ -135,32 +135,75 @@ function chooseUpgrades(issues, dependencies, tried) {
 }
 
 /**
+ * Reads the report an earlier attempt of this run left, so that a retry, which starts from the manifests that attempt already upgraded,
+ * still reports its upgrades. Manual and skipped entries are kept only while their dependency is unchanged, as a person may have handled them since.
+ * @param reportFile report of the earlier attempt
+ * @returns the report to continue from
+ */
+function readEarlierReport(reportFile) {
+    if (!fs.existsSync(reportFile)) {
+        return { upgrades: [], manual: [], skipped: [] };
+    }
+    const earlier = JSON.parse(fs.readFileSync(reportFile, 'utf8'));
+    const dependencies = workspaceDependencies();
+
+    return {
+        upgrades: earlier.upgrades ?? [],
+        manual: (earlier.manual ?? []).filter((entry) => dependencies[entry.name] === entry.from),
+        skipped: (earlier.skipped ?? []).filter((entry) => dependencies[entry.name] === entry.range)
+    };
+}
+
+/**
+ * Adds entries to a report list, replacing the entry of the same package. An upgrade keeps the version it started from.
+ * @param list report list to update
+ * @param entries entries to add
+ */
+function addByName(list, entries) {
+    for (const entry of entries) {
+        const index = list.findIndex((existing) => existing.name === entry.name);
+        if (index === -1) {
+            list.push(entry);
+        } else {
+            list[index] = { ...entry, ...(list[index].from && { from: list[index].from }) };
+        }
+    }
+}
+
+/**
  * Upgrades direct dependencies until the peers the update broke are satisfied or nothing more can be done, installing after each round.
  * Issues that were already there before the update are left alone, they are only reported.
+ * The report is written before every install, so that a failed install keeps the decisions that were already applied to the manifests.
  * @param baselineFile issues saved before the update
- * @param reportFile JSON file listing the `upgrades` made, the `manual` upgrades left to a person and the `skipped` dependencies
+ * @param reportFile JSON file listing the `upgrades` made, the `manual` upgrades left to a person and the `skipped` dependencies,
+ * continued when an earlier attempt of this run left one
  */
 function alignPeers(baselineFile, reportFile) {
     const baselineKeys = readBaselineKeys(baselineFile);
-    const report = { upgrades: [], manual: [], skipped: [] };
+    const report = readEarlierReport(reportFile);
+    const save = () => fs.writeFileSync(reportFile, `${JSON.stringify(report, null, 2)}\n`);
     const tried = new Set();
 
     for (let round = 0; round < MAX_ROUNDS; round++) {
         const newIssues = findPeerIssues().filter((issue) => !baselineKeys.has(issueKey(issue)));
         const { upgrades, manual, skipped } = chooseUpgrades(newIssues, workspaceDependencies(), tried);
 
-        report.manual.push(...manual);
-        report.skipped.push(...skipped);
+        addByName(report.manual, manual);
+        addByName(report.skipped, skipped);
         if (!upgrades.length) {
             break;
         }
 
         setDependencyVersions(upgrades);
-        report.upgrades.push(...upgrades.map(({ name, from, to }) => ({ name, from, to: `${from.match(/^\D*/)[0]}${to}` })));
+        addByName(
+            report.upgrades,
+            upgrades.map(({ name, from, to }) => ({ name, from, to: `${from.match(/^\D*/)[0]}${to}` }))
+        );
+        save();
         runVisibly('pnpm', ['install', '--no-frozen-lockfile']);
     }
 
-    fs.writeFileSync(reportFile, `${JSON.stringify(report, null, 2)}\n`);
+    save();
 }
 
 main(alignPeers);
