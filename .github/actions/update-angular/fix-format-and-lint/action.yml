@@ -1,5 +1,9 @@
 name: "Fix format and lint"
 description: "Apply the automatic format and lint fixes and commit them"
+outputs:
+  outcome:
+    description: "Outcome of the fixes, failure when they left errors behind"
+    value: ${{ steps.stage.outcome }}
 runs:
   using: "composite"
   steps:
