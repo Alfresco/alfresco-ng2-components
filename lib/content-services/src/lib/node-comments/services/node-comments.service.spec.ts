@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { CommentModel, RedirectAuthService } from '@alfresco/adf-core';
 import { fakeContentComment, fakeContentComments } from '../mocks/node-comments.mock';
 import { NodeCommentsService } from './node-comments.service';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { EMPTY, of } from 'rxjs';
 import { AlfrescoApiService } from '../../services';
@@ -33,7 +33,7 @@ describe('NodeCommentsService', () => {
             providers: [
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
-                provideHttpClient(),
+                provideHttpClient(withXhr()),
                 provideHttpClientTesting()
             ]
         });

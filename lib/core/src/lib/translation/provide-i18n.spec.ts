@@ -21,7 +21,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { provideI18N } from './provide-i18n';
 import { TranslateLoaderService } from './translate-loader.service';
 import { TranslationService } from './translation.service';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideAppConfigTesting } from '../testing';
 
@@ -29,7 +29,7 @@ describe('provideI18N', () => {
     describe('basic configuration', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                providers: [provideHttpClient(), provideHttpClientTesting(), provideAppConfigTesting(), provideI18N()]
+                providers: [provideHttpClient(withXhr()), provideHttpClientTesting(), provideAppConfigTesting(), provideI18N()]
             });
         });
 
@@ -47,7 +47,7 @@ describe('provideI18N', () => {
     describe('with custom default language', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                providers: [provideHttpClient(), provideHttpClientTesting(), provideAppConfigTesting(), provideI18N({ defaultLanguage: 'fr' })]
+                providers: [provideHttpClient(withXhr()), provideHttpClientTesting(), provideAppConfigTesting(), provideI18N({ defaultLanguage: 'fr' })]
             });
         });
 
@@ -61,7 +61,7 @@ describe('provideI18N', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 providers: [
-                    provideHttpClient(),
+                    provideHttpClient(withXhr()),
                     provideHttpClientTesting(),
                     provideAppConfigTesting(),
                     provideI18N({
@@ -95,7 +95,7 @@ describe('provideI18N', () => {
         beforeEach(async () => {
             TestBed.configureTestingModule({
                 providers: [
-                    provideHttpClient(),
+                    provideHttpClient(withXhr()),
                     provideHttpClientTesting(),
                     provideAppConfigTesting(),
                     provideI18N({
@@ -138,7 +138,7 @@ describe('provideI18N', () => {
         beforeEach(async () => {
             TestBed.configureTestingModule({
                 providers: [
-                    provideHttpClient(),
+                    provideHttpClient(withXhr()),
                     provideHttpClientTesting(),
                     provideAppConfigTesting(),
                     provideI18N({
@@ -166,7 +166,7 @@ describe('provideI18N', () => {
         beforeEach(async () => {
             TestBed.configureTestingModule({
                 providers: [
-                    provideHttpClient(),
+                    provideHttpClient(withXhr()),
                     provideHttpClientTesting(),
                     provideAppConfigTesting(),
                     provideI18N({
@@ -196,7 +196,7 @@ describe('provideI18N', () => {
         beforeEach(async () => {
             TestBed.configureTestingModule({
                 providers: [
-                    provideHttpClient(),
+                    provideHttpClient(withXhr()),
                     provideHttpClientTesting(),
                     provideAppConfigTesting(),
                     provideI18N({

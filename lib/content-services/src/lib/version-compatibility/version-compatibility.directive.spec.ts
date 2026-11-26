@@ -22,7 +22,7 @@ import { VersionCompatibilityService } from './version-compatibility.service';
 import { VersionInfo } from '@alfresco/js-api';
 import { RedirectAuthService } from '@alfresco/adf-core';
 import { EMPTY, of } from 'rxjs';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { VersionCompatibilityDirective } from './version-compatibility.directive';
 
@@ -57,7 +57,7 @@ describe('VersionCompatibilityDirective', () => {
             imports: [VersionCompatibilityDirective, TestComponent],
             providers: [
                 { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
-                provideHttpClient(),
+                provideHttpClient(withXhr()),
                 provideHttpClientTesting()
             ]
         });

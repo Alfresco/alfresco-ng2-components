@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
@@ -46,7 +46,7 @@ describe('TokenInterceptor', () => {
                     useClass: TokenInterceptor,
                     multi: true
                 },
-                provideHttpClient(withInterceptorsFromDi()),
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
                 provideHttpClientTesting()
             ]
         });

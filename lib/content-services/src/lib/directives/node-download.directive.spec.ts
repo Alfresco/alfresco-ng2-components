@@ -20,7 +20,7 @@ import { By } from '@angular/platform-browser';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Component, DebugElement, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { NodeDownloadDirective } from './node-download.directive';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ContentApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
@@ -59,7 +59,7 @@ describe('NodeDownloadDirective', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [MatDialogModule, TestComponent],
-            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }, provideHttpClient(), provideHttpClientTesting()]
+            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }, provideHttpClient(withXhr()), provideHttpClientTesting()]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;

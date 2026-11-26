@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../../app-config/app-config.service';
@@ -31,7 +31,7 @@ describe('TimeSyncService', () => {
         appConfigSpy = jasmine.createSpyObj('AppConfigService', ['get']);
 
         TestBed.configureTestingModule({
-            providers: [TimeSyncService, { provide: AppConfigService, useValue: appConfigSpy }, provideHttpClient(), provideHttpClientTesting()]
+            providers: [TimeSyncService, { provide: AppConfigService, useValue: appConfigSpy }, provideHttpClient(withXhr()), provideHttpClientTesting()]
         });
 
         service = TestBed.inject(TimeSyncService);

@@ -20,7 +20,7 @@ import { LibraryMembershipDirective } from './library-membership.directive';
 import { SimpleChange } from '@angular/core';
 import { of, throwError } from 'rxjs';
 import { SitesService } from '../common/services/sites.service';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
@@ -48,7 +48,7 @@ describe('LibraryMembershipDirective', () => {
                 SitesService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: VersionCompatibilityService, useValue: versionCompatibilityService },
-                provideHttpClient(),
+                provideHttpClient(withXhr()),
                 provideHttpClientTesting()
             ]
         });
