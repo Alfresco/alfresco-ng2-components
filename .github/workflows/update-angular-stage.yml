@@ -19,6 +19,10 @@ on:
       releases-as-of:
         required: true
         type: string
+    outputs:
+      lockfile-outcome:
+        description: "Outcome of the lockfile verification of the format-and-check stage"
+        value: ${{ jobs.stage.outputs.lockfile-outcome }}
 
 permissions:
   contents: read
@@ -28,6 +32,8 @@ jobs:
     name: ${{ inputs.stage }}
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    outputs:
+      lockfile-outcome: ${{ steps.format-check.outputs.lockfile-outcome }}
     env:
       NODE_OPTIONS: "--max-old-space-size=5120"
       UPDATE_ANGULAR_RELEASES_AS_OF: ${{ inputs.releases-as-of }}
@@ -141,7 +147,7 @@ jobs:
           branch: ${{ inputs.branch }}
           github-token: ${{ steps.app-token.outputs.token }}
           gpg-private-key: ${{ secrets.HXPS_GIT_COMMIT_SIGNING_PRIVATE_KEY }}
-      - name: Fail when the lockfile does not match
-        if: ${{ always() && steps.format-check.outputs.lockfile-outcome == 'failure' }}
+      - name: Fail when fixes left errors or the lockfile does not match
+        if: ${{ always() && (steps.format-check.outputs.format-outcome == 'failure' || steps.format-check.outputs.lockfile-outcome == 'failure') }}
         shell: bash
         run: exit 1
