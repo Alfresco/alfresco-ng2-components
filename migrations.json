@@ -1,0 +1,74 @@
+{
+  "migrations": [
+    {
+      "version": "22.0.0",
+      "description": "Adds `ChangeDetectionStrategy.Eager` to all components.",
+      "factory": "./bundles/change-detection-eager.cjs#migrate",
+      "package": "@angular/core",
+      "name": "change-detection-eager"
+    },
+    {
+      "version": "22.0.0",
+      "description": "Adds 'withXhr' to 'provideHttpClient' function calls when the 'HttpXhrBackend' is used. For more information see: https://angular.dev/api/common/http/withXhr",
+      "factory": "./bundles/http-xhr-backend.cjs#migrate",
+      "package": "@angular/core",
+      "name": "http-xhr-backend"
+    },
+    {
+      "version": "22.0.0",
+      "description": "Adds 'strictTemplates: false' in tsconfig.json when not set.",
+      "factory": "./bundles/strict-templates-default.cjs#migrate",
+      "package": "@angular/core",
+      "name": "strict-templates-default"
+    },
+    {
+      "version": "22.0.0",
+      "description": "Adds the required third argument to canMatch callsites.",
+      "factory": "./bundles/can-match-snapshot-required.cjs#migrate",
+      "package": "@angular/core",
+      "name": "can-match-snapshot-required"
+    },
+    {
+      "version": "22.0.0",
+      "description": "Adds withNoIncrementalHydration() opt out to provideClientHydration() when incremental hydration is not enabled to retain pre-v22 behavior-.",
+      "factory": "./bundles/incremental-hydration.cjs#migrate",
+      "package": "@angular/core",
+      "name": "incremental-hydration"
+    },
+    {
+      "version": "22.0.0",
+      "description": "Disables the 'nullishCoalescingNotNullable & optionalChainNotNullable extended diagnostics.",
+      "factory": "./bundles/strict-safe-navigation-narrow.cjs#migrate",
+      "package": "@angular/core",
+      "name": "strict-safe-navigation-narrow"
+    },
+    {
+      "version": "22.0.0",
+      "description": "Migrate broken duplicate outputs",
+      "factory": "./bundles/model-output.cjs#migrate",
+      "package": "@angular/core",
+      "name": "model-output"
+    },
+    {
+      "version": "22.0.0",
+      "description": "Wraps optional chaining expressions in $safeNavigationMigration().",
+      "factory": "./bundles/safe-optional-chaining.cjs#migrate",
+      "package": "@angular/core",
+      "name": "safe-optional-chaining"
+    },
+    {
+      "version": "22.0.0-0",
+      "description": "Updates the Angular CDK to v22",
+      "factory": "./ng-update/index#updateToV22",
+      "package": "@angular/cdk",
+      "name": "migration-v22"
+    },
+    {
+      "version": "22.0.0-0",
+      "description": "Updates Angular Material to v22",
+      "factory": "./ng-update/index_bundled#updateToV22",
+      "package": "@angular/material",
+      "name": "migration-v22"
+    }
+  ]
+}
