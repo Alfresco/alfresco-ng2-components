@@ -80,6 +80,12 @@ jobs:
         with:
           name: ${{ inputs.stage }}
           outcome: failure
+      - name: Record initialization success
+        if: ${{ inputs.stage == 'format-and-check' }}
+        uses: ./.github/actions/update-angular/record-validation-result
+        with:
+          name: ${{ inputs.stage }}
+          outcome: success
       - name: Update Nx
         if: ${{ inputs.stage == 'update-nx' }}
         uses: ./.github/actions/update-angular/update-nx
