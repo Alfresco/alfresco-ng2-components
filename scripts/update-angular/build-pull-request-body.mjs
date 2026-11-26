@@ -22,6 +22,9 @@ import { main } from './lib/cli.mjs';
 import { fenced, shareBudget, truncateMarkdown } from './lib/markdown.mjs';
 
 const NOT_RUN = 'not run';
+const OUTDATED = 'outdated';
+const OUTDATED_TODO =
+    'It checked an older commit than the head of this branch. Re-run this job alone on the workflow run, which also refreshes this pull request. Avoid **Re-run all jobs**, which repeats the update stages.';
 
 const UPDATE_STAGES = [
     { name: 'update-nx', todo: 'Move Nx to a release that supports the target Angular, then run `pnpm install`.' },
@@ -69,8 +72,8 @@ function readIfExists(file) {
 
 /**
  * Reads the outcome and log of every step recorded by the workflow.
- * @param validationDir directory with a <name>.status and a <name>.log file per step
- * @returns recorded steps with their name, outcome and log
+ * @param validationDir directory with a <name>.status and a <name>.log file per step, and a <name>.sha file for the checks of the branch
+ * @returns recorded steps with their name, outcome, log and checked commit
  */
 function readRecordedSteps(validationDir) {
     if (!fs.existsSync(validationDir)) {
@@ -86,9 +89,22 @@ function readRecordedSteps(validationDir) {
             return {
                 name,
                 outcome: readIfExists(path.join(validationDir, file)).trim(),
-                log: readIfExists(path.join(validationDir, `${name}.log`)).trimEnd()
+                log: readIfExists(path.join(validationDir, `${name}.log`)).trimEnd(),
+                sha: readIfExists(path.join(validationDir, `${name}.sha`)).trim()
             };
         });
+}
+
+/**
+ * Marks the checks that ran on another commit than the head of the branch as outdated, because a fix was pushed after them.
+ * @param recorded steps recorded by the workflow
+ * @param headSha commit at the head of the branch
+ * @returns steps, with the outdated checks keeping their result as `checkedOutcome`
+ */
+function rejectOutdated(recorded, headSha) {
+    return recorded.map((step) =>
+        step.sha && step.sha !== headSha ? { ...step, outcome: OUTDATED, checkedOutcome: step.outcome, todo: OUTDATED_TODO } : step
+    );
 }
 
 /**
@@ -105,10 +121,11 @@ function listSteps(recorded) {
     const known = [...UPDATE_STAGES, ...optional, ...VALIDATION_STAGES].map((stage) => ({
         log: '',
         outcome: NOT_RUN,
+        ...stage,
         ...find(stage.name),
-        ...stage
+        todo: find(stage.name)?.todo ?? stage.todo
     }));
-    const tests = recorded.filter((step) => step.name.startsWith('test-')).map((step) => ({ ...step, todo: TEST_TODO }));
+    const tests = recorded.filter((step) => step.name.startsWith('test-')).map((step) => ({ todo: TEST_TODO, ...step }));
 
     return [...known, ...(tests.length ? tests : [{ name: 'unit tests', outcome: NOT_RUN, log: '', todo: TEST_TODO }])];
 }
@@ -122,6 +139,9 @@ function resultsTable(steps) {
     const icons = (step) => {
         if (step.outcome === 'success') {
             return '✅ passed';
+        }
+        if (step.outcome === OUTDATED) {
+            return `⚠️ outdated, ${step.checkedOutcome} on ${step.sha.slice(0, 7)}`;
         }
         return step.outcome === NOT_RUN ? '⏭ not run' : `❌ ${step.outcome}`;
     };
@@ -148,7 +168,7 @@ function clip(text, limit) {
  * @returns markdown
  */
 function failureDetails(steps, runUrl, budget) {
-    const failed = steps.filter((step) => step.log && step.outcome !== 'success');
+    const failed = steps.filter((step) => step.log && step.outcome !== 'success' && step.checkedOutcome !== 'success');
     const limit = Math.min(MAX_LOG_CHARS, Math.floor(budget / Math.max(failed.length, 1)) - LOG_OVERHEAD_CHARS);
 
     if (failed.length && limit < MIN_LOG_CHARS) {
@@ -171,9 +191,13 @@ function failureDetails(steps, runUrl, budget) {
  */
 function nextSteps(steps, runUrl) {
     const pending = steps.filter((step) => step.outcome !== 'success');
-    const items = pending.map((step) =>
-        step.outcome === NOT_RUN ? `- **${step.name}** (${NOT_RUN}): ${step.todo}` : `- **${step.name}** (failed, see its log below): ${step.todo}`
-    );
+    const status = (step) => {
+        if (step.outcome === NOT_RUN || step.outcome === OUTDATED) {
+            return step.outcome;
+        }
+        return 'failed, see its log below';
+    };
+    const items = pending.map((step) => `- **${step.name}** (${status(step)}): ${step.todo}`);
     const resume = `To let the workflow continue instead, push your fixes to this branch and use **Re-run failed jobs** on the [workflow run](${runUrl}). GitHub re-runs failed jobs and their dependent jobs, keeping successful upstream jobs. Each retried job starts from the latest commit on this branch and updates this pull request. A new run of the workflow never overwrites this branch.`;
 
     return pending.length ? `### What needs to be done\n\nWork on this branch, in this order:\n\n${items.join('\n')}\n\n${resume}` : '';
@@ -201,10 +225,11 @@ function stoppedWarning(steps) {
  * @param reportDir directory with migration-report.md, peers.md and overrides.md
  * @param version Angular version the update moves to
  * @param runUrl URL of the workflow run
+ * @param headSha commit at the head of the branch, the one every check has to have validated
  * @param jobResults results of the workflow jobs
  */
-function buildPullRequestBody(bodyFile, validationDir, reportDir, version, runUrl, ...jobResults) {
-    const steps = listSteps(readRecordedSteps(validationDir));
+function buildPullRequestBody(bodyFile, validationDir, reportDir, version, runUrl, headSha, ...jobResults) {
+    const steps = listSteps(rejectOutdated(readRecordedSteps(validationDir), headSha));
     const needsFixes = steps.some((step) => step.outcome !== 'success') || jobResults.some((result) => result !== 'success');
     const readReport = (file) => readIfExists(path.join(reportDir, file)).trim();
     const join = (sections) => `${sections.filter(Boolean).join('\n\n')}\n`;

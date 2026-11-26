@@ -31,7 +31,8 @@ runs:
         BASE_BRANCH: ${{ inputs.base-branch }}
         RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
       run: |
-        STATE=$(node scripts/update-angular/build-pull-request-body.mjs body.md validation report "$VERSION" "$RUN_URL" $JOB_RESULTS)
+        HEAD_SHA=$(gh api "repos/$GH_REPO/git/ref/heads/$BRANCH" --jq '.object.sha')
+        STATE=$(node scripts/update-angular/build-pull-request-body.mjs body.md validation report "$VERSION" "$RUN_URL" "$HEAD_SHA" $JOB_RESULTS)
         TITLE="GH auto: Update Angular to $VERSION"
         DRAFT_FLAG=""
         if [ "$STATE" == "draft" ]; then

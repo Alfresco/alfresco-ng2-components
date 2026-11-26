@@ -7,6 +7,10 @@ inputs:
   outcome:
     description: 'Outcome of the validated step'
     required: true
+  sha:
+    description: 'Commit the check ran on, so that the pull request can reject results of an older commit'
+    required: false
+    default: ''
 runs:
   using: "composite"
   steps:
@@ -16,11 +20,15 @@ runs:
       env:
         CHECK_NAME: ${{ inputs.name }}
         OUTCOME: ${{ inputs.outcome }}
+        SHA: ${{ inputs.sha }}
       run: |
         SAFE_NAME="${CHECK_NAME//\//-}"
         RESULTS="$RUNNER_TEMP/validation-results/$SAFE_NAME"
         mkdir -p "$RESULTS"
         echo "$OUTCOME" > "$RESULTS/$SAFE_NAME.status"
+        if [ -n "$SHA" ]; then
+          echo "$SHA" > "$RESULTS/$SAFE_NAME.sha"
+        fi
         if [ -f "$RUNNER_TEMP/validation.log" ]; then
           CLEAN_LOG="$RUNNER_TEMP/validation-clean.log"
           sed 's/\x1b\[[0-9;]*[A-Za-z]//g' "$RUNNER_TEMP/validation.log" | perl -0pe '
