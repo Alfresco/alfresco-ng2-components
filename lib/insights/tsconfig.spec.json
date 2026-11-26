@@ -6,5 +6,18 @@
     "useDefineForClassFields": false
   },
   "files": ["src/test.ts"],
-  "include": ["**/*.spec.ts", "**/*.test.ts", "**/*.d.ts", "index.ts"]
+  "include": [
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "**/*.d.ts",
+    "index.ts"
+  ],
+  "angularCompilerOptions": {
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
+  }
 }

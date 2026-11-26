@@ -17,5 +17,16 @@
     "useDefineForClassFields": false
   },
   "exclude": ["./test.ts", "**/*.spec.ts", "**/*.test.ts", "**/*.stories.ts"],
-  "include": ["src/**/*.ts", "index.ts"]
+  "include": [
+    "src/**/*.ts",
+    "index.ts"
+  ],
+  "angularCompilerOptions": {
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
+  }
 }
