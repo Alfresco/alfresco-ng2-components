@@ -57,7 +57,7 @@ import { provideCloudPreferences } from '../../../../providers';
                 class="adf-desktop-only dw-dt-col-3 adf-ellipsis-cell"
             >
                 <ng-template let-entry="$implicit">
-                    <div>{{ getFullName(entry.row?.obj?.startedBy) }}</div>
+                    <div>{{ getFullName($safeNavigationMigration(entry.row?.obj?.startedBy)) }}</div>
                 </ng-template>
             </data-column>
         </data-columns>

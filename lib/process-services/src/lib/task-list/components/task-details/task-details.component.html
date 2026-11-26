@@ -86,7 +86,7 @@
                     <adf-checklist
                        [readOnly]="internalReadOnlyForm"
                        [taskId]="taskDetails.id"
-                       [assignee]="taskDetails.assignee?.id"
+                       [assignee]="$safeNavigationMigration(taskDetails.assignee?.id)"
                        (checklistTaskCreated)="onChecklistTaskCreated($event)"
                        (checklistTaskDeleted)="onChecklistTaskDeleted($event)" />
                 </div>

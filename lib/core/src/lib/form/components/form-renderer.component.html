@@ -42,14 +42,14 @@
 <ng-template #render let-fieldToRender="fieldToRender">
     @for (currentRootElement of fieldToRender; track currentRootElement.id) {
         @if (currentRootElement.type === 'section') {
-            <div [id]="'field-' + currentRootElement?.id + '-container'" class="adf-container-widget">
+            <div [id]="'field-' + $safeNavigationMigration(currentRootElement?.id) + '-container'" class="adf-container-widget">
             <adf-form-section [field]="currentRootElement.field" />
         </div>
         }
 
         @if (currentRootElement.type === 'container' || currentRootElement.type === 'group') {
             <div
-             [id]="'field-' + currentRootElement?.id + '-container'"
+             [id]="'field-' + $safeNavigationMigration(currentRootElement?.id) + '-container'"
              class="adf-container-widget"
              [hidden]="!currentRootElement?.isVisible">
             <adf-header-widget [element]="currentRootElement" />
@@ -77,7 +77,7 @@
                     @for (column of currentRootElement?.columns; track column; let columnIndex = $index) {
                             <div
                              class="adf-grid-list-single-column"
-                             [style.width.%]="getColumnWidth(currentRootElement, currentRootElement?.columns, columnIndex)">
+                             [style.width.%]="getColumnWidth(currentRootElement, $safeNavigationMigration(currentRootElement?.columns), columnIndex)">
                             @for (field of column?.fields; track field) {
                                 @if (field.type === 'section') {
                                     <adf-form-section [field]="field"/>
@@ -107,7 +107,7 @@
 
         @if (currentRootElement.type === 'repeatable-section') {
             <div
-                [id]="'field-' + currentRootElement?.id + '-container'"
+                [id]="'field-' + $safeNavigationMigration(currentRootElement?.id) + '-container'"
                 class="adf-container-widget"
                 [hidden]="!currentRootElement?.isVisible"
             >

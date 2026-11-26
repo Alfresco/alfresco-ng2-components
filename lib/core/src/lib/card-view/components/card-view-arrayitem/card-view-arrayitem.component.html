@@ -51,7 +51,7 @@
         </mat-menu>
     </ng-container>
     <ng-template #elseEmptyValueBlock>
-        <span class="adf-card-array-item-default" data-automation-id="card-arrayitem-default">{{ property?.default | translate }}</span>
+        <span class="adf-card-array-item-default" data-automation-id="card-arrayitem-default">{{ $safeNavigationMigration(property?.default) | translate }}</span>
     </ng-template>
     @if (showClickableIcon) {
         <button mat-icon-button

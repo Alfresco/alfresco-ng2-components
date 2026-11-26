@@ -55,7 +55,7 @@
                     @if (existingCategories.length === 1) {
                         {{ 'CATEGORIES_MANAGEMENT.ONE_EXISTING_CATEGORY_AVAILABLE' | translate : { wordTyped: categoryNameControl.value } }}
                     } @else {
-                        {{ 'CATEGORIES_MANAGEMENT.EXISTING_CATEGORIES_AVAILABLE' | translate : { categoriesCount: existingCategories?.length, wordTyped: categoryNameControl.value } }}
+                        {{ 'CATEGORIES_MANAGEMENT.EXISTING_CATEGORIES_AVAILABLE' | translate : { categoriesCount: $safeNavigationMigration(existingCategories?.length), wordTyped: categoryNameControl.value } }}
                     }
                 } @else {
                     {{ 'CATEGORIES_MANAGEMENT.NO_EXISTING_CATEGORIES_ANNOUNCEMENT' | translate : { wordTyped: categoryNameControl.value } }}

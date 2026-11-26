@@ -18,7 +18,7 @@
         <mat-error>{{ 'LIBRARY.ERRORS.TITLE_TOO_LONG' | translate }}</mat-error>
       }
       @else if (form.controls['title'].errors?.message) {
-        <mat-error>{{ form.controls['title'].errors?.message | translate }}</mat-error>
+        <mat-error>{{ $safeNavigationMigration(form.controls['title'].errors?.message) | translate }}</mat-error>
       }
       @else if (form.controls['title'].errors?.required) {
         <mat-error>{{ 'LIBRARY.ERRORS.NAME_REQUIRED' | translate }}</mat-error>
@@ -35,7 +35,7 @@
       />
 
       @if (form.controls['id'].errors?.message) {
-        <mat-error>{{ form.controls['id'].errors?.message | translate }}</mat-error>
+        <mat-error>{{ $safeNavigationMigration(form.controls['id'].errors?.message) | translate }}</mat-error>
       }
       @else if (form.controls['id'].errors?.maxlength) {
         <mat-error>{{ 'LIBRARY.ERRORS.ID_TOO_LONG' | translate }}</mat-error>

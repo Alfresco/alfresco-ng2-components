@@ -5,7 +5,7 @@
             <td class="adf-file-properties-table-cell" mat-cell *matCellDef="let element">
                 <mat-icon matListItemLine class="adf-datatable-selected" *ngIf="selectedNode && element.id === selectedNode.id" (click)="onRowClicked(element)" adf-icon="check_circle" />
                 <img matListItemLine class="adf-attach-widget__icon"
-                    *ngIf="!selectedNode || element.id !== selectedNode.id" [id]="'file-'+element?.id+'-icon'"
+                    *ngIf="!selectedNode || element.id !== selectedNode.id" [id]="'file-'+$safeNavigationMigration(element?.id)+'-icon'"
                     (click)="onRowClicked(element)"
                     (keyup.enter)="onRowClicked(element)"
                     [src]="element.content ? getIcon(element.content.mimeType) : getIcon(element['mimeType'])"
@@ -69,7 +69,7 @@
                     </button>
                     <button *ngIf="!field.readOnly && displayMenuOption('remove')"
                             mat-menu-item
-                            [id]="'file-'+element?.id+'-remove'"
+                            [id]="'file-'+$safeNavigationMigration(element?.id)+'-remove'"
                             (click)="onRemoveAttachFile(element);" (keyup.enter)="onRemoveAttachFile(element);">
                         <mat-icon class="mat-24" adf-icon="highlight_off" />
                         <span>{{ 'FORM.FIELD.REMOVE_FILE' | translate }}</span>

@@ -1,6 +1,6 @@
 <div class="adf-comments-container">
     <div id="comment-header" class="adf-comments-header adf-comments-divider">
-        {{'COMMENTS.HEADER' | translate: { count: comments?.length } }}
+        {{'COMMENTS.HEADER' | translate: { count: $safeNavigationMigration(comments?.length) } }}
     </div>
     <div *ngIf="!readOnly" class="adf-comments-input-container adf-comments-divider">
             <mat-form-field class="adf-comments-input-form-field">

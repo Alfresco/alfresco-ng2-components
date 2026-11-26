@@ -12,7 +12,7 @@
             >
                 <ng-container *ngTemplateOutlet="expandButton; context: { $implicit: element }" />
                 <span
-                    [id]="'container-header-label-' + element?.id"
+                    [id]="'container-header-label-' + $safeNavigationMigration(element?.id)"
                     role="button"
                     tabindex="0"
                     (keyup.enter)="onExpanderClicked(element)"

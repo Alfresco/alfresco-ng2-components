@@ -1,6 +1,6 @@
 <ng-container *ngIf="!loading; else loadingTemplate">
   <adf-form *ngIf="hasFormKey(); else withoutForm"
-    [taskId]="taskDetails?.id"
+    [taskId]="$safeNavigationMigration(taskDetails?.id)"
     [showTitle]="showFormTitle"
     [showValidationIcon]="showFormValidationIcon"
     [showRefreshButton]="showFormRefreshButton"
