@@ -851,11 +851,10 @@ describe('ViewerComponent', () => {
 
         it('should hide the viewer when DownloadPromptDialog returns DownloadPromptActions.DOWNLOAD', fakeAsync(() => {
             dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.DOWNLOAD) } as ReturnType<MatDialog['open']>);
-            fixture.detectChanges();
+            fixture.autoDetectChanges();
             expect(testingUtils.getByCSS('.adf-viewer-content')).not.toBeNull();
 
             tick(3000);
-            fixture.detectChanges();
 
             expect(testingUtils.getByCSS('.adf-viewer-content')).toBeNull();
         }));
@@ -970,27 +969,30 @@ describe('ViewerComponent with PDF viewer', () => {
         testingUtils = new UnitTestingUtils(fixture.debugElement);
         fixture.componentRef.setInput('blobFile', new Blob(['%PDF'], { type: 'application/pdf' }));
         fixture.componentRef.setInput('fileName', 'file.pdf');
-        fixture.detectChanges();
+        fixture.autoDetectChanges();
     });
 
     afterEach(() => {
         fixture.destroy();
     });
 
-    it('should show the spinner until the PDF viewer emits pagesLoaded', () => {
+    it('should show the spinner until the PDF viewer emits pagesLoaded', async () => {
+        await fixture.whenStable();
         expect(getSpinner()).not.toBeNull();
     });
 
-    it('should hide the spinner when the PDF viewer emits pagesLoaded', () => {
+    it('should hide the spinner when the PDF viewer emits pagesLoaded', async () => {
+        await fixture.whenStable();
         getPdfViewer().pagesLoaded.emit();
-        fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(getSpinner()).toBeNull();
     });
 
-    it('should hide the spinner and show the unknown format view when the PDF viewer emits error', () => {
+    it('should hide the spinner and show the unknown format view when the PDF viewer emits error', async () => {
+        await fixture.whenStable();
         getPdfViewer().error.emit();
-        fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(getSpinner()).toBeNull();
         expect(testingUtils.getByCSS('adf-viewer-unknown-format')).not.toBeNull();
