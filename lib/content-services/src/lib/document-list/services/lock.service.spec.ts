@@ -20,7 +20,7 @@ import { LockService } from './lock.service';
 import { AuthenticationService, RedirectAuthService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { addDays, subDays } from 'date-fns';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { EMPTY, of } from 'rxjs';
 
@@ -36,7 +36,7 @@ describe('LockService', () => {
         TestBed.configureTestingModule({
             providers: [
                 { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
-                provideHttpClient(),
+                provideHttpClient(withXhr()),
                 provideHttpClientTesting()
             ]
         });

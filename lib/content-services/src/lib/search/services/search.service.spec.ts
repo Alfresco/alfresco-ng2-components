@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { mockError, fakeSearch } from '../mocks/search.service.mock';
 import { SearchService } from './search.service';
 import { NodePaging } from '@alfresco/js-api';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('SearchService', () => {
@@ -27,7 +27,7 @@ describe('SearchService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [SearchService, provideHttpClient(), provideHttpClientTesting()]
+            providers: [SearchService, provideHttpClient(withXhr()), provideHttpClientTesting()]
         });
         service = TestBed.inject(SearchService);
     });

@@ -24,7 +24,7 @@ import { ActionRef } from '../config/action.extensions';
 import { ComponentRegisterService } from './component-register.service';
 import { RuleService } from './rule.service';
 import { TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('ExtensionService', () => {
@@ -43,7 +43,7 @@ describe('ExtensionService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
-                provideHttpClient(),
+                provideHttpClient(withXhr()),
                 provideHttpClientTesting(),
                 ExtensionService,
                 ExtensionLoaderService,

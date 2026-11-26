@@ -20,7 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IdentityGroupService } from './identity-group.service';
 import { mockFoodGroups } from '../mock/group-cloud.mock';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
-import { provideHttpClient, HttpErrorResponse } from '@angular/common/http';
+import { provideHttpClient, HttpErrorResponse, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 const mockHttpErrorResponse = new HttpErrorResponse({
@@ -37,7 +37,7 @@ describe('IdentityGroupService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [TranslateModule.forRoot()],
-            providers: [IdentityGroupService, provideHttpClient(), provideHttpClientTesting()]
+            providers: [IdentityGroupService, provideHttpClient(withXhr()), provideHttpClientTesting()]
         });
         service = TestBed.inject(IdentityGroupService);
         adfHttpClient = TestBed.inject(AdfHttpClient);

@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { throwError } from 'rxjs';
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { AppConfigService } from '@alfresco/adf-core';
-import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
+import { HttpErrorResponse, provideHttpClient, withXhr } from '@angular/common/http';
 import { AppsProcessCloudService } from './apps-process-cloud.service';
 import { fakeApplicationInstance, fakeApplicationInstanceWithEnvironment } from '../mock/app-model.mock';
 import { fakeEnvironmentList } from '../../common/mock/environment.mock';
@@ -36,7 +36,7 @@ describe('AppsProcessCloudService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [provideHttpClient(), AlfrescoApiService, AppConfigService]
+            providers: [provideHttpClient(withXhr()), AlfrescoApiService, AppConfigService]
         });
         adfHttpClient = TestBed.inject(AdfHttpClient);
         spyOn(adfHttpClient, 'request').and.returnValue(apiMockResponse);

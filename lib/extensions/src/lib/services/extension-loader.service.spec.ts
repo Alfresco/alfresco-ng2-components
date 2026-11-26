@@ -16,7 +16,7 @@
  */
 
 import { TestBed, fakeAsync, flushMicrotasks, tick } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ExtensionConfig } from '../config/extension.config';
 import { ExtensionLoaderService } from './extension-loader.service';
@@ -36,7 +36,7 @@ describe('ExtensionLoaderService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [ExtensionLoaderService, provideHttpClient(), provideHttpClientTesting()]
+            providers: [ExtensionLoaderService, provideHttpClient(withXhr()), provideHttpClientTesting()]
         });
         extensionLoaderService = TestBed.inject(ExtensionLoaderService);
         httpMock = TestBed.inject(HttpTestingController);

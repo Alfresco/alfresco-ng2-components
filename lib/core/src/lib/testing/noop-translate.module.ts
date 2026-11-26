@@ -16,7 +16,7 @@
  */
 
 import { EventEmitter, Injectable, NgModule } from '@angular/core';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Language, provideTranslateLoader, provideTranslateService, TranslateLoader, TranslationObject } from '@ngx-translate/core';
 import { TranslationService } from '../translation/translation.service';
@@ -56,7 +56,7 @@ export class NoopTranslationService implements TranslateLoader {
 
 @NgModule({
     providers: [
-        provideHttpClient(),
+        provideHttpClient(withXhr()),
         provideHttpClientTesting(),
         { provide: TranslationService, useClass: NoopTranslationService },
         provideTranslateService({

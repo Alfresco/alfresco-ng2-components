@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { UserAccessService } from './user-access.service';
 import { JwtHelperService } from './jwt-helper.service';
 import { AppConfigService } from '../../app-config';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { JWT_STORAGE_SERVICE, provideCoreAuth } from '../oidc/auth.module';
 import { StorageService } from '../../common/services/storage.service';
@@ -34,7 +34,7 @@ describe('UserAccessService', () => {
             providers: [
                 provideCoreAuth({ useHash: true }),
                 { provide: JWT_STORAGE_SERVICE, useClass: StorageService },
-                provideHttpClient(),
+                provideHttpClient(withXhr()),
                 provideHttpClientTesting()
             ]
         });

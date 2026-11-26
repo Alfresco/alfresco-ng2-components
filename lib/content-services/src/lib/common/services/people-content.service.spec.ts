@@ -19,7 +19,7 @@ import { RedirectAuthService } from '@alfresco/adf-core';
 import { PeopleContentQueryRequestModel, PeopleContentService } from './people-content.service';
 import { TestBed } from '@angular/core/testing';
 import { Person, PersonPaging } from '@alfresco/js-api';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { EMPTY, firstValueFrom, of } from 'rxjs';
 import { AlfrescoApiService } from '../../services';
@@ -95,7 +95,7 @@ describe('PeopleContentService', () => {
                 PeopleContentService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
-                provideHttpClient(),
+                provideHttpClient(withXhr()),
                 provideHttpClientTesting()
             ]
         });

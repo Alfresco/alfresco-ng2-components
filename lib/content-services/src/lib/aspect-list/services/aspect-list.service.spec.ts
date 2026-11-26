@@ -20,7 +20,7 @@ import { AspectListService, CustomAspectsWhere, StandardAspectsWhere } from './a
 import { AspectPaging, AspectsApi, AspectEntry, ListAspectsOpts } from '@alfresco/js-api';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { AlfrescoApiService } from '../../services';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { AppConfigService } from '@alfresco/adf-core';
 
 const stdAspect1: AspectEntry = { entry: { id: 'std:standardAspectOne', description: 'Standard Aspect One', title: 'StandardAspectOne' } };
@@ -56,7 +56,7 @@ describe('AspectListService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [provideHttpClient(), provideHttpClientTesting()]
+            providers: [provideHttpClient(withXhr()), provideHttpClientTesting()]
         });
 
         aspectListService = TestBed.inject(AspectListService);

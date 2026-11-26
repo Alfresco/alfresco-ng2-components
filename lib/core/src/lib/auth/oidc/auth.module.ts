@@ -22,7 +22,7 @@ import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth-config';
 import { authConfigFactory, AuthConfigService } from './auth-config.service';
 import { AuthService } from './auth.service';
 import { RedirectAuthService } from './redirect-auth.service';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, withXsrfConfiguration } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, withXsrfConfiguration, withXhr } from '@angular/common/http';
 import { TokenInterceptor } from './token.interceptor';
 import { StorageService } from '../../common/services/storage.service';
 import { provideRouter } from '@angular/router';
@@ -50,7 +50,7 @@ export function oauthStorageFactory(): OAuthStorage {
 export function provideCoreAuth(config: AuthModuleConfig = { useHash: false }): (Provider | EnvironmentProviders)[] {
     config.preventClearHashAfterLogin = config.preventClearHashAfterLogin ?? true;
     return [
-        provideHttpClient(withInterceptorsFromDi(), withXsrfConfiguration({ cookieName: 'CSRF-TOKEN', headerName: 'X-CSRF-TOKEN' })),
+        provideHttpClient(withXhr(), withInterceptorsFromDi(), withXsrfConfiguration({ cookieName: 'CSRF-TOKEN', headerName: 'X-CSRF-TOKEN' })),
         provideOAuthClient(),
         provideRouter(AUTH_ROUTES),
         { provide: OAuthStorage, useFactory: oauthStorageFactory },

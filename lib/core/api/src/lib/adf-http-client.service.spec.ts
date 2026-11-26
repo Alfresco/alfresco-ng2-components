@@ -16,7 +16,7 @@
  */
 
 import { Emitters, RequestOptions, ResultListDataRepresentationTaskRepresentation, SecurityOptions } from '@alfresco/js-api';
-import { HttpParams, provideHttpClient } from '@angular/common/http';
+import { HttpParams, provideHttpClient, withXhr } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { AdfHttpClient } from './adf-http-client.service';
@@ -52,7 +52,7 @@ describe('AdfHttpClient', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [AdfHttpClient, provideHttpClient(), provideHttpClientTesting()]
+            providers: [AdfHttpClient, provideHttpClient(withXhr()), provideHttpClientTesting()]
         });
         angularHttpClient = TestBed.inject(AdfHttpClient);
         controller = TestBed.inject(HttpTestingController);

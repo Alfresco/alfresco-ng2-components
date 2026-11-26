@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { NotificationCloudService } from './notification-cloud.service';
 import { WebSocketService } from './web-socket.service';
 import { Apollo } from 'apollo-angular';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { AuthenticationService } from '@alfresco/adf-core';
 import { of, Subject } from 'rxjs';
@@ -56,7 +56,7 @@ describe('NotificationCloudService', () => {
                         onLogout: onLogoutSubject.asObservable()
                     }
                 },
-                provideHttpClient(),
+                provideHttpClient(withXhr()),
                 provideHttpClientTesting()
             ]
         });

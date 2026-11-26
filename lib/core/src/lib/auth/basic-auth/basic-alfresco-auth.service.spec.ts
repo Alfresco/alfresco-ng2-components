@@ -20,7 +20,7 @@ import { BasicAlfrescoAuthService } from './basic-alfresco-auth.service';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { ProcessAuth } from './process-auth';
 import { ContentAuth } from './content-auth';
-import { HttpHeaders, provideHttpClient } from '@angular/common/http';
+import { HttpHeaders, provideHttpClient, withXhr } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
 
@@ -33,7 +33,7 @@ describe('BasicAlfrescoAuthService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [BasicAlfrescoAuthService, provideHttpClient()]
+            providers: [BasicAlfrescoAuthService, provideHttpClient(withXhr())]
         });
         basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
 

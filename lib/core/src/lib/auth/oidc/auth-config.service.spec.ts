@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
@@ -91,7 +91,7 @@ describe('AuthConfigService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [{ provide: AUTH_MODULE_CONFIG, useValue: { useHash: true } }, provideHttpClient(), provideHttpClientTesting()]
+            providers: [{ provide: AUTH_MODULE_CONFIG, useValue: { useHash: true } }, provideHttpClient(withXhr()), provideHttpClientTesting()]
         });
         service = TestBed.inject(AuthConfigService);
         spyOn<any>(service, 'getLocationOrigin').and.returnValue('http://localhost:3000');
