@@ -30,25 +30,4 @@ runs:
         JOB_RESULTS: ${{ inputs.job-results }}
         BASE_BRANCH: ${{ inputs.base-branch }}
         RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-      run: |
-        HEAD_SHA=$(gh api "repos/$GH_REPO/git/ref/heads/$BRANCH" --jq '.object.sha')
-        STATE=$(node scripts/update-angular/build-pull-request-body.mjs body.md validation report "$VERSION" "$RUN_URL" "$HEAD_SHA" $JOB_RESULTS)
-        TITLE="GH auto: Update Angular to $VERSION"
-        DRAFT_FLAG=""
-        if [ "$STATE" == "draft" ]; then
-          DRAFT_FLAG="--draft"
-          TITLE="$TITLE (needs manual fixes)"
-        fi
-        EXISTING=$(gh pr list --head "$BRANCH" --base "$BASE_BRANCH" --state open --json number,isDraft --jq '.[0] // empty | "\(.number) \(.isDraft)"')
-        if [ -z "$EXISTING" ]; then
-          gh pr create --base "$BASE_BRANCH" --head "$BRANCH" --title "$TITLE" --body-file body.md $DRAFT_FLAG
-          exit 0
-        fi
-        read -r NUMBER IS_DRAFT <<< "$EXISTING"
-        echo "Updating pull request #$NUMBER"
-        gh api -X PATCH "repos/$GH_REPO/pulls/$NUMBER" -f title="$TITLE" -F body=@body.md > /dev/null
-        if [ "$STATE" == "draft" ] && [ "$IS_DRAFT" == "false" ]; then
-          gh pr ready "$NUMBER" --undo
-        elif [ "$STATE" != "draft" ] && [ "$IS_DRAFT" == "true" ]; then
-          gh pr ready "$NUMBER"
-        fi
+      run: scripts/update-angular/create-pull-request.sh

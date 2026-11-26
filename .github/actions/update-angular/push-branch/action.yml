@@ -33,14 +33,7 @@ runs:
         BRANCH: ${{ inputs.branch }}
         BASE_BRANCH: ${{ inputs.base-branch }}
         GPG_KEY: ${{ inputs.gpg-private-key }}
-      run: |
-        echo "$GPG_KEY" | gpg --batch --import
-        git config user.signingkey "$(gpg --list-secret-keys --with-colons | awk -F: '/^sec/ {print $5; exit}')"
-        UPSTREAM="origin/$BASE_BRANCH"
-        if git rev-parse --verify --quiet "refs/remotes/origin/$BRANCH" > /dev/null; then
-          UPSTREAM="origin/$BRANCH"
-        fi
-        git rebase --force-rebase --gpg-sign "$UPSTREAM"
+      run: scripts/update-angular/sign-commits.sh
     - name: Push
       shell: bash
       env:
