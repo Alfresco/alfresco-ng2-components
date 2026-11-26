@@ -1,5 +1,5 @@
 name: "Validate"
-description: "Run a check on the update branch without failing the job, and record its outcome for the pull request"
+description: "Run a check on the update branch, record its outcome for the pull request, and fail the job when the check fails"
 inputs:
   name:
     description: "Name of the check, shown in the pull request"
@@ -27,3 +27,7 @@ runs:
       with:
         name: ${{ inputs.name }}
         outcome: ${{ steps.check.outcome }}
+    - name: Fail when validation did not pass
+      if: ${{ steps.check.outcome == 'failure' }}
+      shell: bash
+      run: exit 1

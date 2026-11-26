@@ -1,0 +1,146 @@
+name: "Angular update stage"
+
+on:
+  workflow_call:
+    inputs:
+      stage:
+        description: "Mutation stage to execute"
+        required: true
+        type: string
+      branch:
+        required: true
+        type: string
+      angular-major:
+        required: true
+        type: string
+      version:
+        required: true
+        type: string
+      releases-as-of:
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  stage:
+    name: ${{ inputs.stage }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      NODE_OPTIONS: "--max-old-space-size=5120"
+      UPDATE_ANGULAR_RELEASES_AS_OF: ${{ inputs.releases-as-of }}
+    steps:
+      - name: Checkout workflow source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Setup environment
+        id: setup
+        uses: ./.github/actions/setup
+        with:
+          full-setup: 'false'
+      - name: Save original peer baseline
+        if: ${{ inputs.stage == 'align-peers' || inputs.stage == 'format-and-check' }}
+        shell: bash
+        run: node scripts/update-angular/save-peer-baseline.mjs "$RUNNER_TEMP/peers-baseline.json"
+      - name: Configure git identity
+        uses: ./.github/actions/update-angular/configure-git-identity
+        with:
+          git-user: ${{ vars.HXPS_GIT_USERNAME }}
+          git-email: ${{ vars.HXPS_GIT_EMAIL }}
+      - name: Checkout latest update branch
+        id: branch
+        shell: bash
+        env:
+          BRANCH: ${{ inputs.branch }}
+        run: git checkout -b "$BRANCH" "origin/$BRANCH"
+      - name: Install branch dependencies
+        id: install
+        shell: bash
+        run: pnpm install --no-frozen-lockfile 2>&1 | tee "$RUNNER_TEMP/validation.log"
+      - name: Download peer alignment report
+        if: ${{ inputs.stage == 'format-and-check' }}
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: migration-data-align-peers
+          path: ${{ runner.temp }}
+      - name: Record initialization failure
+        if: ${{ failure() }}
+        uses: ./.github/actions/update-angular/record-validation-result
+        with:
+          name: ${{ inputs.stage }}
+          outcome: failure
+      - name: Update Nx
+        if: ${{ inputs.stage == 'update-nx' }}
+        uses: ./.github/actions/update-angular/update-nx
+        with:
+          angular-major: ${{ inputs.angular-major }}
+      - name: Update Angular packages
+        if: ${{ inputs.stage == 'update-angular-packages' }}
+        uses: ./.github/actions/update-angular/update-angular-packages
+        with:
+          angular-major: ${{ inputs.angular-major }}
+          version: ${{ inputs.version }}
+      - name: Align peer dependencies
+        if: ${{ inputs.stage == 'align-peers' }}
+        uses: ./.github/actions/update-angular/align-peers
+      - name: Run migrations
+        if: ${{ inputs.stage == 'run-migrations' }}
+        uses: ./.github/actions/update-angular/run-migrations
+      - name: Format and check dependencies
+        id: format-check
+        if: ${{ inputs.stage == 'format-and-check' }}
+        uses: ./.github/actions/update-angular/format-and-check
+      - name: Clean overrides
+        if: ${{ inputs.stage == 'clean-overrides' }}
+        uses: ./.github/actions/update-angular/clean-overrides
+      - name: Collect report data
+        if: ${{ always() && (inputs.stage == 'update-nx' || inputs.stage == 'update-angular-packages' || inputs.stage == 'align-peers') }}
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/stage-report"
+          for FILE in reported peers-aligned.json; do
+            if [ -e "$RUNNER_TEMP/$FILE" ]; then
+              cp -R "$RUNNER_TEMP/$FILE" "$RUNNER_TEMP/stage-report/"
+            fi
+          done
+      - name: Upload report data
+        if: ${{ always() && (inputs.stage == 'update-nx' || inputs.stage == 'update-angular-packages' || inputs.stage == 'align-peers') }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: migration-data-${{ inputs.stage }}
+          path: ${{ runner.temp }}/stage-report
+          if-no-files-found: ignore
+          retention-days: 7
+          overwrite: true
+      - name: Upload peer report
+        if: ${{ always() && inputs.stage == 'format-and-check' }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: peer-report
+          path: ${{ runner.temp }}/report/peers.md
+          if-no-files-found: ignore
+          retention-days: 7
+          overwrite: true
+      - name: Generate app token
+        id: app-token
+        if: ${{ always() && steps.branch.outcome == 'success' }}
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ vars.GH_APP_ENGINEERING_CONTRIB_CLIENT_ID }}
+          private-key: ${{ secrets.GH_APP_ENGINEERING_CONTRIB_PRIVATE_KEY }}
+          permission-contents: write
+      - name: Sign and push branch
+        if: ${{ always() && steps.branch.outcome == 'success' && steps.app-token.outcome == 'success' }}
+        uses: ./.github/actions/update-angular/push-branch
+        with:
+          branch: ${{ inputs.branch }}
+          github-token: ${{ steps.app-token.outputs.token }}
+          gpg-private-key: ${{ secrets.HXPS_GIT_COMMIT_SIGNING_PRIVATE_KEY }}
+      - name: Fail when the lockfile does not match
+        if: ${{ always() && steps.format-check.outputs.lockfile-outcome == 'failure' }}
+        shell: bash
+        run: exit 1
