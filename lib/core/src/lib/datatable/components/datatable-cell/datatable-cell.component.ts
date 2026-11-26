@@ -33,7 +33,7 @@ import { UserPreferencesService } from '../../../common/services/user-preference
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         @let value = value$ | async;
-        @let displayValue = column?.maxTextLength ? (value | truncate: column?.maxTextLength) : value;
+        @let displayValue = column?.maxTextLength ? (value | truncate: $safeNavigationMigration(column?.maxTextLength)) : value;
 
         @if (copyContent) {
             <span

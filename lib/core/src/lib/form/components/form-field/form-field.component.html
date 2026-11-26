@@ -1,4 +1,4 @@
-<div [id]="'field-' + field?.id + '-container'"
+<div [id]="'field-' + $safeNavigationMigration(field?.id) + '-container'"
      [style.display]="field?.isVisible ? 'block' : 'none'"
      [style]="field | adfFieldStyle"
      [class.adf-focus]="focus"

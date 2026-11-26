@@ -165,7 +165,7 @@
                     [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                     [attr.data-automation-id]="'card-textitem-clickable-icon-' + property.key"
                 >
-                    <mat-icon class="adf-textitem-icon" [adf-icon]="property?.icon" />
+                    <mat-icon class="adf-textitem-icon" [adf-icon]="$safeNavigationMigration(property?.icon)" />
                 </button>
             </mat-form-field>
         </button>

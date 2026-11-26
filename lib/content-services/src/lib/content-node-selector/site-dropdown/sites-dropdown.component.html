@@ -13,7 +13,7 @@
             placeholder="{{placeholder | translate}}"
             (selectionChange)="selectedSite($event)">
             <mat-select-trigger class="adf-sites-dropdown-select-trigger">
-                {{ selected?.entry.title | translate}}
+                {{ $safeNavigationMigration(selected?.entry.title) | translate}}
             </mat-select-trigger>
             <mat-option *ngFor="let site of siteList?.list.entries;" [value]="site">
                 {{ site.entry.title | translate}}

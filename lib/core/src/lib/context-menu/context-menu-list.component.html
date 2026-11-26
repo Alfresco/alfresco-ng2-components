@@ -5,8 +5,8 @@
                 <button
                     [attr.data-automation-id]="'context-' + (link.title || link.model?.title | translate)"
                     mat-menu-item
-                    [disabled]="link.model?.disabled"
-                    [title]="link.model?.tooltip | translate"
+                    [disabled]="$safeNavigationMigration(link.model?.disabled)"
+                    [title]="$safeNavigationMigration(link.model?.tooltip) | translate"
                     (click)="onMenuItemClick($event, link)"
                 >
                     @if (link.model?.icon) {

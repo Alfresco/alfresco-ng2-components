@@ -2,11 +2,11 @@
     <button
         mat-flat-button
         class="adf-button-widget__button"
-        [matTooltip]="field?.tooltip"
+        [matTooltip]="$safeNavigationMigration(field?.tooltip)"
         [matTooltipShowDelay]="tooltipShowDelay"
         [disabled]="field?.readOnly ?? false"
         (click)="onClick($event)"
     >
-        {{ field?.name | translate }}
+        {{ $safeNavigationMigration(field?.name) | translate }}
     </button>
 </div>

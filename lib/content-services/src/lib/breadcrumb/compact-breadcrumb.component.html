@@ -36,7 +36,7 @@
                   cdkDropListGroup
                   cdkDropList
                   cdkDropListSortingDisabled
-                  [cdkDropListData]="hoveredItem()?.node"
+                  [cdkDropListData]="$safeNavigationMigration(hoveredItem()?.node)"
                   (cdkDropListDropped)="onDrop($event)"
                   cdk-scrollable
                   [cdkTrapFocus]="menuOpen()" >

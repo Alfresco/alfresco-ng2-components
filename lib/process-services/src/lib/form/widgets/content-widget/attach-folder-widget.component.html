@@ -7,7 +7,7 @@
             <mat-icon>folder</mat-icon>
             <div class="adf-attach-folder-files-row">
                 <span matLine id="{{ 'folder-' + field?.id }}" role="button" tabindex="0" class="adf-folder">{{ selectedFolderName }}</span>
-                <button *ngIf="!field.readOnly" mat-icon-button [id]="'folder-' + field?.id + '-remove'" (click)="removeFolder()">
+                <button *ngIf="!field.readOnly" mat-icon-button [id]="'folder-' + $safeNavigationMigration(field?.id) + '-remove'" (click)="removeFolder()">
                     <mat-icon class="mat-24">highlight_off</mat-icon>
                 </button>
             </div>
@@ -17,7 +17,7 @@
             <button
                 mat-raised-button
                 (click)="openSelectDialogFromFileSource()"
-                [id]="'folder-' + field?.id + '-button'"
+                [id]="'folder-' + $safeNavigationMigration(field?.id) + '-button'"
                 class="adf-attach-folder-menu-trigger"
             >
                 {{ 'FORM.FIELD.UPLOAD' | translate }}

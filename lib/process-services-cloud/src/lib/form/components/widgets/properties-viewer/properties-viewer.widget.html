@@ -6,21 +6,21 @@
         #properties
         [ngTemplateOutlet]="properties"
         let-properties="properties"
-        [ngTemplateOutletContext]="{ properties: field.params?.propertiesViewerOptions }"
+        [ngTemplateOutletContext]="{ properties: $safeNavigationMigration(field.params?.propertiesViewerOptions) }"
     >
         <adf-properties-viewer-wrapper
             *ngIf="field.value"
             [nodeId]="field.value"
-            [displayDefaultProperties]="properties?.displayDefaultProperties !== undefined ?  properties?.displayDefaultProperties : true"
-            [expanded]="properties?.expanded !== undefined ? properties?.expanded : true"
-            [preset]="properties?.preset"
-            [displayEmpty]="properties?.displayEmpty !== undefined ? properties?.displayEmpty : false"
-            [editable]="properties?.editable !== undefined ? properties?.editable : false"
-            [multi]="properties?.multi !== undefined ? properties?.multi : false"
-            [displayAspect]="properties?.displayAspect !== undefined ? properties?.displayAspect : null"
-            [copyToClipboardAction]="properties?.copyToClipboardAction !== undefined ? properties?.copyToClipboardAction : true"
+            [displayDefaultProperties]="$safeNavigationMigration(properties?.displayDefaultProperties) !== undefined ?  $safeNavigationMigration(properties?.displayDefaultProperties) : true"
+            [expanded]="$safeNavigationMigration(properties?.expanded) !== undefined ? $safeNavigationMigration(properties?.expanded) : true"
+            [preset]="$safeNavigationMigration(properties?.preset)"
+            [displayEmpty]="$safeNavigationMigration(properties?.displayEmpty) !== undefined ? $safeNavigationMigration(properties?.displayEmpty) : false"
+            [editable]="$safeNavigationMigration(properties?.editable) !== undefined ? $safeNavigationMigration(properties?.editable) : false"
+            [multi]="$safeNavigationMigration(properties?.multi) !== undefined ? $safeNavigationMigration(properties?.multi) : false"
+            [displayAspect]="$safeNavigationMigration(properties?.displayAspect) !== undefined ? $safeNavigationMigration(properties?.displayAspect) : null"
+            [copyToClipboardAction]="$safeNavigationMigration(properties?.copyToClipboardAction) !== undefined ? $safeNavigationMigration(properties?.copyToClipboardAction) : true"
             [displayCopyToClipboardIcon]="properties?.displayCopyToClipboardIcon ?? true"
-            [useChipsForMultiValueProperty]="properties?.useChipsForMultiValueProperty !== undefined ? properties?.useChipsForMultiValueProperty : true"
+            [useChipsForMultiValueProperty]="$safeNavigationMigration(properties?.useChipsForMultiValueProperty) !== undefined ? $safeNavigationMigration(properties?.useChipsForMultiValueProperty) : true"
             (nodeContentLoaded)="onNodeContentLoaded($event)"
         />
     </ng-template>

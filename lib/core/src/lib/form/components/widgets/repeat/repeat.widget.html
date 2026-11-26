@@ -3,7 +3,7 @@
         id="container-repeat"
         class="adf-container-widget-repeat__text"
     >
-        <span [id]="'container-repeat-label-' + element?.id" role="button" tabindex="0">
+        <span [id]="'container-repeat-label-' + $safeNavigationMigration(element?.id)" role="button" tabindex="0">
             {{ element.name | translate }}
         </span>
     </h4>

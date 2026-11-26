@@ -9,7 +9,7 @@
                     id="adf-version-upload-button"
                     [node]="node"
                     [newFileVersion]="newFileVersion"
-                    [currentVersion]="versionList?.latestVersion?.entry"
+                    [currentVersion]="$safeNavigationMigration(versionList?.latestVersion?.entry)"
                     (success)="onUploadSuccess($event)"
                     (cancel)="onUploadCancel()"
                     (error)="onUploadError($event)"

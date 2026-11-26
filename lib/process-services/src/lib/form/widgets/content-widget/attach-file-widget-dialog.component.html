@@ -9,9 +9,9 @@
     <adf-login-dialog-panel id="attach-file-login-panel" #adfLoginPanel *ngIf="!isLoggedIn()" />
     <adf-content-node-selector-panel *ngIf="isLoggedIn()"
                                      id="attach-file-content-node"
-                                     [currentFolderId]="data?.currentFolderId"
-                                     [isSelectionValid]="data?.isSelectionValid"
-                                     [showFilesInResult]="data?.showFilesInResult"
+                                     [currentFolderId]="$safeNavigationMigration(data?.currentFolderId)"
+                                     [isSelectionValid]="$safeNavigationMigration(data?.isSelectionValid)"
+                                     [showFilesInResult]="$safeNavigationMigration(data?.showFilesInResult)"
                                      (select)="onSelect($event)"
                                      (siteChange)="onSiteChange($event)" />
 </mat-dialog-content>
