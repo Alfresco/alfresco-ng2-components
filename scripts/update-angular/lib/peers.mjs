@@ -17,6 +17,7 @@
 
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
+import { workspaceDependencies } from './package-json.mjs';
 
 const MAX_OUTPUT_BYTES = 64 * 1024 * 1024;
 
@@ -66,4 +67,25 @@ export function issueKey(issue) {
  */
 export function readBaselineKeys(file) {
     return new Set(JSON.parse(fs.readFileSync(file, 'utf8')).map(issueKey));
+}
+
+/**
+ * Reads the alignment report written by align-peers, possibly by an earlier attempt of the run, checked against the current branch.
+ * Upgrades are kept, as their changelog still needs a review. Manual and skipped entries are kept only while their dependency is unchanged,
+ * because a person may have handled them since.
+ * @param file alignment report
+ * @returns the `upgrades`, `manual` and `skipped` entries, empty when there is no report
+ */
+export function readAlignmentReport(file) {
+    if (!fs.existsSync(file)) {
+        return { upgrades: [], manual: [], skipped: [] };
+    }
+    const report = JSON.parse(fs.readFileSync(file, 'utf8'));
+    const dependencies = workspaceDependencies();
+
+    return {
+        upgrades: report.upgrades ?? [],
+        manual: (report.manual ?? []).filter((entry) => dependencies[entry.name] === entry.from),
+        skipped: (report.skipped ?? []).filter((entry) => dependencies[entry.name] === entry.range)
+    };
 }

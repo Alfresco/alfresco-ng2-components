@@ -20,7 +20,7 @@ import path from 'node:path';
 import process from 'node:process';
 import { main } from './lib/cli.mjs';
 import { escapeTableCell } from './lib/markdown.mjs';
-import { findPeerIssues, issueKey, readBaselineKeys } from './lib/peers.mjs';
+import { findPeerIssues, issueKey, readAlignmentReport, readBaselineKeys } from './lib/peers.mjs';
 import { majorVersion } from './lib/versions.mjs';
 
 /**
@@ -126,14 +126,14 @@ function findingsLog(aligned, newIssues) {
  * @param baselineFile issues saved before the update
  * @param reportDir directory receiving peers.md
  * @param logFile validation log receiving what needs attention
- * @param alignedFile JSON file written by align-peers
+ * @param alignedFile JSON file written by align-peers, possibly in an earlier attempt of the run
  */
 function reportPeers(baselineFile, reportDir, logFile, alignedFile) {
     const baselineKeys = readBaselineKeys(baselineFile);
     const issues = findPeerIssues();
     const newIssues = issues.filter((issue) => !baselineKeys.has(issueKey(issue)));
     const oldIssues = issues.filter((issue) => baselineKeys.has(issueKey(issue)));
-    const aligned = fs.existsSync(alignedFile) ? JSON.parse(fs.readFileSync(alignedFile, 'utf8')) : { upgrades: [], manual: [], skipped: [] };
+    const aligned = readAlignmentReport(alignedFile);
     const findings = findingsLog(aligned, newIssues);
 
     fs.mkdirSync(reportDir, { recursive: true });
