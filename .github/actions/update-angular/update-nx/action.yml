@@ -26,7 +26,11 @@ runs:
           fi
           if [ -f migrations.json ]; then
             cp migrations.json "$RUNNER_TEMP/reported/nx.json"
-            pnpm nx migrate --run-migrations --create-commits
+            PENDING_FILE="$RUNNER_TEMP/pending-migrations.json"
+            PENDING=$(node scripts/update-angular/pending-migrations.mjs migrations.json "$PENDING_FILE")
+            if [ "$PENDING" != "0" ]; then
+              pnpm nx migrate --run-migrations="$(realpath --relative-to=. "$PENDING_FILE")" --create-commits
+            fi
             git rm -f --ignore-unmatch migrations.json
             git diff --cached --quiet || git commit -m "chore: remove Nx migrations file"
           fi
