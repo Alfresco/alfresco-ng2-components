@@ -127,7 +127,7 @@ jobs:
           name: migration-data-${{ inputs.stage }}
           path: ${{ runner.temp }}/stage-report
           if-no-files-found: ignore
-          retention-days: 7
+          retention-days: 30
           overwrite: true
       - name: Upload peer report
         if: ${{ always() && inputs.stage == 'format-and-check' }}
@@ -136,7 +136,7 @@ jobs:
           name: peer-report
           path: ${{ runner.temp }}/report/peers.md
           if-no-files-found: ignore
-          retention-days: 7
+          retention-days: 30
           overwrite: true
       - name: Generate app token
         id: app-token
