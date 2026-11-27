@@ -6,7 +6,9 @@ runs:
     - name: Clean overrides
       id: stage
       shell: bash
-      run: scripts/update-angular/clean-overrides.sh 2>&1 | tee "$RUNNER_TEMP/validation.log"
+      env:
+        VALIDATION_LOG: ${{ runner.temp }}/validation.log
+      run: scripts/update-angular/clean-overrides.sh 2>&1 | tee "$VALIDATION_LOG"
     - name: Record result
       if: ${{ always() }}
       uses: ./.github/actions/update-angular/record-validation-result
