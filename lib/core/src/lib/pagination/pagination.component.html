@@ -3,13 +3,13 @@
         <span aria-hidden="true" class="adf-pagination__range">
             {{ itemRangeText }}
         </span>
-        <span role="status" aria-atomic="true" aria-live="polite" class="cdk-visually-hidden">
+        <output aria-atomic="true" aria-live="polite" class="cdk-visually-hidden">
             @if (pagination.totalItems === 1) {
                 {{ 'CORE.PAGINATION.ONE_ITEM_FOUND' | translate }}
             } @else {
                 {{ 'CORE.PAGINATION.TOTAL_ITEMS_FOUND' | translate: { totalItems: pagination.totalItems } }}
             }
-        </span>
+        </output>
     </div>
 
     <div class="adf-pagination__block adf-pagination__perpage-block">
