@@ -1,5 +1,5 @@
 name: "Validate"
-description: "Run a check on the update branch without failing the job, and record its outcome for the pull request"
+description: "Run a check on the update branch, record its outcome for the pull request, and fail the job when the check fails"
 inputs:
   name:
     description: "Name of the check, shown in the pull request"
@@ -14,6 +14,10 @@ runs:
       uses: ./.github/actions/setup
       with:
         full-setup: 'false'
+    - name: Read checked commit
+      id: head
+      shell: bash
+      run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
     - name: Run check
       id: check
       shell: bash
@@ -27,3 +31,8 @@ runs:
       with:
         name: ${{ inputs.name }}
         outcome: ${{ steps.check.outcome }}
+        sha: ${{ steps.head.outputs.sha }}
+    - name: Fail when validation did not pass
+      if: ${{ steps.check.outcome == 'failure' }}
+      shell: bash
+      run: exit 1

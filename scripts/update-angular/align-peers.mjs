@@ -18,7 +18,7 @@
 import fs from 'node:fs';
 import { main } from './lib/cli.mjs';
 import { installedVersion, setDependencyVersions, workspaceDependencies } from './lib/package-json.mjs';
-import { findPeerIssues, issueKey, readBaselineKeys } from './lib/peers.mjs';
+import { findPeerIssues, issueKey, readAlignmentReport, readBaselineKeys } from './lib/peers.mjs';
 import { installableReleases, peerDependenciesOf } from './lib/registry.mjs';
 import { runVisibly } from './lib/shell.mjs';
 import { compareVersions, exactVersion, isVersionRange, majorVersion, satisfiesRange } from './lib/versions.mjs';
@@ -135,32 +135,55 @@ function chooseUpgrades(issues, dependencies, tried) {
 }
 
 /**
+ * Adds entries to a report list, replacing the entry of the same package. An upgrade keeps the version it started from.
+ * @param list report list to update
+ * @param entries entries to add
+ */
+function addByName(list, entries) {
+    for (const entry of entries) {
+        const index = list.findIndex((existing) => existing.name === entry.name);
+        if (index === -1) {
+            list.push(entry);
+        } else {
+            list[index] = { ...entry, ...(list[index].from && { from: list[index].from }) };
+        }
+    }
+}
+
+/**
  * Upgrades direct dependencies until the peers the update broke are satisfied or nothing more can be done, installing after each round.
  * Issues that were already there before the update are left alone, they are only reported.
+ * The report is written before every install, so that a failed install keeps the decisions that were already applied to the manifests.
  * @param baselineFile issues saved before the update
- * @param reportFile JSON file listing the `upgrades` made, the `manual` upgrades left to a person and the `skipped` dependencies
+ * @param reportFile JSON file listing the `upgrades` made, the `manual` upgrades left to a person and the `skipped` dependencies,
+ * continued when an earlier attempt of this run left one
  */
 function alignPeers(baselineFile, reportFile) {
     const baselineKeys = readBaselineKeys(baselineFile);
-    const report = { upgrades: [], manual: [], skipped: [] };
+    const report = readAlignmentReport(reportFile);
+    const save = () => fs.writeFileSync(reportFile, `${JSON.stringify(report, null, 2)}\n`);
     const tried = new Set();
 
     for (let round = 0; round < MAX_ROUNDS; round++) {
         const newIssues = findPeerIssues().filter((issue) => !baselineKeys.has(issueKey(issue)));
         const { upgrades, manual, skipped } = chooseUpgrades(newIssues, workspaceDependencies(), tried);
 
-        report.manual.push(...manual);
-        report.skipped.push(...skipped);
+        addByName(report.manual, manual);
+        addByName(report.skipped, skipped);
         if (!upgrades.length) {
             break;
         }
 
         setDependencyVersions(upgrades);
-        report.upgrades.push(...upgrades.map(({ name, from, to }) => ({ name, from, to: `${from.match(/^\D*/)[0]}${to}` })));
+        addByName(
+            report.upgrades,
+            upgrades.map(({ name, from, to }) => ({ name, from, to: `${from.match(/^\D*/)[0]}${to}` }))
+        );
+        save();
         runVisibly('pnpm', ['install', '--no-frozen-lockfile']);
     }
 
-    fs.writeFileSync(reportFile, `${JSON.stringify(report, null, 2)}\n`);
+    save();
 }
 
 main(alignPeers);

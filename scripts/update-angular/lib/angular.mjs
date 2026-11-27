@@ -64,15 +64,19 @@ export function packagesBehind(dependencies, targetMajor) {
 /**
  * Validates the requested Angular major, which must be the one right after the installed Angular.
  * @param text requested major, as typed by the user
+ * @param options validation options
+ * @param options.allowReached also accepts an installed Angular already at the requested major,
+ * for the stages that continue an update a previous attempt of the run left half done
  * @returns the major as a number
  */
-export function parseTargetMajor(text) {
+export function parseTargetMajor(text, { allowReached = false } = {}) {
     if (!/^\d+$/.test(text)) {
         throw new Error(`"${text}" is not a major version number`);
     }
 
     const currentMajor = majorVersion(workspaceDependencies()['@angular/core']);
-    if (Number(text) !== currentMajor + 1) {
+    const reached = allowReached && Number(text) === currentMajor;
+    if (Number(text) !== currentMajor + 1 && !reached) {
         throw new Error(`Only the next major is supported: current is ${currentMajor}, requested ${text}`);
     }
 

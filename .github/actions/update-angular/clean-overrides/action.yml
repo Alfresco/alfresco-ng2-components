@@ -6,20 +6,9 @@ runs:
     - name: Clean overrides
       id: stage
       shell: bash
-      run: |
-        {
-          FRESH="$RUNNER_TEMP/fresh-resolution"
-          git worktree add --detach "$FRESH"
-          node scripts/update-angular/remove-all-overrides.mjs "$FRESH/pnpm-workspace.yaml"
-          rm "$FRESH/pnpm-lock.yaml"
-          (cd "$FRESH" && pnpm install --lockfile-only --ignore-scripts)
-          node scripts/update-angular/find-obsolete-overrides.mjs pnpm-workspace.yaml "$FRESH/pnpm-lock.yaml" "$RUNNER_TEMP/override-decisions.json"
-          mkdir -p "$RUNNER_TEMP/overrides-report"
-          node scripts/update-angular/remove-obsolete-overrides.mjs pnpm-workspace.yaml "$RUNNER_TEMP/override-decisions.json" "$RUNNER_TEMP/overrides-report/overrides.md"
-          pnpm install --lockfile-only --ignore-scripts
-          git add -A
-          git diff --cached --quiet || git commit -m "chore: remove obsolete pnpm overrides"
-        } 2>&1 | tee "$RUNNER_TEMP/validation.log"
+      env:
+        VALIDATION_LOG: ${{ runner.temp }}/validation.log
+      run: scripts/update-angular/clean-overrides.sh 2>&1 | tee "$VALIDATION_LOG"
     - name: Record result
       if: ${{ always() }}
       uses: ./.github/actions/update-angular/record-validation-result
@@ -33,4 +22,5 @@ runs:
         name: overrides-report
         path: ${{ runner.temp }}/overrides-report
         if-no-files-found: ignore
-        retention-days: 7
+        retention-days: 30
+        overwrite: true

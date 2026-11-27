@@ -16,28 +16,7 @@ runs:
       env:
         TARGET_MAJOR: ${{ inputs.angular-major }}
         VERSION: ${{ inputs.version }}
-      run: |
-        {
-          PLAN=$(node scripts/update-angular/plan-angular-packages.mjs "$TARGET_MAJOR" "$RUNNER_TEMP/missing-releases.log")
-          echo "$PLAN"
-          mkdir -p "$RUNNER_TEMP/migrations" "$RUNNER_TEMP/reported"
-          COUNT=0
-          MIGRATION_FILES=()
-          while read -r spec; do
-            ./node_modules/.bin/nx migrate "$spec"
-            if [ -f migrations.json ]; then
-              mv migrations.json "$RUNNER_TEMP/migrations/$COUNT.json"
-              MIGRATION_FILES+=("$RUNNER_TEMP/migrations/$COUNT.json")
-            fi
-            COUNT=$((COUNT+1))
-          done <<< "$PLAN"
-          node scripts/update-angular/merge-migrations.mjs migrations.json "${MIGRATION_FILES[@]}"
-          pnpm install --no-frozen-lockfile
-          node scripts/update-angular/verify-versions.mjs "$TARGET_MAJOR"
-          cp migrations.json "$RUNNER_TEMP/reported/angular.json"
-          git add -A
-          git commit -m "chore: update Angular to $VERSION"
-        } 2>&1 | tee "$RUNNER_TEMP/validation.log"
+      run: scripts/update-angular/update-angular-packages.sh "$TARGET_MAJOR" "$VERSION" 2>&1 | tee "$RUNNER_TEMP/validation.log"
     - name: Record result
       if: ${{ always() }}
       uses: ./.github/actions/update-angular/record-validation-result

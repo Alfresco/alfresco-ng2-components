@@ -23,4 +23,5 @@ runs:
       with:
         name: migration-report
         path: ${{ runner.temp }}/report
-        retention-days: 7
+        retention-days: 30
+        overwrite: true

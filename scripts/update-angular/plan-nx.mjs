@@ -41,7 +41,7 @@ function supportsAngular(nxVersion, angular) {
  * @param target requested Angular major
  */
 function planNx(target) {
-    const targetMajor = parseTargetMajor(target);
+    const targetMajor = parseTargetMajor(target, { allowReached: true });
     const dependencies = workspaceDependencies();
 
     if (!dependencies[NX_ANGULAR]) {

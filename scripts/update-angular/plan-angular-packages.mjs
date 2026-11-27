@@ -45,7 +45,7 @@ function coreFirst(a, b) {
  * @param missingFile optional file receiving one line per best-effort package left out, empty when there is none
  */
 function planAngularPackages(target, missingFile) {
-    const targetMajor = parseTargetMajor(target);
+    const targetMajor = parseTargetMajor(target, { allowReached: true });
     const dependencies = workspaceDependencies();
     const specs = [];
     const missing = [];

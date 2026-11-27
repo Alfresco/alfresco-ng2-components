@@ -1,20 +1,16 @@
 name: "Prepare update branch"
-description: "Resolve the target Angular version and create the branch of the update"
+description: "Resolve the target Angular version and create an update branch owned by this workflow run"
 inputs:
   angular-major:
     description: "Target Angular major version"
     required: true
-  base-branch:
-    description: "Branch the update starts from"
-    required: false
-    default: develop
 outputs:
   version:
     description: "Resolved @angular/core version"
     value: ${{ steps.version.outputs.version }}
   branch:
-    description: "Name of the created branch"
-    value: ${{ steps.branch.outputs.name }}
+    description: "Name of the created or resumed branch"
+    value: ${{ steps.branch.outputs.branch }}
   base-sha:
     description: "Commit the update starts from"
     value: ${{ steps.branch.outputs.base-sha }}
@@ -35,13 +31,6 @@ runs:
       shell: bash
       env:
         VERSION: ${{ steps.version.outputs.version }}
-        BASE_BRANCH: ${{ inputs.base-branch }}
+        RUN_ID: ${{ github.run_id }}
       run: |
-        BRANCH="chore/update-angular-$VERSION"
-        if git rev-parse --verify --quiet "refs/remotes/origin/$BRANCH" > /dev/null; then
-          echo "Branch $BRANCH already exists"
-          exit 1
-        fi
-        git checkout -b "$BRANCH"
-        echo "name=$BRANCH" >> "$GITHUB_OUTPUT"
-        echo "base-sha=$(git rev-parse "origin/$BASE_BRANCH")" >> "$GITHUB_OUTPUT"
+        node scripts/update-angular/prepare-branch.mjs "$VERSION" "$RUN_ID" >> "$GITHUB_OUTPUT"
