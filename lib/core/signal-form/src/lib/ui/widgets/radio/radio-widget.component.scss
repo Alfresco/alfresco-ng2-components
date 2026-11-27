@@ -1,0 +1,11 @@
+@use '@angular/material' as mat;
+
+.adf-radio-buttons-widget {
+    @include mat.radio-overrides(
+        (
+            label-text-size: var(--adf-radio-buttons-font-size, var(--adf-form-label-font-size, var(--mat-sys-body-medium-size))),
+            label-text-weight: var(--adf-radio-buttons-font-weight, var(--adf-form-label-font-weight, var(--mat-sys-body-medium-weight))),
+            label-text-color: var(--adf-radio-buttons-color, var(--adf-form-label-color, var(--mat-sys-on-surface-variant)))
+        )
+    );
+}
