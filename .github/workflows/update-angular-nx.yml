@@ -77,7 +77,7 @@ jobs:
           gpg-private-key: ${{ secrets.HXPS_GIT_COMMIT_SIGNING_PRIVATE_KEY }}
 
   update-nx:
-    name: "Update Nx"
+    name: "⬆️ Update Nx"
     needs: [prepare]
     uses: ./.github/workflows/update-angular-stage.yml
     secrets: inherit
@@ -89,7 +89,7 @@ jobs:
       releases-as-of: ${{ needs.prepare.outputs.releases-as-of }}
 
   update-angular:
-    name: "Update Angular packages"
+    name: "🅰️ Update Angular packages"
     needs: [prepare, update-nx]
     uses: ./.github/workflows/update-angular-stage.yml
     secrets: inherit
@@ -101,7 +101,7 @@ jobs:
       releases-as-of: ${{ needs.prepare.outputs.releases-as-of }}
 
   align-peers:
-    name: "Align peer dependencies"
+    name: "🔗 Align peer dependencies"
     needs: [prepare, update-angular]
     uses: ./.github/workflows/update-angular-stage.yml
     secrets: inherit
@@ -113,7 +113,7 @@ jobs:
       releases-as-of: ${{ needs.prepare.outputs.releases-as-of }}
 
   run-migrations:
-    name: "Run migrations"
+    name: "🚚 Run migrations"
     needs: [prepare, align-peers]
     uses: ./.github/workflows/update-angular-stage.yml
     secrets: inherit
@@ -125,7 +125,7 @@ jobs:
       releases-as-of: ${{ needs.prepare.outputs.releases-as-of }}
 
   format-and-check:
-    name: "Format and check dependencies"
+    name: "🎨 Format and check dependencies"
     needs: [prepare, run-migrations]
     uses: ./.github/workflows/update-angular-stage.yml
     secrets: inherit
@@ -137,7 +137,7 @@ jobs:
       releases-as-of: ${{ needs.prepare.outputs.releases-as-of }}
 
   clean-overrides:
-    name: "Clean overrides"
+    name: "🧹 Clean overrides"
     needs: [prepare, format-and-check]
     if: ${{ !cancelled() && needs.prepare.result == 'success' && (needs.format-and-check.result == 'success' || (needs.format-and-check.result == 'failure' && needs.format-and-check.outputs.lockfile-outcome == 'success')) }}
     uses: ./.github/workflows/update-angular-stage.yml
@@ -150,7 +150,7 @@ jobs:
       releases-as-of: ${{ needs.prepare.outputs.releases-as-of }}
 
   migration-report:
-    name: "Migration report"
+    name: "📝 Migration report"
     needs: [prepare, update-nx, update-angular, align-peers, run-migrations, format-and-check, clean-overrides]
     if: ${{ always() && needs.prepare.result == 'success' }}
     runs-on: ubuntu-latest
