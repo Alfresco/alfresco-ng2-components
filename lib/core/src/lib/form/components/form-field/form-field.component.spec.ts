@@ -327,5 +327,38 @@ describe('FormFieldComponent', () => {
                 expect(update).not.toHaveBeenCalled();
             });
         }
+
+        it('should show the authored ISO datetime default again in its mounted input after a reset', async () => {
+            const model = new FormModel(
+                {
+                    id: 'same-definition',
+                    fields: [
+                        {
+                            id: 'container',
+                            type: 'container',
+                            numberOfColumns: 1,
+                            fields: { 1: [{ id: 'field', type: FormFieldTypes.DATETIME, value: '2026-01-03T16:00:00.000Z' }] }
+                        }
+                    ]
+                },
+                undefined,
+                false,
+                formService
+            );
+            const mounted = mountField(FormFieldTypes.DATETIME, model);
+            const freshInput = mounted.input.value;
+            expect(freshInput).toBe('3-1-2026 04:00 PM');
+            mounted.control.setValue(new Date(2026, 0, 27, 16, 15));
+            mounted.host.detectChanges();
+            expect(mounted.input.value).not.toBe(freshInput);
+            expect((await model.resetToDefaults(mounted.context)).status).toBe('complete');
+            mounted.host.detectChanges();
+            await mounted.host.whenStable();
+            expect(mounted.input.value).toBe(freshInput);
+            expect(mounted.control.value).toBe('2026-01-03T16:00:00.000Z');
+            expect(mounted.field.value).toBe('2026-01-03T16:00:00.000Z');
+            expect(model.values.field).toBe('2026-01-03T16:00:00.000Z');
+            expect(mounted.field.isValid).toBeTrue();
+        });
     });
 });

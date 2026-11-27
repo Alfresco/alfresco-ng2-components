@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { isValid } from 'date-fns';
+import { DateFnsUtils } from '../../common/utils/date-fns-utils';
 import type { FormFieldModel } from '../components/widgets/core/form-field.model';
 import { FormFieldTypes } from '../components/widgets/core/form-field-types';
 import { captureAuthoredDefinition, getAuthoredDefault } from './form-authored-state.model';
@@ -43,8 +45,17 @@ const isRelativeDateKeyword = (field: FormFieldModel, value: unknown): boolean =
 const isInvalidNumber = (field: FormFieldModel, parsed: unknown): boolean =>
     NUMERIC_TYPES.includes(field.type) && parsed !== null && !Number.isFinite(Number(parsed));
 
+const isAcceptedDateTimeLiteral = (field: FormFieldModel, parsed: unknown): boolean =>
+    field.type === FormFieldTypes.DATETIME &&
+    typeof parsed === 'string' &&
+    isValid(DateFnsUtils.parseDateTime(parsed)) &&
+    isValid(DateFnsUtils.getDate(parsed));
+
 const isInvalidDate = (field: FormFieldModel, parsed: unknown): boolean =>
-    DATE_TYPES.includes(field.type) && parsed !== null && (!(parsed instanceof Date) || !Number.isFinite(parsed.getTime()));
+    DATE_TYPES.includes(field.type) &&
+    parsed !== null &&
+    !isAcceptedDateTimeLiteral(field, parsed) &&
+    (!(parsed instanceof Date) || !Number.isFinite(parsed.getTime()));
 
 const isUnknownOption = (field: FormFieldModel, parsed: unknown): boolean =>
     OPTION_TYPES.includes(field.type) &&
