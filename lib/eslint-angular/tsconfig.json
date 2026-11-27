@@ -10,7 +10,8 @@
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "baseUrl": "src",
-    "types": ["node", "@typescript-eslint/utils"]
+    "types": ["node", "@typescript-eslint/utils"],
+    "ignoreDeprecations": "6.0"
   },
   "include": ["**/*"],
   "exclude": ["node_modules", "tests"]
