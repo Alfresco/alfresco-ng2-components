@@ -21,7 +21,7 @@ import { DiagramModel } from '../models/diagram/diagram.model';
 import { DiagramColorService } from '../services/diagram-color.service';
 import { DiagramsService } from '../services/diagrams.service';
 import { RaphaelService } from './raphael/raphael.service';
-import { CommonModule } from '@angular/common';
+
 import { DiagramStartEventComponent } from './events/diagram-start-event.component';
 import { DiagramExclusiveGatewayComponent } from './gateways/diagram-exclusive-gateway.component';
 import { DiagramInclusiveGatewayComponent } from './gateways/diagram-inclusive-gateway.component';
@@ -48,7 +48,6 @@ const PADDING_HEIGHT: number = 60;
 @Component({
     selector: 'adf-diagram',
     imports: [
-        CommonModule,
         DiagramStartEventComponent,
         DiagramExclusiveGatewayComponent,
         DiagramInclusiveGatewayComponent,

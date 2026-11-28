@@ -1,5 +1,9 @@
-<div *ngIf="lanes">
-    <div *ngFor="let lane of lanes">
+@if (lanes) {
+  <div>
+    @for (lane of lanes; track lane) {
+      <div>
         <diagram-lane [lane]="lane" />
-    </div>
-</div>
+      </div>
+    }
+  </div>
+}

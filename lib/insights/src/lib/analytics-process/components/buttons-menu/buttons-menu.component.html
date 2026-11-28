@@ -1,18 +1,23 @@
-<div id="adf-buttons-menu" class="adf-buttons-menu" *ngIf="!isMenuEmpty">
-    <div *ngIf="isMobile()">
+@if (!isMenuEmpty) {
+  <div id="adf-buttons-menu" class="adf-buttons-menu">
+    @if (isMobile()) {
+      <div>
         <button mat-icon-button [matMenuTriggerFor]="editReportMenu">
-            <mat-icon>more_vert</mat-icon>
+          <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #editReportMenu="matMenu" class="adf-buttons-menu-mobile">
-            <ng-content *ngTemplateOutlet="desktop" />
+          <ng-content *ngTemplateOutlet="desktop" />
         </mat-menu>
-    </div>
-
-    <div *ngIf="!isMobile()" class="adf-buttons-menu-desktop">
+      </div>
+    }
+    @if (!isMobile()) {
+      <div class="adf-buttons-menu-desktop">
         <ng-content *ngTemplateOutlet="desktop" />
-    </div>
-</div>
+      </div>
+    }
+  </div>
+}
 
 <ng-template #desktop>
-    <ng-content />
+  <ng-content />
 </ng-template>
