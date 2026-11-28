@@ -21,6 +21,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { EmptyContentComponent } from './empty-content.component';
 import { UnitTestingUtils } from '../../testing/unit-testing-utils';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({
     selector: 'adf-test-component',
@@ -39,6 +40,7 @@ describe('EmptyContentComponent', () => {
     let fixture: ComponentFixture<TestComponent>;
     let translateService: TranslateService;
     let testingUtils: UnitTestingUtils;
+    let announceSpy: jasmine.Spy<LiveAnnouncer['announce']>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -47,6 +49,7 @@ describe('EmptyContentComponent', () => {
         fixture = TestBed.createComponent(TestComponent);
         testingUtils = new UnitTestingUtils(fixture.debugElement);
         translateService = TestBed.inject(TranslateService);
+        announceSpy = spyOn(TestBed.inject(LiveAnnouncer), 'announce');
     });
 
     it('should render custom title', async () => {
@@ -90,5 +93,12 @@ describe('EmptyContentComponent', () => {
         expect(subTitles[0].nativeElement.textContent).toContain('SUBTITLE-1');
         expect(subTitles[1].nativeElement.textContent).toContain('SUBTITLE-2');
         expect(subTitles[2].nativeElement.textContent).toContain('SUBTITLE-3');
+    });
+
+    it('should announce message when no results are found', () => {
+        fixture.componentRef.setInput('title', 'CUSTOM_TITLE');
+        fixture.detectChanges();
+
+        expect(announceSpy).toHaveBeenCalledWith('CUSTOM_TITLE', 'polite');
     });
 });

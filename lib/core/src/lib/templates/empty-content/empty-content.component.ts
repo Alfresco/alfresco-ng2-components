@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, Input } from '@angular/core';
-import { TranslatePipe } from '@ngx-translate/core';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, Input, inject, OnInit } from '@angular/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { IconModule } from '../../icon';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({
     selector: 'adf-empty-content',
@@ -28,7 +29,10 @@ import { IconModule } from '../../icon';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-empty-content' }
 })
-export class EmptyContentComponent {
+export class EmptyContentComponent implements OnInit {
+    private readonly liveAnnouncer = inject(LiveAnnouncer);
+    private readonly translate = inject(TranslateService);
+
     /** Material Icon to use. */
     @Input()
     icon = 'cake';
@@ -40,4 +44,10 @@ export class EmptyContentComponent {
     /** String or Resource Key for the subtitle. */
     @Input()
     subtitle = '';
+
+    ngOnInit(): void {
+        if (this.title) {
+            this.liveAnnouncer.announce(this.translate.instant(this.title), 'polite');
+        }
+    }
 }
