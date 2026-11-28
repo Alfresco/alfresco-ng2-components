@@ -23,7 +23,7 @@ import { ComponentSelectionMode } from '../../../../types';
 import { IdentityGroupModel } from '../../../../group/models/identity-group.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReactivePreselectionService } from '../reactive-preselection.service';
-import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 import { GroupCloudComponent } from '../../../../group/components/group-cloud.component';
 
@@ -31,7 +31,7 @@ import { GroupCloudComponent } from '../../../../group/components/group-cloud.co
 
 @Component({
     selector: 'group-cloud-widget',
-    imports: [CommonModule, TranslatePipe, GroupCloudComponent],
+    imports: [TranslatePipe, GroupCloudComponent],
     templateUrl: './group-cloud.widget.html',
     host: {
         '(click)': 'event($event)',
