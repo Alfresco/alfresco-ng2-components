@@ -103,6 +103,16 @@ OAuth2 is a protocol that allows the application to authorize operations without
 
     customQueryParams: Static query parameters appended to the OIDC authorization request, provided as an object of key/value pairs (for example { "tenant_hint": "alfresco" }). Each entry is added to every login/authorize redirect, letting you send provider-specific hints to the identity provider without code changes. The audience parameter, when set, always takes precedence over a key of the same name.
 
+## Front-channel logout
+
+When several applications share the same identity provider session, logging out from one of them must not leave the others working with the tokens of the previous user.
+
+ADF ships the static page `assets/frontchannel-logout.html`, an implementation of [OpenID Connect Front-Channel Logout](https://openid.net/specs/openid-connect-frontchannel-1_0.html). Register its URL as the front-channel logout URI of the client in the identity provider, with the session parameters enabled, for example:
+
+    https://my-host/my-app/assets/frontchannel-logout.html
+
+When a session ends, the identity provider loads the page in a hidden iframe with the `iss` and `sid` query parameters. The page removes the OAuth items stored by every application on the same origin whose `id_token` belongs to that session. It needs no configuration, never redirects and never calls the network. The page must be allowed to be framed by the identity provider, and the identity provider must be on the same site as the application, otherwise the browser gives the iframe a separate storage.
+
 # Examples
 ## Keycloak Configuration
 ```json 
